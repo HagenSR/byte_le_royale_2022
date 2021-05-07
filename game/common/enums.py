@@ -9,3 +9,4 @@ class ObjectType:
     none = 0
     action = 1
     player = 2
+    game_board = 3
