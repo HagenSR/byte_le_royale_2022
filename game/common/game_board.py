@@ -5,13 +5,14 @@ import math
 
 
 class GameBoard(GameObject):
-    def __init__(self):
+    # the width and height parameters have default values to allow them to be set for unit testing purposes
+    def __init__(self, width=GameStats.game_board_width, height=GameStats.game_board_height):
         super().__init__()
         self.object_type = ObjectType.game_board
         
         # pull width and height values from GameStats
-        self.width = GameStats.game_board_width
-        self.height = GameStats.game_board_height
+        self.width = width
+        self.height = height
 
         # instantiate lists with an empty list
         self.player_list = []
