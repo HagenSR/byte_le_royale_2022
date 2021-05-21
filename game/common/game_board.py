@@ -25,6 +25,11 @@ class GameBoard(GameObject):
         # set turn counter to 0, not sure the use for this yet
         self.turn = 0
 
+    def obfuscate(self):
+        super().obfuscate()
+
+        self.player_list = None
+
     def to_json(self):
         data = super().to_json()
 
