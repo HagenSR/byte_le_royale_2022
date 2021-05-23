@@ -6,7 +6,7 @@ from game.common.enums import *
 
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None):
+    def __init__(self, code=None, team_name=None, action=None, avatar=None):
         super().__init__()
         self.object_type = ObjectType.player
         
@@ -15,6 +15,7 @@ class Player(GameObject):
         self.team_name = team_name
         self.code = code
         self.action = action
+        self.avatar = avatar
 
     def to_json(self):
         data = super().to_json()

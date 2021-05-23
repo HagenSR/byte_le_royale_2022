@@ -10,3 +10,12 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
+
+
+class MapObjectType:
+    none = 0
+    player = 1
+    item = 2
+    wall = 3
+    building = 4
+    status_object = 5

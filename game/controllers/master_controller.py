@@ -2,7 +2,10 @@ from copy import deepcopy
 
 from game.common.action import Action
 from game.common.enums import *
+from game.common.stats import GameStats
 from game.common.player import Player
+from game.common.map_object import MapObject
+
 import game.config as config
 from game.utils.thread import CommunicationThread
 
@@ -19,7 +22,12 @@ class MasterController(Controller):
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, clients):
-        pass
+        for i in range(len(clients)):
+            clients[i].avatar = MapObject(
+                MapObjectType.player,
+                GameStats.player_stats['starting_health'],
+                GameStats.player_stats['starting_coordinates'][i],
+                GameStats.player_stats['hitbox'])
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate world information
