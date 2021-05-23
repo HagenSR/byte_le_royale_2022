@@ -6,6 +6,6 @@ class GameStats:
 
     player_stats = {
         'starting_health': 10,
-        'starting_coordinates': [[450, 450], [-450, -450]],
+        'starting_coordinates': [[450, 450], [50, 50]],
         'hitbox': {'width': 10, 'height': 10}
     }
