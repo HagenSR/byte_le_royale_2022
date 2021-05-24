@@ -10,16 +10,19 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
     def setUp(self): # This method is used to set up anything you wish to test prior to every test method below.
         self.movObj = MovingObject(10, 10)
     
+    # Test if a valid heading set works
     def test_set_get_heading_valid(self):
         self.setUp()
         self.movObj.set_heading(90)
         self.assertEqual(self.movObj.get_heading(), 90)
     
+    # Test if a valid speed set works
     def test_set_get_speed_valid(self):
         self.setUp()
         self.movObj.set_speed(100)
         self.assertEqual(self.movObj.get_speed(), 100)
 
+    # Test if invalid sets don't work
     def test_set_get_heading_invalid_low(self):
         self.setUp()
         self.movObj.set_heading(-10)
@@ -35,6 +38,7 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
         self.movObj.set_heading(370)
         self.assertEqual(self.movObj.get_heading(), 10)
 
+    # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
         self.setUp()
         self.movObj.set_heading(360)
