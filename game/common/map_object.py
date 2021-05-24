@@ -10,13 +10,16 @@ class MapObject(GameObject):
         self.collidable = collidable
     
     def to_json(self):
-        data = super().__init__()
+        data = super().to_json()
         data['health'] = self.health
         data['coordinates'] = self.coordinates
         data['hitbox'] = self.hitbox
         data['collidable'] = self.collidable
 
+        return data
+
     def from_json(self, data):
+        super().from_json(data)
         self.health = data['health']
         self.coordinates = data['coordinates']
         self.hitbox = data['hitbox']
