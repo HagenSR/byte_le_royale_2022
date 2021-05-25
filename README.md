@@ -13,6 +13,6 @@ python launcher.pyz r
 
 # Test Suite Commands:
 
-```
-python -m game.test_suite.runner
 ```bash
+python -m game.test_suite.runner
+```
