@@ -54,7 +54,6 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
         self.movObj.set_speed(0)
         self.assertEqual(self.movObj.get_speed(), 0)
 
-
     
     
 
