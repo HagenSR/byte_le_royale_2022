@@ -1,25 +1,23 @@
 
 from game.common.map_object import MapObject
+from game.common.stats import GameStats
 
 
 class walls(MapObject):
-    def __init__(self, health = None, destructable = None):
-        super.__init__()
-        self.health = health
-        self.destructable = destructable
+    def __init__(self, coordinates, hitbox, health = GameStats.default_wall_health, destructible = False):
+        super().__init__(health, coordinates, hitbox, True )
+        self.destructible = destructible
         
     def to_json(self):
         data = super().to_json()
         
-        data['health'] = self.health
-        data['destructable'] = self.destructable
+        data['destructible'] = self.destructible
         
         return data
     
     def from_json(self, data):
         super().from_json(data)
         
-        self.health = data['health']
-        self.destructable = data['destructable']
+        self.destructible = data['destructible']
     
         
