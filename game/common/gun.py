@@ -6,6 +6,7 @@ class Gun(GameObject):
     def __init__(self, gun_type): 
         super().__init__()
         self.gun_type = gun_type
+        self.pattern = GameStats.gun_stats[gun_type]['pattern']
         self.damage = GameStats.gun_stats[gun_type]['damage']
         self.fire_rate = GameStats.gun_stats[gun_type]['fire_rate']
         self.cooldown = GameStats.gun_stats[gun_type]['cooldown']
@@ -16,6 +17,7 @@ class Gun(GameObject):
     def to_json(self):
         data = super().to_json()
         data['gun_type'] = self.gun_type
+        data['pattern'] = self.pattern
         data['damage'] = self.damage
         data['fire_rate'] = self.fire_rate
         data['cooldown'] = self.cooldown
@@ -28,6 +30,7 @@ class Gun(GameObject):
     def from_json(self, data):
         super().from_json(data)
         self.gun_type = data['gun_type']
+        self.pattern = data['pattern']
         self.damage = data['damage']
         self.fire_rate = data['fire_rate']
         self.cooldown = data['cooldown']
@@ -38,6 +41,7 @@ class Gun(GameObject):
     def __str__(self):
         return f"""
             Gun Type: {self.gun_type}
+            Pattern: {self.pattern}
             Damage: {self.damage}
             Fire Rate: {self.fire_rate}
             Cooldown: {self.cooldown}

@@ -17,3 +17,10 @@ class GunType:
     assault_rifle = 2
     shotgun = 3
     sniper = 4
+
+
+class ShotPattern:
+    none = 0
+    single = 1
+    multi = 2
+    spread = 3
