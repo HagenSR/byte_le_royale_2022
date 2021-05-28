@@ -3,11 +3,8 @@
 # to insure your tests are run.
 
 import unittest
-<<<<<<< HEAD
-=======
-from game.common.moving import moving_object
->>>>>>> b93182bf15098f3d3f856e10253f1bada170322b
 from game.common.moving.moving_object import MovingObject
+
 
 class TestMovingObject(unittest.TestCase): # Your test class is a subclass of unittest.Testcase, this is important
 
@@ -58,10 +55,6 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
         self.movObj.set_speed(0)
         self.assertEqual(self.movObj.get_speed(), 0)
 
-<<<<<<< HEAD
-
-    
-=======
     def test_moving_obj_parent_params(self):
         self.setUp()
         testMov = MovingObject(10, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
@@ -71,8 +64,6 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
         self.assertIsNone(self.movObj.coordinates)
         self.assertIsNone(self.movObj.hitbox)
         self.assertIsNone(self.movObj.collidable)
->>>>>>> b93182bf15098f3d3f856e10253f1bada170322b
-    
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

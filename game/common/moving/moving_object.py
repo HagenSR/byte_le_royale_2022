@@ -1,6 +1,7 @@
 from game.common.map_object import MapObject
 from game.common.enums import *
 
+
 # Inherits MapObject
 class MovingObject(MapObject):
     def __init__(self, heading=0, speed=0, health=None, coordinates=None, hitbox=None, collidable=None):
@@ -17,7 +18,7 @@ class MovingObject(MapObject):
 
     # setter for heading. Should be degrees between 0 and 360 inclusive
     def set_heading(self, val):
-        if val >= 0 and val <= 360:
+        if 0 <= val <= 360:
             self.__heading = val
     
     # Set speed must be greater than 0, potential speed limit in the future?

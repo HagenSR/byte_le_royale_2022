@@ -1,6 +1,7 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 
+
 class MapObject(GameObject):
     def __init__(self, health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__()
