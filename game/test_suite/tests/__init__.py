@@ -6,5 +6,6 @@ from game.test_suite.tests.test_moving_object import TestMovingObject
 
 __all__ = [
     'TestGameBoard',
-    'TestMovingObject'
+    'TestMovingObject',
+    'TestDamagingObject'
 ]
