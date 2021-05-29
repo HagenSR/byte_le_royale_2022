@@ -11,7 +11,8 @@ class ObjectType:
     player = 2
     game_board = 3
     map_object = 4
-    gun = 5
+    item = 5
+    gun = 6
 
 class GunType:
     none = 0
