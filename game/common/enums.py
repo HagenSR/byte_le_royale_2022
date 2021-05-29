@@ -18,6 +18,11 @@ class GunType:
     shotgun = 3
     sniper = 4
 
+class GunLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
 
 class ShotPattern:
     none = 0
