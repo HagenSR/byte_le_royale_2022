@@ -24,7 +24,7 @@ class MovingObject(MapObject):
     
     # Set speed must be greater than 0
     def set_speed(self, val):
-        if val >= 0 and val <= moving_object_stats['max_speed']:
+        if val >= 0 and val <= GameStats.moving_object_stats['max_speed']:
             self.__speed = val
 
     # To_json creates a dictionary representation of the object.
