@@ -3,6 +3,7 @@
 
 from game.test_suite.tests.test_game_board import TestGameBoard
 from game.test_suite.tests.test_moving_object import TestMovingObject
+from game.test_suite.tests.test_damaging_object import TestDamagingObject
 
 __all__ = [
     'TestGameBoard',

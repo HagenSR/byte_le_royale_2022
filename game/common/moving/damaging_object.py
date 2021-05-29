@@ -5,17 +5,17 @@ from game.common.enums import *
 
 
 
-class DamagingObject(MovingObject)
+class DamagingObject(MovingObject):
     def _init_(self, range=0, damage=0, heading = None, speed = None, 
-               health=None, coordinates=None, hitbox=None, collidable=None)):
+               health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__(heading, speed, health, coordinates, hitbox, collidable)
-            self.__range = range
-            self.__damage = damage
+        self.__range = range
+        self.__damage = damage
         
     def get_range(self):
         return self.__range
         
-    def get__damage(self):
+    def get_damage(self):
         return self.__damage
         
     def set_range(self, val):
