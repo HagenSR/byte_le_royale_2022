@@ -19,11 +19,11 @@ class DamagingObject(MovingObject)
         return self.__damage
         
     def set_range(self, val):
-        if val >= 0 and val <= damaging_object_stats['max_range']:
+        if val >= 0 and val <= GameStats.damaging_object_stats['max_range']:
             self.__range = val
     
     def set_damage(self, val):
-         if val>= 0 and val <= damaging_object_stats['max_damage']:
+         if val>= 0 and val <= GameStats.damaging_object_stats['max_damage']:
             self.__damage = val
 
     

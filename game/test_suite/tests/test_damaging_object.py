@@ -1,5 +1,6 @@
 import unittest 
 from game.common.damaging_object import DamagingObject
+from game.common.stats import GameStats
 
 class TestDamagingObject(unittest.TestCase):
 
@@ -40,13 +41,13 @@ class TestDamagingObject(unittest.TestCase):
 
     def test_set_get_range_boundary_high(self): 
         self.setUp()
-        self.dmgObj.set_range(damaging_object_stats['max_range'])
-        self.assertEqual(self.dmgObj.get_range(), damaging_object_stats['max_range']) 
+        self.dmgObj.set_range(GameStats.damaging_object_stats['max_range'])
+        self.assertEqual(self.dmgObj.get_range(), GameStats.damaging_object_stats['max_range']) 
 
     def test_set_get_damage_boundary_high(self): 
         self.setUp()
-        self.dmgObj.set_damage(damaging_object_stats['max_damage'])
-        self.assertEqual(self.dmgObj.get_damage(), damaging_object_stats['max_damage'])  
+        self.dmgObj.set_damage(GameStats.damaging_object_stats['max_damage'])
+        self.assertEqual(self.dmgObj.get_damage(), GameStats.damaging_object_stats['max_damage'])  
 
     def test_damaging_obj_parent_params(self):
         self.setUp()
