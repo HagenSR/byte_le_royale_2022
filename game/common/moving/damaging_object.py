@@ -1,6 +1,8 @@
 
-from game.common.moving_object import MovingObject
+from game.common.moving.moving_object import MovingObject
+from game.common.stats import GameStats
 from game.common.enums import *
+
 
 
 class DamagingObject(MovingObject)
@@ -17,26 +19,23 @@ class DamagingObject(MovingObject)
         return self.__damage
         
     def set_range(self, val):
-        if val >= 0:
+        if val >= 0 and val <= damaging_object_stats['max_range']:
             self.__range = val
     
     def set_damage(self, val):
-         if val>= 0:
+         if val>= 0 and val <= damaging_object_stats['max_damage']:
             self.__damage = val
 
-    # To_json creates a dictionary representation of the object.
-    # super().to_json() calls MapObject.to_json(), which calls gameObject.to_json()
-    # This dictionary can then easily be converted to json by the game engine
+    
     def to_json(self):
         data = super().to_json()
         data['range'] = self.range
         data['damage'] = self.damage
 
         return data
-
-    # Not actually necessary, but the idea is that it takes a json representation (dictionary)
-    # And converts it back into an object
+ 
     def from_json(self, data):
         super().from_json(data)
         self.range = data['range']
         self.damage = data['damage']
+   
