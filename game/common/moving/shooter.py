@@ -1,8 +1,9 @@
 from game.common.moving.moving_object import MovingObject
 from game.common.stats import GameStats
+from game.common.enums import *
 
 
-class Player(MovingObject):
+class Shooter(MovingObject):
     def __init__(self, heading=0, speed=0, coordinates=GameStats.player_stats['starting_coordinates']):
         super().__init__(
             heading,
@@ -10,8 +11,9 @@ class Player(MovingObject):
             GameStats.player_stats['starting_health'],
             coordinates,
             GameStats.player_stats['hitbox'],
-            True
+            True  # collidable
         )
+        self.object_type = ObjectType.shooter
         self.inventory = []
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
@@ -31,10 +33,12 @@ class Player(MovingObject):
 
     def to_json(self):
         data = super().to_json()
-        data['inventory'] = self.inventory
+
+        data['inventory'] = [item.to_json() for item in self.inventory]
+        data['visible'] = [obj for obj in self.visible]
+
         data['money'] = self.money
         data['armor'] = self.armor
-        data['visible'] = self.visible
         data['view_radius'] = self.view_radius
         data['moving'] = self.moving
 

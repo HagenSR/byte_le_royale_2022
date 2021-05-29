@@ -10,3 +10,4 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
+    shooter = 4
