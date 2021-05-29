@@ -5,6 +5,8 @@ from game.common.items.item import Item
 class Gun(Item):
     def __init__(self, gun_type, level):
         super().__init__()
+        self.object_type = ObjectType.gun
+
         self.gun_type = gun_type
         # Leveling subject to change
         self.level = level
