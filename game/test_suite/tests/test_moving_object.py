@@ -45,6 +45,11 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
         self.movObj.set_heading(360)
         self.assertEqual(self.movObj.get_heading(), 360)
 
+    def test_set_get_speed_boundary_high(self):
+        self.setUp()
+        self.movObj.set_heading(moving_object_stats['max_speed'])
+        self.assertEqual(self.movObj.get_heading(), moving_object_stats['max_speed'])
+
     def test_set_get_heading_boundary_low(self):
         self.setUp()
         self.movObj.set_heading(0)

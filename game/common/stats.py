@@ -15,4 +15,13 @@ class GameStats:
         'max_speed': 500
     }
 
+    damaging_object_stats = {
+        # This is assuming the player is at the very edge of board and the object 
+        # only stops once it hits an object. 
+        'max_range': 500
+        
+        # This determines the max damage an object instance to do, value 
+        # is arbitrary for now and will be changed when necessary 
+        'max_damage': 100
+    }
    
