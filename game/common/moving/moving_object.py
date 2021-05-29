@@ -22,7 +22,7 @@ class MovingObject(MapObject):
         if val >= 0 and val <= 360:
             self.__heading = val
     
-    # Set speed must be greater than 0, potential speed limit in the future?
+    # Set speed must be greater than 0
     def set_speed(self, val):
         if val >= 0 and val <= moving_object_stats['max_speed']:
             self.__speed = val
