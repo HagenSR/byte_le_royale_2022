@@ -1,6 +1,6 @@
 from game.common.map_object import MapObject
 
-class item(MapObject):
+class Item(MapObject):
     def __init__(self, coordinates, hitbox, health=None, count = 1):
         super().__init__(health, coordinates, hitbox, True)
         self.count = count
