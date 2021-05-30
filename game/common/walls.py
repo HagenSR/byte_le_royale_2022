@@ -4,7 +4,7 @@ from game.common.stats import GameStats
 
 class Walls(MapObject):
     def __init__(self, coordinates, hitbox, health = GameStats.default_wall_health, destructible = False):
-        super().__init__(health, coordinates, hitbox, True )
+        super().__init__(health, coordinates, hitbox, collidable = True )
         self.destructible = destructible
         
     def to_json(self):
