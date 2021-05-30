@@ -9,7 +9,22 @@ class GameStats:
         'starting_coordinates': [{'x': 450, 'y': 450}, {'x': 50, 'y': 50}],
         'hitbox': {'width': 10, 'height': 10}
     }
+    
+    moving_object_stats = {
+        # max speed value is arbitrary at this time and will most likely be changed
+        'max_speed': 500
+    }
 
+    damaging_object_stats = {
+        # This is assuming the player is at the very edge of board and the object 
+        # only stops once it hits an object. 
+        'max_range': 500,
+        
+        # This determines the max damage an object instance to do, value 
+        # is arbitrary for now and will be changed when necessary 
+        'max_damage': 100
+    }
+   
 # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
         GunType.none: {'pattern': ShotPattern.none, 'damage': 0,
