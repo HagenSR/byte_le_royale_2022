@@ -4,6 +4,7 @@
 
 import unittest
 from game.common.moving.moving_object import MovingObject
+from game.common.stats import GameStats
 
 
 class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
@@ -44,6 +45,11 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.setUp()
         self.movObj.set_heading(360)
         self.assertEqual(self.movObj.get_heading(), 360)
+
+    def test_set_get_speed_boundary_high(self):
+        self.setUp()
+        self.movObj.set_speed(GameStats.moving_object_stats['max_speed'])
+        self.assertEqual(self.movObj.get_speed(), GameStats.moving_object_stats['max_speed'])
 
     def test_set_get_heading_boundary_low(self):
         self.setUp()

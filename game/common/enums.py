@@ -11,3 +11,28 @@ class ObjectType:
     player = 2
     game_board = 3
     shooter = 4
+    map_object = 5
+    item = 6
+    gun = 7
+    
+
+class GunType:
+    none = 0
+    handgun = 1
+    assault_rifle = 2
+    shotgun = 3
+    sniper = 4
+
+    
+class GunLevel:
+    level_zero = 0
+    level_one = 1
+    level_two = 2
+    level_three = 3
+
+    
+class ShotPattern:
+    none = 0
+    single = 1
+    multi = 2
+    spread = 3
