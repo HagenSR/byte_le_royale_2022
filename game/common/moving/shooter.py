@@ -35,7 +35,7 @@ class Shooter(MovingObject):
         data = super().to_json()
 
         data['inventory'] = [item.to_json() for item in self.inventory]
-        data['visible'] = [obj for obj in self.visible]
+        data['visible'] = [obj.to_json() for obj in self.visible]
 
         data['money'] = self.money
         data['armor'] = self.armor
