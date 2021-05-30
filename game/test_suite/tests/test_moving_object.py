@@ -3,13 +3,13 @@
 # to insure your tests are run.
 
 import unittest
-from game.common.moving import moving_object
 from game.common.moving.moving_object import MovingObject
 from game.common.stats import GameStats
 
-class TestMovingObject(unittest.TestCase): # Your test class is a subclass of unittest.Testcase, this is important
 
-    def setUp(self): # This method is used to set up anything you wish to test prior to every test method below.
+class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+
+    def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
         self.movObj = MovingObject(10, 10)
     
     # Test if a valid heading set works
@@ -63,14 +63,13 @@ class TestMovingObject(unittest.TestCase): # Your test class is a subclass of un
 
     def test_moving_obj_parent_params(self):
         self.setUp()
-        testMov = MovingObject(10, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
-        self.assertIsNotNone(testMov.coordinates)
-        self.assertIsNotNone(testMov.hitbox)
-        self.assertIsNotNone(testMov.collidable)
+        test_mov = MovingObject(10, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
+        self.assertIsNotNone(test_mov.coordinates)
+        self.assertIsNotNone(test_mov.hitbox)
+        self.assertIsNotNone(test_mov.collidable)
         self.assertIsNone(self.movObj.coordinates)
         self.assertIsNone(self.movObj.hitbox)
         self.assertIsNone(self.movObj.collidable)
-    
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

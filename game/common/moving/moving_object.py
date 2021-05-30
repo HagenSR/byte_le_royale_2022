@@ -19,7 +19,7 @@ class MovingObject(MapObject):
 
     # setter for heading. Should be degrees between 0 and 360 inclusive
     def set_heading(self, val):
-        if val >= 0 and val <= 360:
+        if 0 <= val <= 360:
             self.__heading = val
     
     # Set speed must be greater than 0
