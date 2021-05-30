@@ -11,7 +11,7 @@ class Shooter(MovingObject):
             GameStats.player_stats['starting_health'],
             coordinates,
             GameStats.player_stats['hitbox'],
-            True  # collidable
+            collidable = True
         )
         self.object_type = ObjectType.shooter
         self.inventory = []
