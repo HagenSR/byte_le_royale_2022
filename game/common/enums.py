@@ -10,9 +10,9 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
-    damaging_object = 4
-    moving_object = 5
-    map_object = 6
+    map_object = 4
+    damaging_object = 5
+    moving_object = 6
     shooter = 7
     item = 8
     gun = 9
