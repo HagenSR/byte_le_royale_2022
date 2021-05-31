@@ -10,10 +10,13 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
-    shooter = 4
-    map_object = 5
-    item = 6
-    gun = 7
+    damaging_object = 4
+    moving_object = 5
+    map_object = 6
+    shooter = 7
+    item = 8
+    gun = 9
+    wall = 10
     
 
 class GunType:

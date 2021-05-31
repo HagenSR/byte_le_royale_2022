@@ -1,4 +1,4 @@
-from game.common.map_object import MapObject
+from game.common.map_object import MapObject, ObjectType
 
 class Item(MapObject):
     def __init__(self, coordinates, hitbox, health=None, count = 1):

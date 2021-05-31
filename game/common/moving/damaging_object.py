@@ -9,22 +9,27 @@ class DamagingObject(MovingObject):
     def __init__(self, range=0, damage=0, heading = None, speed = None, 
                health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__(heading, speed, health, coordinates, hitbox, collidable)
-        self.__range = range
-        self.__damage = damage
+        self.range = range
+        self.damage = damage
+        self.object_type = ObjectType.damaging_object
         
-    def get_range(self):
-        return self.__range
-        
-    def get_damage(self):
-        return self.__damage
-        
-    def set_range(self, val):
-        if val >= 0 and val <= GameStats.damaging_object_stats['max_range']:
-            self.__range = val
+    @property
+    def range(self):
+        return self.range
+
+    @range.setter
+    def range(self, value):
+        if value >= 0 and value <= GameStats.damaging_object_stats['max_range']:
+            self.range = value
+            
+    @property
+    def damage(self):
+        return self.damage
     
-    def set_damage(self, val):
-         if val>= 0 and val <= GameStats.damaging_object_stats['max_damage']:
-            self.__damage = val
+    @damage.setter
+    def damage(self, value):
+         if value >= 0 and value <= GameStats.damaging_object_stats['max_damage']:
+            self.damage = value
 
     
     def to_json(self):
