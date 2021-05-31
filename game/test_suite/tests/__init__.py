@@ -4,7 +4,7 @@
 from game.test_suite.tests.objects.test_game_board import TestGameBoard
 from game.test_suite.tests.objects.test_moving_object import TestMovingObject
 from game.test_suite.tests.objects.test_damaging_object import TestDamagingObject
-from game.test_suite.tests.objects.test_initialization import TestDamagingObject
+from game.test_suite.tests.objects.test_initialization import TestInit
 
 __all__ = [
     'TestGameBoard',

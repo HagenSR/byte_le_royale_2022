@@ -15,51 +15,51 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
     # Test if a valid heading set works
     def test_set_get_heading_valid(self):
         self.setUp()
-        self.movObj.set_heading(90)
-        self.assertEqual(self.movObj.get_heading(), 90)
+        self.movObj.heading = 90
+        self.assertEqual(self.movObj.heading, 90)
     
     # Test if a valid speed set works
     def test_set_get_speed_valid(self):
         self.setUp()
-        self.movObj.set_speed(100)
-        self.assertEqual(self.movObj.get_speed(), 100)
+        self.movObj.speed = 100
+        self.assertEqual(self.movObj.speed, 100)
 
     # Test if invalid sets don't work
     def test_set_get_heading_invalid_low(self):
         self.setUp()
-        self.movObj.set_heading(-10)
-        self.assertEqual(self.movObj.get_heading(), 10)
+        self.movObj.heading = -10
+        self.assertEqual(self.movObj.heading, 10)
 
     def test_set_get_speed_invalid_low(self):
         self.setUp()
-        self.movObj.set_speed(-1)
-        self.assertEqual(self.movObj.get_speed(), 10)
+        self.movObj.speed = -1
+        self.assertEqual(self.movObj.speed, 10)
 
     def test_set_get_heading_invalid_high(self):
         self.setUp()
-        self.movObj.set_heading(370)
-        self.assertEqual(self.movObj.get_heading(), 10)
+        self.movObj.heading = 370
+        self.assertEqual(self.movObj.heading, 10)
 
     # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
         self.setUp()
-        self.movObj.set_heading(360)
-        self.assertEqual(self.movObj.get_heading(), 360)
+        self.movObj.heading = 360
+        self.assertEqual(self.movObj.heading, 360)
 
     def test_set_get_speed_boundary_high(self):
         self.setUp()
-        self.movObj.set_speed(GameStats.moving_object_stats['max_speed'])
-        self.assertEqual(self.movObj.get_speed(), GameStats.moving_object_stats['max_speed'])
+        self.movObj.speed = GameStats.moving_object_stats['max_speed']
+        self.assertEqual(self.movObj.speed, GameStats.moving_object_stats['max_speed'])
 
     def test_set_get_heading_boundary_low(self):
         self.setUp()
-        self.movObj.set_heading(0)
-        self.assertEqual(self.movObj.get_heading(), 0)
+        self.movObj.heading = 0
+        self.assertEqual(self.movObj.heading, 0)
 
     def test_set_get_speed_boundary_low(self):
         self.setUp()
-        self.movObj.set_speed(0)
-        self.assertEqual(self.movObj.get_speed(), 0)
+        self.movObj.speed = 0
+        self.assertEqual(self.movObj.speed, 0)
 
     def test_moving_obj_parent_params(self):
         self.setUp()
