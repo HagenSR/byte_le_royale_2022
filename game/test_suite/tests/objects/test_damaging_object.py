@@ -18,6 +18,8 @@ class TestDamagingObject(unittest.TestCase):
 
 
     def test_set_get_range_invalid_low(self):
+        # Checks if an exception is raised by an Illegal set
+        # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
         self.assertRaises(Exception, lambda : self.dmgObj.range(-10))
 
     def test_set_get_damage_invalid_low(self):

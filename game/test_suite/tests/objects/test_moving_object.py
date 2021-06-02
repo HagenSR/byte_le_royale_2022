@@ -26,6 +26,8 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
 
     # Test if invalid sets don't work
     def test_set_get_heading_invalid_low(self):
+        # Checks if an exception is raised by an Illegal set
+        # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
         self.assertRaises(Exception, lambda : self.movObj.heading(-1))
 
     def test_set_get_speed_invalid_low(self):
