@@ -2,6 +2,8 @@ from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.items.upgrade import Upgrade
 from game.common.items.consumable import Consumable
+from game.common.items.item import Item
+from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
 
@@ -36,6 +38,10 @@ class Shooter(MovingObject):
     def inventory(self):
         return self.__inventory
 
+    @inventory.setter
+    def inventory(self, value):
+        self.__inventory = value
+
     def has_empty_slot(self, slot_type):
         for slot in self.__inventory[slot_type]:
             if not slot:
@@ -43,12 +49,18 @@ class Shooter(MovingObject):
         return False
 
     def append_inventory(self, value):
+        if not isinstance(value, (Gun, Upgrade, Consumable)):
+            raise TypeError(f"Value appended must be of type Gun, Upgrade, or Consumable, not {type(value)}")
         if isinstance(value, Gun) and self.has_empty_slot('guns'):
             self.__inventory['guns'].replace(None, value, 1)
+            return None
         if isinstance(value, Upgrade) and self.has_empty_slot('upgrades'):
             self.__inventory['upgrades'].replace(None, value, 1)
+            return None
         if isinstance(value, Consumable) and self.has_empty_slot('consumables'):
             self.__inventory['consumables'].replace(None, value, 1)
+            return None
+        raise InventoryFullError(f"Inventory full for type {type(value)}")
 
     def remove_from_inventory(self, obj):
         for slot_type in self.__inventory:
