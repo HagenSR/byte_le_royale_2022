@@ -1,4 +1,7 @@
 from game.common.moving.moving_object import MovingObject
+from game.common.items.gun import Gun
+from game.common.items.upgrade import Upgrade
+from game.common.items.consumable import Consumable
 from game.common.stats import GameStats
 from game.common.enums import *
 
@@ -11,15 +14,47 @@ class Shooter(MovingObject):
             GameStats.player_stats['starting_health'],
             coordinates,
             GameStats.player_stats['hitbox'],
-            collidable = True
+            collidable=True
         )
         self.object_type = ObjectType.shooter
-        self.inventory = []
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
         self.visible = []
         self.view_radius = GameStats.player_stats['view_radius']
         self.moving = False
+
+        self.__inventory = {
+            'guns':
+                [None] * GameStats.inventory_stats['guns'],
+            'upgrades':
+                [None] * GameStats.inventory_stats['upgrades'],
+            'consumables':
+                [None] * GameStats.inventory_stats['consumables']
+        }
+
+    @property
+    def inventory(self):
+        return self.__inventory
+
+    def has_empty_slot(self, slot_type):
+        for slot in self.__inventory[slot_type]:
+            if not slot:
+                return True
+        return False
+
+    def append_inventory(self, value):
+        if isinstance(value, Gun) and self.has_empty_slot('guns'):
+            self.__inventory['guns'].replace(None, value, 1)
+        if isinstance(value, Upgrade) and self.has_empty_slot('upgrades'):
+            self.__inventory['upgrades'].replace(None, value, 1)
+        if isinstance(value, Consumable) and self.has_empty_slot('consumables'):
+            self.__inventory['consumables'].replace(None, value, 1)
+
+    def remove_from_inventory(self, obj):
+        for slot_type in self.__inventory:
+            self.__inventory[slot_type].replace(obj, None, 1)
+            return obj
+        return None
 
     # set the heading and direction in a controlled way, might need to add distance attribute later
     def move(self, heading):
@@ -34,7 +69,7 @@ class Shooter(MovingObject):
     def to_json(self):
         data = super().to_json()
 
-        data['inventory'] = [item.to_json() for item in self.inventory]
+        data['inventory'] = self.inventory
         data['visible'] = [obj.to_json() for obj in self.visible]
 
         data['money'] = self.money
