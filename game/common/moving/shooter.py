@@ -2,7 +2,6 @@ from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.items.upgrade import Upgrade
 from game.common.items.consumable import Consumable
-from game.common.items.item import Item
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
