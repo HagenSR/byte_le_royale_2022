@@ -58,12 +58,12 @@ class Shooter(MovingObject):
 
     # set the heading and direction in a controlled way, might need to add distance attribute later
     def move(self, heading):
-        super().set_heading(heading)
-        super().set_speed(GameStats.player_stats['move_speed'])
+        super().heading = heading
+        super().speed = GameStats.player_stats['move_speed']
         self.moving = True
 
     def stop(self):
-        super().set_speed(0)
+        super().speed = 0
         self.moving = False
 
     def to_json(self):
