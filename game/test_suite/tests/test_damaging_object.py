@@ -3,10 +3,10 @@ from game.common.moving import damaging_object
 from game.common.moving.damaging_object import DamagingObject
 from game.common.stats import GameStats
 
-class TestDamagingObject(unittest.TestCase):
 
+class TestDamagingObject(unittest.TestCase):
     def setUp(self):
-       self.dmgObj = DamagingObject(10, 10)
+        self.dmgObj = DamagingObject(10, 10)
     
     def test_set_get_range_valid(self):
         self.setUp()
