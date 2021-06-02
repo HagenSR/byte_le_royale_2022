@@ -21,6 +21,8 @@ class DamagingObject(MovingObject):
     def range(self, value):
         if value >= 0 and value <= GameStats.damaging_object_stats['max_range']:
             self.__range = value
+        else:
+            raise Exception("Range value outside bounds, Not set")
             
     @property
     def damage(self):
@@ -28,8 +30,10 @@ class DamagingObject(MovingObject):
     
     @damage.setter
     def damage(self, value):
-         if value >= 0 and value <= GameStats.damaging_object_stats['max_damage']:
+        if value >= 0 and value <= GameStats.damaging_object_stats['max_damage']:
             self.__damage = value
+        else:
+            raise Exception("Damage value outside bounds, Not set")
 
     
     def to_json(self):
