@@ -48,3 +48,9 @@ class GameStats:
             'fire_rate': 1, 'range': 100, 'mag_size': 1, 'reload_speed': 8,
             'cooldown': {'max': 1, 'rate': 1}, 'level_mod': 1.25}
     }
+
+    grenade_stats = 
+    {
+        'min_fuse_time': 10,
+        'max_fuse_time:': 50
+    }
