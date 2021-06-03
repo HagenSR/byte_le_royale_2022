@@ -10,3 +10,9 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
+
+class Upgrades:
+    none = 0
+    gun_upgrades = 1
+    movement_upgrades = 2
+    sight_upgrades = 3
