@@ -10,6 +10,7 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
+<<<<<<< HEAD
     shooter = 4
     map_object = 5
     item = 6
@@ -19,6 +20,16 @@ class DamagingType:
     none = 0
     bullet = 1
     grenade = 2  
+=======
+    map_object = 4
+    damaging_object = 5
+    moving_object = 6
+    shooter = 7
+    item = 8
+    gun = 9
+    wall = 10
+    
+>>>>>>> 56777947cd75f560937fd2892c5f9c0a2502d6b9
 
 class GunType:
     none = 0
