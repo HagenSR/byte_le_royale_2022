@@ -14,7 +14,11 @@ class ObjectType:
     map_object = 5
     item = 6
     gun = 7
-    
+
+class DamagingType:
+    none = 0
+    bullet = 1
+    grenade = 2  
 
 class GunType:
     none = 0
