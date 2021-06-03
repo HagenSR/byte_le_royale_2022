@@ -2,9 +2,10 @@ from game.common.enums import *
 from game.common.stats import GameStats
 from game.common.items.item import Item
 
+
 class Gun(Item):
-    def __init__(self, gun_type, level):
-        super().__init__()
+    def __init__(self, gun_type, level, coordinates=None, hitbox=None):
+        super().__init__(coordinates, hitbox)
         self.object_type = ObjectType.gun
 
         self.gun_type = gun_type
