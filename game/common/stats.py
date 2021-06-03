@@ -17,7 +17,7 @@ class GameStats:
     }
 
     inventory_stats = {
-        'guns': 1,
+        'guns': 2,
         'upgrades': 3,
         'consumables': 4
     }

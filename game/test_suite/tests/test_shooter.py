@@ -19,6 +19,8 @@ class TestShooter(unittest.TestCase):
         test_upgrade = Upgrade()
         test_consumable = Consumable()
 
+        print(self.shooter.inventory)
+
         self.shooter.append_inventory(test_gun)
         self.shooter.append_inventory(test_gun)
         self.assertFalse(self.shooter.has_empty_slot('guns'))

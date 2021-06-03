@@ -24,13 +24,11 @@ class Shooter(MovingObject):
         self.view_radius = GameStats.player_stats['view_radius']
         self.moving = False
 
+        # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
+        # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
+        slot_types = [key for key in GameStats.inventory_stats.keys()]
         self.__inventory = {
-            'guns':
-                [None] * GameStats.inventory_stats['guns'],
-            'upgrades':
-                [None] * GameStats.inventory_stats['upgrades'],
-            'consumables':
-                [None] * GameStats.inventory_stats['consumables']
+            slot_type: [None for _ in range(GameStats.inventory_stats[slot_type])] for slot_type in slot_types
         }
 
     @property
@@ -51,7 +49,8 @@ class Shooter(MovingObject):
         if not isinstance(value, (Gun, Upgrade, Consumable)):
             raise TypeError(f"Value appended must be of type Gun, Upgrade, or Consumable, not {type(value)}")
         if isinstance(value, Gun) and self.has_empty_slot('guns'):
-            self.__inventory['guns'].replace(None, value, 1)
+            self.__inventory['guns'] = [value if not gun else None for gun in self.__inventory['guns']]
+            # self.__inventory['guns'].replace(None, value, 1)
             return None
         if isinstance(value, Upgrade) and self.has_empty_slot('upgrades'):
             self.__inventory['upgrades'].replace(None, value, 1)
