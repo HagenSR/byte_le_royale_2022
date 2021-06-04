@@ -1,4 +1,7 @@
 from game.common.enums import *
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
 
 
 class GameStats:
@@ -16,10 +19,20 @@ class GameStats:
         'move_speed': 10,
     }
 
+    # format: 'slot_type': { num_of_slots, slot_obj_type }
     inventory_stats = {
-        'guns': 2,
-        'upgrades': 3,
-        'consumables': 4
+        'guns': {
+            'slots': 2,
+            'type': game.common.items.gun.Gun
+        },
+        'upgrades': {
+            'slots': 3,
+            'type': game.common.items.upgrade.Upgrade
+        },
+        'consumables': {
+            'slots': 4,
+            'type': game.common.items.consumable.Consumable
+        },
     }
 
     moving_object_stats = {

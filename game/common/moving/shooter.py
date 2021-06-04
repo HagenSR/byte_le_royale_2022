@@ -1,7 +1,4 @@
 from game.common.moving.moving_object import MovingObject
-from game.common.items.gun import Gun
-from game.common.items.upgrade import Upgrade
-from game.common.items.consumable import Consumable
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
@@ -26,9 +23,17 @@ class Shooter(MovingObject):
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
         # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
-        slot_types = [key for key in GameStats.inventory_stats.keys()]
+        # Because of the way this is set up, it is VERY important that each shooter is only instantiated once per run
+        #
+        # this statement grabs the slot_type as a string, the object type as a Type, and puts it into a list of tuples
+        self.slot_obj_types = [
+            (slot_type, slot_stats['type']) for slot_type, slot_stats in GameStats.inventory_stats.items()
+        ]
+        # this generates an empty inventory, with number of slots for each slot type taken from game stats
         self.__inventory = {
-            slot_type: [None for _ in range(GameStats.inventory_stats[slot_type])] for slot_type in slot_types
+            slot_type:
+                [None for _ in range(GameStats.inventory_stats[slot_type]['slots'])]
+                for slot_type, slot_obj_type in self.slot_obj_types
         }
 
     @property
@@ -46,23 +51,23 @@ class Shooter(MovingObject):
         return False
 
     def append_inventory(self, value):
-        if not isinstance(value, (Gun, Upgrade, Consumable)):
-            raise TypeError(f"Value appended must be of type Gun, Upgrade, or Consumable, not {type(value)}")
-        if isinstance(value, Gun) and self.has_empty_slot('guns'):
-            self.__inventory['guns'] = [value if not gun else None for gun in self.__inventory['guns']]
-            # self.__inventory['guns'].replace(None, value, 1)
-            return None
-        if isinstance(value, Upgrade) and self.has_empty_slot('upgrades'):
-            self.__inventory['upgrades'].replace(None, value, 1)
-            return None
-        if isinstance(value, Consumable) and self.has_empty_slot('consumables'):
-            self.__inventory['consumables'].replace(None, value, 1)
-            return None
+        if not isinstance(value, tuple(slot_type[1] for slot_type in self.slot_obj_types)):
+            raise TypeError(f"Value appended must be of type "
+                            f"{[obj_type[1] for obj_type in self.slot_obj_types]} "
+                            f"not {type(value)}")
+        for slot_type, slot_obj_type in self.slot_obj_types:
+            if isinstance(value, slot_obj_type) and self.has_empty_slot(slot_type):
+                self.__inventory[slot_type][self.__inventory[slot_type].index(None)] = value
+                return None
         raise InventoryFullError(f"Inventory full for type {type(value)}")
 
     def remove_from_inventory(self, obj):
         for slot_type in self.__inventory:
-            self.__inventory[slot_type].replace(obj, None, 1)
+            # this try except block checks to make sure you're only checking the correct slot type
+            try:
+                self.__inventory[slot_type][self.__inventory[slot_type].index(obj)] = None
+            except ValueError:
+                continue
             return obj
         return None
 

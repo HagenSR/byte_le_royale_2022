@@ -19,11 +19,21 @@ class TestShooter(unittest.TestCase):
         test_upgrade = Upgrade()
         test_consumable = Consumable()
 
-        print(self.shooter.inventory)
-
-        self.shooter.append_inventory(test_gun)
-        self.shooter.append_inventory(test_gun)
+        for slot in self.shooter.inventory['guns']:
+            self.shooter.append_inventory(test_gun)
         self.assertFalse(self.shooter.has_empty_slot('guns'))
         self.assertEqual(test_gun, self.shooter.remove_from_inventory(test_gun))
         self.assertTrue(self.shooter.has_empty_slot('guns'))
+
+        for slot in self.shooter.inventory['upgrades']:
+            self.shooter.append_inventory(test_upgrade)
+        self.assertFalse(self.shooter.has_empty_slot('upgrades'))
+        self.assertIsNotNone(self.shooter.remove_from_inventory(test_upgrade))
+        self.assertTrue(self.shooter.has_empty_slot('upgrades'))
+
+        for slot in self.shooter.inventory['consumables']:
+            self.shooter.append_inventory(test_consumable)
+        self.assertFalse(self.shooter.has_empty_slot('consumables'))
+        self.assertEqual(test_consumable, self.shooter.remove_from_inventory(test_consumable))
+        self.assertTrue(self.shooter.has_empty_slot('consumables'))
 

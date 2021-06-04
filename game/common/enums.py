@@ -14,6 +14,7 @@ class ObjectType:
     map_object = 5
     item = 6
     gun = 7
+    upgrade = 8
     
 
 class GunType:
