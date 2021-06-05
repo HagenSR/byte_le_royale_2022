@@ -25,7 +25,7 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         breakpoint()
         self.gun = Gun()
         self.item = Item()
-        self.grnObj = GrenadeObject()
+        self.grnObj = Grenade()
         self.damaging = DamagingObject()
         self.movObj = MovingObject(10, 10)
         self.shooter = Shooter()

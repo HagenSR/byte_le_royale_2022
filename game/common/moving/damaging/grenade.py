@@ -8,7 +8,7 @@ class Grenade(DamagingObject):
         heading = None, speed = None, health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__(range, damage, heading, speed, health, coordinates, hitbox, collidable)
         self.__fuse_time = fuse_time
-        self.__object_type = ObjectType.grenade
+        self.object_type = ObjectType.grenade
         
     @property    
     def fuse_time(self):
