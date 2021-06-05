@@ -51,5 +51,5 @@ class GameStats:
 
     grenade_stats = {
         'min_fuse_time': 10,
-        'max_fuse_time:': 50
+        'max_fuse_time': 50
     }
