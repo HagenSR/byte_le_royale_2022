@@ -13,15 +13,15 @@ class Upgrade(Item):
         
     def to_json(self):
         data = super().to_json()
-        data[upgrade_enum] = self.upgrade_enum
-        data[movement_enum] = self.movement_enum
-        data[sight_enum] = self.sight_enum
+        data['upgrade_enum'] = self.upgrade_enum
+        data['movement_enum'] = self.movement_enum
+        data['sight_enum'] = self.sight_enum
         return data
     
     def from_json(self, data):
         super.from_json(data)
-        self.upgrade_enum = data[upgrade_enum]
-        self.movement_enum = data[movement_enum]
-        self.sight_enum = data[sight_enum]
+        self.upgrade_enum = data['upgrade_enum']
+        self.movement_enum = data['movement_enum']
+        self.sight_enum = data['sight_enum']
         
         
