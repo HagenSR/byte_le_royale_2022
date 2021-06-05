@@ -16,7 +16,7 @@ class Grenade(DamagingObject):
         
     @fuse_time.setter
     def fuse_time(self, val):
-        if val >= GameStats.grenade_stats['min_fuse_time']:
+        if val >= GameStats.grenade_stats['min_fuse_time'] and val <= GameStats.grenade_stats['max_fuse_time']:
            self.__fuse_time = val
         else:
             raise Exception("fuse time value outside bounds, Not set")

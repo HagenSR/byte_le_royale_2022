@@ -22,7 +22,6 @@ from game.common.enums import ObjectType
 class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
     def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
-        breakpoint()
         self.gun = Gun()
         self.item = Item()
         self.grnObj = Grenade()
