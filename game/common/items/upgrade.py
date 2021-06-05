@@ -6,5 +6,4 @@ from game.common.items.item import Item
 class Upgrade(Item):
     def __init__(self):
         super().__init__(None, None)
-        self.object_type = ObjectType.upgrade
 
