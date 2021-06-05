@@ -5,7 +5,7 @@ from game.common.enums import *
 
 
 class Shooter(MovingObject):
-    def __init__(self, heading=0, speed=0, coordinates=GameStats.player_stats['starting_coordinates']):
+    def __init__(self, heading=0, speed=0, coordinates=GameStats.player_stats['starting_coordinates'][0]):
         super().__init__(
             heading,
             speed,
@@ -72,10 +72,12 @@ class Shooter(MovingObject):
         return None
 
     # set the heading and direction in a controlled way, might need to add distance attribute later
-    def move(self, heading):
+    def move(self, heading, speed):
         super().heading = heading
-        super().speed = GameStats.player_stats['move_speed']
-        self.moving = True
+        if speed < GameStats.player_stats['move_speed']:
+            super().speed = speed
+            self.moving = True
+        raise ValueError("Speed must be less than max move speed for the player")
 
     def stop(self):
         super().speed = 0
