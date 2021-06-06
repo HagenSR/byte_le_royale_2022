@@ -17,7 +17,9 @@ class GameStats:
     
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be changed
-        'max_speed': 500
+        'max_speed': 500,
+        # min speed value is arbitrary at this time and could possibly be changed
+        'min_speed': 0
     }
 
     damaging_object_stats = {

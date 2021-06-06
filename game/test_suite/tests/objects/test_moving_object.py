@@ -31,7 +31,7 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertRaises(Exception, lambda : self.movObj.heading(-1))
 
     def test_set_get_speed_invalid_low(self):
-        self.assertRaises(Exception, lambda : self.movObj.speed(-1))
+        self.assertRaises(Exception, lambda : self.movObj.speed(GameStats.moving_object_stats['min_speed'] - 1))
 
     def test_set_get_heading_invalid_high(self):
         self.assertRaises(Exception, lambda : self.movObj.heading(math.pi*3))
