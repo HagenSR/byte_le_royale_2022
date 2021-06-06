@@ -10,13 +10,6 @@ class ObjectType:
     action = 1
     player = 2
     game_board = 3
-
-
-class Upgrades:
-    none = 0
-    gun_upgrades = 1
-    movement_upgrades = 2
-    sight_upgrades = 3
     map_object = 4
     damaging_object = 5
     moving_object = 6
@@ -24,6 +17,13 @@ class Upgrades:
     item = 8
     gun = 9
     wall = 10
+    
+
+class Upgrades:
+    none = 0
+    gun_upgrades = 1
+    movement_upgrades = 2
+    sight_upgrades = 3
     
 
 class GunType:
