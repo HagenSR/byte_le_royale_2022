@@ -1,29 +1,41 @@
 from game.common.map_object import MapObject
+from game.common.stats import GameStats
 from game.common.enums import *
+import math
+
 
 # Inherits MapObject
 class MovingObject(MapObject):
-    def __init__(self, heading=0, speed=0):
-        super().__init__()
+    def __init__(self, heading=0, speed=0, health=None, coordinates=None, hitbox=None, collidable=None):
+        super().__init__(health, coordinates, hitbox, collidable)
         # Double underscore 'name mangles' the variable. The closest to private we can get in python
         self.__heading = heading
         self.__speed = speed
+        self.object_type = ObjectType.moving_object
 
-    def get_heading(self):
+    @property
+    def heading(self):
         return self.__heading
 
-    def get_speed(self):
+    @property
+    def speed(self):
         return self.__speed
-
-    # setter for heading. Should be degrees between 0 and 360 inclusive
-    def set_heading(self, val):
-        if val >= 0 and val <= 360:
-            self.__heading = val
     
-    # Set speed must be greater than 0, potential speed limit in the future?
-    def set_speed(self, val):
-        if val >= 0:
+    # setter for heading. Should be degrees between 0 and 360 inclusive
+    @heading.setter
+    def heading(self, val):
+        if 0 <= val <= (math.pi * 2):
+            self.__heading = val
+        else:
+            raise Exception("Heading value outside bounds, Not set")
+    
+    # Set speed must be greater than 0
+    @speed.setter
+    def speed(self, val):
+        if val >= 0 and val <= GameStats.moving_object_stats['max_speed']:
             self.__speed = val
+        else: 
+            raise Exception("Speed value outside bounds, Not set")
 
     # To_json creates a dictionary representation of the object.
     # super().to_json() calls MapObject.to_json(), which calls gameObject.to_json()
