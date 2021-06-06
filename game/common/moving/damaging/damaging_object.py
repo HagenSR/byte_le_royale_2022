@@ -9,8 +9,8 @@ class DamagingObject(MovingObject):
     def __init__(self, range=0, damage=0, heading = None, speed = None, 
                health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__(heading, speed, health, coordinates, hitbox, collidable)
-        self.__range = range
-        self.__damage = damage
+        self.range = range
+        self.damage = damage
         self.object_type = ObjectType.damaging_object
         
     @property
