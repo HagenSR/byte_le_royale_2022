@@ -13,10 +13,11 @@ class ObjectType:
     map_object = 4
     damaging_object = 5
     moving_object = 6
-    shooter = 7
-    item = 8
-    gun = 9
-    wall = 10
+    grenade = 7
+    shooter = 8
+    item = 9
+    gun = 10
+    wall = 11
     
 
 class Upgrades:
@@ -25,6 +26,11 @@ class Upgrades:
     movement_upgrades = 2
     sight_upgrades = 3
     
+class DamagingType:
+    none = 0
+    #note that bullet object has not been added yet
+    bullet = 1
+    grenade = 2  
 
 class GunType:
     none = 0

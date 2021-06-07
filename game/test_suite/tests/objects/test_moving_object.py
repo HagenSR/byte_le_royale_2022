@@ -12,7 +12,7 @@ import math
 class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
     def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
-        self.movObj = MovingObject(10, 10)
+        self.movObj = MovingObject(1, 10)
     
     # Test if a valid heading set works
     def test_set_get_heading_valid(self):
@@ -57,7 +57,7 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertEqual(self.movObj.speed, 0)
 
     def test_moving_obj_parent_params(self):
-        test_mov = MovingObject(10, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
+        test_mov = MovingObject(1, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
         self.assertIsNotNone(test_mov.coordinates)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)

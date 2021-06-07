@@ -1,12 +1,12 @@
 import unittest 
-from game.common.moving import damaging_object
-from game.common.moving.damaging_object import DamagingObject
+from game.common.moving.damaging import damaging_object
+from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
 
 class TestDamagingObject(unittest.TestCase):
 
     def setUp(self):
-       self.dmgObj = DamagingObject(10, 10)
+       self.dmgObj = DamagingObject(10, 10, heading= 1, speed= 1)
     
     def test_set_get_range_valid(self):
         self.dmgObj.range = 50
@@ -43,7 +43,7 @@ class TestDamagingObject(unittest.TestCase):
         self.assertEqual(self.dmgObj.damage, GameStats.damaging_object_stats['max_damage'])  
 
     def test_damaging_obj_parent_params(self):
-        testDmg = DamagingObject(range = 10, damage = 10, heading = 10, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
+        testDmg = DamagingObject(range = 10, damage = 10, heading = 1, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
         hitbox={'width': 10, 'height': 10}, collidable=True)
         
        
@@ -52,13 +52,6 @@ class TestDamagingObject(unittest.TestCase):
         self.assertIsNotNone(testDmg.coordinates)
         self.assertIsNotNone(testDmg.hitbox)
         self.assertIsNotNone(testDmg.collidable)
-
-       
-        self.assertIsNone(self.dmgObj.heading)
-        self.assertIsNone(self.dmgObj.speed)
-        self.assertIsNone(self.dmgObj.coordinates)
-        self.assertIsNone(self.dmgObj.hitbox)
-        self.assertIsNone(self.dmgObj.collidable)
     
 if __name__ == '__main__':
      unittest.main 
