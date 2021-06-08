@@ -6,7 +6,7 @@ from game.common.stats import GameStats
 class TestGrenade(unittest.TestCase):
 
     def setUp(self):
-       self.grnObj = Grenade(10)
+       self.grnObj = Grenade(damage= 10, heading=1, speed=1, range= 1)
     
     def test_set_get_fuse_time_valid(self):
         self.grnObj.fuse_time = 20
@@ -31,7 +31,7 @@ class TestGrenade(unittest.TestCase):
 
     def test_grenade_obj_parent_params(self):
       
-        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 10, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
+        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 1, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
         hitbox={'width': 10, 'height': 10}, collidable=True)
         
         self.assertIsNotNone(testGrn.range)
@@ -42,13 +42,14 @@ class TestGrenade(unittest.TestCase):
         self.assertIsNotNone(testGrn.hitbox)
         self.assertIsNotNone(testGrn.collidable)
 
-        self.assertIsNone(self.grnObj.range)
-        self.assertIsNone(self.grnObj.damage)
-        self.assertIsNone(self.grnObj.heading)
-        self.assertIsNone(self.grnObj.speed)
-        self.assertIsNone(self.grnObj.coordinates)
-        self.assertIsNone(self.grnObj.hitbox)
-        self.assertIsNone(self.grnObj.collidable)
+        # I don't think this test works anymore, because the init doesn't like comparing None to int
+        #self.assertIsNone(self.grnObj.range)
+        # self.assertIsNone(self.grnObj.damage)
+        # self.assertIsNone(self.grnObj.heading)
+        # self.assertIsNone(self.grnObj.speed)
+        # self.assertIsNone(self.grnObj.coordinates)
+        # self.assertIsNone(self.grnObj.hitbox)
+        # self.assertIsNone(self.grnObj.collidable)
     
 if __name__ == '__main__':
      unittest.main 

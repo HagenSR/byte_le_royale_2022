@@ -8,7 +8,6 @@ import math
 class MovingObject(MapObject):
     def __init__(self, heading=0, speed=0, health=None, coordinates=None, hitbox=None, collidable=None):
         super().__init__(health, coordinates, hitbox, collidable)
-        # Double underscore 'name mangles' the variable. The closest to private we can get in python
         self.heading = heading
         self.speed = speed
         self.object_type = ObjectType.moving_object
