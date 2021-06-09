@@ -1,6 +1,6 @@
 from game.common.enums import Upgrades
 from game.common.map_object import MapObject
-from game.common.items import Item
+from game.common.items.item import Item
 
 
 class Upgrade(Item):

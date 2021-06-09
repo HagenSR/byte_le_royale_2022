@@ -26,7 +26,7 @@ class TestShooterObject(unittest.TestCase):
     def test_inventory_upgrades(self):
         self.assertTrue(self.shooter.has_empty_slot('upgrades'))
 
-        test_upgrade = Upgrade()
+        test_upgrade = Upgrade(None, None, None, None)
 
         for slot in self.shooter.inventory['upgrades']:
             self.shooter.append_inventory(test_upgrade)
