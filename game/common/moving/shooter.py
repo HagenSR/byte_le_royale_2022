@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from game.common.moving.moving_object import MovingObject
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
@@ -38,7 +40,7 @@ class Shooter(MovingObject):
 
     @property
     def inventory(self):
-        return self.__inventory
+        return deepcopy(self.__inventory)
 
     @inventory.setter
     def inventory(self, value):
