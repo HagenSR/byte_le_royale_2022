@@ -1,6 +1,6 @@
 from game.common.enums import Upgrades
 from game.common.map_object import MapObject
-from game.common.items import Item
+from game.common.items.item import Item
 
 
 class Upgrade(Item):
@@ -23,5 +23,3 @@ class Upgrade(Item):
         self.upgrade_enum = data['upgrade_enum']
         self.movement_enum = data['movement_enum']
         self.sight_enum = data['sight_enum']
-        
-        

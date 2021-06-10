@@ -3,8 +3,8 @@ from game.common.moving.damaging import damaging_object
 from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
 
-class TestDamagingObject(unittest.TestCase):
 
+class TestDamagingObject(unittest.TestCase):
     def setUp(self):
        self.dmgObj = DamagingObject(10, 10, heading= 1, speed= 1)
     

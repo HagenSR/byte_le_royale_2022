@@ -19,7 +19,6 @@ class TestExample(unittest.TestCase): # Your test class is a subclass of unittes
         self.assertEqual(a, [1, 2, 3, 4, 5]) # The heart of a test method are assertions
         self.assertEqual(a[2], 3) # These methods take two arguments and compare them to one another
         self.assertIn(5, a) # There are loads of them, and they're all very useful
-        
 
     def test_dict_string(self):
         s = self.d["string"]
