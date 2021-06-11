@@ -19,7 +19,7 @@ class Upgrade(Item):
         return data
     
     def from_json(self, data):
-        super.from_json(data)
+        super().from_json(data)
         self.upgrade_enum = data['upgrade_enum']
         self.movement_enum = data['movement_enum']
         self.sight_enum = data['sight_enum']
