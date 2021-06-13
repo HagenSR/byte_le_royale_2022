@@ -1,4 +1,4 @@
-from game.common.enums import Upgrades
+from game.common.enums import ObjectType, Upgrades
 from game.common.map_object import MapObject
 from game.common.items.item import Item
 
@@ -7,6 +7,7 @@ class Upgrade(Item):
     
     def __init__ (self, coordinates, hitbox, health, count, upgrade_enum = None, movement_enum = None, sight_enum = None ):
         super().__init__(coordinates, hitbox, health, count)
+        self.object_type = ObjectType.upgrade
         self.upgrade_enum = upgrade_enum
         self.movement_enum = movement_enum
         self.sight_enum = sight_enum

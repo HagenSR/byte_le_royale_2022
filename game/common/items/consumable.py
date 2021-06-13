@@ -1,10 +1,11 @@
 from game.common.items.item import Item
-from game.common.enums import Consumables
+from game.common.enums import Consumables, ObjectType
 
 
 class Consumable(Item):
     def __init__(self, coordinates, hitbox, health, count, speed_enum = None, health_enum = None, armor_enum = None):
         super().__init__(coordinates, hitbox, health, count)
+        self.object_type = ObjectType.consumable
         self.speed_enum = speed_enum
         self.health_enum = health_enum
         self.armor_enum = armor_enum

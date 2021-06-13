@@ -18,6 +18,8 @@ class ObjectType:
     item = 9
     gun = 10
     wall = 11
+    upgrade = 12
+    consumable = 13
     
 
 class Upgrades:
