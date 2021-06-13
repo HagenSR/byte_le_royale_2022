@@ -14,10 +14,11 @@ class ObjectType:
     damaging_object = 5
     moving_object = 6
     grenade = 7
-    shooter = 8
-    item = 9
-    gun = 10
-    wall = 11
+    bullet = 8
+    shooter = 9
+    item = 10
+    gun = 11
+    wall = 12
     
 
 class Upgrades:

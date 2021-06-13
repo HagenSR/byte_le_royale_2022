@@ -12,5 +12,6 @@ __all__ = [
     'TestMovingObject',
     'TestDamagingObject',
     'TestGrenade',
+    'TestBullet',
     'TestInit'
 ]
