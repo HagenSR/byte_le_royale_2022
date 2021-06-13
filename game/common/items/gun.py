@@ -1,5 +1,5 @@
 from game.common.enums import *
-from game.common.stats import GameStats
+import game.common.stats as stats
 from game.common.items.item import Item
 
 
@@ -11,26 +11,26 @@ class Gun(Item):
         self.gun_type = gun_type
         # Leveling subject to change
         self.level = level
-        self.pattern = GameStats.gun_stats[gun_type]['pattern']
-        self.damage = (round(GameStats.gun_stats[gun_type]['damage']
-            * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level), 1)
+        self.pattern = stats.GameStats.gun_stats[gun_type]['pattern']
+        self.damage = (round(stats.GameStats.gun_stats[gun_type]['damage']
+            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level), 1)
             if self.level > GunLevel.level_zero else 0)
-        self.fire_rate = (round(GameStats.gun_stats[gun_type]['fire_rate']
-            * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
+        self.fire_rate = (round(stats.GameStats.gun_stats[gun_type]['fire_rate']
+            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
             if self.level > GunLevel.level_zero else 0)
-        self.range = (round(GameStats.gun_stats[gun_type]['range']
-            * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
+        self.range = (round(stats.GameStats.gun_stats[gun_type]['range']
+            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
             if self.level > GunLevel.level_zero else 0)
-        self.mag_size = (round(GameStats.gun_stats[gun_type]['mag_size']
-            * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
+        self.mag_size = (round(stats.GameStats.gun_stats[gun_type]['mag_size']
+            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
             if self.level > GunLevel.level_zero else 0)
-        self.reload_speed = (round(GameStats.gun_stats[gun_type]['reload_speed']
-            * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
+        self.reload_speed = (round(stats.GameStats.gun_stats[gun_type]['reload_speed']
+            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
             if self.level > GunLevel.level_zero else 0)
         if self.level > GunLevel.level_zero:
-            self.cooldown = GameStats.gun_stats[gun_type]['cooldown']
+            self.cooldown = stats.GameStats.gun_stats[gun_type]['cooldown']
             self.cooldown['max'] = round(self.cooldown['max']
-                    * (GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
+                    * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
         else:
             self.cooldown = {'max': 0, 'rate': 0}
 
