@@ -2,11 +2,12 @@ import unittest
 from game.common.moving.damaging import damaging_object
 from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
+from game.common.hitbox import Hitbox
 
 
 class TestDamagingObject(unittest.TestCase):
     def setUp(self):
-       self.dmgObj = DamagingObject(10, 10, heading= 1, speed= 1)
+       self.dmgObj = DamagingObject(10, 10, heading= 1, speed= 1, hitbox= Hitbox(5,5 ,(5,5)), collidable=True)
     
     def test_set_get_range_valid(self):
         self.dmgObj.range = 50
@@ -43,13 +44,12 @@ class TestDamagingObject(unittest.TestCase):
         self.assertEqual(self.dmgObj.damage, GameStats.damaging_object_stats['max_damage'])  
 
     def test_damaging_obj_parent_params(self):
-        testDmg = DamagingObject(range = 10, damage = 10, heading = 1, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
-        hitbox={'width': 10, 'height': 10}, collidable=True)
+        testDmg = DamagingObject(range = 10, damage = 10, heading = 1, speed = 10, health = 1, hitbox= Hitbox(5,5,(5,5)), collidable=True)
         
        
         self.assertIsNotNone(testDmg.heading)
         self.assertIsNotNone(testDmg.speed)
-        self.assertIsNotNone(testDmg.coordinates)
+        self.assertIsNotNone(testDmg.hitbox.position)
         self.assertIsNotNone(testDmg.hitbox)
         self.assertIsNotNone(testDmg.collidable)
     

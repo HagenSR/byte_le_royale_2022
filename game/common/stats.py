@@ -50,6 +50,11 @@ class GameStats:
         'max_damage': 100
     }
 
+    max_hitbox = {
+        'width': 100,
+        'height': 100,
+    }
+
     # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
         GunType.none: {'pattern': ShotPattern.none, 'damage': 0,

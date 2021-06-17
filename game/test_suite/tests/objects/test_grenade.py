@@ -1,3 +1,4 @@
+from game.common.hitbox import Hitbox
 import unittest 
 from game.common.moving.damaging import grenade
 from game.common.moving.damaging.grenade import Grenade
@@ -31,14 +32,13 @@ class TestGrenade(unittest.TestCase):
 
     def test_grenade_obj_parent_params(self):
       
-        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 1, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
-        hitbox={'width': 10, 'height': 10}, collidable=True)
+        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 1, speed = 10, health = 1, hitbox=Hitbox(10,10,(10,10)), collidable=True)
         
         self.assertIsNotNone(testGrn.range)
         self.assertIsNotNone(testGrn.damage)
         self.assertIsNotNone(testGrn.heading)
         self.assertIsNotNone(testGrn.speed)
-        self.assertIsNotNone(testGrn.coordinates)
+        self.assertIsNotNone(testGrn.hitbox.position)
         self.assertIsNotNone(testGrn.hitbox)
         self.assertIsNotNone(testGrn.collidable)
 

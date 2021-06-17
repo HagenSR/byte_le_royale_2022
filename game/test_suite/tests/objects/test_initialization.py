@@ -2,6 +2,7 @@
 # Always remember to add the proper details to the __init__.py file in the 'tests' folder
 # to insure your tests are run.
 
+from game.common.hitbox import Hitbox
 from game.common.map_object import MapObject
 import unittest
 from game.common.items.gun import Gun
@@ -23,8 +24,8 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
 
     def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
         self.gun = Gun(gun_type=GunType.assault_rifle, level= GunLevel.level_one)
-        self.item = Item(coordinates={'x': 0, 'y':1}, hitbox={'width': 10, 'height':10} )
-        self.damaging = DamagingObject(coordinates={'x': 0, 'y':1}, hitbox={'width': 10, 'height':10}, heading=1, speed=10 )
+        self.item = Item(hitbox=Hitbox(10,10,(10,10)))
+        self.damaging = DamagingObject(hitbox=Hitbox(10,10,(10,10)), heading=1, speed=10 )
         self.movObj = MovingObject(1, 10)
         self.shooter = Shooter()
         self.action = Action()
@@ -32,7 +33,7 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.gameObj = GameObject()
         self.map = MapObject()
         self.player = Player()
-        self.wall = Wall(coordinates={'x': 0, 'y':1}, hitbox={'width': 10, 'height':10} )
+        self.wall = Wall(hitbox=Hitbox(10,10,(10,10)))
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
 
     def testObjectInit(self):

@@ -18,6 +18,7 @@ class ObjectType:
     item = 9
     gun = 10
     wall = 11
+    hitbox = 12
     
 
 class Upgrades:

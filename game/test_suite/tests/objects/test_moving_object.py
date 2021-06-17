@@ -6,6 +6,7 @@ import unittest
 from unittest.case import FunctionTestCase
 from game.common.moving.moving_object import MovingObject
 from game.common.stats import GameStats
+from game.common.hitbox import Hitbox
 import math
 
 
@@ -57,11 +58,10 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertEqual(self.movObj.speed, 0)
 
     def test_moving_obj_parent_params(self):
-        test_mov = MovingObject(1, 10, health=1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], hitbox={'width': 10, 'height': 10}, collidable=True)
-        self.assertIsNotNone(test_mov.coordinates)
+        test_mov = MovingObject(1, 10, health=1, hitbox= Hitbox(10,10,(10,10)), collidable=True)
+        self.assertIsNotNone(test_mov.hitbox.position)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)
-        self.assertIsNone(self.movObj.coordinates)
         self.assertIsNone(self.movObj.hitbox)
         self.assertIsNone(self.movObj.collidable)
 
