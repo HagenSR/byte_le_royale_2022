@@ -18,6 +18,8 @@ class ObjectType:
     item = 9
     gun = 10
     wall = 11
+    upgrade = 12
+    consumable = 13
     
 
 class Upgrades:
@@ -26,11 +28,13 @@ class Upgrades:
     movement_upgrades = 2
     sight_upgrades = 3
     
+    
 class DamagingType:
     none = 0
     #note that bullet object has not been added yet
     bullet = 1
     grenade = 2  
+
 
 class GunType:
     none = 0
@@ -52,3 +56,10 @@ class ShotPattern:
     single = 1
     multi = 2
     spread = 3
+
+
+class Consumables:
+    none = 0
+    speed_boost = 1
+    health_pack = 2
+    armor_pack = 3
