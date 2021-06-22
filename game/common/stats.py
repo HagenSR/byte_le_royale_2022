@@ -9,6 +9,7 @@ class GameStats:
     game_board_height = 500
 
     default_wall_health = 50
+    door_opening_speed = 3 # 3 ticks to open/close door
 
     player_stats = {
         'starting_health': 10,
