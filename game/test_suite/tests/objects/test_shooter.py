@@ -1,3 +1,4 @@
+from game.common.hitbox import Hitbox
 import unittest
 from game.common.moving.shooter import Shooter
 from game.common.items.gun import Gun
@@ -37,7 +38,7 @@ class TestShooterObject(unittest.TestCase):
     def test_inventory_consumables(self):
         self.assertTrue(self.shooter.has_empty_slot('consumables'))
 
-        test_consumable = Consumable('(200, 200)', '(50, 50)', 20, 1, None, None, None)
+        test_consumable = Consumable(Hitbox(10,10,(10,10)), 20, 1, None, None, None)
 
         for slot in self.shooter.inventory['consumables']:
             self.shooter.append_inventory(test_consumable)

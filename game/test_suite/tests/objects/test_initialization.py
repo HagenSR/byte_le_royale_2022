@@ -37,8 +37,8 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.player = Player()
         self.wall = Wall(hitbox=Hitbox(10,10,(10,10)))
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
-        self.consumable = Consumable(coordinates={'x': 0, 'y': 1}, hitbox= {'width': 10, 'height': 10}, health=10, count=1)
-        self.upgrade = Upgrade(coordinates={'x': 0, 'y': 1}, hitbox= {'width': 10, 'height': 10}, health=10, count=1)
+        self.consumable = Consumable(hitbox= Hitbox(10,10,(10,10)), health=10, count=1)
+        self.upgrade = Upgrade(hitbox= Hitbox(10,10,(10,10)), health=10, count=1)
         
     def testObjectInit(self):
         self.assertEqual(self.gun.object_type, ObjectType.gun)

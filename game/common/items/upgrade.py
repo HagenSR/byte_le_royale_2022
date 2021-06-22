@@ -7,6 +7,7 @@ class Upgrade(Item):
     
     def __init__ (self, hitbox, health, count, upgrade_enum = None, movement_enum = None, sight_enum = None ):
         super().__init__(hitbox, health, count)
+        self.object_type = ObjectType.upgrade
         self.upgrade_enum = upgrade_enum
         self.movement_enum = movement_enum
         self.sight_enum = sight_enum
