@@ -37,7 +37,7 @@ class TestShooterObject(unittest.TestCase):
     def test_inventory_consumables(self):
         self.assertTrue(self.shooter.has_empty_slot('consumables'))
 
-        test_consumable = Consumable()
+        test_consumable = Consumable('(200, 200)', '(50, 50)', 20, 1, None, None, None)
 
         for slot in self.shooter.inventory['consumables']:
             self.shooter.append_inventory(test_consumable)
