@@ -19,12 +19,16 @@ class TestDamagingObject(unittest.TestCase):
 
 
     def test_set_get_range_invalid_low(self):
-        # Checks if an exception is raised by an Illegal set
-        # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
-        self.assertRaises(Exception, lambda : self.dmgObj.range(-10))
+        self.assertRaises(Exception, self.setRange, (-10))
+        
+    def test_set_get_range_invalid_high(self):
+        self.assertRaises(Exception, self.setRange, (GameStats.damaging_object_stats['max_range'] + 1))
 
     def test_set_get_damage_invalid_low(self):
-        self.assertRaises(Exception, lambda : self.dmgObj.damage(-10))
+        self.assertRaises(Exception, self.setDamage, (-10))
+        
+    def test_set_get_damage_invalid_high(self):
+        self.assertRaises(Exception, self.setDamage, GameStats.damaging_object_stats['max_damage'] + 1)
     
     def test_set_get_range_boundary_low(self):
         self.dmgObj.range = 0
@@ -52,6 +56,12 @@ class TestDamagingObject(unittest.TestCase):
         self.assertIsNotNone(testDmg.hitbox.position)
         self.assertIsNotNone(testDmg.hitbox)
         self.assertIsNotNone(testDmg.collidable)
+        
+    def setRange(self, newRange):
+        self.dmgObj.range = newRange
+        
+    def setDamage(self, newDamage):
+        self.dmgObj.damage = newDamage
     
 if __name__ == '__main__':
      unittest.main 

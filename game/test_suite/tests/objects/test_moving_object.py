@@ -27,18 +27,17 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
 
     # Test if invalid sets don't work
     def test_set_get_heading_invalid_low(self):
-        # Checks if an exception is raised by an Illegal set
-        # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
-        self.assertRaises(Exception, lambda : self.movObj.heading(-1))
+        func = lambda: self.movObj.heading(10)
+        self.assertRaises(Exception, func)
 
     def test_set_get_speed_invalid_low(self):
-        self.assertRaises(Exception, lambda : self.movObj.speed(-1))
+        self.assertRaises(Exception, self.setSpeed, -1)
 
     def test_set_get_heading_invalid_high(self):
-        self.assertRaises(Exception, lambda : self.movObj.heading(math.pi*3))
+        self.assertRaises(Exception, self.setHeading, (math.pi*3))
         
     def test_set_get_speed_invalid_high(self):
-        self.assertRaises(Exception, lambda : self.movObj.speed(GameStats.moving_object_stats['max_speed'] + 1))
+        self.assertRaises(Exception, self.setSpeed, (GameStats.moving_object_stats['max_speed'] + 1))
 
     # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
@@ -64,6 +63,12 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertIsNotNone(test_mov.collidable)
         self.assertIsNone(self.movObj.hitbox)
         self.assertIsNone(self.movObj.collidable)
+        
+    def setHeading(self, newHeading):
+        self.movObj.heading = newHeading
+    
+    def setSpeed(self, newSpeed):
+        self.movObj.speed = newSpeed
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

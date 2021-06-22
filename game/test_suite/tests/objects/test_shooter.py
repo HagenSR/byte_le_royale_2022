@@ -46,10 +46,11 @@ class TestShooterObject(unittest.TestCase):
         self.assertTrue(self.shooter.has_empty_slot('consumables'))
 
     def test__append_inventory__wrong_inventory_type_raises_TypeError(self):
-        self.assertRaises(TypeError, lambda: self.shooter.append_inventory(Item(None, None)))
+        self.assertRaises(TypeError, self.shooter.append_inventory, (Item(None, None)))
 
     def test__append_inventory__correct_type_inventory_full__raises_InventoryFullError(self):
         test_gun = Gun(GunType.shotgun, 1)
         for slot in self.shooter.inventory['guns']:
             self.shooter.append_inventory(test_gun)
-        self.assertRaises(InventoryFullError, lambda: self.shooter.append_inventory(test_gun))
+        self.assertRaises(InventoryFullError, self.shooter.append_inventory, (test_gun))
+        
