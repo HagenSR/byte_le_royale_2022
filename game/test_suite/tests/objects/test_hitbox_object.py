@@ -38,16 +38,16 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.position, (GameStats.game_board_width,10))
 
     def test_set_get_tuple_X_invalid_high(self):
-        self.assertRaises(Exception, self.setPosition, (GameStats.game_board_width + 1,10))
+        self.assertRaises(ValueError, self.setPosition, (GameStats.game_board_width + 1,10))
 
     def test_set_get_tuple_y_invalid_high(self):
-        self.assertRaises(Exception, self.setPosition, (10, GameStats.game_board_height + 1))
+        self.assertRaises(ValueError, self.setPosition, (10, GameStats.game_board_height + 1))
         
     def test_set_get_tuple_x_boundary_low(self):
-        self.assertRaises(Exception, self.setPosition, ((-1, 10)))
+        self.assertRaises(ValueError, self.setPosition, ((-1, 10)))
         
     def test_set_get_tuple_y_boundary_low(self):
-        self.assertRaises(Exception, self.setPosition, ((10, -1)))
+        self.assertRaises(ValueError, self.setPosition, ((10, -1)))
 
     def test_topLeft_corner(self):
         self.assertEqual(self.hitbox.topLeft, (-1,1))
@@ -82,16 +82,10 @@ class TestHitboxObject(unittest.TestCase):
         self.assertIsNotNone(self.hitbox.object_type)
 
     def test_set_get_height_invalid_low(self):
-        self.assertRaises(Exception, self.setHeight, -1)
+        self.assertRaises(ValueError, self.setHeight, -1)
 
     def test_set_get_width_invalid_low(self):
-        self.assertRaises(Exception, self.setWidth, (-1))
-        
-    def test_set_get_height_invalid_high(self):
-        self.assertRaises(Exception, self.setHeight, GameStats.max_hitbox['height'] + 1)
-
-    def test_set_get_width_invalid_high(self):
-        self.assertRaises(Exception, self.setWidth, GameStats.max_hitbox['width'] + 1)
+        self.assertRaises(ValueError, self.setWidth, (-1))
     
     def setPosition(self, newPos):
         self.hitbox.position = newPos

@@ -27,8 +27,7 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
 
     # Test if invalid sets don't work
     def test_set_get_heading_invalid_low(self):
-        func = lambda: self.movObj.heading(10)
-        self.assertRaises(Exception, func)
+        self.assertRaises(Exception, self.setHeading, -1)
 
     def test_set_get_speed_invalid_low(self):
         self.assertRaises(Exception, self.setSpeed, -1)
