@@ -77,3 +77,6 @@ class GameStats:
     Upgrades.gun_upgrades = 20  #Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20   #May be used to make the player go faster?
     Upgrades.sight_upgrades = 20   #Increase how far player can see?
+
+    # Loot generation stats
+    density_constant = 10  # 0 < density < 1
