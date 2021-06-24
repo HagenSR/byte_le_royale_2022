@@ -21,6 +21,7 @@ class ObjectType:
     door = 12
     upgrade = 13
     consumable = 14
+    ray = 15
     
 
 class Upgrades:
