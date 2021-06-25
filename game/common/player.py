@@ -3,6 +3,7 @@ import uuid
 from game.common.action import Action
 from game.common.game_object import GameObject
 from game.common.enums import *
+from game.common.moving.shooter import Shooter
 
 
 class Player(GameObject):
@@ -15,6 +16,7 @@ class Player(GameObject):
         self.team_name = team_name
         self.code = code
         self.action = action
+        self.shooter = Shooter()
 
     def to_json(self):
         data = super().to_json()

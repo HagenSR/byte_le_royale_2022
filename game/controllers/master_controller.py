@@ -7,6 +7,7 @@ import game.config as config
 from game.utils.thread import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.ray_controller import RayController
 
 
 class MasterController(Controller):
@@ -16,6 +17,8 @@ class MasterController(Controller):
 
         self.turn = None
         self.current_world_data = None
+
+        self.ray_controller = RayController()
 
     # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, clients):
@@ -50,7 +53,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        pass
+        for client in clients:
+            self.ray_controller.handle_actions(client, self.current_world_data)
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):

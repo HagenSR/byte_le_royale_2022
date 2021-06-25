@@ -1,6 +1,7 @@
 from game.controllers.controller import Controller
 from game.common.ray import Ray
 from game.config import *
+from game.common.items.gun import Gun
 
 import math
 
@@ -143,12 +144,14 @@ class RayController(Controller):
 
         return ray
 
-    def handle_actions(self, player, gameboard, gun):
+    def handle_actions(self, player, gameboard):
         gameboard.ray_list.clear()
-        collidables = self.load_collidables(gameboard)
-        slope = self.calculate_slope(player)
+        if isinstance(player.action.action_parameter, Gun) is True:
+            gun = player.action.action_parameter
+            collidables = self.load_collidables(gameboard)
+            slope = self.calculate_slope(player)
 
-        self.cull_objects(player, gameboard, collidables, slope)
-        self.sort_objects(player, collidables, gun)
-        ray = self.determine_collision(player, collidables, slope, gun)
-        gameboard.ray_list.append(ray)
+            self.cull_objects(player, gameboard, collidables, slope)
+            self.sort_objects(player, collidables, gun)
+            ray = self.determine_collision(player, collidables, slope, gun)
+            gameboard.ray_list.append(ray)
