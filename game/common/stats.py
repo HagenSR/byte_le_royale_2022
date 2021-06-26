@@ -74,6 +74,8 @@ class GameStats:
         'max_fuse_time': 50
     }
     
+    circle_shrink_distance = 1
+    
     Upgrades.gun_upgrades = 20  #Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20   #May be used to make the player go faster?
     Upgrades.sight_upgrades = 20   #Increase how far player can see?

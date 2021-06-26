@@ -22,10 +22,22 @@ class GameBoard(GameObject):
         self.lethal_list = []
 
         # this calculates starting radius to totally encompass the map at start
-        self.circle_radius = math.sqrt( ( self.width / 2 ) ** 2 + ( self.height / 2 ) ** 2 )
+        self.__circle_radius = math.sqrt( ( self.width / 2 ) ** 2 + ( self.height / 2 ) ** 2 )
 
         # set turn counter to 0, not sure the use for this yet
         self.turn = 0
+        
+    @property
+    def circle_radius(self):
+        return self.__circle_radius
+    
+    # setter for heading. Should be degrees between 0 and 360 inclusive
+    @circle_radius.setter
+    def circle_radius(self, val):
+        if val > 0:
+            self.__circle_radius = val
+        else:
+            self.__circle_radius = 0
 
     def obfuscate(self):
         super().obfuscate()
