@@ -7,6 +7,7 @@ from game.test_suite.tests.objects.test_damaging_object import TestDamagingObjec
 from game.test_suite.tests.objects.test_grenade import TestGrenade
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
+from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 
 __all__ = [
     'TestGameBoard',
@@ -14,5 +15,6 @@ __all__ = [
     'TestDamagingObject',
     'TestShooterObject',
     'TestGrenade',
-    'TestInit'
+    'TestInit',
+    'TestHitboxObject'
 ]

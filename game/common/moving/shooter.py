@@ -7,12 +7,11 @@ from game.common.enums import *
 
 
 class Shooter(MovingObject):
-    def __init__(self, heading=0, speed=0, coordinates=GameStats.player_stats['starting_coordinates'][0]):
+    def __init__(self, heading=0, speed=0):
         super().__init__(
             heading,
             speed,
             GameStats.player_stats['starting_health'],
-            coordinates,
             GameStats.player_stats['hitbox'],
             collidable=True
         )

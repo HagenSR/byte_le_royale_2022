@@ -5,8 +5,8 @@ from game.common.enums import *
 
 class Grenade(DamagingObject):
     def __init__(self, fuse_time = GameStats.grenade_stats['min_fuse_time'], range= None, damage= None, 
-        heading = None, speed = None, health=None, coordinates=None, hitbox=None, collidable=None):
-        super().__init__(range, damage, heading, speed, health, coordinates, hitbox, collidable)
+        heading = None, speed = None, health=None, hitbox=None, collidable=None):
+        super().__init__(range, damage, heading, speed, health, hitbox, collidable)
         self.fuse_time = fuse_time
         self.object_type = ObjectType.grenade
         

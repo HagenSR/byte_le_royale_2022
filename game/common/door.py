@@ -4,8 +4,8 @@ from game.common.stats import GameStats
 
 
 class Door(MapObject):
-    def __init__(self, coordinates, hitbox, health = GameStats.default_wall_health, open_speed = GameStats.door_opening_speed):
-        super().__init__(health, coordinates, hitbox, collidable = True )
+    def __init__(self, hitbox, health = GameStats.default_wall_health, open_speed = GameStats.door_opening_speed):
+        super().__init__(health,hitbox, collidable = True )
         self.opening_speed = open_speed
         self.open_state = False 
         self.object_type = ObjectType.door
