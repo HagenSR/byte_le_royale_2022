@@ -1,7 +1,8 @@
 from game.controllers.controller import Controller
 from game.common.ray import Ray
-from game.config import *
 from game.common.items.gun import Gun
+from game.config import *
+from game.common.enums import *
 
 import math
 
@@ -146,7 +147,8 @@ class RayController(Controller):
 
     def handle_actions(self, player, gameboard):
         gameboard.ray_list.clear()
-        if isinstance(player.action.action_parameter, Gun) is True:
+        if (isinstance(player.action.action_parameter, Gun) is True
+                and player.action._chosen_action is ActionType.shoot):
             gun = player.action.action_parameter
             collidables = self.load_collidables(gameboard)
             slope = self.calculate_slope(player)
