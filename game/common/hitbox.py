@@ -26,19 +26,19 @@ class Hitbox(GameObject):
 
     @property
     def topLeft(self):
-        return (self.position[0] - (self.width/2), self.position[1] + (self.height/2))
-
-    @property
-    def topRight(self):
-        return (self.position[0] + (self.width/2), self.position[1] + (self.height/2))
-
-    @property
-    def bottomLeft(self):
         return (self.position[0] - (self.width/2), self.position[1] - (self.height/2))
 
     @property
-    def bottomRight(self):
+    def topRight(self):
         return (self.position[0] + (self.width/2), self.position[1] - (self.height/2))
+
+    @property
+    def bottomLeft(self):
+        return (self.position[0] - (self.width/2), self.position[1] + (self.height/2))
+
+    @property
+    def bottomRight(self):
+        return (self.position[0] + (self.width/2), self.position[1] + (self.height/2))
     
     # set height between 0 and max
     @height.setter
@@ -74,9 +74,9 @@ class Hitbox(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.width = data['width']
-        self.height = data['height']
-        self.position = data['position']
+        self.width = data['hitbox']['width']
+        self.height = data['hitbox']['height']
+        self.position = data['hitbox']['position']
 
     def __str__(self):
          return f"""
