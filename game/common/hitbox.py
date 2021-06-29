@@ -43,18 +43,18 @@ class Hitbox(GameObject):
     # set height between 0 and max
     @height.setter
     def height(self, val):
-        if 0 <= val <= GameStats.max_hitbox['height']:
+        if val > 0:
             self.__height = val
         else:
-            raise Exception("Tried to set an invalid height for hitbox")
+            raise ValueError("Tried to set an invalid height for hitbox")
     
     # Set width for hitbox between 0 and max
     @width.setter
     def width(self, val):
-        if val >= 0 and val <= GameStats.max_hitbox['width']:
+        if val > 0:
             self.__width = val
         else: 
-            raise Exception("Tried to set an invalid width for hitbox")
+            raise ValueError("Tried to set an invalid width for hitbox")
 
     # set x between 0 and max game board width
     @position.setter
@@ -62,7 +62,7 @@ class Hitbox(GameObject):
         if (0 <= val[0] <= GameStats.game_board_width) and (0 <= val[1] <= GameStats.game_board_height):
             self.__position = val
         else:
-            raise Exception("Tried to set an invalid xy position tuple for hitbox")
+            raise ValueError("Tried to set an invalid xy position tuple for hitbox")
     
     def to_json(self):
         data = super().to_json()
