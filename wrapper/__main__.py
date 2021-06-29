@@ -2,6 +2,7 @@ import sys
 
 from game.engine import Engine
 from game.utils.generate_game import generate
+from game.utils.pyGenStructures import create_structures_file
 import game.config
 import argparse
 
@@ -18,6 +19,10 @@ if __name__ == '__main__':
     # Run Subparser and optionals
     run_subpar = spar.add_parser('run', aliases=['r'],
                                  help='Runs your bot against the last generated map! "r -h" shows more options')
+    
+        # Run Subparser and optionals
+    run_subpar = spar.add_parser('build struct', aliases=['bs'],
+                                 help='builds a structure to json')
 
     run_subpar.add_argument('-debug', '-d', action='store', type=int, nargs='?', const=-1, 
                             default=None, dest='debug', help='Allows for debugging when running your code')
@@ -34,6 +39,10 @@ if __name__ == '__main__':
     # Generate game options
     if action in ['generate', 'g']:
         generate()
+    
+        # Generate game options
+    if action in ['bs']:
+        create_structures_file(file_path="./structures/wall_on_bottom.json")
     
     # Run game options
     elif action in ['run', 'r']:

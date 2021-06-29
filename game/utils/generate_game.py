@@ -1,3 +1,6 @@
+import json
+from game.common.hitbox import Hitbox
+from game.common.wall import Wall
 from game.config import *
 from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
@@ -9,9 +12,9 @@ def generate():
 
     data = dict()
 
-    #game board will have all the containers/lists 
+    # game board will have all the containers/lists
     game_map = GameBoard()
-    #separate the seed for processing    
+
     for x in range(1, MAX_TICKS + 1):
         game_map.circle_radius -= GameStats.circle_shrink_distance
         data[x] = game_map.to_json()
@@ -22,6 +25,3 @@ def generate():
 
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
-    
-def create_structures_file(file_path, ):
-
