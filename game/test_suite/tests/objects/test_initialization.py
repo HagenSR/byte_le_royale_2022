@@ -19,7 +19,6 @@ from game.common.items.consumable import Consumable
 from game.common.items.upgrade import Upgrade
 from game.common.stats import GameStats
 from game.common.enums import ObjectType, GunLevel, GunType
-from game.common.door import Door
 
 
 class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
@@ -37,7 +36,6 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.player = Player()
         self.wall = Wall(coordinates={'x': 0, 'y':1}, hitbox={'width': 10, 'height':10} )
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
-        self.door = Door(coordinates={'x': 0, 'y':1}, hitbox={'width': 10, 'height':10} )
         self.consumable = Consumable(coordinates={'x': 0, 'y': 1}, hitbox= {'width': 10, 'height': 10}, health=10, count=1)
         self.upgrade = Upgrade(coordinates={'x': 0, 'y': 1}, hitbox= {'width': 10, 'height': 10}, health=10, count=1)
         
@@ -54,7 +52,6 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.assertEqual(self.map.object_type, ObjectType.map_object)
         self.assertEqual(self.player.object_type, ObjectType.player)
         self.assertEqual(self.wall.object_type, ObjectType.wall)
-        self.assertEqual(self.door.object_type, ObjectType.door)
         self.assertEqual(self.consumable.object_type, ObjectType.consumable)
         self.assertEqual(self.upgrade.object_type, ObjectType.upgrade)
         
