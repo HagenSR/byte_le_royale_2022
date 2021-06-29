@@ -42,32 +42,32 @@ class TestHitboxObject(unittest.TestCase):
     #     self.assertEqual(self.hitbox.position, (10,GameStats.game_board_height))
 
     def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.topLeft, (-1,1))
+        self.assertEqual(self.hitbox.topLeft, (-1,-1))
 
-    def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.topRight, (1,1))
+    def test_topRight_corner(self):
+        self.assertEqual(self.hitbox.topRight, (1,-1))
 
-    def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.bottomLeft, (-1,-1))
+    def test_bottomLeft_corner(self):
+        self.assertEqual(self.hitbox.bottomLeft, (-1,1))
 
-    def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.bottomRight, (1,-1))
-
-    def test_topLeft_corner_alt(self):
-        self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.topLeft, (9,11))
+    def test_bottomRight_corner(self):
+        self.assertEqual(self.hitbox.bottomRight, (1,1))
 
     def test_topLeft_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.topRight, (11,11))
+        self.assertEqual(self.hitbox.topLeft, (9,9))
 
-    def test_topLeft_corner_alt(self):
+    def test_topRight_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.bottomLeft, (9,9))
+        self.assertEqual(self.hitbox.topRight, (11,9))
 
-    def test_topLeft_corner_alt(self):
+    def test_bottomLeft_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.bottomRight, (11,9))
+        self.assertEqual(self.hitbox.bottomLeft, (9,11))
+
+    def test_bottomRight_corner_alt(self):
+        self.hitbox.position = (10,10) 
+        self.assertEqual(self.hitbox.bottomRight, (11,11))
 
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)
@@ -76,10 +76,10 @@ class TestHitboxObject(unittest.TestCase):
     
     # Needs a rework
 
-    # def test_set_get_height_invalid_low(self):
-    #     # Checks if an exception is raised by an Illegal set
-    #     # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
-    #     self.assertRaises(Exception, lambda : {self.hitbox.height(10)})
+    def test_set_get_height_invalid_low(self):
+          # Checks if an exception is raised by an Illegal set
+          # Lambda is needed because the property set isn't considered a function (which assertRaises takes as an argument)
+          self.assertRaises(Exception, lambda : {self.hitbox.height(10)})
 
     # def test_set_get_width_invalid_low(self):
     #     self.assertRaises(Exception, lambda : self.hitbox.width(10))
