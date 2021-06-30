@@ -17,12 +17,14 @@ class ObjectType:
     shooter = 8
     item = 9
     gun = 10
-    wall = 11 
-    door = 12
-    upgrade = 13
-    consumable = 14
-    ray = 15
+    ray = 11
+    wall = 12
+    hitbox = 13
+    door = 14
+    upgrade = 15
+    consumable = 16
 
+    
 class ActionType:
     none = 0
     shoot = 1

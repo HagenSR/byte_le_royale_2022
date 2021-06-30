@@ -14,7 +14,6 @@ class Shooter(MovingObject):
             heading,
             speed,
             GameStats.player_stats['starting_health'],
-            coordinates,
             GameStats.player_stats['hitbox'],
             collidable=True
         )

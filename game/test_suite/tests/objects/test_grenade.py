@@ -1,3 +1,4 @@
+from game.common.hitbox import Hitbox
 import unittest 
 from game.common.moving.damaging import grenade
 from game.common.moving.damaging.grenade import Grenade
@@ -14,10 +15,10 @@ class TestGrenade(unittest.TestCase):
      
 
     def test_set_get_fuse_time_invalid_low(self):
-         self.assertRaises(Exception, lambda : self.grnObj.fuse_time(0))
+         self.assertRaises(Exception, self.setFuse, (0))
 
     def test_set_get_fuse_time_invalid_high(self):
-         self.assertRaises(Exception, lambda : self.grnObj.fuse_time(100))
+         self.assertRaises(Exception, self.setFuse, (100))
 
     def test_set_get_fuse_time_boundary_low(self):
         self.grnObj.fuse_time = GameStats.grenade_stats['min_fuse_time']
@@ -31,25 +32,18 @@ class TestGrenade(unittest.TestCase):
 
     def test_grenade_obj_parent_params(self):
       
-        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 1, speed = 10, health = 1, coordinates=[{'x': 450, 'y': 450}, {'x': 50, 'y': 50}], 
-        hitbox={'width': 10, 'height': 10}, collidable=True)
+        testGrn = Grenade(fuse_time = 20, range = 10, damage = 10, heading = 1, speed = 10, health = 1, hitbox=Hitbox(10,10,(10,10)), collidable=True)
         
         self.assertIsNotNone(testGrn.range)
         self.assertIsNotNone(testGrn.damage)
         self.assertIsNotNone(testGrn.heading)
         self.assertIsNotNone(testGrn.speed)
-        self.assertIsNotNone(testGrn.coordinates)
+        self.assertIsNotNone(testGrn.hitbox.position)
         self.assertIsNotNone(testGrn.hitbox)
         self.assertIsNotNone(testGrn.collidable)
 
-        # I don't think this test works anymore, because the init doesn't like comparing None to int
-        #self.assertIsNone(self.grnObj.range)
-        # self.assertIsNone(self.grnObj.damage)
-        # self.assertIsNone(self.grnObj.heading)
-        # self.assertIsNone(self.grnObj.speed)
-        # self.assertIsNone(self.grnObj.coordinates)
-        # self.assertIsNone(self.grnObj.hitbox)
-        # self.assertIsNone(self.grnObj.collidable)
+    def setFuse(self, newTime):
+        self.grnObj.fuse_time = newTime
     
 if __name__ == '__main__':
      unittest.main 
