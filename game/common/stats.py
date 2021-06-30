@@ -9,7 +9,6 @@ class GameStats:
     game_board_height = 500
 
     default_wall_health = 50
-    door_opening_speed = 3 # 3 ticks to open/close door
 
     player_stats = {
         'starting_health': 10,
@@ -79,6 +78,8 @@ class GameStats:
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
+
+    door_opening_speed = 1
     
     Upgrades.gun_upgrades = 20  #Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20   #May be used to make the player go faster?
