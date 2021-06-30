@@ -138,7 +138,7 @@ class RayController(Controller):
                         if self.calculate_ray_y(player, slope, right_x)
                         is not math.nan else lower_y)
                 ray_x = self.calculate_ray_x(player, slope, lower_y)
-            if (lower_y <= ray_y <= upper_y) and (left_x <= ray_x <= right_x):
+            if (lower_y <= ray_y <= upper_y) or (left_x <= ray_x <= right_x):
                 endpoint = {'x': ray_x, 'y': ray_y}
                 ray = Ray(player.shooter.coordinates, endpoint, collidable, gun.damage)
                 break
