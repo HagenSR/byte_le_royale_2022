@@ -50,32 +50,40 @@ class TestHitboxObject(unittest.TestCase):
         self.assertRaises(ValueError, self.setPosition, ((10, -1)))
 
     def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.topLeft, (-1,-1))
+        self.assertEqual(self.hitbox.topLeft, (0,0))
 
     def test_topRight_corner(self):
-        self.assertEqual(self.hitbox.topRight, (1,-1))
+        self.assertEqual(self.hitbox.topRight, (2, 0))
 
     def test_bottomLeft_corner(self):
-        self.assertEqual(self.hitbox.bottomLeft, (-1,1))
+        self.assertEqual(self.hitbox.bottomLeft, (0,2))
 
     def test_bottomRight_corner(self):
-        self.assertEqual(self.hitbox.bottomRight, (1,1))
+        self.assertEqual(self.hitbox.bottomRight, (2,2))
+
+    
+    def test_middle(self):
+        self.assertEqual(self.hitbox.middle, (1,1))
 
     def test_topLeft_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.topLeft, (9,9))
+        self.assertEqual(self.hitbox.topLeft, (10,10))
 
     def test_topRight_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.topRight, (11,9))
+        self.assertEqual(self.hitbox.topRight, (12,10))
 
     def test_bottomLeft_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.bottomLeft, (9,11))
+        self.assertEqual(self.hitbox.bottomLeft, (10,12))
 
     def test_bottomRight_corner_alt(self):
         self.hitbox.position = (10,10) 
-        self.assertEqual(self.hitbox.bottomRight, (11,11))
+        self.assertEqual(self.hitbox.bottomRight, (12,12))
+
+    def test_middle_alt(self):
+        self.hitbox.position = (10,10) 
+        self.assertEqual(self.hitbox.middle, (11,11))
 
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)

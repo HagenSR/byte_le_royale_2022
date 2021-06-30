@@ -9,7 +9,7 @@ class Hitbox(GameObject):
         self.object_type = ObjectType.hitbox
         self.width = width
         self.height = height
-        # (x,y) tuple, where [0] is the x position and y is [1], which the hitbox is centered around
+        # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         self.position = xy_tuple
 
     @property
@@ -26,19 +26,23 @@ class Hitbox(GameObject):
 
     @property
     def topLeft(self):
-        return (self.position[0] - (self.width/2), self.position[1] - (self.height/2))
+        return self.position
 
     @property
     def topRight(self):
-        return (self.position[0] + (self.width/2), self.position[1] - (self.height/2))
+        return (self.position[0] + self.width, self.position[1])
 
     @property
     def bottomLeft(self):
-        return (self.position[0] - (self.width/2), self.position[1] + (self.height/2))
+        return (self.position[0], self.position[1] + self.height)
 
     @property
     def bottomRight(self):
-        return (self.position[0] + (self.width/2), self.position[1] + (self.height/2))
+        return (self.position[0] + self.width, self.position[1] +self.height)
+
+    @property
+    def middle(self):
+        return (self.position[0] + self.width / 2, self.position[1] +self.height / 2)
     
     # set height between 0 and max
     @height.setter
