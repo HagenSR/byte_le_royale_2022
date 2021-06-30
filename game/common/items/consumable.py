@@ -3,8 +3,8 @@ from game.common.enums import Consumables, ObjectType
 
 
 class Consumable(Item):
-    def __init__(self, coordinates, hitbox, health, count, speed_enum = None, health_enum = None, armor_enum = None):
-        super().__init__(coordinates, hitbox, health, count)
+    def __init__(self, hitbox, health, count, speed_enum = None, health_enum = None, armor_enum = None):
+        super().__init__(hitbox, health, count)
         self.object_type = ObjectType.consumable
         self.speed_enum = speed_enum
         self.health_enum = health_enum

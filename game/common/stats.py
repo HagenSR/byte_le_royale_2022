@@ -50,6 +50,11 @@ class GameStats:
         'max_damage': 100
     }
 
+    max_hitbox = {
+        'width': 100,
+        'height': 100,
+    }
+
     # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
         GunType.none: {'pattern': ShotPattern.none, 'damage': 0,
@@ -73,6 +78,8 @@ class GameStats:
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
+
+    door_opening_speed = 1
     
     Upgrades.gun_upgrades = 20  #Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20   #May be used to make the player go faster?
