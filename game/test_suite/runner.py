@@ -1,5 +1,6 @@
 import unittest
 import game.test_suite.tests
+import sys
 
 def main():
     loader = unittest.TestLoader()
@@ -8,7 +9,7 @@ def main():
 
     suite.addTests(loader.loadTestsFromModule(game.test_suite.tests))
 
-    runner.run(suite)
+    sys.exit(not runner.run(suite).wasSuccessful())
 
 if __name__ == '__main__':
     main()
