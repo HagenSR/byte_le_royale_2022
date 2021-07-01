@@ -1,5 +1,6 @@
 from game.common.enums import ObjectType
 from game.common.stats import GameStats
+from game.common.game_object import GameObject
 
 class Ray(GameObject):
     def __init__(self, origin, endpoint, collision=None, damage=None):
