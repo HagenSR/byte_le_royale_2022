@@ -33,9 +33,9 @@ class CommunicationThread(Thread):
         except Exception:
             self.error = traceback.format_exc()
 
-        if self.type is not None and not isinstance(self.safeObject.value, self.type):
+        if self.type is not None and not isinstance(
+                self.safeObject.value, self.type):
             self.safeObject.value = None
 
     def retrieve_value(self):
         return self.safeObject.value
-
