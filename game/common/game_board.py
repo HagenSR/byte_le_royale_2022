@@ -50,11 +50,11 @@ class GameBoard(GameObject):
         data['width'] = self.width
         data['height'] = self.height
 
-        data['player_list'] = self.player_list
-        data['wall_list'] = self.wall_list
-        data['items_list'] = self.items_list
-        data['upgrades_list'] = self.upgrades_list
-        data['lethal_list'] = self.lethal_list
+        data['player_list'] = [player.to_json() for player in self.player_list]
+        data['wall_list'] = [wall.to_json() for wall in self.wall_list]
+        data['items_list'] = [item.to_json() for item in self.items_list]
+        data['upgrades_list'] = [upgrade.to_json() for upgrade in self.upgrades_list]
+        data['lethal_list'] = [lethal.to_json() for lethal in self.lethal_list]
 
         data['circle_radius'] = self.circle_radius
 

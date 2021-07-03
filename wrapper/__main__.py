@@ -2,7 +2,6 @@ import sys
 
 from game.engine import Engine
 from game.utils.generate_game import generate
-from game.utils.pyGenStructures import create_structures_file
 import game.config
 import argparse
 
@@ -40,9 +39,6 @@ if __name__ == '__main__':
     if action in ['generate', 'g']:
         generate()
     
-        # Generate game options
-    if action in ['bs']:
-        create_structures_file(file_path="./structures/wall_on_bottom.json")
     
     # Run game options
     elif action in ['run', 'r']:

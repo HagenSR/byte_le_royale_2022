@@ -7,6 +7,8 @@ import game.common.items.consumable
 class GameStats:
     game_board_width = 500
     game_board_height = 500
+    circle_shrink_distance = 1
+    corridor_width_height = 20
 
     default_wall_health = 50
     door_opening_speed = 3 # 3 ticks to open/close door
@@ -79,9 +81,7 @@ class GameStats:
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
-    
-    circle_shrink_distance = 1
-    
+
     Upgrades.gun_upgrades = 20  #Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20   #May be used to make the player go faster?
     Upgrades.sight_upgrades = 20   #Increase how far player can see?
