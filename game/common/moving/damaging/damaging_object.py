@@ -47,4 +47,5 @@ class DamagingObject(MovingObject):
         super().from_json(data)
         self.range = data['range']
         self.damage = data['damage']
+        return self
    

@@ -34,6 +34,7 @@ class Player(GameObject):
         self.team_name = data['team_name']
         act = Action()
         self.action = act.from_json(data['action']) if data['action'] is not None else None
+        return self
 
     def __str__(self):
         p = f"""ID: {self.id}

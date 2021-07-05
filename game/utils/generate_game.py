@@ -42,7 +42,7 @@ def findPlotHitboxes():
             # Skip the middle plot
             if i == 1 and y == 1:
                 hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
-                continue;
+                continue
             # Add the plot to the plot list, increment x position to the next starting position
             plot_hitbox_list.append(Hitbox(plot_width_hieght, plot_width_hieght, (hitbox_top_right_x, hitbox_top_right_y)))
             hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
@@ -64,7 +64,7 @@ def generate():
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
     # Use ../../launcher.pyz if opening in the utils folder
-    with zipfile.ZipFile('../../launcher.pyz') as z:
+    with zipfile.ZipFile('launcher.pyz') as z:
         wallList = []
         for filename in z.namelist():
             # Only load proper structure json
@@ -74,7 +74,7 @@ def generate():
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     for entry in filejsn:
                         # Load in every wall in the structure
-                        wall = Hitbox(1,1,(0,0))
+                        wall = Wall(Hitbox(1,1,(0,0)))
                         wall.from_json(entry)
                         wallList.append(wall)
                     structuresList.append(wallList)
@@ -90,10 +90,10 @@ def generate():
             for wall in struct:
                 # A copy of wall is needed, because the original wall will persist in the structures list after it's position is altered
                 wall_copy = copy.deepcopy(wall)
-                x_offset = plot.position[0] + wall.position[0]
-                y_offset = plot.position[1] + wall.position[1]
+                x_offset = plot.position[0] + wall_copy.hitbox.position[0]
+                y_offset = plot.position[1] + wall_copy.hitbox.position[1]
                 wall_copy.position = (x_offset, y_offset)
-                game_map.wall_list.append(wall)
+                game_map.wall_list.append(wall_copy)
 
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):

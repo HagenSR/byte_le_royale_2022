@@ -21,3 +21,4 @@ class Consumable(Item):
         self.speed_enum = data['speed_enum']
         self.health_enum = data['health_enum']
         self.armor_enum = data['armor_enum']
+        return self

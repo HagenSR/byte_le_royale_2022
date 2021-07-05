@@ -1,4 +1,5 @@
 from game.common.game_object import GameObject
+from game.common.game_object import GameObject
 from game.common.stats import GameStats
 from game.common.enums import *
 
@@ -78,9 +79,10 @@ class Hitbox(GameObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.width = data['hitbox']['width']
-        self.height = data['hitbox']['height']
-        self.position = data['hitbox']['position']
+        self.width = data['width']
+        self.height = data['height']
+        self.position = data['position']
+        return self
 
     def __str__(self):
          return f"""

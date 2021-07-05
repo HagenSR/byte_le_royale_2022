@@ -20,6 +20,7 @@ class Action:
     def from_json(self, data):
         self.object_type = data['object_type']
         self._example_action = data['example_action']
+        return self
 
     def __str__(self):
         outstring = ''
