@@ -42,7 +42,13 @@ class Hitbox(GameObject):
 
     @property
     def middle(self):
-        return (self.position[0] + self.width / 2, self.position[1] + self.height / 2)
+        return (
+            self.position[0] +
+            self.width /
+            2,
+            self.position[1] +
+            self.height /
+            2)
 
     # set height between 0 and max
     @height.setter
@@ -67,7 +73,8 @@ class Hitbox(GameObject):
                 0 <= val[1] <= GameStats.game_board_height):
             self.__position = val
         else:
-            raise ValueError("Tried to set an invalid xy position tuple for hitbox")
+            raise ValueError(
+                "Tried to set an invalid xy position tuple for hitbox")
 
     def to_json(self):
         data = super().to_json()
