@@ -22,7 +22,7 @@ class MapObject(GameObject):
     def from_json(self, data):
         super().from_json(data)
         self.health = data['health']
-        self.hitbox = Hitbox(100, 4, (0, 0))
+        self.hitbox = Hitbox(1, 1, (0, 0))
         self.hitbox.from_json(data['hitbox'])
         self.collidable = data['collidable']
         return self
@@ -30,6 +30,6 @@ class MapObject(GameObject):
     def __str__(self):
         return f"""
              Health: {self.health}
-             Hitbox: {self.hitbox}
+             Hitbox: {self.hitbox.__str__()}
              Collidable: {self.collidable}
              """

@@ -51,10 +51,6 @@ class Shooter(MovingObject):
         self.__primary_pointer = 0
         self.__primary = self.__inventory['guns'][self.__primary_pointer]
 
-        # set initial primary gun to be none
-        self.__primary_pointer = 0
-        self.__primary = self.__inventory['guns'][self.__primary_pointer]
-
     @property
     def inventory(self):
         return deepcopy(self.__inventory)

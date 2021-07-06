@@ -68,7 +68,7 @@ def generate():
     # game board will have all the containers/lists
     game_map = GameBoard()
 
-    structuresList = []
+    structures_list = []
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
     # Use ../../launcher.pyz if opening in the utils folder
@@ -87,14 +87,14 @@ def generate():
                         wall = Wall(Hitbox(1, 1, (0, 0)))
                         wall.from_json(entry)
                         wallList.append(wall)
-                    structuresList.append(wallList)
+                    structures_list.append(wallList)
         # Plots can potentially be empty
-        structuresList.append(None)
+        structures_list.append(None)
 
     # Choose what structure goes in what plot
     plot_list = findPlotHitboxes()
     for plot in plot_list:
-        struct = random.choice(structuresList)
+        struct = random.choice(structures_list)
         if struct:
             # Reposition structure to be on the plot
             for wall in struct:

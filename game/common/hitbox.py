@@ -94,5 +94,6 @@ class Hitbox(GameObject):
         return f"""
              Height: {self.height}
              Width: {self.width}
-             X: {self.position}
+             X: {self.position[0]}
+             Y: {self.position[1]}
              """

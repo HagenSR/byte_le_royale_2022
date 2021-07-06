@@ -40,7 +40,7 @@ class GameBoard(GameObject):
     def circle_radius(self):
         return self.__circle_radius
 
-    # setter for heading. Should be degrees between 0 and 360 inclusive
+    # setter for circle radius. must be greater than or equal to zero
     @circle_radius.setter
     def circle_radius(self, val):
         if val > 0:

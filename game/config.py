@@ -7,7 +7,7 @@ from game.common.enums import *
 # max number of ticks the server will run regardless of game state
 MAX_TICKS = 500
 TQDM_BAR_FORMAT = "Game running at {rate_fmt} "  # how TQDM displays the bar
-TQDM_UNITS = " turns"  # units TQDM takes in the bar
+TQDM_UNITS = " ticks"  # units TQDM takes in the bar
 
 # max number of basic operations clients have for their turns
 MAX_SECONDS_PER_TURN = 0.1
