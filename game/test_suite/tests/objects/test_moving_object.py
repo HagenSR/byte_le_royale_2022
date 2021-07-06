@@ -11,7 +11,7 @@ import math
 
 
 class TestMovingObject(
-    unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+        unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
     # This method is used to set up anything you wish to test prior to every
     # test method below.
@@ -39,7 +39,10 @@ class TestMovingObject(
         self.assertRaises(Exception, self.setHeading, (math.pi * 3))
 
     def test_set_get_speed_invalid_high(self):
-        self.assertRaises(Exception, self.setSpeed, (GameStats.moving_object_stats['max_speed'] + 1))
+        self.assertRaises(
+            Exception,
+            self.setSpeed,
+            (GameStats.moving_object_stats['max_speed'] + 1))
 
     # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
@@ -61,7 +64,9 @@ class TestMovingObject(
         self.assertEqual(self.movObj.speed, 0)
 
     def test_moving_obj_parent_params(self):
-        test_mov = MovingObject(1, 10, health=1, hitbox=Hitbox(10, 10, (10, 10)), collidable=True)
+        test_mov = MovingObject(
+            1, 10, health=1, hitbox=Hitbox(
+                10, 10, (10, 10)), collidable=True)
         self.assertIsNotNone(test_mov.hitbox.position)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)

@@ -43,7 +43,13 @@ class Hitbox(GameObject):
 
     @property
     def middle(self):
-        return (self.position[0] + self.width / 2, self.position[1] + self.height / 2)
+        return (
+            self.position[0] +
+            self.width /
+            2,
+            self.position[1] +
+            self.height /
+            2)
 
     # set height between 0 and max
     @height.setter
