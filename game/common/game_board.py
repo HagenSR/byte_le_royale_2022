@@ -5,11 +5,13 @@ import math
 
 
 class GameBoard(GameObject):
-    # the width and height parameters have default values to allow them to be set for unit testing purposes
-    def __init__(self, width=GameStats.game_board_width, height=GameStats.game_board_height):
+    # the width and height parameters have default values to allow them to be
+    # set for unit testing purposes
+    def __init__(self, width=GameStats.game_board_width,
+                 height=GameStats.game_board_height):
         super().__init__()
         self.object_type = ObjectType.game_board
-        
+
         # pull width and height values from GameStats
         self.width = width
         self.height = height
@@ -22,7 +24,8 @@ class GameBoard(GameObject):
         self.lethal_list = []
 
         # this calculates starting radius to totally encompass the map at start
-        self.circle_radius = math.sqrt( ( self.width / 2 ) ** 2 + ( self.height / 2 ) ** 2 )
+        self.circle_radius = math.sqrt(
+            (self.width / 2) ** 2 + (self.height / 2) ** 2)
 
         # set turn counter to 0, not sure the use for this yet
         self.turn = 0
@@ -53,7 +56,7 @@ class GameBoard(GameObject):
     def from_json(self, data):
         super().from_json(data)
 
-        self.width =  data['width']
+        self.width = data['width']
         self.height = data['height']
 
         self.player_list = data['player_list']
@@ -63,5 +66,5 @@ class GameBoard(GameObject):
         self.lethal_list = data['lethal_list']
 
         self.circle_radius = data['circle_radius']
-        
+
         self.turn = data['turn']

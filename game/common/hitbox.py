@@ -63,7 +63,8 @@ class Hitbox(GameObject):
     # set x between 0 and max game board width
     @position.setter
     def position(self, val):
-        if (0 <= val[0] <= GameStats.game_board_width) and (0 <= val[1] <= GameStats.game_board_height):
+        if (0 <= val[0] <= GameStats.game_board_width) and (
+                0 <= val[1] <= GameStats.game_board_height):
             self.__position = val
         else:
             raise ValueError("Tried to set an invalid xy position tuple for hitbox")
