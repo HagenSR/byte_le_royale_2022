@@ -2,11 +2,13 @@ from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
 from game.common.enums import *
 
+
 class Bullet(DamagingObject):
-    def __init__(self, termination = {'x': 0, 'y': 0}, object_hit = None, range= None, 
-        damage= None, heading = None, speed = None, health=None, coordinates=None,
-        hitbox=None, collidable=None):
-        super().__init__(range, damage, heading, speed, health, coordinates, hitbox, collidable)
+    def __init__(self, termination=None, object_hit=None, range=None,
+                 damage=None, heading=None, speed=None, health=None,
+                 hitbox=None, collidable=None):
+        super().__init__(range, damage, heading, speed, health, hitbox, collidable)
+        # termination will be an xy tuple
         self.termination = termination
         self.object_hit = object_hit
         self.object_type = ObjectType.bullet
@@ -14,24 +16,18 @@ class Bullet(DamagingObject):
     @property
     def termination(self):
         return self.__termination
-    
 
     @termination.setter
-    def termination(self, x_value, y_value):
-        if x_value >= 0 and x_value <= GameStats.game_board_width:
-            self.__termination['x'] = x_value
+    def termination(self, vals):
+        if vals[0] >= 0 and vals[0] <= GameStats.game_board_width:
+            self.__termination[0] = vals[0]
         else:
-            raise Exception("x coordinate value outside bounds, Not set")
-        if y_value >= 0 and y_value <= GameStats.game_board_height:
-            self.__termination['y'] = y_value
+            raise ValueError("x coordinate value outside bounds, Not set")
+        if vals[1] >= 0 and vals[1] <= GameStats.game_board_height:
+            self.__termination[1] = vals[1]
         else:
-            raise Exception("y coordinate value outside bounds, Not set")
+            raise ValueError("y coordinate value outside bounds, Not set")
 
-
-    @property
-    def object_hit(self):
-        return self.__object_hit
-        
     def to_json(self):
         data = super().to_json()
         data['termination'] = self.termination
@@ -43,4 +39,3 @@ class Bullet(DamagingObject):
         super().from_json(data)
         self.termination = data['termination']
         self.object_hit = data['object_hit']
-    
