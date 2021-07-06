@@ -8,7 +8,8 @@ class GameStats:
     # The radius that the kill circle will shrink every tick
     circle_shrink_distance = 1
 
-    # The "margin" inbetween every building plot in game map. Used so players can always navigate between buildings
+    # The "margin" inbetween every building plot in game map. Used so players
+    # can always navigate between buildings
     corridor_width_height = 20
 
     default_wall_health = 50
