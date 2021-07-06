@@ -7,7 +7,9 @@ from game.common.hitbox import Hitbox
 
 class TestDamagingObject(unittest.TestCase):
     def setUp(self):
-        self.dmgObj = DamagingObject(10, 10, heading=1, speed=1, hitbox=Hitbox(5, 5, (5, 5)), collidable=True)
+        self.dmgObj = DamagingObject(
+            10, 10, heading=1, speed=1, hitbox=Hitbox(
+                5, 5, (5, 5)), collidable=True)
 
     def test_set_get_range_valid(self):
         self.dmgObj.range = 50
@@ -21,13 +23,20 @@ class TestDamagingObject(unittest.TestCase):
         self.assertRaises(Exception, self.setRange, (-10))
 
     def test_set_get_range_invalid_high(self):
-        self.assertRaises(Exception, self.setRange, (GameStats.damaging_object_stats['max_range'] + 1))
+        self.assertRaises(
+            Exception,
+            self.setRange,
+            (GameStats.damaging_object_stats['max_range'] + 1))
 
     def test_set_get_damage_invalid_low(self):
         self.assertRaises(Exception, self.setDamage, (-10))
 
     def test_set_get_damage_invalid_high(self):
-        self.assertRaises(Exception, self.setDamage, GameStats.damaging_object_stats['max_damage'] + 1)
+        self.assertRaises(
+            Exception,
+            self.setDamage,
+            GameStats.damaging_object_stats['max_damage'] +
+            1)
 
     def test_set_get_range_boundary_low(self):
         self.dmgObj.range = 0
@@ -51,8 +60,9 @@ class TestDamagingObject(unittest.TestCase):
             GameStats.damaging_object_stats['max_damage'])
 
     def test_damaging_obj_parent_params(self):
-        testDmg = DamagingObject(range=10, damage=10, heading=1, speed=10, health=1, hitbox=Hitbox(5, 5, (5, 5)),
-                                 collidable=True)
+        testDmg = DamagingObject(
+            range=10, damage=10, heading=1, speed=10, health=1, hitbox=Hitbox(
+                5, 5, (5, 5)), collidable=True)
 
         self.assertIsNotNone(testDmg.heading)
         self.assertIsNotNone(testDmg.speed)

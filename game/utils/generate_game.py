@@ -44,11 +44,17 @@ def findPlotHitboxes():
             if i == 1 and y == 1:
                 hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
                 continue
-            # Add the plot to the plot list, increment x position to the next starting position
+            # Add the plot to the plot list, increment x position to the next
+            # starting position
             plot_hitbox_list.append(
-                Hitbox(plot_width_hieght, plot_width_hieght, (hitbox_top_right_x, hitbox_top_right_y)))
+                Hitbox(
+                    plot_width_hieght,
+                    plot_width_hieght,
+                    (hitbox_top_right_x,
+                     hitbox_top_right_y)))
             hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
-        # Increment y position down to the next starting position, reset X position back to the starting x position
+        # Increment y position down to the next starting position, reset X
+        # position back to the starting x position
         hitbox_top_right_y += plot_width_hieght + GameStats.corridor_width_height
         hitbox_top_right_x = GameStats.corridor_width_height
     return plot_hitbox_list
@@ -70,9 +76,11 @@ def generate():
         wallList = []
         for filename in z.namelist():
             # Only load proper structure json
-            if filename.startswith("game/utils/structures/") and filename.endswith('.json'):
+            if filename.startswith(
+                    "game/utils/structures/") and filename.endswith('.json'):
                 with z.open(filename, 'r') as fl:
-                    # Read the zipped file, then decode it from bytes, then load it into json
+                    # Read the zipped file, then decode it from bytes, then
+                    # load it into json
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     for entry in filejsn:
                         # Load in every wall in the structure
@@ -90,7 +98,8 @@ def generate():
         if struct:
             # Reposition structure to be on the plot
             for wall in struct:
-                # A copy of wall is needed, because the original wall will persist in the structures list after it's position is altered
+                # A copy of wall is needed, because the original wall will
+                # persist in the structures list after it's position is altered
                 wall_copy = copy.deepcopy(wall)
                 x_offset = plot.position[0] + wall_copy.hitbox.position[0]
                 y_offset = plot.position[1] + wall_copy.hitbox.position[1]

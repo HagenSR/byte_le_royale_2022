@@ -24,12 +24,17 @@ from game.common.enums import ObjectType, GunLevel, GunType
 
 
 class TestInit(
-    unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+        unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
-    def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
-        self.gun = Gun(gun_type=GunType.assault_rifle, level=GunLevel.level_one)
+    # This method is used to set up anything you wish to test prior to every
+    # test method below.
+    def setUp(self):
+        self.gun = Gun(
+            gun_type=GunType.assault_rifle,
+            level=GunLevel.level_one)
         self.item = Item(hitbox=Hitbox(10, 10, (10, 10)))
-        self.damaging = DamagingObject(hitbox=Hitbox(10, 10, (10, 10)), heading=1, speed=10)
+        self.damaging = DamagingObject(hitbox=Hitbox(
+            10, 10, (10, 10)), heading=1, speed=10)
         self.movObj = MovingObject(1, 10)
         self.shooter = Shooter()
         self.action = Action()
@@ -39,8 +44,11 @@ class TestInit(
         self.player = Player()
         self.wall = Wall(hitbox=Hitbox(10, 10, (10, 10)))
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
-        self.consumable = Consumable(hitbox=Hitbox(10, 10, (10, 10)), health=10, count=1)
-        self.upgrade = Upgrade(hitbox=Hitbox(10, 10, (10, 10)), health=10, count=1)
+        self.consumable = Consumable(hitbox=Hitbox(
+            10, 10, (10, 10)), health=10, count=1)
+        self.upgrade = Upgrade(
+            hitbox=Hitbox(
+                10, 10, (10, 10)), health=10, count=1)
         self.door = Door(hitbox=Hitbox(10, 10, (10, 10)))
 
     def testObjectInit(self):

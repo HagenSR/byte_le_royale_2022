@@ -6,7 +6,7 @@ import unittest
 
 
 class TestExample(
-    unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+        unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
     # This method is used to set up anything you wish to test prior to every
     # test method below.

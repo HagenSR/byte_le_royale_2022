@@ -38,14 +38,14 @@ class Shooter(MovingObject):
         self.slot_obj_types = [
             (slot_type,
              slot_stats['type']) for slot_type,
-                                     slot_stats in GameStats.inventory_stats.items()]
+            slot_stats in GameStats.inventory_stats.items()]
         # this generates an empty inventory, with number of slots for each slot
         # type taken from game stats
         self.__inventory = {
             slot_type: [
                 None for _ in range(
                     GameStats.inventory_stats[slot_type]['slots'])] for slot_type,
-                                                                        slot_obj_type in self.slot_obj_types}
+            slot_obj_type in self.slot_obj_types}
 
         # set initial primary gun to be none
         self.__primary_pointer = 0
@@ -68,13 +68,17 @@ class Shooter(MovingObject):
 
     def append_inventory(self, value):
         """Add object to inventory"""
-        if not value.object_type in tuple(slot_type[1] for slot_type in self.slot_obj_types):
-            raise TypeError(f"Value appended must be of type "
-                            f"{[obj_type[1] for obj_type in self.slot_obj_types]} "
-                            f"not {value.object_type}")
+        if value.object_type not in tuple(
+                slot_type[1] for slot_type in self.slot_obj_types):
+            raise TypeError(
+                f"Value appended must be of type "
+                f"{[obj_type[1] for obj_type in self.slot_obj_types]} "
+                f"not {value.object_type}")
         for slot_type, slot_obj_type in self.slot_obj_types:
-            if value.object_type == slot_obj_type and self.has_empty_slot(slot_type):
-                self.__inventory[slot_type][self.__inventory[slot_type].index(None)] = value
+            if value.object_type == slot_obj_type and self.has_empty_slot(
+                    slot_type):
+                self.__inventory[slot_type][self.__inventory[slot_type].index(
+                    None)] = value
                 return None
         raise InventoryFullError(f"Inventory full for type {value}")
 

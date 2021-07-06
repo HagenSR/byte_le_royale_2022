@@ -15,7 +15,7 @@ class Gun(Item):
         self.damage = (
             round(
                 stats.GameStats.gun_stats[gun_type]['damage'] * (
-                        stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level),
+                    stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level),
                 1) if self.level > GunLevel.level_zero else 0)
         self.fire_rate = (round(stats.GameStats.gun_stats[gun_type]['fire_rate']
                                 * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))

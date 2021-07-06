@@ -31,17 +31,21 @@ class TestHitboxObject(unittest.TestCase):
 
     def test_set_get_tuple_y_boundary_high(self):
         self.hitbox.position = (10, GameStats.game_board_height)
-        self.assertEqual(self.hitbox.position, (10, GameStats.game_board_height))
+        self.assertEqual(self.hitbox.position,
+                         (10, GameStats.game_board_height))
 
     def test_set_get_tuple_x_boundary_high(self):
         self.hitbox.position = (GameStats.game_board_width, 10)
-        self.assertEqual(self.hitbox.position, (GameStats.game_board_width, 10))
+        self.assertEqual(self.hitbox.position,
+                         (GameStats.game_board_width, 10))
 
     def test_set_get_tuple_X_invalid_high(self):
-        self.assertRaises(ValueError, self.setPosition, (GameStats.game_board_width + 1, 10))
+        self.assertRaises(ValueError, self.setPosition,
+                          (GameStats.game_board_width + 1, 10))
 
     def test_set_get_tuple_y_invalid_high(self):
-        self.assertRaises(ValueError, self.setPosition, (10, GameStats.game_board_height + 1))
+        self.assertRaises(ValueError, self.setPosition,
+                          (10, GameStats.game_board_height + 1))
 
     def test_set_get_tuple_x_boundary_low(self):
         self.assertRaises(ValueError, self.setPosition, ((-1, 10)))

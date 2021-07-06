@@ -32,7 +32,8 @@ class Engine:
             if ('map' not in file.path):
                 os.remove(file.path)
 
-    # Starting point of the engine. Runs other methods then sits on top of a basic game loop until over
+    # Starting point of the engine. Runs other methods then sits on top of a
+    # basic game loop until over
     def loop(self):
         # If quiet mode is activated, replace stdout with devnull
         f = sys.stdout
@@ -161,7 +162,8 @@ class Engine:
         # I think this stuff will have to change
         self.game_map = world['game_map']
 
-    # Sits on top of all actions that need to happen before the player takes their turn
+    # Sits on top of all actions that need to happen before the player takes
+    # their turn
     def pre_tick(self):
         # Increment the tick
         self.tick_number += 1
@@ -174,9 +176,11 @@ class Engine:
 
         # Send current world information to master controller for purposes
         if SET_NUMBER_OF_CLIENTS_START == 1:
-            self.master_controller.interpret_current_turn_data(self.clients[0], self.game_map, self.tick_number)
+            self.master_controller.interpret_current_turn_data(
+                self.clients[0], self.game_map, self.tick_number)
         else:
-            self.master_controller.interpret_current_turn_data(self.clients, self.game_map, self.tick_number)
+            self.master_controller.interpret_current_turn_data(
+                self.clients, self.game_map, self.tick_number)
 
     # Does actions like lets the player take their turn and asks master
     # controller to perform game logic
