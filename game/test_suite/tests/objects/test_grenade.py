@@ -15,10 +15,10 @@ class TestGrenade(unittest.TestCase):
      
 
     def test_set_get_fuse_time_invalid_low(self):
-         self.assertRaises(Exception, lambda : self.grnObj.fuse_time(0))
+         self.assertRaises(Exception, self.setFuse, (0))
 
     def test_set_get_fuse_time_invalid_high(self):
-         self.assertRaises(Exception, lambda : self.grnObj.fuse_time(100))
+         self.assertRaises(Exception, self.setFuse, (100))
 
     def test_set_get_fuse_time_boundary_low(self):
         self.grnObj.fuse_time = GameStats.grenade_stats['min_fuse_time']
@@ -42,14 +42,8 @@ class TestGrenade(unittest.TestCase):
         self.assertIsNotNone(testGrn.hitbox)
         self.assertIsNotNone(testGrn.collidable)
 
-        # I don't think this test works anymore, because the init doesn't like comparing None to int
-        #self.assertIsNone(self.grnObj.range)
-        # self.assertIsNone(self.grnObj.damage)
-        # self.assertIsNone(self.grnObj.heading)
-        # self.assertIsNone(self.grnObj.speed)
-        # self.assertIsNone(self.grnObj.coordinates)
-        # self.assertIsNone(self.grnObj.hitbox)
-        # self.assertIsNone(self.grnObj.collidable)
+    def setFuse(self, newTime):
+        self.grnObj.fuse_time = newTime
     
 if __name__ == '__main__':
      unittest.main 

@@ -10,6 +10,7 @@ from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 from game.test_suite.tests.collision_test import TestCollision
 
+
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',

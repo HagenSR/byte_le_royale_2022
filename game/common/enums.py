@@ -19,22 +19,23 @@ class ObjectType:
     gun = 10
     wall = 11
     hitbox = 12
-    upgrade = 13
-    consumable = 14
-    
+    door = 13
+    upgrade = 14
+    consumable = 15
+
 
 class Upgrades:
     none = 0
     gun_upgrades = 1
     movement_upgrades = 2
     sight_upgrades = 3
-    
-    
+
+
 class DamagingType:
     none = 0
-    #note that bullet object has not been added yet
+    # note that bullet object has not been added yet
     bullet = 1
-    grenade = 2  
+    grenade = 2
 
 
 class GunType:
@@ -44,14 +45,14 @@ class GunType:
     shotgun = 3
     sniper = 4
 
-    
+
 class GunLevel:
     level_zero = 0
     level_one = 1
     level_two = 2
     level_three = 3
 
-    
+
 class ShotPattern:
     none = 0
     single = 1

@@ -37,7 +37,7 @@ class TestCollision(unittest.TestCase):
         self.hitOne.width = 4
 
         self.hitTwo.position = (1, 3)
-        self.hitTwo.height = 2
+        self.hitTwo.height = 6
         self.hitTwo.width = 6
         self.assertTrue(check_collision(self.hitOne, self.hitTwo))
 
@@ -57,8 +57,8 @@ class TestCollision(unittest.TestCase):
         self.hitOne.width = 80
 
         self.hitTwo.position = (20, 20)
-        self.hitTwo.height = 30
-        self.hitTwo.width = 40
+        self.hitTwo.height = 50
+        self.hitTwo.width = 60
         self.assertTrue(check_collision(self.hitOne, self.hitTwo))
 
     def test_collision_false_three(self):
