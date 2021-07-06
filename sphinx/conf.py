@@ -42,7 +42,7 @@ templates_path = ['_templates']
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = [ '.rst', '.md' ]
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -178,13 +178,15 @@ texinfo_documents = [
 
 # At the bottom of conf.py
 github_doc_root = "https://royale.ndacm.org/GameURL/"
+
+
 def setup(app):
     app.add_config_value('recommonmark_config', {
-            'url_resolver': lambda url: github_doc_root + url,
-            'enable_auto_toc_tree': True,
-            'enable_eval_rst': True,
-            'enable_auto_doc_ref': False,
-            }, True)
+        'url_resolver': lambda url: github_doc_root + url,
+        'enable_auto_toc_tree': True,
+        'enable_eval_rst': True,
+        'enable_auto_doc_ref': False,
+    }, True)
     app.add_transform(AutoStructify)
 
     app.add_stylesheet('accordion.css')

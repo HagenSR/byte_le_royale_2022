@@ -27,9 +27,9 @@ class Engine:
 
         self.quiet_mode = quiet_mode
 
-        #Delete logs, then recreate logs dir
+        # Delete logs, then recreate logs dir
         for file in os.scandir(LOGS_DIR):
-            if('map' not in file.path):
+            if ('map' not in file.path):
                 os.remove(file.path)
 
     # Starting point of the engine. Runs other methods then sits on top of a basic game loop until over
@@ -43,10 +43,11 @@ class Engine:
         self.boot()
         self.load()
 
-        for self.current_world_key in tqdm(self.master_controller.game_loop_logic(),
-                                           bar_format=TQDM_BAR_FORMAT,
-                                           unit=TQDM_UNITS,
-                                           file=f):
+        for self.current_world_key in tqdm(
+                self.master_controller.game_loop_logic(),
+                bar_format=TQDM_BAR_FORMAT,
+                unit=TQDM_UNITS,
+                file=f):
             self.pre_tick()
             self.tick()
             self.post_tick()
@@ -57,7 +58,8 @@ class Engine:
 
     # Finds, checks, and instantiates clients
     def boot(self):
-        # Insert path of where clients are expected to be inside where python will look
+        # Insert path of where clients are expected to be inside where python
+        # will look
         current_dir = os.getcwd()
         sys.path.insert(0, current_dir)
         sys.path.insert(0, f'{current_dir}/{CLIENT_DIRECTORY}')
@@ -66,7 +68,8 @@ class Engine:
         for filename in os.listdir(CLIENT_DIRECTORY):
             filename = filename.replace('.py', '')
 
-            # Filter out files that do not contain CLIENT_KEYWORD in their filename (located in config)
+            # Filter out files that do not contain CLIENT_KEYWORD in their
+            # filename (located in config)
             if CLIENT_KEYWORD.upper() not in filename.upper():
                 continue
 
@@ -82,11 +85,13 @@ class Engine:
             imports, opening = verify_code(filename + '.py')
             if len(imports) != 0:
                 player.functional = False
-                player.error = ImportError(f'Player has attempted illegal imports: {imports}')
+                player.error = ImportError(
+                    f'Player has attempted illegal imports: {imports}')
 
             if opening:
                 player.functional = False
-                player.error = PermissionError(f'Player is using "open" which is forbidden.')
+                player.error = PermissionError(
+                    f'Player is using "open" which is forbidden.')
 
             # Import client's code
             im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
@@ -108,7 +113,8 @@ class Engine:
 
             if thr.is_alive():
                 player.functional = False
-                player.error = TimeoutError('Client failed to provide a team name in time.')
+                player.error = TimeoutError(
+                    'Client failed to provide a team name in time.')
 
             if thr.error is not None:
                 player.functional = False
@@ -126,7 +132,8 @@ class Engine:
         if client_num_correct is not None:
             self.shutdown(source='Client_error')
 
-        # Finally, request master controller to establish clients with basic objects
+        # Finally, request master controller to establish clients with basic
+        # objects
         if SET_NUMBER_OF_CLIENTS_START == 1:
             self.master_controller.give_clients_objects(self.clients[0])
         else:
@@ -158,12 +165,12 @@ class Engine:
     def pre_tick(self):
         # Increment the tick
         self.tick_number += 1
-        
+
         # game map isn't tick based, only need the previous game map to persist
         # Retrieve current world info
         # if self.current_world_key not in self.world:
         #     raise KeyError('Given generated world key does not exist inside the world.')
-        #current_world = self.world['game_map']
+        # current_world = self.world['game_map']
 
         # Send current world information to master controller for purposes
         if SET_NUMBER_OF_CLIENTS_START == 1:
@@ -171,7 +178,8 @@ class Engine:
         else:
             self.master_controller.interpret_current_turn_data(self.clients, self.game_map, self.tick_number)
 
-    # Does actions like lets the player take their turn and asks master controller to perform game logic
+    # Does actions like lets the player take their turn and asks master
+    # controller to perform game logic
     def tick(self):
         # Create list of threads to run client's code
         threads = list()
@@ -181,7 +189,8 @@ class Engine:
                 continue
 
             # Retrieve list of arguments to pass
-            arguments = self.master_controller.client_turn_arguments(client, self.tick_number)
+            arguments = self.master_controller.client_turn_arguments(
+                client, self.tick_number)
 
             # Create the thread, pass the arguments
             thr = Thread(func=client.code.take_turn, args=arguments)
@@ -210,10 +219,12 @@ class Engine:
 
         # Go through each thread and check if they are still alive
         for client, thr in zip(self.clients, threads):
-            # If thread is no longer alive, mark it as non-functional, preventing it from receiving future turns
+            # If thread is no longer alive, mark it as non-functional,
+            # preventing it from receiving future turns
             if thr.is_alive():
                 client.functional = False
-                client.error = TimeoutError(f'{client.id} failed to reply in time and has been dropped.')
+                client.error = TimeoutError(
+                    f'{client.id} failed to reply in time and has been dropped.')
                 print(client.error)
 
             # Also check to see if the client had created an error and save it
@@ -233,23 +244,27 @@ class Engine:
 
         # Finally, consult master controller for game logic
         if SET_NUMBER_OF_CLIENTS_START == 1:
-            self.master_controller.turn_logic(self.clients[0], self.tick_number)
+            self.master_controller.turn_logic(
+                self.clients[0], self.tick_number)
         else:
             self.master_controller.turn_logic(self.clients, self.tick_number)
 
-    # Does any actions that need to happen after the game logic, then creates the game log for the turn
+    # Does any actions that need to happen after the game logic, then creates
+    # the game log for the turn
     def post_tick(self):
         # Add logs to logs list
         data = None
         if SET_NUMBER_OF_CLIENTS_START == 1:
-            data = self.master_controller.create_turn_log(self.clients[0], self.tick_number)
+            data = self.master_controller.create_turn_log(
+                self.clients[0], self.tick_number)
         else:
-            data = self.master_controller.create_turn_log(self.clients, self.tick_number)
+            data = self.master_controller.create_turn_log(
+                self.clients, self.tick_number)
 
         # self.game_logs[self.tick_number] = data
 
         with open(os.path.join(LOGS_DIR, f"turn_{self.tick_number:04d}.json"), 'w+') as f:
-            json.dump(data,f)
+            json.dump(data, f)
 
         # Perform a game over check
         if self.master_controller.game_over:
@@ -267,9 +282,11 @@ class Engine:
         # Retrieve and write results information
         results_information = None
         if SET_NUMBER_OF_CLIENTS_START == 1:
-            results_information = self.master_controller.return_final_results(self.clients[0], self.tick_number)
+            results_information = self.master_controller.return_final_results(
+                self.clients[0], self.tick_number)
         else:
-            results_information = self.master_controller.return_final_results(self.clients, self.tick_number)
+            results_information = self.master_controller.return_final_results(
+                self.clients, self.tick_number)
 
         if source:
             results_information['reason'] = source

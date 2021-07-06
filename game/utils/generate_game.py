@@ -26,6 +26,7 @@ def create_structures_file(file_path):
 def read_structures_file(file_path):
     print("MAKE ME!")
 
+
 def findPlotHitboxes():
     plot_hitbox_list = []
 
@@ -44,7 +45,8 @@ def findPlotHitboxes():
                 hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
                 continue
             # Add the plot to the plot list, increment x position to the next starting position
-            plot_hitbox_list.append(Hitbox(plot_width_hieght, plot_width_hieght, (hitbox_top_right_x, hitbox_top_right_y)))
+            plot_hitbox_list.append(
+                Hitbox(plot_width_hieght, plot_width_hieght, (hitbox_top_right_x, hitbox_top_right_y)))
             hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
         # Increment y position down to the next starting position, reset X position back to the starting x position
         hitbox_top_right_y += plot_width_hieght + GameStats.corridor_width_height
@@ -74,11 +76,11 @@ def generate():
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     for entry in filejsn:
                         # Load in every wall in the structure
-                        wall = Wall(Hitbox(1,1,(0,0)))
+                        wall = Wall(Hitbox(1, 1, (0, 0)))
                         wall.from_json(entry)
                         wallList.append(wall)
                     structuresList.append(wallList)
-         # Plots can potentially be empty
+        # Plots can potentially be empty
         structuresList.append(None)
 
     # Choose what structure goes in what plot

@@ -9,7 +9,7 @@ import json
 class TestGameBoardGeneration(unittest.TestCase):
 
     def setUp(self):
-        #generate()
+        # generate()
         # Based on the most recently generated game map
         with open('./logs/game_map.json') as fl:
             self.gameboard = GameBoard(10, 10)
