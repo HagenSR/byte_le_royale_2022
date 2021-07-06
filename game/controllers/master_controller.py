@@ -56,8 +56,8 @@ class MasterController(Controller):
     def create_turn_log(self, clients, turn):
         data = dict()
 
-        # Add things that should be thrown into the turn logs here
-        data['temp'] = None
+        # Add things that should be thrown into the turn logs here. 
+        data['world'] = self.current_world_data
 
         return data
 
