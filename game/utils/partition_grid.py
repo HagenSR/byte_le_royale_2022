@@ -94,4 +94,3 @@ class PartitionGrid:
             ]
             for row in range(len(self.__matrix))
         ]
-        g
