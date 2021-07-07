@@ -3,6 +3,8 @@ from game.common.enums import ObjectType
 from game.common.stats import GameStats
 import math
 
+from game.utils.partition_grid import PartitionGrid
+
 
 class GameBoard(GameObject):
     # the width and height parameters have default values to allow them to be
@@ -16,12 +18,7 @@ class GameBoard(GameObject):
         self.width = width
         self.height = height
 
-        # instantiate lists with an empty list
-        self.player_list = []
-        self.wall_list = []
-        self.items_list = []
-        self.upgrades_list = []
-        self.lethal_list = []
+        self.partition = PartitionGrid(width, height, width / 25, height / 25)
 
         # this calculates starting radius to totally encompass the map at start
         self.circle_radius = math.sqrt(
