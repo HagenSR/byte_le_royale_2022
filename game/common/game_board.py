@@ -36,11 +36,7 @@ class GameBoard(GameObject):
         data['width'] = self.width
         data['height'] = self.height
 
-        data['player_list'] = self.player_list
-        data['wall_list'] = self.wall_list
-        data['items_list'] = self.items_list
-        data['upgrades_list'] = self.upgrades_list
-        data['lethal_list'] = self.lethal_list
+        data['partition'] = self.partition.to_json()
 
         data['circle_radius'] = self.circle_radius
 
@@ -54,11 +50,7 @@ class GameBoard(GameObject):
         self.width = data['width']
         self.height = data['height']
 
-        self.player_list = data['player_list']
-        self.wall_list = data['wall_list']
-        self.items_list = data['items_list']
-        self.upgrades_list = data['upgrades_list']
-        self.lethal_list = data['lethal_list']
+        self.partition = data['partition']
 
         self.circle_radius = data['circle_radius']
 

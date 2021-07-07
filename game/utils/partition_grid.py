@@ -79,3 +79,14 @@ class PartitionGrid:
         row = self.find_row(obj.hitbox.position[1])
         column = self.find_column(obj.hitbox.position[0])
         self.__matrix[row][column].remove(obj)
+
+    def to_json(self):
+        data = {}
+        data['matrix'] = [
+            [
+                [obj.to_json() for obj in self.__matrix[row][column]]
+                for column in range(len(self.__matrix[row]))
+            ]
+            for row in range(len(self.__matrix))
+        ]
+        g
