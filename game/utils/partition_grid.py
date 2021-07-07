@@ -8,7 +8,12 @@ from game.utils import collision_detection
 class PartitionGrid:
     """Structure for storing objects in partitioned 2d space"""
 
-    def __init__(self, width: int, height: int, partitions_wide: int, partitions_tall: int):
+    def __init__(
+            self,
+            width: int,
+            height: int,
+            partitions_wide: int,
+            partitions_tall: int):
         # define the length and width of each square partition
         self.__partition_width = width / partitions_wide
         self.__partition_height = height / partitions_tall
@@ -68,7 +73,8 @@ class PartitionGrid:
         row = self.find_row(given_obj.hitbox.position[1])
         column = self.find_column(given_obj.hitbox.position[0])
         for obj in self.__matrix[row][column]:
-            if collision_detection.check_collision(given_obj.hitbox, obj.hitbox):
+            if collision_detection.check_collision(
+                    given_obj.hitbox, obj.hitbox):
                 return True
         return False
 
