@@ -9,8 +9,8 @@ class TestCollision(unittest.TestCase):
         self.hitOne = Hitbox(10, 10, (5, 5))
         self.hitTwo = Hitbox(25, 25, (5, 6))
 
-    """Below are 3 examples of true cases and false cases. The hit boxes were graphed out beforehand 
-    in order to determine if the test cases are behaving as expected."""
+    # Below are 3 examples of true cases and false cases. The hit boxes were graphed out beforehand
+    # in order to determine if the test cases are behaving as expected.
     def test_collision_true_one(self):
         self.hitOne.position = (5, 5)
         self.hitOne.height = 5
