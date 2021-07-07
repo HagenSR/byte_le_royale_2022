@@ -30,8 +30,6 @@ class GameBoard(GameObject):
     def obfuscate(self):
         super().obfuscate()
 
-        self.player_list = None
-
     def to_json(self):
         data = super().to_json()
 
