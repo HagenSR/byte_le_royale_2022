@@ -73,7 +73,8 @@ class PartitionGrid:
         row = self.find_row(given_obj.hitbox.position[1])
         column = self.find_column(given_obj.hitbox.position[0])
         for obj in self.__matrix[row][column]:
-            if collision_detection.check_collision(given_obj.hitbox, obj.hitbox):
+            if collision_detection.check_collision(
+                    given_obj.hitbox, obj.hitbox):
                 return True
         return False
 
