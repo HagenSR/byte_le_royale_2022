@@ -39,7 +39,7 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.position,
                          (GameStats.game_board_width, 10))
 
-    def test_set_get_tuple_X_invalid_high(self):
+    def test_set_get_tuple_x_invalid_high(self):
         self.assertRaises(ValueError, self.setPosition,
                           (GameStats.game_board_width + 1, 10))
 
