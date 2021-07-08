@@ -44,12 +44,18 @@ def verify_num_clients(clients, set_clients, min_clients, max_clients):
     # Verify correct number of clients
     if set_clients is not None and len(clients) != set_clients:
         res = ValueError("Number of clients is not the set value.\n"
-                         "Number of clients: " + str(len(clients)) + "  |  Set number: " + str(set_clients))
+                         "Number of clients: " +
+                         str(len(clients)) +
+                         "  |  Set number: " +
+                         str(set_clients))
     elif min_clients is not None and len(clients) < min_clients:
         res = ValueError("Number of clients is less than the minimum required.\n"
                          "Number of clients: " + str(len(clients)) + "  |  Minimum: " + str(min_clients))
     elif max_clients is not None and len(clients) > max_clients:
         res = ValueError("Number of clients exceeds the maximum allowed.\n"
-                         "Number of clients: " + str(len(clients)) + "  |  Maximum: " + str(max_clients))
+                         "Number of clients: " +
+                         str(len(clients)) +
+                         "  |  Maximum: " +
+                         str(max_clients))
 
     return res
