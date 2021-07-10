@@ -34,7 +34,9 @@ class TestBullet(unittest.TestCase):
             self.bltObj.termination, (0, 0))
 
     def test_set_get_termination_boundary_high(self):
-        self.bltObj.termination = (GameStats.game_board_width, GameStats.game_board_height)
+        self.bltObj.termination = (
+            GameStats.game_board_width,
+            GameStats.game_board_height)
         self.assertEqual(
             self.bltObj.termination,
             (GameStats.game_board_width, GameStats.game_board_height))

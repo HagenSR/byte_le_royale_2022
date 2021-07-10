@@ -44,7 +44,15 @@ class TestInit(
         self.map = MapObject()
         self.player = Player()
         self.wall = Wall(hitbox=Hitbox(10, 10, (10, 10)))
-        self.bltObj = Bullet(termination=(25, 25), object_hit=False, range=5, damage=5, heading=1, speed=1)
+        self.bltObj = Bullet(
+            termination=(
+                25,
+                25),
+            object_hit=False,
+            range=5,
+            damage=5,
+            heading=1,
+            speed=1)
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
         self.consumable = Consumable(hitbox=Hitbox(
             10, 10, (10, 10)), health=10, count=1)
@@ -68,6 +76,7 @@ class TestInit(
         self.assertEqual(self.wall.object_type, ObjectType.wall)
         self.assertEqual(self.consumable.object_type, ObjectType.consumable)
         self.assertEqual(self.upgrade.object_type, ObjectType.upgrade)
+
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html

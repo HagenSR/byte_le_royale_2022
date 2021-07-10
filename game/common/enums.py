@@ -25,7 +25,6 @@ class ObjectType:
     consumable = 16
 
 
-
 class Upgrades:
     none = 0
     gun_upgrades = 1
