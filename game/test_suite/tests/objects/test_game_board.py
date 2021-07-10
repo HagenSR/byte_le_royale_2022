@@ -11,7 +11,8 @@ class TestGameBoard(unittest.TestCase):
             game_board1.circle_radius, .5 * math.sqrt(20000))  # should succeed
         # if the first test fails, but this one succeeds, then there might be
         # rounding errors
-        self.assertAlmostEqual(game_board1.circle_radius, .5 * math.sqrt(20000))
+        self.assertAlmostEqual(
+            game_board1.circle_radius, .5 * math.sqrt(20000))
 
     # rectangular board test, width greater than height
     def test_circle_rect_width(self):
@@ -19,7 +20,8 @@ class TestGameBoard(unittest.TestCase):
         self.assertGreaterEqual(
             game_board2.circle_radius, .5 * math.sqrt(22500))  # should succeed
         # shows possible rounding errors
-        self.assertAlmostEqual(game_board2.circle_radius, .5 * math.sqrt(32500))
+        self.assertAlmostEqual(
+            game_board2.circle_radius, .5 * math.sqrt(32500))
 
     # rectangular board test, height greater than width
     def test_circle_rect_height(self):
@@ -27,7 +29,8 @@ class TestGameBoard(unittest.TestCase):
         self.assertGreaterEqual(
             game_board3.circle_radius, .5 * math.sqrt(32500))  # should succeed
         # shows possible rounding errors
-        self.assertAlmostEqual(game_board3.circle_radius, .5 * math.sqrt(32500))
+        self.assertAlmostEqual(
+            game_board3.circle_radius, .5 * math.sqrt(32500))
 
     # check each corner's location, and if y value of corner is >= y value of the circle at that x,
     # then that corner must be inside the circle
