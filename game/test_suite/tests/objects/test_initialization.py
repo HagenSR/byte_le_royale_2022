@@ -44,7 +44,7 @@ class TestInit(
         self.map = MapObject()
         self.player = Player()
         self.wall = Wall(hitbox=Hitbox(10, 10, (10, 10)))
-        self.bltObj = Bullet((25, 25), False, range=5, damage=5)
+        self.bltObj = Bullet(termination=(25, 25), object_hit=False, range=5, damage=5, heading=1, speed=1)
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
         self.consumable = Consumable(hitbox=Hitbox(
             10, 10, (10, 10)), health=10, count=1)
