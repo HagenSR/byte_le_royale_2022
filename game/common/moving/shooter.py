@@ -64,19 +64,21 @@ class Shooter(MovingObject):
 
     def append_inventory(self, value):
         """Add object to inventory"""
-        if value.object_type not in tuple(
-                slot_type[1] for slot_type in self.slot_obj_types):
+        if not isinstance(
+            value, tuple(
+                slot_type[1] for slot_type in self.slot_obj_types)):
             raise TypeError(
                 f"Value appended must be of type "
                 f"{[obj_type[1] for obj_type in self.slot_obj_types]} "
-                f"not {value.object_type}")
+                f"not {type(value)}")
         for slot_type, slot_obj_type in self.slot_obj_types:
-            if value.object_type == slot_obj_type and self.has_empty_slot(
-                    slot_type):
+            if isinstance(
+                    value,
+                    slot_obj_type) and self.has_empty_slot(slot_type):
                 self.__inventory[slot_type][self.__inventory[slot_type].index(
                     None)] = value
                 return None
-        raise InventoryFullError(f"Inventory full for type {value}")
+        raise InventoryFullError(f"Inventory full for type {type(value)}")
 
     def remove_from_inventory(self, obj):
         """Remove object from inventory"""

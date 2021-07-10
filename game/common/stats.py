@@ -1,5 +1,7 @@
 from game.common.enums import *
-
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
 
 class GameStats:
     game_board_width = 500
@@ -27,15 +29,15 @@ class GameStats:
     inventory_stats = {
         'guns': {
             'slots': 2,
-            'type': ObjectType.gun
+            'type': game.common.items.gun.Gun
         },
         'upgrades': {
             'slots': 3,
-            'type': ObjectType.upgrade
+            'type': game.common.items.upgrade.Upgrade
         },
         'consumables': {
             'slots': 4,
-            'type': ObjectType.consumable
+            'type': game.common.items.consumable.Consumable
         },
     }
 
