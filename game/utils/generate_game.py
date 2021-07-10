@@ -73,7 +73,6 @@ def generate():
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
     # Use ../../launcher.pyz if opening in the utils folder
     with zipfile.ZipFile('launcher.pyz') as z:
-        wallList = []
         for filename in z.namelist():
             # Only load proper structure json
             if filename.startswith(
@@ -82,6 +81,7 @@ def generate():
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
                     filejsn = json.loads(fl.read().decode('utf-8'))
+                    wallList = []
                     for entry in filejsn:
                         # Load in every wall in the structure
                         wall = Wall(Hitbox(1, 1, (0, 0)))
