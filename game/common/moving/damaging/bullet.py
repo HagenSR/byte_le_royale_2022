@@ -19,14 +19,12 @@ class Bullet(DamagingObject):
 
     @termination.setter
     def termination(self, vals):
-        if vals[0] >= 0 and vals[0] <= GameStats.game_board_width:
-            self.__termination[0] = vals[0]
+        if vals[0] < 0 or vals[0] > GameStats.game_board_width:
+            raise ValueError("x coordinate outside bounds, Not set")
+        elif vals[1] < 0 or vals[1] > GameStats.game_board_height:
+            raise ValueError("y coordinate outside bounds, Not set")
         else:
-            raise ValueError("x coordinate value outside bounds, Not set")
-        if vals[1] >= 0 and vals[1] <= GameStats.game_board_height:
-            self.__termination[1] = vals[1]
-        else:
-            raise ValueError("y coordinate value outside bounds, Not set")
+            self.__termination = vals
 
     def to_json(self):
         data = super().to_json()

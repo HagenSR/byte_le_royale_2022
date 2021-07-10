@@ -17,16 +17,16 @@ class TestBullet(unittest.TestCase):
         self.assertEqual(self.bltObj.termination, (10, 10))
 
     def test_set_get_termination_invalid_x_low(self):
-        self.assertRaises(Exception, self.setTermination, -5)
+        self.assertRaises(Exception, self.setTermination, (-5, 10))
 
     def test_set_get_termination_invalid_x_high(self):
-        self.assertRaises(Exception, self.setTermination, 501)
+        self.assertRaises(Exception, self.setTermination, (501, 10))
 
     def test_set_get_termination_invalid_y_low(self):
-        self.assertRaises(Exception, self.setTermination, -5)
+        self.assertRaises(Exception, self.setTermination, (10, -5))
 
     def test_set_get_termination_invalid_y_high(self):
-        self.assertRaises(Exception, self.setTermination, 501)
+        self.assertRaises(Exception, self.setTermination, (10, 501))
 
     def test_set_get_termination_boundary_low(self):
         self.bltObj.termination = (0, 0)
