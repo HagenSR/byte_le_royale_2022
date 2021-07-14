@@ -18,17 +18,23 @@ from game.common.player import Player
 from game.common.wall import Wall
 from game.common.items.consumable import Consumable
 from game.common.items.upgrade import Upgrade
+from game.common.door import Door
 from game.common.stats import GameStats
 from game.common.enums import ObjectType, GunLevel, GunType
-from game.common.door import Door
 
 
-class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+class TestInit(
+        unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
-    def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
-        self.gun = Gun(gun_type=GunType.assault_rifle, level= GunLevel.level_one)
-        self.item = Item(hitbox=Hitbox(10,10,(10,10)))
-        self.damaging = DamagingObject(hitbox=Hitbox(10,10,(10,10)), heading=1, speed=10 )
+    # This method is used to set up anything you wish to test prior to every
+    # test method below.
+    def setUp(self):
+        self.gun = Gun(
+            gun_type=GunType.assault_rifle,
+            level=GunLevel.level_one)
+        self.item = Item(hitbox=Hitbox(10, 10, (10, 10)))
+        self.damaging = DamagingObject(hitbox=Hitbox(
+            10, 10, (10, 10)), heading=1, speed=10)
         self.movObj = MovingObject(1, 10)
         self.shooter = Shooter()
         self.action = Action()
@@ -36,12 +42,15 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.gameObj = GameObject()
         self.map = MapObject()
         self.player = Player()
-        self.wall = Wall(hitbox=Hitbox(10,10,(10,10)))
+        self.wall = Wall(hitbox=Hitbox(10, 10, (10, 10)))
         self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
-        self.consumable = Consumable(hitbox= Hitbox(10,10,(10,10)), health=10, count=1)
-        self.upgrade = Upgrade(hitbox= Hitbox(10,10,(10,10)), health=10, count=1)
-        self.door = Door(hitbox= Hitbox(10,10,(10,10)) )
-        
+        self.consumable = Consumable(hitbox=Hitbox(
+            10, 10, (10, 10)), health=10, count=1)
+        self.upgrade = Upgrade(
+            hitbox=Hitbox(
+                10, 10, (10, 10)), health=10, count=1)
+        self.door = Door(hitbox=Hitbox(10, 10, (10, 10)))
+
     def testObjectInit(self):
         self.assertEqual(self.gun.object_type, ObjectType.gun)
         self.assertEqual(self.item.object_type, ObjectType.item)
@@ -55,12 +64,8 @@ class TestInit(unittest.TestCase):  # Your test class is a subclass of unittest.
         self.assertEqual(self.map.object_type, ObjectType.map_object)
         self.assertEqual(self.player.object_type, ObjectType.player)
         self.assertEqual(self.wall.object_type, ObjectType.wall)
-        self.assertEqual(self.door.object_type, ObjectType.door)
         self.assertEqual(self.consumable.object_type, ObjectType.consumable)
         self.assertEqual(self.upgrade.object_type, ObjectType.upgrade)
-        
-    
-  
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html
