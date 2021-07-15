@@ -1,4 +1,6 @@
 from datetime import datetime
+from game.common.stats import GameStats
+from game.common.moving.shooter import Shooter
 import importlib
 import json
 import os
@@ -6,6 +8,9 @@ import sys
 import traceback
 
 from game.common.player import Player
+from game.common.game_board import GameBoard
+from game.common.hitbox import Hitbox
+
 from game.config import *
 from game.controllers.master_controller import MasterController
 from game.utils.helpers import write_json_file
@@ -157,10 +162,21 @@ class Engine:
         world = None
         with open(GAME_MAP_FILE) as json_file:
             world = json.load(json_file)
-        self.world = world
 
-        # I think this stuff will have to change
-        self.game_map = world['game_map']
+        # Yes, this is a bit ugly. 
+        gameBoard = GameBoard()
+        self.game_map = gameBoard.from_json(world['game_map'])
+
+        ar = GameStats.player_stats["hitbox"][0]
+        hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+        self.game_map.player_list.append(Shooter(hitbox=hit))
+
+        ar = GameStats.player_stats["hitbox"][1]
+        hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+        self.game_map.player_list.append(Shooter(hitbox=hit))
+
+        world.pop("game_map", None)
+        self.world = world
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn

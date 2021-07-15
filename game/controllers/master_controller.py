@@ -14,7 +14,6 @@ class MasterController(Controller):
         super().__init__()
         self.game_over = False
 
-        self.turn = None
         self.current_world_data = None
 
     # Receives all clients for the purpose of giving them the objects they
@@ -59,9 +58,9 @@ class MasterController(Controller):
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-
+        data['turn'] = turn
         # Add things that should be thrown into the turn logs here.
-        data['world'] = self.current_world_data
+        data['world'] = self.current_world_data.to_json()
 
         return data
 
