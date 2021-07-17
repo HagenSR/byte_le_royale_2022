@@ -77,8 +77,9 @@ class TestInit(
         self.assertEqual(self.consumable.object_type, ObjectType.consumable)
         self.assertEqual(self.upgrade.object_type, ObjectType.upgrade)
 
-
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html
+
+
 if __name__ == '__main__':
     unittest.main

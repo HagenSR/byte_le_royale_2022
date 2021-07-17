@@ -6,8 +6,8 @@ from game.common.enums import *
 # The engine requires these to operate
 # max number of ticks the server will run regardless of game state
 MAX_TICKS = 500
-TQDM_BAR_FORMAT = "Game running at {rate_fmt} "     # how TQDM displays the bar
-TQDM_UNITS = " turns"                               # units TQDM takes in the bar
+TQDM_BAR_FORMAT = "Game running at {rate_fmt} "  # how TQDM displays the bar
+TQDM_UNITS = " ticks"  # units TQDM takes in the bar
 
 # max number of basic operations clients have for their turns
 MAX_SECONDS_PER_TURN = 0.1
@@ -36,7 +36,7 @@ MAX_CLIENTS_CONTINUE = None
 # when MIN_CLIENTS or MAX_CLIENTS are used
 SET_NUMBER_OF_CLIENTS_CONTINUE = 2
 
-ALLOWED_MODULES = ["game.client.user_client",       # modules that clients are specifically allowed to access
+ALLOWED_MODULES = ["game.client.user_client",  # modules that clients are specifically allowed to access
                    "game.common.enums"]
 
 # Name and extension of results file
@@ -59,7 +59,7 @@ GAME_MAP_DIR = os.path.join(os.getcwd(), "logs")
 GAME_MAP_FILE = os.path.join(GAME_MAP_DIR, GAME_MAP_FILE_NAME)
 
 
-class Debug:                    # Keeps track of the current debug level of the game
+class Debug:  # Keeps track of the current debug level of the game
     level = DebugLevel.none
 
 # Other Settings Here ----------------------------------------------------

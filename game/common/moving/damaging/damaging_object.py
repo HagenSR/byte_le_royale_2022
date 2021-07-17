@@ -1,4 +1,3 @@
-
 from game.common.moving.moving_object import MovingObject
 from game.common.stats import GameStats
 from game.common.enums import *
@@ -45,3 +44,4 @@ class DamagingObject(MovingObject):
         super().from_json(data)
         self.range = data['range']
         self.damage = data['damage']
+        return self

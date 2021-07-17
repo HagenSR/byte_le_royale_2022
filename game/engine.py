@@ -9,7 +9,7 @@ from game.common.player import Player
 from game.config import *
 from game.controllers.master_controller import MasterController
 from game.utils.helpers import write_json_file
-from game.utils.thread import Thread, CommunicationThread
+from game.utils.threadBytel import Thread, CommunicationThread
 from game.utils.validation import verify_code, verify_num_clients
 
 from tqdm import tqdm
@@ -26,6 +26,11 @@ class Engine:
         self.current_world_key = None
 
         self.quiet_mode = quiet_mode
+
+        # Delete logs, then recreate logs dir
+        for file in os.scandir(LOGS_DIR):
+            if ('map' not in file.path):
+                os.remove(file.path)
 
     # Starting point of the engine. Runs other methods then sits on top of a
     # basic game loop until over
@@ -154,25 +159,28 @@ class Engine:
             world = json.load(json_file)
         self.world = world
 
+        # I think this stuff will have to change
+        self.game_map = world['game_map']
+
     # Sits on top of all actions that need to happen before the player takes
     # their turn
     def pre_tick(self):
         # Increment the tick
         self.tick_number += 1
 
+        # game map isn't tick based, only need the previous game map to persist
         # Retrieve current world info
-        if self.current_world_key not in self.world:
-            raise KeyError(
-                'Given generated world key does not exist inside the world.')
-        current_world = self.world[self.current_world_key]
+        # if self.current_world_key not in self.world:
+        #     raise KeyError('Given generated world key does not exist inside the world.')
+        # current_world = self.world['game_map']
 
         # Send current world information to master controller for purposes
         if SET_NUMBER_OF_CLIENTS_START == 1:
             self.master_controller.interpret_current_turn_data(
-                self.clients[0], current_world, self.tick_number)
+                self.clients[0], self.game_map, self.tick_number)
         else:
             self.master_controller.interpret_current_turn_data(
-                self.clients, current_world, self.tick_number)
+                self.clients, self.game_map, self.tick_number)
 
     # Does actions like lets the player take their turn and asks master
     # controller to perform game logic
@@ -257,7 +265,14 @@ class Engine:
             data = self.master_controller.create_turn_log(
                 self.clients, self.tick_number)
 
-        self.game_logs[self.tick_number] = data
+        # self.game_logs[self.tick_number] = data
+
+        with open(os.path.join(LOGS_DIR, f"turn_{self.tick_number:04d}.json"), 'w+') as f:
+            json.dump(data, f)
+
+        # Perform a game over check
+        if self.master_controller.game_over:
+            self.shutdown()
 
         # Perform a game over check
         if self.master_controller.game_over:

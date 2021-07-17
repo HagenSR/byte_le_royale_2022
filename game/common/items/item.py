@@ -16,3 +16,4 @@ class Item(MapObject):
     def from_json(self, data):
         super().from_json(data)
         self.count = data['count']
+        return self
