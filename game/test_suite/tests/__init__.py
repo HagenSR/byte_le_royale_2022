@@ -23,5 +23,6 @@ __all__ = [
     'TestBullet',
     'TestInit',
     'TestHitboxObject',
+    # 'TestGameBoardGeneration'
     'TestCollision'
 ]
