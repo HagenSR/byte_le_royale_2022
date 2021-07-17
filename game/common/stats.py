@@ -3,6 +3,7 @@ import game.common.items.gun
 import game.common.items.upgrade
 import game.common.items.consumable
 
+
 class GameStats:
     game_board_width = 500
     game_board_height = 500
