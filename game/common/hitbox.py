@@ -2,6 +2,7 @@ from game.common.game_object import GameObject
 from game.common.enums import *
 import game.common.stats as stats
 
+
 class Hitbox(GameObject):
     def __init__(self, width, height, xy_tuple):
         super().__init__()

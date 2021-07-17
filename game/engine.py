@@ -167,7 +167,7 @@ class Engine:
         gameBoard = GameBoard()
         game_map = gameBoard.from_json(world['game_map'])
 
-        #Add players one and two
+        # Add players one and two
         ar = GameStats.player_stats["hitbox"][0]
         hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
         game_map.player_list.append(Shooter(hitbox=hit))
