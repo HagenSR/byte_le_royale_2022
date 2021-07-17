@@ -40,7 +40,7 @@ class MasterController(Controller):
     # interpreting it
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
-        
+
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
     def client_turn_arguments(self, client, turn):
