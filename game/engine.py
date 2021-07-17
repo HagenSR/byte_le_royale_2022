@@ -27,7 +27,7 @@ class Engine:
         self.tick_number = 0
 
         self.game_logs = dict()
-        self.world = None
+        self.world = dict()
         self.current_world_key = None
 
         self.quiet_mode = quiet_mode
@@ -163,20 +163,22 @@ class Engine:
         with open(GAME_MAP_FILE) as json_file:
             world = json.load(json_file)
 
-        # Yes, this is a bit ugly. 
+        # Yes, this is a bit ugly. Load game map json to game map object
         gameBoard = GameBoard()
-        self.game_map = gameBoard.from_json(world['game_map'])
+        game_map = gameBoard.from_json(world['game_map'])
 
+        #Add players one and two
         ar = GameStats.player_stats["hitbox"][0]
         hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-        self.game_map.player_list.append(Shooter(hitbox=hit))
+        game_map.player_list.append(Shooter(hitbox=hit))
 
         ar = GameStats.player_stats["hitbox"][1]
         hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-        self.game_map.player_list.append(Shooter(hitbox=hit))
+        game_map.player_list.append(Shooter(hitbox=hit))
 
+        # add game map object to dictionary
         world.pop("game_map", None)
-        self.world = world
+        self.world["game_map"] = game_map
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn
@@ -193,10 +195,10 @@ class Engine:
         # Send current world information to master controller for purposes
         if SET_NUMBER_OF_CLIENTS_START == 1:
             self.master_controller.interpret_current_turn_data(
-                self.clients[0], self.game_map, self.tick_number)
+                self.clients[0], self.world, self.tick_number)
         else:
             self.master_controller.interpret_current_turn_data(
-                self.clients, self.game_map, self.tick_number)
+                self.clients, self.world, self.tick_number)
 
     # Does actions like lets the player take their turn and asks master
     # controller to perform game logic

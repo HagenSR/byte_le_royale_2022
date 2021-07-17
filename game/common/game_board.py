@@ -28,7 +28,7 @@ class GameBoard(GameObject):
         self.items_list = []
         self.upgrades_list = []
         self.lethal_list = []
-
+        
         # this calculates starting radius to totally encompass the map at start
         self.circle_radius = math.sqrt(
             (self.width / 2) ** 2 + (self.height / 2) ** 2)
