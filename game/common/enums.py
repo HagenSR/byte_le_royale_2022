@@ -24,6 +24,15 @@ class ObjectType:
     consumable = 15
 
 
+class ActionType:
+    none = 0
+    move = 1
+    shoot = 2
+    interact_with_map = 3
+    reload_weapon = 4
+    shop = 5
+
+
 class Upgrades:
     none = 0
     gun_upgrades = 1
