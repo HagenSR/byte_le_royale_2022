@@ -1,6 +1,12 @@
+from game.common.hitbox import Hitbox
 from game.common.game_object import GameObject
-from game.common.enums import ObjectType
+from game.common.enums import ObjectType, Upgrades
+from game.common.items.upgrade import Upgrade
 from game.common.stats import GameStats
+from game.common.moving.shooter import Shooter
+from game.common.wall import Wall
+from game.common.items.item import Item
+from copy import deepcopy
 import math
 
 from game.utils.partition_grid import PartitionGrid
@@ -28,6 +34,18 @@ class GameBoard(GameObject):
         # set turn counter to 0, not sure the use for this yet
         self.turn = 0
 
+    @property
+    def circle_radius(self):
+        return self.__circle_radius
+
+    # setter for circle radius. must be greater than or equal to zero
+    @circle_radius.setter
+    def circle_radius(self, val):
+        if val > 0:
+            self.__circle_radius = val
+        else:
+            self.__circle_radius = 0
+
     def obfuscate(self):
         super().obfuscate()
 
@@ -50,9 +68,10 @@ class GameBoard(GameObject):
 
         self.width = data['width']
         self.height = data['height']
-
+        
         self.partition.from_json(data['partition'])
 
         self.circle_radius = data['circle_radius']
 
         self.turn = data['turn']
+        return self
