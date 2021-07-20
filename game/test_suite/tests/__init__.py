@@ -9,8 +9,7 @@ from game.test_suite.tests.objects.test_grenade import TestGrenade
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
-from game.test_suite.tests.collision_test import TestCollision
-
+#from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 
 __all__ = [
     'TestGameBoard',
@@ -20,5 +19,5 @@ __all__ = [
     'TestGrenade',
     'TestInit',
     'TestHitboxObject',
-    'TestCollision'
+    # 'TestGameBoardGeneration'
 ]

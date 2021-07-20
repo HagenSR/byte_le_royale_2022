@@ -3,10 +3,16 @@ import game.common.items.gun
 import game.common.items.upgrade
 import game.common.items.consumable
 
-
 class GameStats:
     game_board_width = 500
     game_board_height = 500
+
+    # The radius that the kill circle will shrink every tick
+    circle_shrink_distance = 1
+
+    # The "margin" inbetween every building plot in game map. Used so players
+    # can always navigate between buildings
+    corridor_width_height = 20
 
     default_wall_health = 50
 

@@ -4,7 +4,7 @@ from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
-from game.utils.thread import CommunicationThread
+from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
 
@@ -60,8 +60,8 @@ class MasterController(Controller):
     def create_turn_log(self, clients, turn):
         data = dict()
 
-        # Add things that should be thrown into the turn logs here
-        data['temp'] = None
+        # Add things that should be thrown into the turn logs here.
+        data['world'] = self.current_world_data
 
         return data
 

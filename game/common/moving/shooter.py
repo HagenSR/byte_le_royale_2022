@@ -104,6 +104,7 @@ class Shooter(MovingObject):
 
     def cycle_primary(self):
         """Cycle primary gun to the next one in the inventory"""
+
         def cycle():
             if self.__primary_pointer >= len(self.__inventory['guns']):
                 self.__primary_pointer = 0
@@ -160,3 +161,4 @@ class Shooter(MovingObject):
         self.visible = data['visible']
         self.view_radius = data['view_radius']
         self.moving = data['moving']
+        return self
