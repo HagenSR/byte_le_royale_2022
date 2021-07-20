@@ -68,7 +68,7 @@ class GameBoard(GameObject):
 
         self.width = data['width']
         self.height = data['height']
-        
+
         self.partition.from_json(data['partition'])
 
         self.circle_radius = data['circle_radius']
