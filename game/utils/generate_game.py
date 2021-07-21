@@ -192,14 +192,19 @@ def create_structures_file(file_path):
         Wall(Hitbox(40, 40, (55, 40)), destructible=True)
     ]
     Structures.append(square_in_h)
-    
-    
+    structure_name_list = [
+        'bloc', 'outlet', 'the_end', 'smile', 'funnel', 'right_u', 'plus_sign', 'four_corners',
+        'structure_h', 'structure_l', 'reflect_l', 'incomplete_x', 'multi_directional',
+        'center_stage', 'random_rectangles', 'creeper_aw_man', 'train_station', 'blockade',
+        'pyramid_scheme', 'battle_box', 'structure_i', 'fortified', 'square_in_h'
+    ]
+
     #Iterate over each structure and get its walls
     for i in range(len(Structures)):
         walls = []
         for wall in Structures[i]:
             walls.append(wall)
-        with open(file_path, 'w') as fl:
+        with open('./structures/' + structure_name_list[i] + '.json', 'w') as fl:
             # Writes each object to json, then writes the string to file
             strs = [json.dumps(wall.to_json()) for wall in walls]
             s = "[%s]" % ",\n".join(strs)
@@ -217,15 +222,15 @@ def findPlotHitboxes():
     plot_width_hieght = ((GameStats.game_board_width - (20 * 4)) / 3)
 
     # This is the top left of the first plot
-    hitbox_top_right_y = GameStats.corridor_width_height
-    hitbox_top_right_x = GameStats.corridor_width_height
+    hitbox_top_left_y = GameStats.corridor_width_height
+    hitbox_top_left_x = GameStats.corridor_width_height
 
     # Create 9 plots, but the middle one is empty
     for i in range(3):
         for y in range(3):
             # Skip the middle plot
             if i == 1 and y == 1:
-                hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
+                hitbox_top_left_x += plot_width_hieght + GameStats.corridor_width_height
                 continue
             # Add the plot to the plot list, increment x position to the next
             # starting position
@@ -233,13 +238,13 @@ def findPlotHitboxes():
                 Hitbox(
                     plot_width_hieght,
                     plot_width_hieght,
-                    (hitbox_top_right_x,
-                     hitbox_top_right_y)))
-            hitbox_top_right_x += plot_width_hieght + GameStats.corridor_width_height
+                    (hitbox_top_left_x,
+                     hitbox_top_left_y)))
+            hitbox_top_left_x += plot_width_hieght + GameStats.corridor_width_height
         # Increment y position down to the next starting position, reset X
         # position back to the starting x position
-        hitbox_top_right_y += plot_width_hieght + GameStats.corridor_width_height
-        hitbox_top_right_x = GameStats.corridor_width_height
+        hitbox_top_left_y += plot_width_hieght + GameStats.corridor_width_height
+        hitbox_top_left_x = GameStats.corridor_width_height
     return plot_hitbox_list
 
 
@@ -299,4 +304,4 @@ def generate():
 
 
 if __name__ == '__main__':
-    generate()
+    create_structures_file("./structures/structureDescriptiveName.json")
