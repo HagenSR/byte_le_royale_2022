@@ -9,6 +9,8 @@ from game.common.items.item import Item
 from copy import deepcopy
 import math
 
+from game.utils.partition_grid import PartitionGrid
+
 
 class GameBoard(GameObject):
     # the width and height parameters have default values to allow them to be
@@ -22,12 +24,8 @@ class GameBoard(GameObject):
         self.width = width
         self.height = height
 
-        # instantiate lists with an empty list
-        self.player_list = []
-        self.wall_list = []
-        self.items_list = []
-        self.upgrades_list = []
-        self.lethal_list = []
+        self.partition = PartitionGrid(
+            width, height, int(width / 25), int(height / 25))
 
         # this calculates starting radius to totally encompass the map at start
         self.circle_radius = math.sqrt(
@@ -51,20 +49,13 @@ class GameBoard(GameObject):
     def obfuscate(self):
         super().obfuscate()
 
-        self.player_list = None
-
     def to_json(self):
         data = super().to_json()
 
         data['width'] = self.width
         data['height'] = self.height
 
-        data['player_list'] = [player.to_json() for player in self.player_list]
-        data['wall_list'] = [wall.to_json() for wall in self.wall_list]
-        data['items_list'] = [item.to_json() for item in self.items_list]
-        data['upgrades_list'] = [upgrade.to_json()
-                                 for upgrade in self.upgrades_list]
-        data['lethal_list'] = [lethal.to_json() for lethal in self.lethal_list]
+        data['partition'] = self.partition.to_json()
 
         data['circle_radius'] = self.circle_radius
 
@@ -78,25 +69,7 @@ class GameBoard(GameObject):
         self.width = data['width']
         self.height = data['height']
 
-        player = Shooter()
-        self.player_list = [deepcopy(player.from_json(row))
-                            for row in data['player_list']]
-
-        wall = Wall(Hitbox(10, 10, (10, 10)))
-        self.wall_list = [deepcopy(wall.from_json(row))
-                          for row in data['wall_list']]
-
-        # I hope that auto conversion works?
-        item = Item(Hitbox(10, 10, (10, 10)))
-        self.items_list = [deepcopy(item.from_json(row))
-                           for row in data['items_list']]
-
-        upgrade = Upgrade(Hitbox(10, 10, (10, 10)), 1, 1)
-        self.upgrades_list = [deepcopy(upgrade.from_json(row))
-                              for row in data['upgrades_list']]
-
-        # TODO Implement this for projectiles
-        self.lethal_list = data['lethal_list']
+        self.partition.from_json(data['partition'])
 
         self.circle_radius = data['circle_radius']
 
