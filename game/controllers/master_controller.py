@@ -1,10 +1,11 @@
 from copy import deepcopy
+from game.common.stats import GameStats
 
 from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
-from game.utils.thread import CommunicationThread
+from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
 
@@ -14,7 +15,6 @@ class MasterController(Controller):
         super().__init__()
         self.game_over = False
 
-        self.turn = None
         self.current_world_data = None
 
     # Receives all clients for the purpose of giving them the objects they
@@ -34,6 +34,7 @@ class MasterController(Controller):
             yield str(self.turn)
             # Increment the turn counter by 1
             self.turn += 1
+            self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
 
     # Receives world data from the generated game log and is responsible for
     # interpreting it
@@ -59,10 +60,10 @@ class MasterController(Controller):
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-
-        # Add things that should be thrown into the turn logs here
-        data['temp'] = None
-
+        data['turn'] = turn
+        # Add things that should be thrown into the turn logs here.
+        data['game_map'] = self.current_world_data["game_map"].to_json()
+        data['clients'] = [client.to_json() for client in clients]
         return data
 
     # Gather necessary data together in results file

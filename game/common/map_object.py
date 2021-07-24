@@ -1,5 +1,6 @@
 from game.common.game_object import GameObject
-from game.common.enums import *
+from game.common.enums import ObjectType
+import game.common.hitbox as HitBox
 
 
 class MapObject(GameObject):
@@ -13,8 +14,7 @@ class MapObject(GameObject):
     def to_json(self):
         data = super().to_json()
         data['health'] = self.health
-        data['coordinates'] = self.coordinates
-        data['hitbox'] = self.hitbox
+        data['hitbox'] = self.hitbox.to_json()
         data['collidable'] = self.collidable
 
         return data
@@ -22,14 +22,14 @@ class MapObject(GameObject):
     def from_json(self, data):
         super().from_json(data)
         self.health = data['health']
-        self.coordinates = data['coordinates']
-        self.hitbox = data['hitbox']
+        self.hitbox = HitBox.Hitbox(1, 1, (0, 0))
+        self.hitbox.from_json(data['hitbox'])
         self.collidable = data['collidable']
+        return self
 
     def __str__(self):
         return f"""
              Health: {self.health}
-             Coordinates: {self.coordinates}
-             Hitbox: {self.hitbox}
+             Hitbox: {self.hitbox.__str__()}
              Collidable: {self.collidable}
              """

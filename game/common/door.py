@@ -24,3 +24,4 @@ class Door(MapObject):
         super().from_json(data)
         self.opening_speed = data['opening_speed']
         self.open_state = data['open_state']
+        return self
