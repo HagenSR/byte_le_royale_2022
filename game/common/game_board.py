@@ -31,9 +31,6 @@ class GameBoard(GameObject):
         self.circle_radius = math.sqrt(
             (self.width / 2) ** 2 + (self.height / 2) ** 2)
 
-        # set turn counter to 0, not sure the use for this yet
-        self.turn = 0
-
     @property
     def circle_radius(self):
         return self.__circle_radius
@@ -59,8 +56,6 @@ class GameBoard(GameObject):
 
         data['circle_radius'] = self.circle_radius
 
-        data['turn'] = self.turn
-
         return data
 
     def from_json(self, data):
@@ -73,5 +68,4 @@ class GameBoard(GameObject):
 
         self.circle_radius = data['circle_radius']
 
-        self.turn = data['turn']
         return self
