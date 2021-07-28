@@ -1,6 +1,6 @@
 from game.common.game_object import GameObject
-from game.common.stats import GameStats
 from game.common.enums import *
+import game.common.stats as stats
 
 
 class Hitbox(GameObject):
@@ -38,12 +38,18 @@ class Hitbox(GameObject):
 
     @property
     def bottomRight(self):
-        return (self.position[0] + self.width, self.position[1] +self.height)
+        return (self.position[0] + self.width, self.position[1] + self.height)
 
     @property
     def middle(self):
-        return (self.position[0] + self.width / 2, self.position[1] +self.height / 2)
-    
+        return (
+            self.position[0] +
+            self.width /
+            2,
+            self.position[1] +
+            self.height /
+            2)
+
     # set height between 0 and max
     @height.setter
     def height(self, val):
@@ -51,29 +57,30 @@ class Hitbox(GameObject):
             self.__height = val
         else:
             raise ValueError("Tried to set an invalid height for hitbox")
-    
+
     # Set width for hitbox between 0 and max
     @width.setter
     def width(self, val):
         if val > 0:
             self.__width = val
-        else: 
+        else:
             raise ValueError("Tried to set an invalid width for hitbox")
 
     # set x between 0 and max game board width
     @position.setter
     def position(self, val):
-        if (0 <= val[0] <= GameStats.game_board_width) and (0 <= val[1] <= GameStats.game_board_height):
+        if (0 <= val[0] <= stats.GameStats.game_board_width) and (
+                0 <= val[1] <= stats.GameStats.game_board_height):
             self.__position = val
         else:
-            raise ValueError("Tried to set an invalid xy position tuple for hitbox")
-    
+            raise ValueError(
+                "Tried to set an invalid xy position tuple for hitbox")
+
     def to_json(self):
         data = super().to_json()
         data['width'] = self.width
         data['height'] = self.height
         data['position'] = self.position
-        
         return data
 
     def from_json(self, data):
@@ -83,8 +90,9 @@ class Hitbox(GameObject):
         self.position = data['position']
 
     def __str__(self):
-         return f"""
+        return f"""
              Height: {self.height}
              Width: {self.width}
-             X: {self.position}
+             X: {self.position[0]}
+             Y: {self.position[1]}
              """

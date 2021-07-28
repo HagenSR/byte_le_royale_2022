@@ -10,16 +10,19 @@ from game.common.hitbox import Hitbox
 import math
 
 
-class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
+class TestMovingObject(
+        unittest.TestCase):  # Your test class is a subclass of unittest.Testcase, this is important
 
-    def setUp(self):  # This method is used to set up anything you wish to test prior to every test method below.
+    # This method is used to set up anything you wish to test prior to every
+    # test method below.
+    def setUp(self):
         self.movObj = MovingObject(1, 10)
-    
+
     # Test if a valid heading set works
     def test_set_get_heading_valid(self):
         self.movObj.heading = math.pi
         self.assertEqual(self.movObj.heading, math.pi)
-    
+
     # Test if a valid speed set works
     def test_set_get_speed_valid(self):
         self.movObj.speed = 100
@@ -33,19 +36,24 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertRaises(Exception, self.setSpeed, -1)
 
     def test_set_get_heading_invalid_high(self):
-        self.assertRaises(Exception, self.setHeading, (math.pi*3))
-        
+        self.assertRaises(Exception, self.setHeading, (math.pi * 3))
+
     def test_set_get_speed_invalid_high(self):
-        self.assertRaises(Exception, self.setSpeed, (GameStats.moving_object_stats['max_speed'] + 1))
+        self.assertRaises(
+            Exception,
+            self.setSpeed,
+            (GameStats.moving_object_stats['max_speed'] + 1))
 
     # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
-        self.movObj.heading = math.pi*2
-        self.assertEqual(self.movObj.heading, math.pi*2)
+        self.movObj.heading = math.pi * 2
+        self.assertEqual(self.movObj.heading, math.pi * 2)
 
     def test_set_get_speed_boundary_high(self):
         self.movObj.speed = GameStats.moving_object_stats['max_speed']
-        self.assertEqual(self.movObj.speed, GameStats.moving_object_stats['max_speed'])
+        self.assertEqual(
+            self.movObj.speed,
+            GameStats.moving_object_stats['max_speed'])
 
     def test_set_get_heading_boundary_low(self):
         self.movObj.heading = 0
@@ -56,16 +64,24 @@ class TestMovingObject(unittest.TestCase):  # Your test class is a subclass of u
         self.assertEqual(self.movObj.speed, 0)
 
     def test_moving_obj_parent_params(self):
-        test_mov = MovingObject(1, 10, health=1, hitbox= Hitbox(10,10,(10,10)), collidable=True)
+        test_mov = MovingObject(
+            1, 10, health=1, hitbox=Hitbox(
+                10, 10, (10, 10)), collidable=True)
         self.assertIsNotNone(test_mov.hitbox.position)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)
         self.assertIsNone(self.movObj.hitbox)
         self.assertIsNone(self.movObj.collidable)
-        
+
     def setHeading(self, newHeading):
         self.movObj.heading = newHeading
-    
+
+    def setSpeed(self, newSpeed):
+        self.movObj.speed = newSpeed
+
+    def setHeading(self, newHeading):
+        self.movObj.heading = newHeading
+
     def setSpeed(self, newSpeed):
         self.movObj.speed = newSpeed
 
