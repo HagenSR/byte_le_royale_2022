@@ -14,12 +14,12 @@ class Shooter(MovingObject):
             self,
             heading=0,
             speed=0,
-            coordinates=GameStats.player_stats['starting_coordinates'][0]):
+            hitbox=None):
         super().__init__(
             heading,
             speed,
             GameStats.player_stats['starting_health'],
-            GameStats.player_stats['hitbox'],
+            hitbox,
             collidable=True
         )
         self.object_type = ObjectType.shooter

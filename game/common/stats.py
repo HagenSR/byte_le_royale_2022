@@ -3,6 +3,7 @@ import game.common.items.gun
 import game.common.items.upgrade
 import game.common.items.consumable
 
+
 class GameStats:
     game_board_width = 500
     game_board_height = 500
@@ -19,8 +20,7 @@ class GameStats:
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'starting_coordinates': [{'x': 450, 'y': 450}, {'x': 50, 'y': 50}],
-        'hitbox': {'width': 10, 'height': 10},
+        'hitbox': [[10, 10, 50, 50], [10, 10, 450, 450]],
         'view_radius': 10,
         'move_speed': 10,
     }
