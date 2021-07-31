@@ -10,9 +10,9 @@ class GameStats:
 
     # The radius that the kill circle will shrink every tick
     circle_shrink_distance = 1
-    #Damage circle does each tick
+    # Damage circle does each tick
     circle_damage = 1
-    #Number of turns before circle
+    # Number of turns before circle
     circle_delay = 100
 
     # The "margin" inbetween every building plot in game map. Used so players
