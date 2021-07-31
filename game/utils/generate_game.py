@@ -15,18 +15,18 @@ import json
 
 def create_structures_file(file_path):
     Structures = []
-    #Structure1 has no walls
-    block = [(Wall(Hitbox(140, 140, (0,0)), destructible=True))] 
+    # Structure1 has no walls
+    block = [(Wall(Hitbox(140, 140, (0, 0)), destructible=True))]
     Structures.append(block)
     outlet = [
-        Wall(Hitbox(50, 20, (50, 10)), destructible=True), 
+        Wall(Hitbox(50, 20, (50, 10)), destructible=True),
         Wall(Hitbox(10, 75, (30, 45)), destructible=True),
         Wall(Hitbox(10, 75, (100, 45)), destructible=True),
         Wall(Hitbox(140, 20, (0, 120)), destructible=True)
-        ]
+    ]
     Structures.append(outlet)
     the_end = [
-        Wall(Hitbox(18, 18, (30, 30)), destructible=True), 
+        Wall(Hitbox(18, 18, (30, 30)), destructible=True),
         Wall(Hitbox(18, 18, (60, 30)), destructible=True),
         Wall(Hitbox(18, 18, (90, 30)), destructible=True),
         Wall(Hitbox(18, 18, (30, 60)), destructible=True),
@@ -35,7 +35,7 @@ def create_structures_file(file_path):
         Wall(Hitbox(18, 18, (30, 90)), destructible=True),
         Wall(Hitbox(18, 18, (60, 90)), destructible=True),
         Wall(Hitbox(18, 18, (90, 90)), destructible=True)
-        ]
+    ]
     Structures.append(the_end)
     smile = [
         Wall(Hitbox(40, 40, (30, 20)), destructible=True),
@@ -45,7 +45,7 @@ def create_structures_file(file_path):
         Wall(Hitbox(50, 20, (50, 100)), destructible=True),
         Wall(Hitbox(20, 20, (100, 80)), destructible=True),
         Wall(Hitbox(20, 20, (120, 60)), destructible=True)
-        ]
+    ]
     Structures.append(smile)
     funnel = [
         Wall(Hitbox(15, 140, (0, 0)), destructible=True),
@@ -193,13 +193,31 @@ def create_structures_file(file_path):
     ]
     Structures.append(square_in_h)
     structure_name_list = [
-        'bloc', 'outlet', 'the_end', 'smile', 'funnel', 'right_u', 'plus_sign', 'four_corners',
-        'structure_h', 'structure_l', 'reflect_l', 'incomplete_x', 'multi_directional',
-        'center_stage', 'random_rectangles', 'creeper_aw_man', 'train_station', 'blockade',
-        'pyramid_scheme', 'battle_box', 'structure_i', 'fortified', 'square_in_h'
-    ]
+        'bloc',
+        'outlet',
+        'the_end',
+        'smile',
+        'funnel',
+        'right_u',
+        'plus_sign',
+        'four_corners',
+        'structure_h',
+        'structure_l',
+        'reflect_l',
+        'incomplete_x',
+        'multi_directional',
+        'center_stage',
+        'random_rectangles',
+        'creeper_aw_man',
+        'train_station',
+        'blockade',
+        'pyramid_scheme',
+        'battle_box',
+        'structure_i',
+        'fortified',
+        'square_in_h']
 
-    #Iterate over each structure and get its walls
+    # Iterate over each structure and get its walls
     for i in range(len(Structures)):
         walls = []
         for wall in Structures[i]:
