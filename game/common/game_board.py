@@ -27,9 +27,9 @@ class GameBoard(GameObject):
         self.partition = PartitionGrid(
             width, height, int(width / 25), int(height / 25))
 
-        # this calculates starting radius to totally encompass the map at start
+        # this calculates starting radius to totally encompass the map at start with delay
         self.circle_radius = math.sqrt(
-            (self.width / 2) ** 2 + (self.height / 2) ** 2)
+            (self.width / 2) ** 2 + (self.height / 2) ** 2) + GameStats.circle_delay
 
     @property
     def circle_radius(self):
