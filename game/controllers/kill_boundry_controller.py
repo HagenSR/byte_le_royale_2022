@@ -1,6 +1,7 @@
 from game.common.game_board import GameBoard
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
+from game.controllers.controller import Controller
 import math
 
 class KillBoundryController(Controller):
