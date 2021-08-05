@@ -13,7 +13,7 @@ class Wall(MapObject):
         self.destructible = destructible
         self.object_type = ObjectType.wall
         self.destructible = destructible
-
+        
     def to_json(self):
         data = super().to_json()
         data['destructible'] = self.destructible

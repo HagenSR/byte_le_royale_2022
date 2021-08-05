@@ -9,6 +9,14 @@ class MapObject(GameObject):
         self.health = health
         self.hitbox = hitbox
         self.collidable = collidable
+        
+    @property
+    def health(self):
+        return self.health
+    
+    @health.setter    
+    def health(self, val):
+        self.health = val
 
     def to_json(self):
         data = super().to_json()
