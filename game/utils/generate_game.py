@@ -248,7 +248,7 @@ def findPlotHitboxes():
         for y in range(3):
             # Skip the middle plot
             if i == 1 and y == 1:
-                hitbox_top_right_x += plot_width_height + GameStats.corridor_width_height
+                hitbox_top_left_x += plot_width_height + GameStats.corridor_width_height
                 continue
             # Add the plot to the plot list, increment x position to the next
             # starting position
@@ -256,13 +256,13 @@ def findPlotHitboxes():
                 Hitbox(
                     plot_width_height,
                     plot_width_height,
-                    (hitbox_top_right_x,
-                     hitbox_top_right_y)))
-            hitbox_top_right_x += plot_width_height + GameStats.corridor_width_height
+                    (hitbox_top_left_x,
+                     hitbox_top_left_y)))
+            hitbox_top_left_x += plot_width_height + GameStats.corridor_width_height
         # Increment y position down to the next starting position, reset X
         # position back to the starting x position
-        hitbox_top_right_y += plot_width_height + GameStats.corridor_width_height
-        hitbox_top_right_x = GameStats.corridor_width_height
+        hitbox_top_left_y += plot_width_height + GameStats.corridor_width_height
+        hitbox_top_left_x = GameStats.corridor_width_height
     return plot_hitbox_list
 
 
