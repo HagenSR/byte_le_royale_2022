@@ -20,7 +20,7 @@ class TestRayCollision(unittest.TestCase):
     def test_calculate_slope(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (3*math.pi)/4
+        player.shooter.heading = (3 * math.pi) / 4
         expected_slope = -1
         test_slope = calculate_slope(player)
         self.assertAlmostEqual(expected_slope, test_slope, 2)
@@ -28,7 +28,7 @@ class TestRayCollision(unittest.TestCase):
     def test_determine_collision_quadrant1(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (math.pi/4)
+        player.shooter.heading = (math.pi / 4)
         player.shooter.hitbox = Hitbox(10, 10, (19, 101))
         gun = Gun(1, 1)
         gameboard = GameBoard()
@@ -47,7 +47,7 @@ class TestRayCollision(unittest.TestCase):
     def test_determine_collision_quadrant2(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (7*(math.pi/4))
+        player.shooter.heading = (7 * (math.pi / 4))
         player.shooter.hitbox = Hitbox(10, 10, (21, 101))
         gun = Gun(1, 1)
         gameboard = GameBoard()
@@ -66,7 +66,7 @@ class TestRayCollision(unittest.TestCase):
     def test_determine_collision_quadrant3(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (5*(math.pi/4))
+        player.shooter.heading = (5 * (math.pi / 4))
         player.shooter.hitbox = Hitbox(10, 10, (21, 99))
         gun = Gun(1, 1)
         gameboard = GameBoard()
@@ -85,7 +85,7 @@ class TestRayCollision(unittest.TestCase):
     def test_determine_collision_quadrant4(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (3*(math.pi/4))
+        player.shooter.heading = (3 * (math.pi / 4))
         player.shooter.hitbox = Hitbox(10, 10, (19, 99))
         gun = Gun(1, 1)
         gameboard = GameBoard()
@@ -100,6 +100,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         ray = get_ray_collision(player, gameboard, gun)
         self.assertEqual(ray.collision, obj_list[0])
+
 
 if __name__ == '__main__':
     unittest.main
