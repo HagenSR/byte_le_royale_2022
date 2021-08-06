@@ -60,7 +60,8 @@ class MasterController(Controller):
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-        data['turn'] = turn
+        data['tick'] = turn
+        data['clients'] = [client.to_json() for client in clients]
         # Add things that should be thrown into the turn logs here.
         data['game_map'] = self.current_world_data["game_map"].to_json()
 

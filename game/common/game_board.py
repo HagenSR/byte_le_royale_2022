@@ -63,7 +63,7 @@ class GameBoard(GameObject):
     def from_json(self, data):
         super().from_json(data)
 
-        self.partition_width = data['width']
+        self.width = data['width']
         self.height = data['height']
 
         self.partition.from_json(data['partition'])

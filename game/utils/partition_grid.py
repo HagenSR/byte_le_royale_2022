@@ -46,9 +46,9 @@ class PartitionGrid:
         for obj in object_list:
             self.add_object(obj)
 
-    def get_partition_objects(self, x, y):
+    def get_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y tuple"""
-        return self.__matrix[y][x]
+        return self.__matrix[self.find_row(y)][self.find_column(x)]
 
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns boolean whether there is an object at the coordinates"""
@@ -99,7 +99,7 @@ class PartitionGrid:
     def to_json(self):
         data = {'matrix': [
             [
-                [obj.to_json() for obj in self.__matrix[row][column]]
+                [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
             ]
             for row in range(len(self.__matrix))
@@ -110,7 +110,7 @@ class PartitionGrid:
     def from_json(self, data):
         self.__matrix = [
             [
-                [obj.from_json() for obj in column]
+                [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
                 for column in row
             ]
             for row in data['matrix']
