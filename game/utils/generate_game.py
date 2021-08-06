@@ -309,8 +309,8 @@ def generate():
                 wall_copy = copy.deepcopy(wall)
                 x_offset = plot.position[0] + wall_copy.hitbox.position[0]
                 y_offset = plot.position[1] + wall_copy.hitbox.position[1]
-                wall_copy.position = (x_offset, y_offset)
-                game_map.wall_list.append(wall_copy)
+                wall_copy.hitbox.position = (x_offset, y_offset)
+                game_map.partition.add_object(wall_copy)
 
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):

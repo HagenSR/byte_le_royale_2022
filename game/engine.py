@@ -84,8 +84,17 @@ class Engine:
                 continue
 
             # Otherwise, instantiate the player
-            player = Player()
-            self.clients.append(player)
+            if len(self.clients) == 0:
+                # Add players one and two
+                ar = GameStats.player_stats["hitbox"][0]
+                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+                player = Player(shooter=Shooter(hitbox=hit))
+                self.clients.append(player)
+            else:
+                ar = GameStats.player_stats["hitbox"][1]
+                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+                player = Player(shooter=Shooter(hitbox=hit))
+                self.clients.append(player)
 
             # Verify client isn't using invalid imports or opening anything
             imports, opening = verify_code(filename + '.py')
@@ -166,15 +175,6 @@ class Engine:
         # Yes, this is a bit ugly. Load game map json to game map object
         gameBoard = GameBoard()
         game_map = gameBoard.from_json(world['game_map'])
-
-        # Add players one and two
-        ar = GameStats.player_stats["hitbox"][0]
-        hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-        game_map.player_list.append(Shooter(hitbox=hit))
-
-        ar = GameStats.player_stats["hitbox"][1]
-        hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-        game_map.player_list.append(Shooter(hitbox=hit))
 
         # add game map object to dictionary
         world.pop("game_map", None)
