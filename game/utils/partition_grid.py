@@ -41,7 +41,7 @@ class PartitionGrid:
         column = self.find_column(obj.hitbox.position[0])
         self.__matrix[row][column].append(obj)
 
-    def add_object_list(self, object_list: list[MapObject]):
+    def add_object_list(self, object_list: 'list[MapObject]'):
         """add a list of objects to their correct partition"""
         for obj in object_list:
             self.add_object(obj)
