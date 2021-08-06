@@ -6,6 +6,7 @@ from game.common.stats import GameStats
 from game.common.moving.shooter import Shooter
 from game.common.wall import Wall
 from game.common.items.item import Item
+from game.common.ray import Ray
 from copy import deepcopy
 import math
 
@@ -67,7 +68,8 @@ class GameBoard(GameObject):
         self.height = data['height']
 
         self.partition.from_json(data['partition'])
-        self.ray_list = data['ray_list']
+        r = Ray()
+        self.ray_list = [r.from_json(ray) for ray in data['ray_list']]
 
         self.circle_radius = data['circle_radius']
 

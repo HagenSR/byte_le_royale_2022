@@ -14,7 +14,7 @@ class Action:
         data = dict()
 
         data['object_type'] = self.object_type
-        data['example_action'] = self._example_action
+        data['chosen_action'] = self._chosen_action
 
         return data
 
