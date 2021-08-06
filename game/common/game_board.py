@@ -54,7 +54,7 @@ class GameBoard(GameObject):
         data['height'] = self.height
 
         data['partition'] = self.partition.to_json()
-        data['ray_list'] = self.ray_list
+        data['ray_list'] = [ray.to_json() for ray in self.ray_list]
 
         data['circle_radius'] = self.circle_radius
 

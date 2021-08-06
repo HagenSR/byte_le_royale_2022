@@ -46,9 +46,13 @@ class PartitionGrid:
         for obj in object_list:
             self.add_object(obj)
 
-    def get_partition_objects(self, x: float, y: float):
+    def get_coordinate_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y tuple"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
+
+    def get_partition_objects(self, x: float, y: float):
+        """Returns objects that are in the same partition as the x, y tuple"""
+        return self.__matrix[y][x]
 
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns boolean whether there is an object at the coordinates"""
