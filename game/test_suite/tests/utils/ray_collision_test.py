@@ -108,7 +108,7 @@ class TestRayCollision(unittest.TestCase):
     def test_miss_collision(self):
         player = Player()
         player.shooter = Shooter()
-        player.shooter.heading = (3*(math.pi / 4))
+        player.shooter.heading = (3 * (math.pi / 4))
         player.shooter.hitbox = Hitbox(10, 10, (0, 2))
         gun = Gun(1, 1)
         player.shooter.append_inventory(gun)
@@ -167,6 +167,7 @@ class TestRayCollision(unittest.TestCase):
         ray = get_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint['x'], 26.87, 2)
         self.assertEqual(ray.endpoint['y'], 0, 2)
+
 
 if __name__ == '__main__':
     unittest.main

@@ -95,22 +95,22 @@ def sort_objects(player, collidables, gun):
 # Determine which object ray collides with first
 def determine_collision(player, collidables, slope, gun):
     # Get x and y limits given gun range and heading
-    if 0 <= player.shooter.heading < math.pi/2:
+    if 0 <= player.shooter.heading < math.pi / 2:
         ray_x_limit = (
             player.shooter.hitbox.position[0] + abs(gun.range * math.cos(player.shooter.heading)))
         ray_y_limit = (-player.shooter.hitbox.position[1] + abs(
             gun.range * math.sin(player.shooter.heading)))
-    elif math.pi/2 <= player.shooter.heading < math.pi:
+    elif math.pi / 2 <= player.shooter.heading < math.pi:
         ray_x_limit = (
             player.shooter.hitbox.position[0] + abs(gun.range * math.cos(player.shooter.heading)))
         ray_y_limit = (-player.shooter.hitbox.position[1] - abs(
             gun.range * math.sin(player.shooter.heading)))
-    elif math.pi <= player.shooter.heading < (3*(math.pi/4)):
+    elif math.pi <= player.shooter.heading < (3 * (math.pi / 4)):
         ray_x_limit = (
             player.shooter.hitbox.position[0] - abs(gun.range * math.cos(player.shooter.heading)))
         ray_y_limit = (-player.shooter.hitbox.position[1] - abs(
             gun.range * math.sin(player.shooter.heading)))
-    elif (3*(math.pi/4)) <= player.shooter.heading < 2*math.pi:
+    elif (3 * (math.pi / 4)) <= player.shooter.heading < 2 * math.pi:
         ray_x_limit = (
             player.shooter.hitbox.position[0] - abs(gun.range * math.cos(player.shooter.heading)))
         ray_y_limit = (-player.shooter.hitbox.position[1] + abs(
