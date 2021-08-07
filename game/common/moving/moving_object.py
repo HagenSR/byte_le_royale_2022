@@ -58,3 +58,4 @@ class MovingObject(MapObject):
         super().from_json(data)
         self.heading = data['heading']
         self.speed = data['speed']
+        return self

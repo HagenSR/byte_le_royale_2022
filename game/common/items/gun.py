@@ -65,6 +65,7 @@ class Gun(Item):
         self.mag_size = data['mag_size']
         self.reload_speed = data['reload_speed']
         self.cooldown = data['cooldown']
+        return self
 
     def __str__(self):
         return f"""
