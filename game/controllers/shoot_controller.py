@@ -8,22 +8,23 @@ from game.common.enums import *
 
 class ShootController(Controller):
     
-    def shoot_gun(gun, client, game_board):
+    def handle_action(client, game_board):
         if(client.action.chosen_action is ActionType.shoot):
-            collision_object = get_ray_collision(client, game_board, gun)
+            gun = client.shooter.primary_gun
+            ray = get_ray_collision(client, game_board, gun)
+            #add ray for use by visualizer
+            game_board.partition.add_object(ray) 
+            collision_object = ray.collision
             if(collision_object == None):
                 #no collision
                 return
             elif(isinstance(collision_object, Shooter)):
                 collision_object.health(collision_object.health - gun.damage)
-                if(collision_object.health <= 0):
-                    #game over
-                    game_board.player_list.remove(collision_object)
             elif(isinstance(collision_object, Wall) and collision_object.collidable is True):
-                    collision_object.health(collision_object.health - gun.damage)
-                    if(collision_object.health <= 0):
-                        game_board.wall_list.remove(collision_object)
+                collision_object.health(collision_object.health - gun.damage)
+                if(collision_object.health <= 0):
+                    game_board.partition.remove_object(collision_object)
             elif(isinstance(collision_object, Door) and collision_object.collidable is True):
                 collision_object.health(collision_object.health - gun.damage)
                 if(collision_object.health <= 0):
-                    game_board.door_list.remove(collision_object)
+                    game_board.partition.remove_object(collision_object)
