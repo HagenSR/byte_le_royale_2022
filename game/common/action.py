@@ -7,8 +7,10 @@ class Action:
         self._chosen_action = ActionType.none
 
     def set_action(self, act):
-        if act in [ActionType.none, ActionType.move, ActionType.shoot, ActionType.pickup_item,
-                   ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
+
+        if isinstance(act, int) and act in ActionType.__dict__.values():
+            #if act in [ActionType.none, ActionType.move, ActionType.shoot, ActionType.pickup_item,
+                       #ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
             self._chosen_action = act
 
     def to_json(self):
