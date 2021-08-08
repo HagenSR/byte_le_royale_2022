@@ -11,16 +11,29 @@ def load_collidables(player, gameboard):
     gun = player.shooter.primary_gun
     if 0 <= player.shooter.heading < math.pi:
         ray_x_limit = (
-            player.shooter.hitbox.position[0] + abs(gun.range * math.sin(player.shooter.heading % (math.pi/2))))
+            player.shooter.hitbox.position[0] +
+            abs(
+                gun.range *
+                math.sin(
+                    player.shooter.heading %
+                    (math.pi /
+                     2))))
     else:
         ray_x_limit = (
-            player.shooter.hitbox.position[0] - abs(gun.range * math.sin(player.shooter.heading % (math.pi/2))))
-    if 0 <= player.shooter.heading < math.pi/2 or 3*(math.pi/2) <= player.shooter.heading <= 2*math.pi:
+            player.shooter.hitbox.position[0] -
+            abs(
+                gun.range *
+                math.sin(
+                    player.shooter.heading %
+                    (math.pi /
+                     2))))
+    if 0 <= player.shooter.heading < math.pi / 2 or 3 * \
+            (math.pi / 2) <= player.shooter.heading <= 2 * math.pi:
         ray_y_limit = -(-player.shooter.hitbox.position[1] + abs(
-            gun.range * math.cos(player.shooter.heading % (math.pi/2))))
+            gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
     else:
         ray_y_limit = -(-player.shooter.hitbox.position[1] - abs(
-            gun.range * math.cos(player.shooter.heading % (math.pi/2))))
+            gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
     if ray_y_limit < 0:
         ray_y_limit = 0
     elif ray_y_limit > gameboard.height:
@@ -34,28 +47,32 @@ def load_collidables(player, gameboard):
     partition_y = gameboard.partition.find_row(
         player.shooter.hitbox.position[1])
     end_partition_x = gameboard.partition.find_column(
-            ray_x_limit)
+        ray_x_limit)
     end_partition_y = gameboard.partition.find_row(
-            ray_y_limit)
+        ray_y_limit)
     collidables = {}
-    if 0 <= player.shooter.heading < (math.pi / 2) or player.shooter.heading == (2 * math.pi):
-        for x in range(partition_x, end_partition_x+1):
-            for y in range(partition_y, end_partition_y-1, -1):
+    if 0 <= player.shooter.heading < (
+            math.pi /
+            2) or player.shooter.heading == (
+            2 *
+            math.pi):
+        for x in range(partition_x, end_partition_x + 1):
+            for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects(x, y):
                     collidables[z] = 0
     elif (math.pi / 2) <= player.shooter.heading < math.pi:
-        for x in range(partition_x, end_partition_x+1):
-            for y in range(partition_y, end_partition_y+1):
+        for x in range(partition_x, end_partition_x + 1):
+            for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects(x, y):
                     collidables[z] = 0
     elif (math.pi) <= player.shooter.heading < ((3 * math.pi) / 2):
-        for x in range(partition_x, end_partition_x-1, -1):
-            for y in range(partition_y, end_partition_y+1):
+        for x in range(partition_x, end_partition_x - 1, -1):
+            for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects(x, y):
                     collidables[z] = 0
     elif ((3 * math.pi) / 2) <= player.shooter.heading <= (2 * math.pi):
-        for x in range(partition_x, end_partition_x-1, -1):
-            for y in range(partition_y, end_partition_y-1, -1):
+        for x in range(partition_x, end_partition_x - 1, -1):
+            for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects(x, y):
                     collidables[z] = 0
 
@@ -116,16 +133,29 @@ def determine_collision(player, gameboard, collidables, slope):
     # Get x and y limits given gun range and heading
     if 0 <= player.shooter.heading < math.pi:
         ray_x_limit = (
-            player.shooter.hitbox.position[0] + abs(gun.range * math.sin(player.shooter.heading % (math.pi/2))))
+            player.shooter.hitbox.position[0] +
+            abs(
+                gun.range *
+                math.sin(
+                    player.shooter.heading %
+                    (math.pi /
+                     2))))
     else:
         ray_x_limit = (
-            player.shooter.hitbox.position[0] - abs(gun.range * math.sin(player.shooter.heading % (math.pi/2))))
-    if 0 <= player.shooter.heading < math.pi/2 or 3*(math.pi/2) <= player.shooter.heading <= 2*math.pi:
+            player.shooter.hitbox.position[0] -
+            abs(
+                gun.range *
+                math.sin(
+                    player.shooter.heading %
+                    (math.pi /
+                     2))))
+    if 0 <= player.shooter.heading < math.pi / 2 or 3 * \
+            (math.pi / 2) <= player.shooter.heading <= 2 * math.pi:
         ray_y_limit = -(-player.shooter.hitbox.position[1] + abs(
-            gun.range * math.cos(player.shooter.heading % (math.pi/2))))
+            gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
     else:
         ray_y_limit = -(-player.shooter.hitbox.position[1] - abs(
-            gun.range * math.cos(player.shooter.heading % (math.pi/2))))
+            gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
 
     if ray_y_limit < 0:
         ray_y_limit = 0
@@ -135,7 +165,6 @@ def determine_collision(player, gameboard, collidables, slope):
         ray_x_limit = 0
     elif ray_x_limit > gameboard.width:
         ray_x_limit = gameboard.width
-
 
     default_endpoint = {'x': ray_x_limit, 'y': ray_y_limit}
 
