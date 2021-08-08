@@ -140,6 +140,8 @@ def determine_collision(player, gameboard, collidables, slope):
                     player.shooter.heading %
                     (math.pi /
                      2))))
+        if ray_x_limit > gameboard.width:
+            ray_x_limit = gameboard.width
     else:
         ray_x_limit = (
             player.shooter.hitbox.position[0] -
@@ -149,22 +151,19 @@ def determine_collision(player, gameboard, collidables, slope):
                     player.shooter.heading %
                     (math.pi /
                      2))))
+        if ray_x_limit < 0:
+            ray_x_limit = 0
     if 0 <= player.shooter.heading < math.pi / 2 or 3 * \
             (math.pi / 2) <= player.shooter.heading <= 2 * math.pi:
         ray_y_limit = -(-player.shooter.hitbox.position[1] + abs(
             gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
+        if ray_y_limit < 0:
+            ray_y_limit = 0
     else:
         ray_y_limit = -(-player.shooter.hitbox.position[1] - abs(
             gun.range * math.cos(player.shooter.heading % (math.pi / 2))))
-
-    if ray_y_limit < 0:
-        ray_y_limit = 0
-    elif ray_y_limit > gameboard.height:
-        ray_y_limit = gameboard.height
-    if ray_x_limit < 0:
-        ray_x_limit = 0
-    elif ray_x_limit > gameboard.width:
-        ray_x_limit = gameboard.width
+        if ray_y_limit > gameboard.height:
+            ray_y_limit = gameboard.height
 
     default_endpoint = {'x': ray_x_limit, 'y': ray_y_limit}
 
