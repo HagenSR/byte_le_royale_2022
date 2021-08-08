@@ -62,6 +62,19 @@ class GameStats:
         'height': 100,
     }
 
+    shop_stats = {
+        Consumables.speed_boost: {
+            'cost': 0
+        },
+        Consumables.health_pack: {
+            'cost': 0
+        },
+        Consumables.armor_pack: {
+            'cost': 0
+        }
+
+    }
+
     # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
         GunType.none: {
