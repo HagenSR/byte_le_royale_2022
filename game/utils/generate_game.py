@@ -60,10 +60,11 @@ def findPlotHitboxes():
         hitbox_top_right_x = GameStats.corridor_width_height
     return plot_hitbox_list
 
+
 def placeItems(game_board):
     half_width = game_board.width / 2
     half_height = game_board.height / 2
-    number_items = random.randrange(10,25,1)
+    number_items = random.randrange(10, 25, 1)
     for index in range(number_items):
         # Value is pined between 0 and game board height/width. Values are (somewhat) normally distributed around the center
         potential_x = max(min(random.gauss(half_width, half_width * .3), game_board.width - 1), 1)
@@ -71,8 +72,20 @@ def placeItems(game_board):
         while len(game_board.partition.get_partition_objects(potential_x, potential_y)) > 0:
             potential_x = random.gauss(half_width, half_width * .005)
             potential_y = random.gauss(half_height, half_height * .005)
-        game_board.partition.add_object(Item(Hitbox(1,1,(potential_x, potential_y))))
+        game_board.partition.add_object(Item(Hitbox(1, 1, (potential_x, potential_y))))
     return game_board
+
+
+def pickItem(xPos, yPos):
+    # -1 is money
+    type = random.choice([ObjectType.consumable, ObjectType.upgrade, ObjectType.gun, -1])
+    rtnItem = None
+    if type == ObjectType.consumable:
+        conType = random.choice([ type_con for type_con in Consumables.__dir__() if isinstance(type_con, int) ])
+        rtnItem = Consumable(Hitbox(5,5, (xPos, yPos)), 1, conType)
+    elif type == ObjectType.upgrade:
+        upType = random.choice([ type_con for type_con in Upgrades.__dir__() if isinstance(type_con, int) ])
+        rtnItem = Upgrade(Hitbox(5,5 (xPos, yPos)), 5, 1, upType)
 
 
 def generate():
