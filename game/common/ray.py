@@ -4,7 +4,7 @@ from game.common.game_object import GameObject
 
 
 class Ray(GameObject):
-    def __init__(self, origin, endpoint, collision=None, damage=None):
+    def __init__(self, origin=None, endpoint=None, collision=None, damage=None):
         super().__init__()
         self.object_type = ObjectType.ray
 
