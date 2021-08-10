@@ -71,7 +71,7 @@ def calculate_ray_y(player, slope, x):
 
 # Get x coordinate at y given slope
 def calculate_ray_x(player, slope, y):
-    if slope == 0:
+    if math.isclose(slope, 0, abs_tol=1e-8):
         ray_x = math.nan
     elif slope is not math.nan:
         ray_x = (((y - (-player.shooter.hitbox.position[1])) / slope)

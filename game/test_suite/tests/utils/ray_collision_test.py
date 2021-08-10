@@ -250,9 +250,9 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         ray = get_ray_collision(player, gameboard)
-        #self.assertEqual(ray.collision, obj_list[0])
-#        self.assertEqual(ray.endpoint['x'], 18.5 )
+        self.assertEqual(ray.endpoint['x'], 17.5 )
         self.assertEqual(ray.endpoint['y'], 100)
+        self.assertEqual(ray.collision, obj_list[0])
 
 if __name__ == '__main__':
     unittest.main
