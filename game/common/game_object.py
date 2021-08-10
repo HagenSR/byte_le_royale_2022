@@ -1,5 +1,4 @@
 import uuid
-
 from game.common.enums import ObjectType
 
 
@@ -21,6 +20,7 @@ class GameObject:
         # It is recommended call this using super() in child implementations
         self.id = data['id']
         self.object_type = data['object_type']
+        return self
 
     def obfuscate(self):
         pass

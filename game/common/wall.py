@@ -22,3 +22,4 @@ class Wall(MapObject):
     def from_json(self, data):
         super().from_json(data)
         self.destructible = data['destructible']
+        return self

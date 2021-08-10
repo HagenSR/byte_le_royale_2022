@@ -79,6 +79,12 @@ class TestMovingObject(
     def setSpeed(self, newSpeed):
         self.movObj.speed = newSpeed
 
+    def setHeading(self, newHeading):
+        self.movObj.heading = newHeading
+
+    def setSpeed(self, newSpeed):
+        self.movObj.speed = newSpeed
+
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html
 
