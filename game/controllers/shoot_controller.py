@@ -7,16 +7,16 @@ from game.common.enums import *
 
 
 class ShootController(Controller):
-    
+
     def handle_action(client, game_board):
         if(client.action.chosen_action is ActionType.shoot):
             gun = client.shooter.primary_gun
             ray = get_ray_collision(client, game_board, gun)
-            #add ray for use by visualizer
-            game_board.partition.add_object(ray) 
+            # add ray for use by visualizer
+            game_board.partition.add_object(ray)
             collision_object = ray.collision
-            if(collision_object == None):
-                #no collision
+            if(collision_object is None):
+                # no collision
                 return
             elif(isinstance(collision_object, Shooter)):
                 collision_object.health(collision_object.health - gun.damage)

@@ -10,12 +10,12 @@ class MapObject(GameObject):
         self.health = health
         self.hitbox = hitbox
         self.collidable = collidable
-        
+
     @property
     def health(self):
         return self.health
-    
-    @health.setter    
+
+    @health.setter
     def health(self, val):
         self.health = val
 
