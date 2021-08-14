@@ -14,6 +14,7 @@ from game.test_suite.tests.utils.collision_test import TestCollision
 from game.test_suite.tests.utils.ray_collision_test import TestRayCollision
 #from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 from game.test_suite.tests.collision_test import TestCollision
+from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
 
 
 __all__ = [
@@ -26,6 +27,8 @@ __all__ = [
     'TestInit',
     'TestHitboxObject',
     # 'TestGameBoardGeneration'
+    'TestCollision',
+    'TestReloadController'
     'TestCollision',
     'TestRayCollision',
 ]
