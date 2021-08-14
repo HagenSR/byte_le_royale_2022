@@ -38,3 +38,4 @@ class Grenade(DamagingObject):
     def from_json(self, data):
         super().from_json(data)
         self.fuse_time = data['fuse_time']
+        return self

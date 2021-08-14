@@ -1,6 +1,6 @@
 from game.common.game_object import GameObject
-from game.common.stats import GameStats
 from game.common.enums import *
+import game.common.stats as stats
 
 
 class Hitbox(GameObject):
@@ -69,8 +69,8 @@ class Hitbox(GameObject):
     # set x between 0 and max game board width
     @position.setter
     def position(self, val):
-        if (0 <= val[0] <= GameStats.game_board_width) and (
-                0 <= val[1] <= GameStats.game_board_height):
+        if (0 <= val[0] <= stats.GameStats.game_board_width) and (
+                0 <= val[1] <= stats.GameStats.game_board_height):
             self.__position = val
         else:
             raise ValueError(
@@ -81,7 +81,6 @@ class Hitbox(GameObject):
         data['width'] = self.width
         data['height'] = self.height
         data['position'] = self.position
-
         return data
 
     def from_json(self, data):
@@ -94,5 +93,6 @@ class Hitbox(GameObject):
         return f"""
              Height: {self.height}
              Width: {self.width}
-             X: {self.position}
+             X: {self.position[0]}
+             Y: {self.position[1]}
              """

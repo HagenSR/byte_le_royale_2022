@@ -8,13 +8,19 @@ class GameStats:
     game_board_width = 500
     game_board_height = 500
 
+    # The radius that the kill circle will shrink every tick
+    circle_shrink_distance = 1
+
+    # The "margin" inbetween every building plot in game map. Used so players
+    # can always navigate between buildings
+    corridor_width_height = 20
+
     default_wall_health = 50
 
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'starting_coordinates': [{'x': 450, 'y': 450}, {'x': 50, 'y': 50}],
-        'hitbox': {'width': 10, 'height': 10},
+        'hitbox': [[10, 10, 50, 50], [10, 10, 450, 450]],
         'view_radius': 10,
         'move_speed': 10,
     }

@@ -14,14 +14,16 @@ class ObjectType:
     damaging_object = 5
     moving_object = 6
     grenade = 7
-    shooter = 8
-    item = 9
-    gun = 10
-    wall = 11
-    hitbox = 12
-    door = 13
-    upgrade = 14
-    consumable = 15
+    ray = 8
+    bullet = 9
+    shooter = 10
+    item = 11
+    gun = 12
+    wall = 13
+    hitbox = 14
+    door = 15
+    upgrade = 16
+    consumable = 17
 
 
 class Upgrades:
@@ -33,7 +35,6 @@ class Upgrades:
 
 class DamagingType:
     none = 0
-    # note that bullet object has not been added yet
     bullet = 1
     grenade = 2
 
