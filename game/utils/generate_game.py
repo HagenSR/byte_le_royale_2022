@@ -4,6 +4,8 @@ import os
 import random
 import importlib.resources
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.upgrade import Upgrade
 from game.common.wall import Wall
 from game.common.items.item import Item
 from game.config import *
@@ -86,6 +88,7 @@ def pickItem(xPos, yPos):
     elif type == ObjectType.upgrade:
         upType = random.choice([ type_con for type_con in Upgrades.__dir__() if isinstance(type_con, int) ])
         rtnItem = Upgrade(Hitbox(5,5 (xPos, yPos)), 5, 1, upType)
+
 
 
 def generate():
