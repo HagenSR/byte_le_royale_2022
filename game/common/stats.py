@@ -12,8 +12,8 @@ class GameStats:
     circle_shrink_distance = 1
     # Damage circle does each tick
     circle_damage = 1
-    # Number of turns before circle
-    circle_delay = 100
+    # Number of turns before circle encroaches on game map
+    circle_delay = 100 * circle_shrink_distance
 
     # The "margin" inbetween every building plot in game map. Used so players
     # can always navigate between buildings
