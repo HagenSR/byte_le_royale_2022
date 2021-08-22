@@ -11,7 +11,7 @@ class Action:
         if isinstance(act, int) and act in ActionType.__dict__.values():
             #if act in [ActionType.none, ActionType.move, ActionType.shoot, ActionType.pickup_item,
                        #ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
-            self._chosen_action = act
+            self.chosen_action = act
 
     def to_json(self):
         data = dict()

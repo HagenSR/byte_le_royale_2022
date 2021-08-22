@@ -33,7 +33,7 @@ class MovementController(Controller):
             target_location = calculate_location(location, speed, angle)
             space_free = True
             while(location != target_location and space_free):
-                if(self.current_world_data["game_map"].partition.find_object_coordinates(location[0], location[1]) == False):
+                if(self.current_world_data["game_board"].partition.find_object_coordinates(location[0], location[1]) == False):
                     new_x = location[0] + math.cos(angle)
                     new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
