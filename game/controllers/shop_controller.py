@@ -5,6 +5,17 @@ from game.common.enums import *
 
 
 class ShopController(Controller):
+    shop_inventory = {
+        Consumables.speed_boost: {
+            'quantity': GameStats.shop_stats[Consumables.speed_boost]['quantity']
+        },
+        Consumables.health_pack: {
+            'quantity': GameStats.shop_stats[Consumables.health_pack]['quantity']
+        },
+        Consumables.armor_pack: {
+            'quantity': GameStats.shop_stats[Consumables.armor_pack]['quantity']
+        }
+    }
 
     def __init__(self):
         super().__init__()
