@@ -58,7 +58,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        self.boundry_controller.handle_actions(clients, self.current_world_data["game_map"].circle_radius)
+        self.boundry_controller.handle_actions(
+            clients, self.current_world_data["game_map"].circle_radius)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
