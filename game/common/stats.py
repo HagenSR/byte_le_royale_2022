@@ -24,7 +24,7 @@ class GameStats:
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'hitbox': [[10, 10, 50, 50], [10, 10, 450, 450]],
+        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
         'view_radius': 10,
         'move_speed': 10,
     }
