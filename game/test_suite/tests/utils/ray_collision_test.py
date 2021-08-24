@@ -42,6 +42,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
@@ -62,6 +63,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
@@ -82,6 +84,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
@@ -102,6 +105,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
@@ -122,6 +126,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint['x'], 26.87, 2)
         self.assertAlmostEqual(ray.endpoint['y'], 28.87, 2)
@@ -143,6 +148,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint['x'], 26.87, 2)
         self.assertEqual(ray.endpoint['y'], 0)
@@ -164,6 +170,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint['x'], 26.87, 2)
         self.assertEqual(ray.endpoint['y'], 0, 2)
@@ -185,6 +192,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint['x'], 0)
         self.assertEqual(ray.endpoint['y'], 40)
@@ -206,6 +214,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint['x'], 0)
         self.assertEqual(ray.endpoint['y'], 12)
@@ -227,6 +236,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
         self.assertEqual(ray.endpoint['x'], 20)
@@ -249,6 +259,7 @@ class TestRayCollision(unittest.TestCase):
             MapObject(hitbox=Hitbox(5, 5, (200, 20))),
         ]
         gameboard.partition.add_object_list(obj_list)
+        gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint['x'], 17.5)
         self.assertEqual(ray.endpoint['y'], 100)
