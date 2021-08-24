@@ -1,16 +1,14 @@
 from game.common.ray import Ray
-from game.common.items.gun import Gun
 from game.config import *
 from game.common.enums import *
 
 import math
 
 
-# Get relevant collidables
+# Get relevant collidables bounded by furthest x, y and origin
 def load_collidables(player, gameboard, ray_endpoint):
     ray_x_limit = ray_endpoint['x']
     ray_y_limit = ray_endpoint['y']
-    gun = player.shooter.primary_gun
     partition_x = gameboard.partition.find_column(
         player.shooter.hitbox.position[0])
     partition_y = gameboard.partition.find_row(
@@ -84,7 +82,7 @@ def calculate_ray_x(player, slope, y):
 
 def get_ray_limits(player, gameboard, slope):
     gun = player.shooter.primary_gun
-    # Get x and y limits given gun range and heading
+    # Get final x and y coordinates given gun range and heading
     if 0 <= player.shooter.heading < math.pi:
         if player.shooter.heading == (math.pi / 2):
             ray_x_limit = player.shooter.hitbox.position[0] + gun.range
@@ -131,11 +129,11 @@ def get_ray_limits(player, gameboard, slope):
 
     return {'x': ray_x_limit, 'y': ray_y_limit}
 
+
 # Sort objects by distance from given player's shooter
-
-
 def sort_objects(player, collidables):
     gun = player.shooter.primary_gun
+    # assign distances, discard if out of bounds
     for collidable in list(collidables.keys()):
         dist = math.sqrt(
             ((collidable.hitbox.position[0] - player.shooter.hitbox.position[0]) ** 2) + (
@@ -144,6 +142,7 @@ def sort_objects(player, collidables):
             collidables.pop(collidable)
         else:
             collidables[collidable] = dist
+    # sort collidables by distance
     collidables = sorted(collidables.items(), key=lambda x: x[1])
 
     return collidables
@@ -153,10 +152,8 @@ def sort_objects(player, collidables):
 def determine_collision(player, gameboard, collidables, slope, ray_endpoint):
     gun = player.shooter.primary_gun
 
-    default_endpoint = ray_endpoint
-
     # Ray object used to provide data for visualizer
-    ray = Ray(player.shooter.hitbox.position, default_endpoint, None, None)
+    ray = Ray(player.shooter.hitbox.position, ray_endpoint, None, None)
 
     # AABB collision
     for collidable in collidables.keys():
@@ -226,6 +223,7 @@ def determine_collision(player, gameboard, collidables, slope, ray_endpoint):
     return ray
 
 
+# Method to be called by controller
 def get_ray_collision(player, gameboard):
     slope = calculate_slope(player)
     ray_endpoint = get_ray_limits(player, gameboard, slope)
