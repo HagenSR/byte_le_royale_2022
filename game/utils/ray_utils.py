@@ -5,19 +5,22 @@ from game.common.enums import *
 import math
 
 
-# Get relevant collidables bounded by furthest x, y and origin
+# Get relevant collidables in partitions bounded by furthest x, y and origin
 def load_collidables(player, gameboard, ray_endpoint):
     ray_x_limit = ray_endpoint['x']
     ray_y_limit = ray_endpoint['y']
+    # starting partition
     partition_x = gameboard.partition.find_column(
         player.shooter.hitbox.position[0])
     partition_y = gameboard.partition.find_row(
         player.shooter.hitbox.position[1])
+    # ending partition
     end_partition_x = gameboard.partition.find_column(
         ray_x_limit)
     end_partition_y = gameboard.partition.find_row(
         ray_y_limit)
     collidables = {}
+    # angle quadrants
     if 0 <= player.shooter.heading < (
             math.pi /
             2) or player.shooter.heading == (
@@ -26,22 +29,26 @@ def load_collidables(player, gameboard, ray_endpoint):
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects(x, y):
-                    collidables[z] = 0
+                    if z is not player.shooter:
+                        collidables[z] = 0
     elif (math.pi / 2) <= player.shooter.heading < math.pi:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects(x, y):
-                    collidables[z] = 0
+                    if z is not player.shooter:
+                        collidables[z] = 0
     elif (math.pi) <= player.shooter.heading < ((3 * math.pi) / 2):
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects(x, y):
-                    collidables[z] = 0
+                    if z is not player.shooter:
+                        collidables[z] = 0
     elif ((3 * math.pi) / 2) <= player.shooter.heading <= (2 * math.pi):
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects(x, y):
-                    collidables[z] = 0
+                    if z is not player.shooter:
+                        collidables[z] = 0
 
     return collidables
 
