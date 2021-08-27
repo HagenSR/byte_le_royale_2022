@@ -11,9 +11,11 @@ from game.common.player import Player
 from game.controllers.movement_controller import MovementController
 from game.utils.partition_grid import PartitionGrid
 from game.utils.calculate_new_location import calculate_location
+from game.common.wall import Wall
 
 
 class TestMovementController(unittest.TestCase):
+
     def setUp(self):
         act = Action()
         act.set_action(ActionType.move)
@@ -23,30 +25,60 @@ class TestMovementController(unittest.TestCase):
                     10, 10, (10, 10))))
         self.movementController = MovementController()
         self.world_data = {'game_board': GameBoard()}
-        self.world_data["game_board"].partition.add_object(self.myPlayer.shooter)
 
     def test_updated_location(self):
-        self.myPlayer.shooter.speed = 50
+        print("testing location")
+        self.world_data["game_board"].partition.add_object(self.myPlayer.shooter)
+        self.myPlayer.shooter.speed = 10
+        self.myPlayer.shooter.heading = 0.34
+        location = self.myPlayer.shooter.hitbox.position
+        # print(location)
+        speed = self.myPlayer.shooter.speed
+        angle = self.myPlayer.shooter.heading
+        target_location = calculate_location(location, speed, angle)
+        # print(target_location)
+        self.movementController.handle_actions(self.myPlayer, self.world_data)
+        x_val = self.myPlayer.shooter.hitbox.position[0]
+        y_val = self.myPlayer.shooter.hitbox.position[1]
+        self.assertTrue(self.world_data["game_board"].partition.find_object_coordinates(x_val, y_val))
+
+    def test_player_removed(self):
+        print("testing removed")
+        self.myPlayer.shooter.hitbox.position = (0, 0)
+        self.world_data["game_board"].partition.add_object(self.myPlayer.shooter)
+        self.myPlayer.shooter.speed = 10
         self.myPlayer.shooter.heading = 0.34
         location = self.myPlayer.shooter.hitbox.position
         speed = self.myPlayer.shooter.speed
         angle = self.myPlayer.shooter.heading
         target_location = calculate_location(location, speed, angle)
         self.movementController.handle_actions(self.myPlayer, self.world_data)
-        self.assertEqual(self.myPlayer,
-                         self.movementController.current_world_data["game_map"].partition.get_partition_objects(
-                             target_location[0], target_location[1]))
+        self.assertFalse(self.world_data["game_board"].partition.find_object_coordinates(0, 0))
 
     def test_edge_of_map_invalid(self):
+        print("testing edge of map")
+        self.myPlayer.shooter.hitbox.position = (500, 500)
+        self.world_data["game_board"].partition.add_object(self.myPlayer.shooter)
         self.myPlayer.shooter.speed = 50
         self.myPlayer.shooter.heading = 0.34
-        self.myPlayer.shooter.hitbox.position = (500, 500)
         location = self.myPlayer.shooter.hitbox.position
         speed = self.myPlayer.shooter.speed
         angle = self.myPlayer.shooter.heading
-        target_location = calculate_location(location, speed, angle)
+        self.assertRaises(ValueError, self.movementController.handle_actions, self.myPlayer, self.world_data)
+
+    def test_object_in_path(self):
+        print("testing object path")
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        wall_object = Wall(hitbox=Hitbox(10, 10, (55, 50)))
+        self.world_data["game_board"].partition.add_object(self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(wall_object)
+        self.myPlayer.shooter.speed = 50
+        self.myPlayer.shooter.heading = 1.5707
+        location = self.myPlayer.shooter.hitbox.position
+        speed = self.myPlayer.shooter.speed
+        angle = self.myPlayer.shooter.heading
         self.movementController.handle_actions(self.myPlayer, self.world_data)
-        self.assertRaises(Exception, self.setPosition, target_location)
+        self.assertFalse(self.movementController.space_free)
 
     def setPosition(self, new_pos):
         self.myPlayer.shooter.hitbox.position = new_pos

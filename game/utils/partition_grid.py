@@ -27,11 +27,11 @@ class PartitionGrid:
 
     def find_row(self, y: float):
         """Find which row of the structure the y coordinate is in"""
-        return math.floor(y / self.__partition_height)
+        return math.floor(y / self.__partition_height) - 1
 
     def find_column(self, x: float):
         """Find which column of the structure the x coordinate is in"""
-        return math.floor(x / self.__partition_height)
+        return math.floor(x / self.__partition_height) - 1
 
     def add_object(self, obj: MapObject):
         """add object to it's correct partition"""
