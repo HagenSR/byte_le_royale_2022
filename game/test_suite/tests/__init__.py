@@ -14,6 +14,7 @@ from game.test_suite.tests.utils.collision_test import TestCollision
 from game.test_suite.tests.utils.ray_collision_test import TestRayCollision
 #from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 from game.test_suite.tests.collision_test import TestCollision
+from game.test_suite.tests.controllers.shoot_controller_test import TestShootController
 
 
 __all__ = [
@@ -28,4 +29,5 @@ __all__ = [
     # 'TestGameBoardGeneration'
     'TestCollision',
     'TestRayCollision',
+    'TestShootController',
 ]

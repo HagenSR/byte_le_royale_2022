@@ -13,11 +13,11 @@ class MapObject(GameObject):
 
     @property
     def health(self):
-        return self.health
+        return self.__health
 
     @health.setter
     def health(self, val):
-        self.health = val
+        self.__health = val
 
     def to_json(self):
         data = super().to_json()

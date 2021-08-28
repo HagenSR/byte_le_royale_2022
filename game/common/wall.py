@@ -9,7 +9,7 @@ class Wall(MapObject):
             hitbox,
             health=GameStats.default_wall_health,
             destructible=False):
-        super().__init__(health, hitbox, collidable=True)
+        super().__init__(health, hitbox, collidable= destructible)
         self.destructible = destructible
         self.object_type = ObjectType.wall
         self.destructible = destructible
