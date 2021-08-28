@@ -25,6 +25,16 @@ class ObjectType:
     consumable = 16
 
 
+class ActionType:
+    none = 0
+    move = 1
+    shoot = 2
+    pickup_item = 3
+    reload_weapon = 4
+    shop = 5
+    use_item = 6
+
+
 class Upgrades:
     none = 0
     gun_upgrades = 1

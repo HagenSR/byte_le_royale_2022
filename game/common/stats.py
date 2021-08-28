@@ -64,15 +64,15 @@ class GameStats:
 
     shop_stats = {
         Consumables.speed_boost: {
-            'cost': 0,
+            'cost': 20,
             'quantity': 5
         },
         Consumables.health_pack: {
-            'cost': 0,
+            'cost': 25,
             'quantity': 5
         },
         Consumables.armor_pack: {
-            'cost': 0,
+            'cost': 30,
             'quantity': 5
         }
 

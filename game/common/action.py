@@ -4,11 +4,11 @@ from game.common.enums import *
 class Action:
     def __init__(self):
         self.object_type = ObjectType.action
-        self._example_action = None
+        self.chosen_action = None
         self.selected_object = None
 
     def set_action(self, action):
-        self._example_action = action
+        self.chosen_action = action
 
     def select_object(self, obj):
         if isinstance(obj, int) and obj in Consumables.__dict__.values():
