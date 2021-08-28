@@ -9,6 +9,7 @@ from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
+from game.controllers.reload_controller import ReloadController
 
 
 class MasterController(Controller):
@@ -58,10 +59,12 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        breakpoint()
         self.boundry_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
+        for client in clients:
+            ReloadController.handle_actions(client)
+            
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
         pass
