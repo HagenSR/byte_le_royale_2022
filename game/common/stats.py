@@ -16,7 +16,7 @@ class GameStats:
     corridor_width_height = 20
 
     default_wall_health = 18
-    
+
     default_door_health = 18
 
     player_stats = {
