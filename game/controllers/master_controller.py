@@ -8,6 +8,7 @@ import game.config as config
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
 
 
@@ -17,6 +18,8 @@ class MasterController(Controller):
         self.game_over = False
 
         self.current_world_data = None
+
+        self.boundry_controller = KillBoundaryController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -56,8 +59,14 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        self.boundry_controller.handle_actions(
+            clients, self.current_world_data["game_map"].circle_radius)
+
         for client in clients:
             ReloadController.handle_actions(client)
+
+        if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            self.game_over = True
         pass
 
     # Return serialized version of game
