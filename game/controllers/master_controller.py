@@ -58,6 +58,7 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        breakpoint()
         self.boundry_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
