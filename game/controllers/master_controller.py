@@ -64,7 +64,7 @@ class MasterController(Controller):
 
         for client in clients:
             ReloadController.handle_actions(client)
-            
+
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
         pass
