@@ -8,6 +8,7 @@ import game.config as config
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.reload_controller import ReloadController
 
 
 class MasterController(Controller):
@@ -55,6 +56,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        for client in clients:
+            ReloadController.handle_actions(client)
         pass
 
     # Return serialized version of game

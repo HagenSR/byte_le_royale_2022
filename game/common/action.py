@@ -8,7 +8,7 @@ class Action:
         self.action_parameter = None
 
     def set_action(self, action):
-        self._example_action = action
+        self._chosen_action = action
 
     def to_json(self):
         data = dict()
