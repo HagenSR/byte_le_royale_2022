@@ -4,8 +4,8 @@ from game.common.items.item import Item
 
 
 class Gun(Item):
-    def __init__(self, gun_type, level, coordinates=None, hitbox=None):
-        super().__init__(coordinates, hitbox)
+    def __init__(self, gun_type, level, hitbox=None):
+        super().__init__(hitbox)
         self.object_type = ObjectType.gun
 
         self.gun_type = gun_type
@@ -26,6 +26,7 @@ class Gun(Item):
         self.mag_size = (round(stats.GameStats.gun_stats[gun_type]['mag_size']
                                * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
                          if self.level > GunLevel.level_zero else 0)
+        self.mag_ammo = self.mag_size
         self.reload_speed = (round(stats.GameStats.gun_stats[gun_type]['reload_speed']
                                    * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
                              if self.level > GunLevel.level_zero else 0)
@@ -35,6 +36,9 @@ class Gun(Item):
                 self.cooldown['max'] * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
         else:
             self.cooldown = {'max': 0, 'rate': 0}
+
+    def reload(self):
+        self.mag_ammo = self.mag_size
 
     def to_json(self):
         data = super().to_json()
