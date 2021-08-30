@@ -5,6 +5,7 @@ from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
+from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
@@ -55,6 +56,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        for client in clients:
+            ShopController.handle_actions(client)
         pass
 
     # Return serialized version of game

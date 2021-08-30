@@ -5,6 +5,8 @@ from game.common.enums import *
 
 
 class ShopController(Controller):
+    # shop_inventory keeps track of how many of each consumables are in the shop throughout the game
+    # Each purchase shrinks the quantity for that consumables object
     shop_inventory = {
         Consumables.speed_boost: {
             'quantity': GameStats.shop_stats[Consumables.speed_boost]['quantity']
@@ -19,11 +21,10 @@ class ShopController(Controller):
 
     def __init__(self):
         super().__init__()
-        self.current_world_data = None
 
     def handle_actions(self, client):
         if client.action.chosen_action is ActionType.shop:
-            # selected_object should come from Consumables Enum
+            # selected_object should come from Consumables enum
             self.process_purchase(client, client.action.selected_object)
 
     # item = client.action.selected_object
@@ -31,7 +32,9 @@ class ShopController(Controller):
         if client.shooter.money >= GameStats.shop_stats[item]["cost"] and self.shop_inventory[item]["quantity"] > 0:
             if client.shooter.has_empty_slot('consumables'):
                 client.shooter.money = client.shooter.money - GameStats.shop_stats[item]["cost"]
-                bought_item = Consumable(hitbox=None, health=None, count=1,
+                # Create consumable object to be appended to inventory.
+                # "consumable_enum" will store the the client's selected item.
+                bought_item = Consumable(hitbox=None, health=None, count=None,
                                          consumable_enum=client.action.selected_object)
                 client.shooter.append_inventory(bought_item)
                 self.shop_inventory[item]["quantity"] = self.shop_inventory[item]["quantity"] - 1
