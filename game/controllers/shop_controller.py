@@ -29,17 +29,23 @@ class ShopController(Controller):
 
     # item = client.action.selected_object
     def process_purchase(self, client, item):
-        if client.shooter.money >= GameStats.shop_stats[item]["cost"] and self.shop_inventory[item]["quantity"] > 0:
+        if client.shooter.money >= GameStats.shop_stats[item][
+                "cost"] and self.shop_inventory[item]["quantity"] > 0:
             if client.shooter.has_empty_slot('consumables'):
-                client.shooter.money = client.shooter.money - GameStats.shop_stats[item]["cost"]
+                client.shooter.money = client.shooter.money - \
+                    GameStats.shop_stats[item]["cost"]
                 # Create consumable object to be appended to inventory.
                 # "consumable_enum" will store the the client's selected item.
-                bought_item = Consumable(hitbox=None, health=None, count=None,
-                                         consumable_enum=client.action.selected_object)
+                bought_item = Consumable(
+                    hitbox=None,
+                    health=None,
+                    count=None,
+                    consumable_enum=client.action.selected_object)
                 client.shooter.append_inventory(bought_item)
                 self.shop_inventory[item]["quantity"] = self.shop_inventory[item]["quantity"] - 1
             else:
                 raise ValueError("Inventory slots for consumables is full.")
 
         else:
-            raise ValueError("Insufficient funds for item or item is out of stock in shop.")
+            raise ValueError(
+                "Insufficient funds for item or item is out of stock in shop.")

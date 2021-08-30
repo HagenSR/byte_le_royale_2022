@@ -17,7 +17,8 @@ class Action:
             # ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
             self.selected_object = obj
         else:
-            raise ValueError("value entered does not retrieve consumable enum.")
+            raise ValueError(
+                "value entered does not retrieve consumable enum.")
 
     def to_json(self):
         data = dict()
