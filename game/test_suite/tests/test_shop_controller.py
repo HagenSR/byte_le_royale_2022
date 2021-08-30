@@ -26,8 +26,10 @@ class TestShopController(unittest.TestCase):
         self.myPlayer.action.selected_object = Consumables.armor_pack
         # before purchase, shop inventory for armor_pack will be 5
         self.shopController.handle_actions(self.myPlayer)
-        # This assertion statement should prove that the item stock has gone down by one after the purchase
-        self.assertEqual(self.shopController.shop_inventory[self.myPlayer.action.selected_object]["quantity"], 4)
+        # This assertion statement should prove that the item stock has gone
+        # down by one after the purchase
+        self.assertEqual(
+            self.shopController.shop_inventory[self.myPlayer.action.selected_object]["quantity"], 4)
 
     # Tests to make sure player cannot buy items if inventory is full
     def test_user_inventory_error(self):
@@ -35,20 +37,29 @@ class TestShopController(unittest.TestCase):
         self.myPlayer.action.selected_object = Consumables.speed_boost
         an_item = Consumable(hitbox=None, health=None, count=None,
                              consumable_enum=Consumables.speed_boost)
-        # All consumable slots in player's inventory should be full after the for loop
+        # All consumable slots in player's inventory should be full after the
+        # for loop
         items = [an_item, an_item, an_item, an_item]
         for item in items:
             self.myPlayer.shooter.append_inventory(item)
 
-        self.assertRaises(ValueError, self.shopController.handle_actions, self.myPlayer)
+        self.assertRaises(
+            ValueError,
+            self.shopController.handle_actions,
+            self.myPlayer)
 
-    # Tests to make sure error is thrown if player has insufficient funds for item
+    # Tests to make sure error is thrown if player has insufficient funds for
+    # item
     def test_user_cost_error(self):
         self.myPlayer.shooter.money = 0
         self.myPlayer.action.selected_object = Consumables.armor_pack
-        self.assertRaises(ValueError, self.shopController.handle_actions, self.myPlayer)
+        self.assertRaises(
+            ValueError,
+            self.shopController.handle_actions,
+            self.myPlayer)
 
-    # Tests to make sure item is in player's inventory after the purchase is made
+    # Tests to make sure item is in player's inventory after the purchase is
+    # made
     def test_shop_gives_item(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.health_pack]["cost"]
         self.myPlayer.action.selected_object = Consumables.health_pack
@@ -56,8 +67,10 @@ class TestShopController(unittest.TestCase):
         an_item = Consumable(hitbox=None, health=None, count=None,
                              consumable_enum=Consumables.health_pack)
         # When the consumable_enum attributes are being compared, they should be pointing at the same int value in
-        # the consumable enum. In this case, they should both contain the value 2, for health_pack
-        self.assertTrue(an_item.consumable_enum == self.myPlayer.shooter.inventory["consumables"][0].consumable_enum)
+        # the consumable enum. In this case, they should both contain the value
+        # 2, for health_pack
+        self.assertTrue(an_item.consumable_enum ==
+                        self.myPlayer.shooter.inventory["consumables"][0].consumable_enum)
 
 
 if __name__ == '__main__':
