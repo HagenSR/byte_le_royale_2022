@@ -23,7 +23,7 @@ class ShopController(Controller):
         super().__init__()
 
     def handle_actions(self, client):
-        if client.action.chosen_action is ActionType.shop:
+        if client.action._chosen_action is ActionType.shop:
             # selected_object should come from Consumables enum
             self.process_purchase(client, client.action.selected_object)
 

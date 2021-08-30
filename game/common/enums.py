@@ -14,15 +14,16 @@ class ObjectType:
     damaging_object = 5
     moving_object = 6
     grenade = 7
-    bullet = 8
-    shooter = 9
-    item = 10
-    gun = 11
-    wall = 12
-    hitbox = 13
-    door = 14
-    upgrade = 15
-    consumable = 16
+    ray = 8
+    bullet = 9
+    shooter = 10
+    item = 11
+    gun = 12
+    wall = 13
+    hitbox = 14
+    door = 15
+    upgrade = 16
+    consumable = 17
 
 
 class ActionType:
@@ -75,3 +76,8 @@ class Consumables:
     speed_boost = 1
     health_pack = 2
     armor_pack = 3
+
+
+class ActionType:
+    none = 0
+    reload = 4
