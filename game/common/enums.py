@@ -76,6 +76,3 @@ class Consumables:
     speed_boost = 1
     health_pack = 2
     armor_pack = 3
-
-
-
