@@ -10,7 +10,6 @@ from game.test_suite.tests.objects.test_bullet import TestBullet
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
-from game.test_suite.tests.utils.collision_test import TestCollision
 from game.test_suite.tests.test_shop_controller import TestShopController
 from game.test_suite.tests.utils.ray_collision_test import TestRayCollision
 #from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
@@ -33,6 +32,5 @@ __all__ = [
     'TestShopController',
     'TestKillBoundary',
     'TestRayCollision',
-    'TestReloadController',
-    'TestCollision'
+    'TestReloadController'
 ]
