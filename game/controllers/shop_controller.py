@@ -25,9 +25,9 @@ class ShopController(Controller):
     def handle_actions(self, client):
         if client.action._chosen_action is ActionType.shop:
             # selected_object should come from Consumables enum
-            self.process_purchase(client, client.action.selected_object)
+            self.process_purchase(client, client.action.item_to_purchase)
 
-    # item = client.action.selected_object
+    # item = client.action.item_to_purchase
     def process_purchase(self, client, item):
         if client.shooter.money >= GameStats.shop_stats[item][
                 "cost"] and self.shop_inventory[item]["quantity"] > 0:
@@ -40,7 +40,7 @@ class ShopController(Controller):
                     hitbox=None,
                     health=None,
                     count=None,
-                    consumable_enum=client.action.selected_object)
+                    consumable_enum=client.action.item_to_purchase)
                 client.shooter.append_inventory(bought_item)
                 self.shop_inventory[item]["quantity"] = self.shop_inventory[item]["quantity"] - 1
             else:

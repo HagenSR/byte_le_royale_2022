@@ -23,18 +23,18 @@ class TestShopController(unittest.TestCase):
     # Tests that shop controller inventory is updated after item purchase
     def test_shop_inventory_update(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.armor_pack]["cost"]
-        self.myPlayer.action.selected_object = Consumables.armor_pack
+        self.myPlayer.action.item_to_purchase = Consumables.armor_pack
         # before purchase, shop inventory for armor_pack will be 5
         self.shopController.handle_actions(self.myPlayer)
         # This assertion statement should prove that the item stock has gone
         # down by one after the purchase
         self.assertEqual(
-            self.shopController.shop_inventory[self.myPlayer.action.selected_object]["quantity"], 4)
+            self.shopController.shop_inventory[self.myPlayer.action.item_to_purchase]["quantity"], 4)
 
     # Tests to make sure player cannot buy items if inventory is full
     def test_user_inventory_error(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed_boost]["cost"]
-        self.myPlayer.action.selected_object = Consumables.speed_boost
+        self.myPlayer.action.item_to_purchase = Consumables.speed_boost
         an_item = Consumable(hitbox=None, health=None, count=None,
                              consumable_enum=Consumables.speed_boost)
         # All consumable slots in player's inventory should be full after the
@@ -52,7 +52,7 @@ class TestShopController(unittest.TestCase):
     # item
     def test_user_cost_error(self):
         self.myPlayer.shooter.money = 0
-        self.myPlayer.action.selected_object = Consumables.armor_pack
+        self.myPlayer.action.item_to_purchase = Consumables.armor_pack
         self.assertRaises(
             ValueError,
             self.shopController.handle_actions,
@@ -62,7 +62,7 @@ class TestShopController(unittest.TestCase):
     # made
     def test_shop_gives_item(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.health_pack]["cost"]
-        self.myPlayer.action.selected_object = Consumables.health_pack
+        self.myPlayer.action.item_to_purchase = Consumables.health_pack
         self.shopController.handle_actions(self.myPlayer)
         an_item = Consumable(hitbox=None, health=None, count=None,
                              consumable_enum=Consumables.health_pack)
