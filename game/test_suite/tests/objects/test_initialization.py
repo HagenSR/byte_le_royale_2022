@@ -19,6 +19,7 @@ from game.common.player import Player
 from game.common.wall import Wall
 from game.common.items.consumable import Consumable
 from game.common.items.upgrade import Upgrade
+from game.common.items.money import Money
 from game.common.door import Door
 from game.common.stats import GameStats
 from game.common.enums import ObjectType, GunLevel, GunType
@@ -59,6 +60,8 @@ class TestInit(
         self.upgrade = Upgrade(
             hitbox=Hitbox(
                 10, 10, (10, 10)), health=10, count=1)
+        self.mnyObj = Money(hitbox=Hitbox(
+                10, 10, (10, 10)), health=10, count=1)
         self.door = Door(hitbox=Hitbox(10, 10, (10, 10)))
 
     def testObjectInit(self):
@@ -76,6 +79,7 @@ class TestInit(
         self.assertEqual(self.wall.object_type, ObjectType.wall)
         self.assertEqual(self.consumable.object_type, ObjectType.consumable)
         self.assertEqual(self.upgrade.object_type, ObjectType.upgrade)
+        self.assertEqual(self.mnyObj.object_type, ObjectType.money)
 
     # This is just the very basics of how to set up a test file
     # For more info: https://docs.python.org/3/library/unittest.html
