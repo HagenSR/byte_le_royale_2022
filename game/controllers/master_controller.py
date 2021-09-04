@@ -21,6 +21,7 @@ class MasterController(Controller):
         self.current_world_data = None
 
         self.boundry_controller = KillBoundaryController()
+        self.shop_controller = ShopController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -60,13 +61,12 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-
         self.boundry_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
         for client in clients:
             ReloadController.handle_actions(client)
-            ShopController.handle_actions(client)
+            self.shop_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
