@@ -22,7 +22,7 @@ class TestShootController(unittest.TestCase):
                           hitbox=Hitbox(10, 10, (0, 0)))
         self.gun = Gun(GunType.sniper, level=1, hitbox=Hitbox(2, 2, (0, 0)))
         shooter.append_inventory(self.gun)
-        self.player = Player(action=ActionType.shoot, shooter=shooter)
+        self.player = Player(action= ActionType.shoot, shooter=shooter)
         self.game_board.partition.add_object(shooter)
 
     def test_health_removal_wall(self):
