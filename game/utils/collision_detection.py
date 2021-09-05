@@ -1,5 +1,4 @@
 import math
-
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
 from game.common.enums import *
