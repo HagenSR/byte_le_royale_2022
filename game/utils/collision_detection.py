@@ -11,7 +11,8 @@ def check_collision(hitbox_one, hitbox_two):
 
 
 def arc_intersect(center, radius, arc_len_degree, hitbox, heading):
-    # TODO implement this for arcs, currently calculates for an entire circle around the player
+    # TODO implement this for arcs, currently calculates for an entire circle
+    # around the player
     return point_in_hitbox(
         center[0],
         center[1],
