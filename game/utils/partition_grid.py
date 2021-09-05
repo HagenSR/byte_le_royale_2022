@@ -39,7 +39,8 @@ class PartitionGrid:
 
     def add_object(self, obj: MapObject):
         """add object to it's correct partition"""
-        # TODO fix bug where object only gets added to the partition of it's topleft corner, even if it overlaps
+        # TODO fix bug where object only gets added to the partition of it's
+        # topleft corner, even if it overlaps
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         row = self.find_row(obj.hitbox.position[1])
@@ -60,8 +61,10 @@ class PartitionGrid:
         return Hitbox(
             self.partition_width,
             self.partition_height,
-            (self.find_column(x) * self.partition_width, self.find_row(y) * self.partition_height)
-        )
+            (self.find_column(x) *
+             self.partition_width,
+             self.find_row(y) *
+             self.partition_height))
 
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns boolean whether there is an object at the coordinates"""
@@ -73,7 +76,8 @@ class PartitionGrid:
 
     def find_object_hitbox(self, hitbox: Hitbox) -> bool:
         """Returns boolean whether there is an object that collides with the given hitbox"""
-        # TODO account for objects being in multiple partitions after add object fix
+        # TODO account for objects being in multiple partitions after add
+        # object fix
         if not isinstance(hitbox, Hitbox):
             raise ValueError("Hitbox to check must be of type Hitbox")
         row = self.find_row(hitbox.position[1])
@@ -85,7 +89,8 @@ class PartitionGrid:
 
     def find_object_object(self, given_obj: MapObject) -> bool:
         """Returns boolean whether there is an object that collides with the given object"""
-        # TODO account for objects being in multiple partitions after add object fix
+        # TODO account for objects being in multiple partitions after add
+        # object fix
         if not isinstance(given_obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         row = self.find_row(given_obj.hitbox.position[1])
@@ -98,7 +103,8 @@ class PartitionGrid:
 
     def remove_object(self, obj: MapObject) -> None:
         """Remove a given object from the structure"""
-        # TODO account for objects being in multiple partitions after add object fix
+        # TODO account for objects being in multiple partitions after add
+        # object fix
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         row = self.find_row(obj.hitbox.position[1])
@@ -118,7 +124,8 @@ class PartitionGrid:
                 self.remove_object(obj)
 
     def to_json(self):
-        # TODO account for objects being in multiple partitions after add object fix
+        # TODO account for objects being in multiple partitions after add
+        # object fix
         data = {'matrix': [
             [
                 [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
@@ -130,7 +137,8 @@ class PartitionGrid:
         return data
 
     def from_json(self, data):
-        # TODO account for objects being in multiple partitions after add object fix
+        # TODO account for objects being in multiple partitions after add
+        # object fix
         self.__matrix = [
             [
                 [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
