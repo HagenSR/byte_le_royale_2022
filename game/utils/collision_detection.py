@@ -11,8 +11,7 @@ def check_collision(hitbox_one, hitbox_two):
 
 
 def arc_intersect(center, radius, arc_len_degree, hitbox, heading):
-    # TODO implement this for arcs, currently calculates for an entire circle
-    # around the player
+    # TODO implement this for arcs, currently calculates for an entire circle around the player
     return point_in_hitbox(
         center[0],
         center[1],
@@ -60,7 +59,10 @@ def intersect_circle(center, radius, hitbox):
 
         # if the line segment from the radius perpendicular to the edge is less than the total length of the radius,
         # the rectangle intercepts with the rectangle
-        if seg_len < radius:
+        # need to also check that the intersect point is actually between the two endpoints of the edge
+        # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
+        # lines of the arc
+        if seg_len < radius and x1 <= xi <= x2 and y1 <= yi <= y2:
             return True
 
     return False
