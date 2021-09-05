@@ -64,7 +64,8 @@ class MasterController(Controller):
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
-        self.player_view_controller.handle_actions(clients, self.current_world_data["game_map"])
+        self.player_view_controller.handle_actions(
+            clients, self.current_world_data["game_map"])
 
         for client in clients:
             ReloadController.handle_actions(client)
