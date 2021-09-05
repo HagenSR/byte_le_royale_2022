@@ -2,7 +2,7 @@ from game.controllers.controller import Controller
 from game.common.game_board import GameBoard
 from game.client.user_client import UserClient
 from game.common.stats import GameStats
-from game.utils.collision_detection import arc_intersect
+from game.utils.collision_detection import arc_intersect_rect
 import copy
 
 
@@ -34,7 +34,7 @@ class PlayerViewController(Controller):
                     0, GameStats.game_board_height, board.partition_height):
                 partition = board.get_partition_hitbox(x, y)
                 # remove everything from a partition that isn't in view at all
-                if not self.in_view(
+                if not arc_intersect_rect(
                         partition,
                         client_heading,
                         client_field_of_view,
@@ -45,7 +45,7 @@ class PlayerViewController(Controller):
                     # if a partition is in view, need to check each object to
                     # see if it's in view, remove it if it isn't
                     for obj in board.get_partition_objects(x, y):
-                        if not self.in_view(
+                        if not arc_intersect_rect(
                                 obj.hitbox,
                                 client_heading,
                                 client_field_of_view,
@@ -54,19 +54,3 @@ class PlayerViewController(Controller):
                             board.remove_object(obj)
 
             # TODO give partition board to client
-
-    def in_view(
-            self,
-            partition_hitbox,
-            client_heading,
-            client_field_of_view,
-            client_view_distance,
-            client_shooter_xy):
-        """Returns true if any part of the partition is in view, false otherwise"""
-        return arc_intersect(
-            client_shooter_xy,
-            client_view_distance,
-            client_field_of_view,
-            partition_hitbox,
-            client_heading
-        )
