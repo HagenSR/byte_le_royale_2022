@@ -26,6 +26,16 @@ class ObjectType:
     consumable = 17
 
 
+class ActionType:
+    none = 0
+    move = 1
+    shoot = 2
+    pickup = 3
+    reload = 4
+    shop = 5
+    use_item = 6
+
+
 class Upgrades:
     none = 0
     gun_upgrades = 1
@@ -66,8 +76,3 @@ class Consumables:
     speed_boost = 1
     health_pack = 2
     armor_pack = 3
-
-
-class ActionType:
-    none = 0
-    reload = 4
