@@ -1,6 +1,6 @@
 import copy
 import json
-import math
+import sys
 import os
 import random
 import importlib.resources
@@ -233,7 +233,7 @@ def create_structures_file(file_path):
 def generateRandomNumbers():
     rtn = []
     for i in range(10000):
-        rtn.append(random.randint(0, 1000000))
+        rtn.append(random.randint(0, sys.maxsize))
     return rtn
 
 def findPlotHitboxes():
