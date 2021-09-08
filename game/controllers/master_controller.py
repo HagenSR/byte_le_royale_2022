@@ -1,4 +1,5 @@
 from copy import deepcopy
+import random
 from game.common.stats import GameStats
 
 from game.common.action import Action
@@ -41,11 +42,12 @@ class MasterController(Controller):
             # Increment the turn counter by 1
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
-
+            random.seed(self.seed)
     # Receives world data from the generated game log and is responsible for
     # interpreting it
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
+        self.seed = world["seed"][(turn % len(world['seed'])) - 1]
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
@@ -77,7 +79,7 @@ class MasterController(Controller):
         data = dict()
         data['tick'] = turn
         data['clients'] = [client.to_json() for client in clients]
-        # Add things that should be thrown into the turn logs here.
+        # Add things that should be thrown into the turn logs here.self.current_world_data["seed"]
         data['game_map'] = self.current_world_data["game_map"].to_json()
 
         return data

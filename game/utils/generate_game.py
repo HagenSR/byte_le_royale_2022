@@ -1,5 +1,6 @@
 import copy
 import json
+import math
 import os
 import random
 import importlib.resources
@@ -229,9 +230,11 @@ def create_structures_file(file_path):
             fl.write(s)
 
 
-def read_structures_file(file_path):
-    print("MAKE ME!")
-
+def generateRandomNumbers():
+    rtn = []
+    for i in range(10000):
+        rtn.append(random.randint(0, 1000000))
+    return rtn
 
 def findPlotHitboxes():
     plot_hitbox_list = []
@@ -317,6 +320,7 @@ def generate():
         os.mkdir(GAME_MAP_DIR)
 
     data['game_map'] = game_map.to_json()
+    data['seed'] = generateRandomNumbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 
