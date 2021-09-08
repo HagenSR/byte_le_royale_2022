@@ -236,6 +236,7 @@ def generateRandomNumbers():
         rtn.append(random.randint(0, sys.maxsize))
     return rtn
 
+
 def findPlotHitboxes():
     plot_hitbox_list = []
 

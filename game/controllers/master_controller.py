@@ -45,6 +45,7 @@ class MasterController(Controller):
             random.seed(self.seed)
     # Receives world data from the generated game log and is responsible for
     # interpreting it
+
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
