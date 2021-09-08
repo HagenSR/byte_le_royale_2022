@@ -79,7 +79,7 @@ class MasterController(Controller):
         data = dict()
         data['tick'] = turn
         data['clients'] = [client.to_json() for client in clients]
-        # Add things that should be thrown into the turn logs here.self.current_world_data["seed"]
+        # Add things that should be thrown into the turn logs here
         data['game_map'] = self.current_world_data["game_map"].to_json()
 
         return data
