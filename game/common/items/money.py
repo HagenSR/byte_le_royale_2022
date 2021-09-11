@@ -15,6 +15,10 @@ class Money(Item):
         self.object_type = ObjectType.money
         self.amount = randint(GameStats.min_money_amount, GameStats.max_money_amount)
 
+    @property
+    def amount(self):
+        return self.__amount
+
     def to_json(self):
         data = super().to_json()
         data['amount'] = self.amount
