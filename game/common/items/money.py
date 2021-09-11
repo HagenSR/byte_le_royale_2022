@@ -13,11 +13,10 @@ class Money(Item):
             count):
         super().__init__(hitbox, health, count)
         self.object_type = ObjectType.money
-        self.amount = randint(GameStats.min_money_amount, GameStats.max_money_amount)
+        self._amount = randint(GameStats.min_money_amount, GameStats.max_money_amount)
 
-    @property
-    def amount(self):
-        return self.__amount
+    def get_amount(self):
+        return self._amount
 
     def to_json(self):
         data = super().to_json()
