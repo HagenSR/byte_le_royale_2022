@@ -13,7 +13,9 @@ class Money(Item):
             count):
         super().__init__(hitbox, health, count)
         self.object_type = ObjectType.money
-        self._amount = randint(GameStats.min_money_amount, GameStats.max_money_amount)
+        self._amount = randint(
+            GameStats.min_money_amount,
+            GameStats.max_money_amount)
 
     def get_amount(self):
         return self._amount
