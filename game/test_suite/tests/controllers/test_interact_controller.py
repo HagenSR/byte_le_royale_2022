@@ -8,7 +8,7 @@ from game.common.stats import GameStats
 from game.controllers.interact_controller import InteractController
 from game.common.enums import *
 
-class TestShopController(unittest.TestCase):
+class TestInteractController(unittest.TestCase):
     def setUp(self):
         act = Action()
         act.set_action(ActionType.interact)
