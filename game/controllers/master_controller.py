@@ -1,13 +1,17 @@
 from copy import deepcopy
+import random
 from game.common.stats import GameStats
 
 from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
+from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.kill_boundary_controller import KillBoundaryController
+from game.controllers.reload_controller import ReloadController
 
 
 class MasterController(Controller):
@@ -16,6 +20,9 @@ class MasterController(Controller):
         self.game_over = False
 
         self.current_world_data = None
+
+        self.boundry_controller = KillBoundaryController()
+        self.shop_controller = ShopController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -35,11 +42,13 @@ class MasterController(Controller):
             # Increment the turn counter by 1
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
-
+            random.seed(self.seed)
     # Receives world data from the generated game log and is responsible for
     # interpreting it
+
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
+        self.seed = world["seed"][(turn % len(world['seed']))]
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
@@ -55,6 +64,15 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        self.boundry_controller.handle_actions(
+            clients, self.current_world_data["game_map"].circle_radius)
+
+        for client in clients:
+            ReloadController.handle_actions(client)
+            self.shop_controller.handle_actions(client)
+
+        if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            self.game_over = True
         pass
 
     # Return serialized version of game
@@ -62,7 +80,7 @@ class MasterController(Controller):
         data = dict()
         data['tick'] = turn
         data['clients'] = [client.to_json() for client in clients]
-        # Add things that should be thrown into the turn logs here.
+        # Add things that should be thrown into the turn logs here
         data['game_map'] = self.current_world_data["game_map"].to_json()
 
         return data

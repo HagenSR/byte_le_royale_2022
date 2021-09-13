@@ -8,14 +8,10 @@ class Consumable(Item):
             hitbox,
             health,
             count,
-            speed_enum=None,
-            health_enum=None,
-            armor_enum=None):
+            consumable_enum=None):
         super().__init__(hitbox, health, count)
         self.object_type = ObjectType.consumable
-        self.speed_enum = speed_enum
-        self.health_enum = health_enum
-        self.armor_enum = armor_enum
+        self.consumable_enum = consumable_enum
 
     def to_json(self):
         data = super().to_json()
