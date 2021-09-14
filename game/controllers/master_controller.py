@@ -44,7 +44,8 @@ class MasterController(Controller):
             # Increment the turn counter by 1
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
-            # Set the random class's seed to the given turns seed. Should propagate to all controllers
+            # Set the random class's seed to the given turns seed. Should
+            # propagate to all controllers
             random.seed(self.seed)
     # Receives world data from the generated game log and is responsible for
     # interpreting it
