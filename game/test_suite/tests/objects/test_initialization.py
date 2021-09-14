@@ -61,7 +61,7 @@ class TestInit(
             hitbox=Hitbox(
                 10, 10, (10, 10)), health=10, count=1)
         self.mnyObj = Money(hitbox=Hitbox(
-                10, 10, (10, 10)), health=10, count=1)
+            10, 10, (10, 10)), health=10, count=1)
         self.door = Door(hitbox=Hitbox(10, 10, (10, 10)))
 
     def testObjectInit(self):
