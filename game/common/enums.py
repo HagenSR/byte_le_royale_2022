@@ -33,6 +33,10 @@ class ActionType:
     interact_with_map = 3
     reload_weapon = 4
     shop = 5
+    pickup = 6
+    reload = 7
+    shop = 8
+    use_item = 9
 
 
 class Upgrades:
