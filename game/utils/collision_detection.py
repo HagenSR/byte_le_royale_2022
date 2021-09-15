@@ -56,14 +56,16 @@ def intersect_arc(center, radius, hitbox, heading, arc_len_deg):
         else:
             # calculate x coord of the intercept of the edge and the radius perpendicular to the edge
             # numerator
-            xin = (y3 * (x2 - x1) - ((x2 - x1) ** 2 / y1 - y2) * x3 - (x1 * y2 - x2 * y1))
+            xin = (y3 * (x2 - x1) - ((x2 - x1) ** 2 / y1 - y2)
+                   * x3 - (x1 * y2 - x2 * y1))
             # denominator
             xid = ((y1 - y2) - ((x2 - x1) ** 2 / (y1 - y2)))
             xi = xin / xid
 
             # calculate y coord of the intercept of the edge and the radius
             # perpendicular to the edge
-            yi = ((x2 - x1) / (y1 - y2)) * x3 - y3 - ((x2 - x1) / (y1 - y2)) * xi
+            yi = ((x2 - x1) / (y1 - y2)) * x3 - \
+                y3 - ((x2 - x1) / (y1 - y2)) * xi
 
             dx4 = -1 * ((y1 - y2) / (x2 - x1))
 
@@ -79,9 +81,8 @@ def intersect_arc(center, radius, hitbox, heading, arc_len_deg):
         # need to also check that the intersect point is actually between the two endpoints of the edge
         # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
         # lines of the arc
-        if (seg_len < radius and
-                ((distance(x1, y1, x3, y3) < radius or distance(x2, y2, x3, y3) < radius) or
-                 x1 <= xi <= x2 and y1 <= yi <= y2)):
+        if (seg_len < radius and ((distance(x1, y1, x3, y3) < radius or distance(
+                x2, y2, x3, y3) < radius) or x1 <= xi <= x2 and y1 <= yi <= y2)):
             # TODO add check for arc, currently only checks circle
             return True
 
