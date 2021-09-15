@@ -1,3 +1,4 @@
+import random
 from game.controllers.controller import Controller
 from game.common.stats import GameStats
 from game.common.items.consumable import Consumable
