@@ -19,7 +19,9 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
-    default_wall_health = 50
+    default_wall_health = 18
+
+    default_door_health = 18
 
     player_stats = {
         'starting_health': 10,
@@ -65,6 +67,22 @@ class GameStats:
     max_hitbox = {
         'width': 100,
         'height': 100,
+    }
+
+    shop_stats = {
+        Consumables.speed_boost: {
+            'cost': 20,
+            'quantity': 5
+        },
+        Consumables.health_pack: {
+            'cost': 25,
+            'quantity': 5
+        },
+        Consumables.armor_pack: {
+            'cost': 30,
+            'quantity': 5
+        }
+
     }
 
     # Placeholder stats, stats may be created for all gun levels

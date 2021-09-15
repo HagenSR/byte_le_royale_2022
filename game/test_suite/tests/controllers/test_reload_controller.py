@@ -14,7 +14,7 @@ from game.utils.partition_grid import PartitionGrid
 class TestReloadController(unittest.TestCase):
     def setUp(self):
         act = Action()
-        act.set_action(ActionType.reload)
+        act.set_action(ActionType.reload_weapon)
         self.myPlayer = Player(
             action=act, shooter=Shooter(
                 0, 0, Hitbox(

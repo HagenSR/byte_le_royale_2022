@@ -2,7 +2,7 @@ from game.common.hitbox import Hitbox
 import unittest
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
-from game.utils.generate_game import findPlotHitboxes, generate
+from game.utils.generate_game import find_plot_hitboxes, generate
 import json
 
 

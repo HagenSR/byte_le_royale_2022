@@ -171,7 +171,6 @@ class Engine:
         world = None
         with open(GAME_MAP_FILE) as json_file:
             world = json.load(json_file)
-
         # Yes, this is a bit ugly. Load game map json to game map object
         gameBoard = GameBoard()
         game_map = gameBoard.from_json(world['game_map'])
@@ -179,6 +178,7 @@ class Engine:
         # add game map object to dictionary
         world.pop("game_map", None)
         self.world["game_map"] = game_map
+        self.world['seed'] = world['seed']
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn
