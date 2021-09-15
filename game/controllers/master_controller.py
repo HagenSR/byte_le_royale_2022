@@ -5,6 +5,7 @@ from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
+from game.controllers.shoot_controller import ShootController
 from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 
@@ -21,6 +22,7 @@ class MasterController(Controller):
         self.current_world_data = None
 
         self.boundry_controller = KillBoundaryController()
+        self.shoot_controller = ShootController()
         self.shop_controller = ShopController()
 
     # Receives all clients for the purpose of giving them the objects they
@@ -66,6 +68,8 @@ class MasterController(Controller):
 
         for client in clients:
             ReloadController.handle_actions(client)
+            self.shoot_controller.handle_action(
+                client, self.current_world_data["game_map"])
             self.shop_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:

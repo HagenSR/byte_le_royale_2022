@@ -30,10 +30,13 @@ class ActionType:
     none = 0
     move = 1
     shoot = 2
-    pickup = 3
-    reload = 4
+    interact_with_map = 3
+    reload_weapon = 4
     shop = 5
-    use_item = 6
+    pickup = 6
+    reload = 7
+    shop = 8
+    use_item = 9
 
 
 class Upgrades:
