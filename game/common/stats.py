@@ -10,17 +10,23 @@ class GameStats:
 
     # The radius that the kill circle will shrink every tick
     circle_shrink_distance = 1
+    # Damage circle does each tick
+    circle_damage = 1
+    # Number of turns before circle encroaches on game map
+    circle_delay = 100 * circle_shrink_distance
 
     # The "margin" inbetween every building plot in game map. Used so players
     # can always navigate between buildings
     corridor_width_height = 20
 
-    default_wall_health = 50
+    default_wall_health = 18
+
+    default_door_health = 18
 
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'hitbox': [[10, 10, 50, 50], [10, 10, 450, 450]],
+        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
         'view_radius': 10,
         'move_speed': 10,
     }
@@ -60,6 +66,22 @@ class GameStats:
     max_hitbox = {
         'width': 100,
         'height': 100,
+    }
+
+    shop_stats = {
+        Consumables.speed_boost: {
+            'cost': 20,
+            'quantity': 5
+        },
+        Consumables.health_pack: {
+            'cost': 25,
+            'quantity': 5
+        },
+        Consumables.armor_pack: {
+            'cost': 30,
+            'quantity': 5
+        }
+
     }
 
     # Placeholder stats, stats may be created for all gun levels

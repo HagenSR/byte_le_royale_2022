@@ -88,7 +88,7 @@ class Engine:
                 # Add players one and two
                 ar = GameStats.player_stats["hitbox"][0]
                 hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter = Shooter(hitbox=hit))
+                player = Player(shooter=Shooter(hitbox=hit))
                 self.clients.append(player)
             else:
                 ar = GameStats.player_stats["hitbox"][1]
@@ -173,15 +173,14 @@ class Engine:
         world = None
         with open(GAME_MAP_FILE) as json_file:
             world = json.load(json_file)
-
         # Yes, this is a bit ugly. Load game map json to game map object
         gameBoard = GameBoard()
         game_map = gameBoard.from_json(world['game_map'])
 
-
         # add game map object to dictionary
         world.pop("game_map", None)
         self.world["game_map"] = game_map
+        self.world['seed'] = world['seed']
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn
