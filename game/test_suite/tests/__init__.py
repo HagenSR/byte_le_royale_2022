@@ -22,7 +22,6 @@ from game.test_suite.tests.controllers.test_kill_boundary_controller import Test
 from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
 
 
-
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',

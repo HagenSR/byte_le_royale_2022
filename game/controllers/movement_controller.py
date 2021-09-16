@@ -16,7 +16,8 @@ class MovementController(Controller):
     def handle_actions(self, client, world):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
-            # shooter object is removed from old location on gameboard to avoid object duplicates
+            # shooter object is removed from old location on gameboard to avoid
+            # object duplicates
             world["game_board"].partition.remove_object(client.shooter)
             # variable for client's location prior to movement
             location = client.shooter.hitbox.position
@@ -28,11 +29,16 @@ class MovementController(Controller):
             target_location = calculate_location(location, speed, angle)
             self.space_free = True
             while location != target_location and self.space_free:
-                if not world["game_board"].partition.find_object_hitbox(client.shooter.hitbox):
+                if not world["game_board"].partition.find_object_hitbox(
+                        client.shooter.hitbox):
                     new_x = location[0] + math.cos(angle)
                     new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
-                    if abs(new_x - target_location[0]) < 0.00001 and abs(new_y - target_location[1]) < 0.00001:
+                    if abs(
+                            new_x -
+                            target_location[0]) < 0.00001 and abs(
+                            new_y -
+                            target_location[1]) < 0.00001:
                         client.shooter.hitbox.position = target_location
                     location = client.shooter.hitbox.position
                 else:

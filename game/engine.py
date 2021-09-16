@@ -96,8 +96,6 @@ class Engine:
                 player = Player(shooter=Shooter(hitbox=hit))
                 self.clients.append(player)
 
-
-
             # Verify client isn't using invalid imports or opening anything
             imports, opening = verify_code(filename + '.py')
             if len(imports) != 0:
