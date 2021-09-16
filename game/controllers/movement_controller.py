@@ -15,7 +15,7 @@ class MovementController(Controller):
 
     def handle_actions(self, client, world):
         # If statement for if client chooses move action
-        if client.action.chosen_action is ActionType.move:
+        if client.action._chosen_action is ActionType.move:
             # shooter object is removed from old location on gameboard to avoid object duplicates
             world["game_board"].partition.remove_object(client.shooter)
             # variable for client's location prior to movement
