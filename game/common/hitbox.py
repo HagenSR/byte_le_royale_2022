@@ -13,7 +13,8 @@ class Hitbox(GameObject):
         self.height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         self.position = xy_tuple
-        # added rotation to allow for diagonal hitboxes while keeping backwards compatibility
+        # added rotation to allow for diagonal hitboxes while keeping backwards
+        # compatibility
         self.rotation = math.radians(rotation)
 
     @property
