@@ -97,7 +97,13 @@ class TestCollision(unittest.TestCase):
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
-        self.assertTrue(arc_intersect_rect(center, radius, arc_len_degree, self.hitOne, heading))
+        self.assertTrue(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
 
     def test_arc_intersect_rect_circle_in_rect(self):
         center = (10, 10)
@@ -105,7 +111,13 @@ class TestCollision(unittest.TestCase):
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
-        self.assertTrue(arc_intersect_rect(center, radius, arc_len_degree, self.hitOne, heading))
+        self.assertTrue(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
 
     def test_arc_intersect_rect_circle_on_edge(self):
         center = (10, 15)
@@ -113,7 +125,13 @@ class TestCollision(unittest.TestCase):
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
-        self.assertTrue(arc_intersect_rect(center, radius, arc_len_degree, self.hitOne, heading))
+        self.assertTrue(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
 
     def test_arc_intersect_rect_circle_to_side_and_top(self):
         center = (3, 3)
@@ -121,7 +139,13 @@ class TestCollision(unittest.TestCase):
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
-        self.assertTrue(arc_intersect_rect(center, radius, arc_len_degree, self.hitOne, heading))
+        self.assertTrue(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
 
     def test_arc_intersect_rect_false(self):
         center = (3, 3)
@@ -129,7 +153,13 @@ class TestCollision(unittest.TestCase):
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
-        self.assertFalse(arc_intersect_rect(center, radius, arc_len_degree, self.hitOne, heading))
+        self.assertFalse(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
 
 
 if __name__ == '__main__':
