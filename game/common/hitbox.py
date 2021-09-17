@@ -16,18 +16,6 @@ class Hitbox(GameObject):
         # added rotation to allow for diagonal hitboxes while keeping backwards compatibility
         self.rotation = math.radians(rotation)
 
-        self.__calculate_positions()
-
-    # method to be called anytime positions should change
-    def __calculate_positions(self):
-        # use backing variables so the equations don't get calculated everytime the property gets called
-        self.__topRight = (self.position[0] + (self.width * math.cos(self.rotation)),
-                           self.position[1] + (self.width * math.sin(self.rotation)))
-        self.__bottomLeft = (self.position[0] + (self.height * math.sin(self.rotation)),
-                             self.position[1] + (self.height * math.cos(self.rotation)))
-        self.__bottomRight = (self.__bottomLeft[0] + (self.width * math.cos(self.rotation)),
-                              self.__bottomLeft[1] + (self.width * math.sin(self.rotation)))
-
     @property
     def width(self):
         return self.__width
@@ -46,15 +34,18 @@ class Hitbox(GameObject):
 
     @property
     def topRight(self):
-        return self.__topRight
+        return (self.position[0] + (self.width * math.cos(self.rotation)),
+                self.position[1] + (self.width * math.sin(self.rotation)))
 
     @property
     def bottomLeft(self):
-        return self.__bottomLeft
+        return (self.position[0] + (self.height * math.sin(self.rotation)),
+                self.position[1] + (self.height * math.cos(self.rotation)))
 
     @property
     def bottomRight(self):
-        return self.__bottomRight
+        return (self.bottomLeft[0] + (self.width * math.cos(self.rotation)),
+                self.bottomLeft[1] + (self.width * math.sin(self.rotation)))
 
     @property
     def middle(self):
@@ -71,7 +62,6 @@ class Hitbox(GameObject):
     def height(self, val):
         if val > 0:
             self.__height = val
-            self.__calculate_positions()
         else:
             raise ValueError("Tried to set an invalid height for hitbox")
 
@@ -80,7 +70,6 @@ class Hitbox(GameObject):
     def width(self, val):
         if val > 0:
             self.__width = val
-            self.__calculate_positions()
         else:
             raise ValueError("Tried to set an invalid width for hitbox")
 
@@ -90,7 +79,6 @@ class Hitbox(GameObject):
         if (0 <= val[0] <= stats.GameStats.game_board_width) and (
                 0 <= val[1] <= stats.GameStats.game_board_height):
             self.__position = val
-            self.__calculate_positions()
         else:
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox")
