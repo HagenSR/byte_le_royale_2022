@@ -13,20 +13,28 @@ class Hitbox(GameObject):
         self.height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         self.position = xy_tuple
-        # added rotation to allow for diagonal hitboxes while keeping backwards compatibility
+        # added rotation to allow for diagonal hitboxes while keeping backwards
+        # compatibility
         self.rotation = math.radians(rotation)
 
         self.__calculate_positions()
 
     # method to be called anytime positions should change
     def __calculate_positions(self):
-        # use backing variables so the equations don't get calculated everytime the property gets called
-        self.__topRight = (self.position[0] + (self.width * math.cos(self.rotation)),
-                           self.position[1] + (self.width * math.sin(self.rotation)))
-        self.__bottomLeft = (self.position[0] + (self.height * math.sin(self.rotation)),
-                             self.position[1] + (self.height * math.cos(self.rotation)))
-        self.__bottomRight = (self.__bottomLeft[0] + (self.width * math.cos(self.rotation)),
-                              self.__bottomLeft[1] + (self.width * math.sin(self.rotation)))
+        # use backing variables so the equations don't get calculated everytime
+        # the property gets called
+        self.__topRight = (self.position[0] +
+                           (self.width *
+                            math.cos(self.rotation)), self.position[1] +
+                           (self.width *
+                            math.sin(self.rotation)))
+        self.__bottomLeft = (self.position[0] +
+                             (self.height *
+                              math.sin(self.rotation)), self.position[1] +
+                             (self.height *
+                              math.cos(self.rotation)))
+        self.__bottomRight = (self.__bottomLeft[0] + (self.width * math.cos(
+            self.rotation)), self.__bottomLeft[1] + (self.width * math.sin(self.rotation)))
 
     @property
     def width(self):
