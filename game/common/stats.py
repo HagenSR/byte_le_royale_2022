@@ -150,3 +150,18 @@ class GameStats:
     Upgrades.gun_upgrades = 20  # Could potentially incease bullet speed?
     Upgrades.movement_upgrades = 20  # May be used to make the player go faster?
     Upgrades.sight_upgrades = 20  # Increase how far player can see?
+    
+    initial_wave = 0
+    loot_wave_1_tick = 200
+    loot_wave_2_tick = 400
+    loot_wave_3_tick = 600
+    
+    gun_count = 0
+    consumable_count = 0
+    upgrade_count = 0
+    money_count = 0
+    
+    gun_cap = 50
+    consumable_cap = 30
+    upgrade_cap = 20
+    money_cap = 50

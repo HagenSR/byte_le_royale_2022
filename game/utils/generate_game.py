@@ -8,6 +8,7 @@ from game.common.hitbox import Hitbox
 from game.common.items.consumable import Consumable
 from game.common.items.upgrade import Upgrade
 from game.common.wall import Wall
+from game.common.items.gun import Gun
 from game.common.items.item import Item
 from game.config import *
 from game.utils.helpers import write_json_file
@@ -270,35 +271,7 @@ def findPlotHitboxes():
         # position back to the starting x position
         hitbox_top_left_y += plot_width_height + GameStats.corridor_width_height
         hitbox_top_left_x = GameStats.corridor_width_height
-    return plot_hitbox_list
-
-
-def placeItems(game_board):
-    half_width = game_board.width / 2
-    half_height = game_board.height / 2
-    number_items = random.randrange(10, 25, 1)
-    for index in range(number_items):
-        # Value is pined between 0 and game board height/width. Values are (somewhat) normally distributed around the center
-        potential_x = max(min(random.gauss(half_width, half_width * .3), game_board.width - 1), 1)
-        potential_y = max(min(random.gauss(half_height, half_height * .3), game_board.height - 1), 1)
-        while len(game_board.partition.get_partition_objects(potential_x, potential_y)) > 0:
-            potential_x = random.gauss(half_width, half_width * .005)
-            potential_y = random.gauss(half_height, half_height * .005)
-        game_board.partition.add_object(Item(Hitbox(1, 1, (potential_x, potential_y))))
-    return game_board
-
-
-def pickItem(xPos, yPos):
-    # -1 is money
-    type = random.choice([ObjectType.consumable, ObjectType.upgrade, ObjectType.gun, -1])
-    rtnItem = None
-    if type == ObjectType.consumable:
-        conType = random.choice([ type_con for type_con in Consumables.__dir__() if isinstance(type_con, int) ])
-        rtnItem = Consumable(Hitbox(5,5, (xPos, yPos)), 1, conType)
-    elif type == ObjectType.upgrade:
-        upType = random.choice([ type_con for type_con in Upgrades.__dir__() if isinstance(type_con, int) ])
-        rtnItem = Upgrade(Hitbox(5,5 (xPos, yPos)), 5, 1, upType)
-
+    return plot_hitbox_list  
 
 
 def generate():
@@ -346,8 +319,6 @@ def generate():
                 y_offset = plot.position[1] + wall_copy.hitbox.position[1]
                 wall_copy.hitbox.position = (x_offset, y_offset)
                 game_map.partition.add_object(wall_copy)
-
-    placeItems(game_map)
 
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):
