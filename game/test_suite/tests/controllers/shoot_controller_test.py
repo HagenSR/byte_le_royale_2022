@@ -18,7 +18,7 @@ class TestShootController(unittest.TestCase):
     def setUp(self):
         self.shoot_controller = ShootController()
         self.game_board = GameBoard()
-        shooter = Shooter(heading=(math.pi / 2), speed=0,
+        shooter = Shooter(heading=(0), speed=0,
                           hitbox=Hitbox(10, 10, (0, 0)))
         self.gun = Gun(GunType.sniper, level=1, hitbox=Hitbox(2, 2, (0, 0)))
         shooter.append_inventory(self.gun)
@@ -29,7 +29,7 @@ class TestShootController(unittest.TestCase):
         wall = Wall(Hitbox(30, 30, (20, 0)), destructible=True)
         self.game_board.partition.add_object(wall)
         self.shoot_controller.handle_action(self.player, self.game_board)
-        self.assertTrue(
+        self.assertEqual(
             round(
                 wall.health), round(
                 (GameStats.default_wall_health - self.gun.damage)))
@@ -48,7 +48,7 @@ class TestShootController(unittest.TestCase):
         door = Door(Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(door)
         self.shoot_controller.handle_action(self.player, self.game_board)
-        self.assertTrue(
+        self.assertEqual(
             round(
                 door.health), round(
                 (GameStats.default_door_health - self.gun.damage)))
@@ -68,7 +68,7 @@ class TestShootController(unittest.TestCase):
                           hitbox=Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(shooter)
         self.shoot_controller.handle_action(self.player, self.game_board)
-        self.assertTrue(
+        self.assertEqual(
             round(
                 shooter.health), round(
                 (GameStats.player_stats['starting_health'] - self.gun.damage)))
@@ -80,7 +80,4 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.add_object(shooter)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
-        if(shooter.health <= 0):
-            self.assertTrue(True, True)
-        else:
-            self.assertTrue(True, False)
+        self.assertLessEqual(shooter.health, 0)
