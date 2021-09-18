@@ -45,6 +45,10 @@ class GameStats:
         },
     }
 
+    # stats for money located on the gameboard
+    min_money_amount = 25
+    max_money_amount = 500
+
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be
         # changed

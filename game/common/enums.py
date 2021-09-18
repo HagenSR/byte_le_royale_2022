@@ -24,6 +24,7 @@ class ObjectType:
     door = 15
     upgrade = 16
     consumable = 17
+    money = 18
 
 
 class ActionType:
