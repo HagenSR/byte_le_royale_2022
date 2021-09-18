@@ -271,7 +271,6 @@ def determine_collision(player, gameboard, collidables, slope, ray_endpoint):
                 collidable,
                 gun.damage)
             break
-
     return ray
 
 
