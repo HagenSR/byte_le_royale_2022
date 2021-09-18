@@ -285,8 +285,8 @@ def generate():
     structures_list = []
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
-    # Use ../../launcher.pyz if opening in the utils folder
-    with zipfile.ZipFile('../../launcher.pyz') as z:
+    # Use ../../launcher.pyz if opening in the utils folder or ./launcher.pyz for the .pyz
+    with zipfile.ZipFile('./launcher.pyz') as z:
         for filename in z.namelist():
             # Only load proper structure json
             if filename.startswith(
