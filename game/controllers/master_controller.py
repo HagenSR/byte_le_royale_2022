@@ -1,4 +1,5 @@
 from copy import deepcopy
+from game.controllers.loot_generation_controller import LootGenerationController
 import random
 from game.common.stats import GameStats
 
@@ -12,6 +13,7 @@ from game.utils.threadBytel import CommunicationThread
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
+from game.controllers.loot_generation_controller import LootGenerationController
 
 
 class MasterController(Controller):
@@ -23,6 +25,7 @@ class MasterController(Controller):
 
         self.boundry_controller = KillBoundaryController()
         self.shop_controller = ShopController()
+        self.loot_generation_controller = LootGenerationController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control

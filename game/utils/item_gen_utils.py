@@ -45,7 +45,7 @@ def pickItem(xPos, yPos, loot_wave_num):
 
 def hasReachedItemCap(item):
     if item == ObjectType.consumable:
-        if GameStats.consumable_count >= GameStats.consumable_count:
+        if GameStats.consumable_count >= GameStats.consumable_cap:
             return True
     elif item == ObjectType.upgrade:
         if GameStats.upgrade_count >= GameStats.upgrade_cap:
