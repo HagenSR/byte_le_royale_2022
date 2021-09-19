@@ -13,7 +13,11 @@ class LootGenerationController(Controller):
         self.ticks_between_waves = 200
         self.tick = 200
 
-    def handle_actions(self, game_board, kill_boundry_radius):
+    def handle_actions(self, game_board, kill_boundary_radius):
         if (self.tick % 200) == 0 and self.next_wave <= self.num_loot_waves:
+            # As more waves spawn, there will be less items per wave
             number_items = random.randrange(20 - (self.next_wave * 2), 35 - (self.next_wave * 2), 1)
-            placeItems(game_board, self.next_wave, kill_boundry_radius, number_items)
+            items = placeItems(game_board, self.next_wave, kill_boundary_radius, number_items)
+            game_board.partition.add_object_list(items)
+            self.next_wave += 1
+        self.tick += 1
