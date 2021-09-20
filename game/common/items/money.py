@@ -18,7 +18,8 @@ class Money(Item):
             GameStats.min_money_amount,
             GameStats.max_money_amount)
 
-    def get_amount(self):
+    @property
+    def amount(self):
         return self.__amount
 
     def to_json(self):
