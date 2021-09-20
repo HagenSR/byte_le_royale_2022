@@ -37,15 +37,31 @@ class PartitionGrid:
         """Find which column of the structure the x coordinate is in"""
         return math.floor(x / self.partition_height) - 1
 
+    def check_overlap(self, hitbox: Hitbox):
+        partitions = []
+        topLeft_row = self.find_row(hitbox.topLeft[1])
+        topLeft_column = self.find_column(hitbox.topLeft[0])
+        topRight_row = self.find_row(hitbox.topRight[1])
+        topRight_column = self.find_column(hitbox.topRight[0])
+        bottomRight_row = self.find_row(hitbox.bottomRight[1])
+        bottomRight_column = self.find_column(hitbox.bottomRight[0])
+        bottomLeft_row = self.find_row(hitbox.bottomLeft[1])
+        bottomLeft_column = self.find_column(hitbox.bottomLeft[0])
+        partitions.append((topLeft_row, topLeft_column))
+        if topLeft_row != topRight_row and topLeft_column != topRight_column:
+            partitions.append((topRight_row, topRight_column))
+        if topRight_row != bottomRight_row and topRight_column != bottomRight_column:
+            partitions.append((bottomRight_row, bottomRight_column))
+        if topLeft_row != bottomLeft_row and topLeft_column != bottomLeft_column:
+            partitions.append((bottomLeft_row, bottomLeft_column))
+        return partitions
+
     def add_object(self, obj: MapObject):
         """add object to it's correct partition"""
-        # TODO fix bug where object only gets added to the partition of it's
-        # topleft corner, even if it overlaps
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
-        row = self.find_row(obj.hitbox.position[1])
-        column = self.find_column(obj.hitbox.position[0])
-        self.__matrix[row][column].append(obj)
+        for partition in self.check_overlap(obj.hitbox):
+            self.__matrix[partition[0]][partition[1]].append(obj)
 
     def add_object_list(self, object_list: 'list[MapObject]'):
         """add a list of objects to their correct partition"""
@@ -76,40 +92,31 @@ class PartitionGrid:
 
     def find_object_hitbox(self, hitbox: Hitbox) -> bool:
         """Returns the object if there is an object that collides with the given hitbox, or false otherwise"""
-        # TODO account for objects being in multiple partitions after add
-        # object fix
         if not isinstance(hitbox, Hitbox):
             raise ValueError("Hitbox to check must be of type Hitbox")
-        row = self.find_row(hitbox.position[1])
-        column = self.find_column(hitbox.position[0])
-        for obj in self.__matrix[row][column]:
-            if collision_detection.check_collision(obj.hitbox, hitbox):
-                return obj
+        for partition in self.check_overlap(hitbox):
+            for obj in self.__matrix[partition[0]][partition[1]]:
+                if collision_detection.check_collision(obj.hitbox, hitbox):
+                    return obj
         return False
 
     def find_object_object(self, given_obj: MapObject) -> bool:
         """Returns object if there is an object that collides with the given object, false otherwise"""
-        # TODO account for objects being in multiple partitions after add
-        # object fix
         if not isinstance(given_obj, MapObject):
             raise ValueError("Object must be of type MapObject")
-        row = self.find_row(given_obj.hitbox.position[1])
-        column = self.find_column(given_obj.hitbox.position[0])
-        for obj in self.__matrix[row][column]:
-            if collision_detection.check_collision(
-                    given_obj.hitbox, obj.hitbox):
-                return obj
+        for partition in self.check_overlap(given_obj.hitbox):
+            for obj in self.__matrix[partition[0]][partition[1]]:
+                if collision_detection.check_collision(
+                        given_obj.hitbox, obj.hitbox):
+                    return obj
         return False
 
     def remove_object(self, obj: MapObject) -> None:
         """Remove a given object from the structure"""
-        # TODO account for objects being in multiple partitions after add
-        # object fix
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
-        row = self.find_row(obj.hitbox.position[1])
-        column = self.find_column(obj.hitbox.position[0])
-        self.__matrix[row][column].remove(obj)
+        for partition in self.check_overlap(obj.hitbox):
+            self.__matrix[partition[0]][partition[1]].remove(obj)
 
     def get_partitions_wide(self):
         return len(self.__matrix)
@@ -124,8 +131,6 @@ class PartitionGrid:
                 self.remove_object(obj)
 
     def to_json(self):
-        # TODO account for objects being in multiple partitions after add
-        # object fix
         data = {'matrix': [
             [
                 [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
@@ -137,8 +142,6 @@ class PartitionGrid:
         return data
 
     def from_json(self, data):
-        # TODO account for objects being in multiple partitions after add
-        # object fix
         self.__matrix = [
             [
                 [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
