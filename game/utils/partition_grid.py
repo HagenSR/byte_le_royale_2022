@@ -67,15 +67,15 @@ class PartitionGrid:
              self.partition_height))
 
     def find_object_coordinates(self, x: float, y: float) -> bool:
-        """Returns boolean whether there is an object at the coordinates"""
+        """Returns the object if there is an object at the coordinates, or false otherwise"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
             if (obj.hitbox.topLeft[0] <= x <= obj.hitbox.bottomRight[0]
                     and obj.hitbox.topLeft[1] <= y <= obj.hitbox.bottomRight[1]):
-                return True
+                return obj
         return False
 
     def find_object_hitbox(self, hitbox: Hitbox) -> bool:
-        """Returns boolean whether there is an object that collides with the given hitbox"""
+        """Returns the object if there is an object that collides with the given hitbox, or false otherwise"""
         # TODO account for objects being in multiple partitions after add
         # object fix
         if not isinstance(hitbox, Hitbox):
@@ -84,11 +84,11 @@ class PartitionGrid:
         column = self.find_column(hitbox.position[0])
         for obj in self.__matrix[row][column]:
             if collision_detection.check_collision(obj.hitbox, hitbox):
-                return True
+                return obj
         return False
 
     def find_object_object(self, given_obj: MapObject) -> bool:
-        """Returns boolean whether there is an object that collides with the given object"""
+        """Returns object if there is an object that collides with the given object, false otherwise"""
         # TODO account for objects being in multiple partitions after add
         # object fix
         if not isinstance(given_obj, MapObject):
@@ -98,7 +98,7 @@ class PartitionGrid:
         for obj in self.__matrix[row][column]:
             if collision_detection.check_collision(
                     given_obj.hitbox, obj.hitbox):
-                return True
+                return obj
         return False
 
     def remove_object(self, obj: MapObject) -> None:
