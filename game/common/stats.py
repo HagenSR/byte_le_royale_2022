@@ -159,6 +159,12 @@ class GameStats:
     consumable_count = 0
     upgrade_count = 0
     money_count = 0
+
+    num_loot_waves = 4
+    next_wave = 1
+    # self.ticks_between_waves and self.tick must be equal to each other
+    ticks_between_waves = 200
+    tick = 200
     
     gun_cap = 50
     consumable_cap = 30

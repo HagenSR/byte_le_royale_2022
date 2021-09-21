@@ -9,7 +9,7 @@ from game.common.enums import *
 from game.common.items.item import Item
 
 
-def placeItems(game_board, loot_wave_num, kill_boundary_radius, number_items):
+def place_items(game_board, loot_wave_num, kill_boundary_radius, number_items):
     item_list = []
     half_width = kill_boundary_radius
     half_height = kill_boundary_radius
@@ -17,7 +17,7 @@ def placeItems(game_board, loot_wave_num, kill_boundary_radius, number_items):
         # Value is pined between 0 and game board height/width. Values are (somewhat) normally distributed around the center
         potential_x = max(min(random.gauss(half_width, half_width * .3), kill_boundary_radius - 1), 1)
         potential_y = max(min(random.gauss(half_height, half_height * .3), kill_boundary_radius - 1), 1)
-        item = pickItem(potential_x, potential_y, loot_wave_num = loot_wave_num)
+        item = pick_item(potential_x, potential_y, loot_wave_num = loot_wave_num)
         # Determine if there is an object in the way
         while game_board.partition.find_object_hitbox(item):
             potential_x = random.gauss(half_width, half_width * .005)
@@ -27,10 +27,10 @@ def placeItems(game_board, loot_wave_num, kill_boundary_radius, number_items):
     return item_list
 
 
-def pickItem(xPos, yPos, loot_wave_num):
+def pick_item(xPos, yPos, loot_wave_num):
     type = random.choice([ObjectType.consumable, ObjectType.consumable, ObjectType.upgrade, ObjectType.gun, ObjectType.money])
     rtnItem = None
-    if hasReachedItemCap(type):
+    if has_reached_item_cap(type):
         return rtnItem
     if type == ObjectType.consumable:
         conType = random.choice([ type_con for type_con in Consumables.__dir__() if isinstance(type_con, int) ])
@@ -46,7 +46,7 @@ def pickItem(xPos, yPos, loot_wave_num):
     return rtnItem
 
 
-def hasReachedItemCap(item):
+def has_reached_item_cap(item):
     if item == ObjectType.consumable:
         if GameStats.consumable_count >= GameStats.consumable_cap:
             return True
