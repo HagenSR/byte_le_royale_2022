@@ -40,8 +40,8 @@ class Hitbox(GameObject):
 
     @property
     def bottomLeft(self):
-        return (self.position[0] + (self.height * math.sin(self.rotation)),
-                self.position[1] + (self.height * math.cos(self.rotation)))
+        return (self.position[0] + (self.height * math.cos(self.rotation)),
+                self.position[1] + (self.height * math.sin(self.rotation)))
 
     @property
     def bottomRight(self):
