@@ -32,5 +32,6 @@ __all__ = [
     'TestShopController',
     'TestKillBoundary',
     'TestRayCollision',
-    'TestReloadController'
+    'TestReloadController',
+    'TestLootGenerationController'
 ]

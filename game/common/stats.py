@@ -161,11 +161,9 @@ class GameStats:
     money_count = 0
 
     num_loot_waves = 4
-    next_wave = 1
-    # self.ticks_between_waves and self.tick must be equal to each other
+    # self.ticks_between_waves and self.tick (var in loot gen controller) must be equal to each other
     ticks_between_waves = 200
-    tick = 200
-    
+
     gun_cap = 50
     consumable_cap = 30
     upgrade_cap = 20
