@@ -1,25 +1,31 @@
 import math
-from copy import deepcopy
+from copy import deepcopy, copy
 
+from game.common import game_board
 from game.common.hitbox import Hitbox
 from game.common.items.item import Item
 from game.common.map_object import MapObject
 from game.common.moving.moving_object import MovingObject
+from game.common.stats import GameStats
 from game.utils import collision_detection
+from game.utils.collision_detection import arc_intersect_rect
 
 
 class PartitionGrid:
     """Structure for storing objects in partitioned 2d space"""
-
     def __init__(
             self,
             width: int,
             height: int,
             partitions_wide: int,
             partitions_tall: int):
+
+        if width % partitions_wide != 0 or width % partitions_tall != 0:
+            raise ValueError("Width and height must be evenly divisible by number of partitions")
+
         # define the length and width of each square partition
-        self.partition_width = width / partitions_wide
-        self.partition_height = height / partitions_tall
+        self.partition_width = width // partitions_wide
+        self.partition_height = height // partitions_tall
 
         # create a 3d list. The first 2 dimensions handle the partitions
         # and the 3rd dimension holds the objects in those partitions
@@ -133,6 +139,45 @@ class PartitionGrid:
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
             if isinstance(obj, MovingObject) or isinstance(obj, Item):
                 self.remove_object(obj)
+
+    def obfuscate(self, client):
+        # get center of client hitbox for origin of view arc
+        client_shooter_xy = (
+            client.shooter.hitbox.topLeft[0] +
+            client.shooter.hitbox.topRight[0] /
+            2,
+            client.shooter.hitbox.topLeft[1] +
+            client.shooter.hitbox.bottomLeft[1] /
+            2)
+        client_heading = client.shooter.heading
+        client_view_distance = client.shooter.view_distance
+        client_field_of_view = client.shooter.field_of_view
+
+        # Check all partitions, if a partition isn't in view, obfuscate it
+        # if it is in view, remove only objects that aren't visible
+        for x, y in range(
+                0, GameStats.game_board_width, self.partition_width), range(
+            0, GameStats.game_board_height, self.partition_height):
+            partition = self.get_partition_hitbox(x, y)
+            # remove everything from a partition that isn't in view at all
+            if not arc_intersect_rect(
+                    partition,
+                    client_heading,
+                    client_field_of_view,
+                    client_view_distance,
+                    client_shooter_xy):
+                self.obfuscate_partition(x, y)
+            else:
+                # if a partition is in view, need to check each object to
+                # see if it's in view, remove it if it isn't
+                for obj in self.get_partition_objects(x, y):
+                    if not arc_intersect_rect(
+                            obj.hitbox,
+                            client_heading,
+                            client_field_of_view,
+                            client_view_distance,
+                            client_shooter_xy):
+                        self.remove_object(obj)
 
     def to_json(self):
         data = {'matrix': [
