@@ -82,6 +82,10 @@ class PartitionGrid:
              self.find_row(y) *
              self.partition_height))
 
+    def get_partition_objects_by_index(self, x: int, y: int):
+        """Returns objects that are in the partition at indices [y][x]"""
+        return self.__matrix[y][x]
+
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns the object if there is an object at the coordinates, or false otherwise"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
