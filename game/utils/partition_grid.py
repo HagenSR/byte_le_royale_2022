@@ -13,6 +13,7 @@ from game.utils.collision_detection import arc_intersect_rect
 
 class PartitionGrid:
     """Structure for storing objects in partitioned 2d space"""
+
     def __init__(
             self,
             width: int,
@@ -21,7 +22,8 @@ class PartitionGrid:
             partitions_tall: int):
 
         if width % partitions_wide != 0 or width % partitions_tall != 0:
-            raise ValueError("Width and height must be evenly divisible by number of partitions")
+            raise ValueError(
+                "Width and height must be evenly divisible by number of partitions")
 
         # define the length and width of each square partition
         self.partition_width = width // partitions_wide
@@ -156,8 +158,8 @@ class PartitionGrid:
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
         for x, y in range(
-                0, GameStats.game_board_width, self.partition_width), range(
-            0, GameStats.game_board_height, self.partition_height):
+            0, GameStats.game_board_width, self.partition_width), range(
+                0, GameStats.game_board_height, self.partition_height):
             partition = self.get_partition_hitbox(x, y)
             # remove everything from a partition that isn't in view at all
             if not arc_intersect_rect(
