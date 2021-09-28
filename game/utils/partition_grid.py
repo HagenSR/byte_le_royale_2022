@@ -54,6 +54,10 @@ class PartitionGrid:
         """Returns objects that are in the same partition as the x, y tuple"""
         return self.__matrix[y][x]
 
+    def get_partition_objects_by_index(self, x: int, y: int):
+        """Returns objects that are in the partition at indices [y][x]"""
+        return self.__matrix[y][x]
+
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns boolean whether there is an object at the coordinates"""
 
