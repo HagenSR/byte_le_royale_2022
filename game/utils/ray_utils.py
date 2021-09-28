@@ -6,7 +6,13 @@ import math
 
 
 # Get relevant collidables in partitions bounded by furthest x, y and origin
-def load_collidables_in_ray_range(heading, x, y, gameboard, ray_endpoint, exclusions=[]):
+def load_collidables_in_ray_range(
+        heading,
+        x,
+        y,
+        gameboard,
+        ray_endpoint,
+        exclusions=[]):
     ray_x_limit = ray_endpoint['x']
     ray_y_limit = ray_endpoint['y']
     # starting partition
@@ -22,25 +28,29 @@ def load_collidables_in_ray_range(heading, x, y, gameboard, ray_endpoint, exclus
     if math.pi / 2 >= heading >= 0:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif math.pi >= heading > math.pi / 2:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 >= heading > math.pi:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 < heading <= 2 * math.pi:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
 
@@ -194,7 +204,13 @@ def sort_objects(x1, y1, collidables, max_range):
 
 
 # Determine which object ray collides with first
-def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint, damage):
+def determine_gun_collision(
+        player,
+        gameboard,
+        collidables,
+        slope,
+        ray_endpoint,
+        damage):
     # Ray object used to provide data for visualizer
     ray = Ray(player.shooter.hitbox.position, ray_endpoint, None, None)
 
@@ -302,7 +318,15 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
     return ray
 
 
-def determine_collision(heading, x, y, gameboard, collidables, slope, ray_endpoint, damage):
+def determine_collision(
+        heading,
+        x,
+        y,
+        gameboard,
+        collidables,
+        slope,
+        ray_endpoint,
+        damage):
     # Ray object used to provide data for visualizer
     ray = Ray((x, y), ray_endpoint, None, None)
     heading = math.radians(heading)
@@ -420,13 +444,13 @@ def get_ray_collision(player, gameboard):
                                   slope,
                                   player.shooter.primary_gun.range)
     collidables = load_collidables_in_ray_range(
-            player.shooter.heading,
-            player.shooter.hitbox.position[0],
-            player.shooter.hitbox.position[1],
-            gameboard,
-            ray_endpoint,
-            [player.shooter]
-            )
+        player.shooter.heading,
+        player.shooter.hitbox.position[0],
+        player.shooter.hitbox.position[1],
+        gameboard,
+        ray_endpoint,
+        [player.shooter]
+    )
     sort_objects(player.shooter.hitbox.position[0],
                  player.shooter.hitbox.position[1],
                  collidables,
@@ -438,6 +462,6 @@ def get_ray_collision(player, gameboard):
         slope,
         ray_endpoint,
         player.shooter.primary_gun.damage
-        )
+    )
 
     return ray
