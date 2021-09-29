@@ -180,7 +180,7 @@ class PartitionGrid:
                         self.remove_object(obj)
 
     def to_json(self):
-        data = {'matrix': [
+        data = {'partition_grid': [
             [
                 [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
@@ -196,5 +196,5 @@ class PartitionGrid:
                 [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
                 for column in row
             ]
-            for row in data['matrix']
+            for row in data['partition_grid']
         ]
