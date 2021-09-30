@@ -9,11 +9,10 @@ class Upgrade(Item):
             self,
             hitbox,
             health,
-            count,
             upgrade_enum=None,
             movement_enum=None,
             sight_enum=None):
-        super().__init__(hitbox, health, count)
+        super().__init__(hitbox, health)
         self.object_type = ObjectType.upgrade
         self.upgrade_enum = upgrade_enum
         self.movement_enum = movement_enum

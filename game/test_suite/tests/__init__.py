@@ -16,6 +16,7 @@ from game.test_suite.tests.utils.ray_collision_test import TestRayCollision
 from game.test_suite.tests.collision_test import TestCollision
 from game.test_suite.tests.controllers.test_kill_boundary_controller import TestKillBoundary
 from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
+from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
 
 
 __all__ = [

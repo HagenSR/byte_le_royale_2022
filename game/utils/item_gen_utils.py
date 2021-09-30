@@ -33,16 +33,16 @@ def pick_item(xPos, yPos, loot_wave_num):
     if has_reached_item_cap(type):
         return rtnItem
     if type == ObjectType.consumable:
-        conType = random.choice([ type_con for type_con in Consumables.__dir__() if isinstance(type_con, int) ])
+        conType = random.choice([ type_con for type_con in Consumables if isinstance(type_con, int) ])
         rtnItem = Consumable(Hitbox(5,5, (xPos, yPos)), 1, conType)
     elif type == ObjectType.upgrade:
-        upType = random.choice([ up_type for up_type in Upgrades.__dir__() if isinstance(up_type, int) ])
+        upType = random.choice([ up_type for up_type in Upgrades if isinstance(up_type, int) ])
         rtnItem = Upgrade(Hitbox(5,5 (xPos, yPos)), 5, 1, upType)
     elif type == ObjectType.gun:
-        gunType = random.choice([ gun_type for gun_type in GunType.__dir__() if isinstance(gun_type, int)])
+        gunType = random.choice([ gun_type for gun_type in GunType if isinstance(gun_type, int)])
         rtnItem = Gun(gunType, loot_wave_num, Hitbox(5, 5, (xPos, yPos)))
     elif type == ObjectType.money:
-        rtnItem = Money(Hitbox(5, 5, (xPos, yPos)))
+        rtnItem = Money(Hitbox(5, 5, (xPos, yPos)), health = 2022)
     return rtnItem
 
 

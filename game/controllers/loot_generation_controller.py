@@ -6,7 +6,8 @@ from game.utils.item_gen_utils import place_items
 
 class LootGenerationController(Controller):
 
-    def set_up(self):
+    def __init__(self):
+         # self.ticks_between_waves (var in game stats) and self.tick must be equal to each other
         self.tick = 200
         self.next_wave = 1
 

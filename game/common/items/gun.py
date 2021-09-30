@@ -16,21 +16,21 @@ class Gun(Item):
             round(
                 stats.GameStats.gun_stats[gun_type]['damage'] * (
                     stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level),
-                1) if self.level > GunLevel.level_zero else 0)
+                1) if self.level > 0 else 0)
         self.fire_rate = (round(stats.GameStats.gun_stats[gun_type]['fire_rate']
                                 * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                          if self.level > GunLevel.level_zero else 0)
+                          if self.level > 0 else 0)
         self.range = (round(stats.GameStats.gun_stats[gun_type]['range']
                             * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                      if self.level > GunLevel.level_zero else 0)
+                      if self.level > 0 else 0)
         self.mag_size = (round(stats.GameStats.gun_stats[gun_type]['mag_size']
                                * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                         if self.level > GunLevel.level_zero else 0)
+                         if self.level > 0 else 0)
         self.mag_ammo = self.mag_size
         self.reload_speed = (round(stats.GameStats.gun_stats[gun_type]['reload_speed']
                                    * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                             if self.level > GunLevel.level_zero else 0)
-        if self.level > GunLevel.level_zero:
+                             if self.level > 0 else 0)
+        if self.level > 0:
             self.cooldown = stats.GameStats.gun_stats[gun_type]['cooldown']
             self.cooldown['max'] = round(
                 self.cooldown['max'] * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))

@@ -33,7 +33,7 @@ class TestInit(
     def setUp(self):
         self.gun = Gun(
             gun_type=GunType.assault_rifle,
-            level=GunLevel.level_one)
+            level=1)
         self.item = Item(hitbox=Hitbox(10, 10, (10, 10)))
         self.damaging = DamagingObject(hitbox=Hitbox(
             10, 10, (10, 10)), heading=1, speed=10)

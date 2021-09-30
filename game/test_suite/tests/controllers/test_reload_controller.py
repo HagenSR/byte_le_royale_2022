@@ -20,7 +20,7 @@ class TestReloadController(unittest.TestCase):
                 0, 0, Hitbox(
                     10, 10, (10, 10))))
         self.myPlayer.shooter.append_inventory(
-            Gun(GunType.shotgun, GunLevel.level_two, hitbox=Hitbox(10, 10, (10, 10))))
+            Gun(GunType.shotgun, 2, hitbox=Hitbox(10, 10, (10, 10))))
         self.reloadController = ReloadController()
 
     def test_reload_when_empty(self):

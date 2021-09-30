@@ -9,9 +9,8 @@ class Money(Item):
     def __init__(
             self,
             hitbox,
-            health,
-            count):
-        super().__init__(hitbox, health, count)
+            health,):
+        super().__init__(hitbox, health)
 
         self.object_type = ObjectType.money
         self.__amount = randint(
