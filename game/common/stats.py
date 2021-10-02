@@ -150,11 +150,6 @@ class GameStats:
     }
 
     door_opening_speed = 1
-    
-    gun_count = 0
-    consumable_count = 0
-    upgrade_count = 0
-    money_count = 0
 
     num_loot_waves = 4
     # self.ticks_between_waves and self.tick (var in loot gen controller) must be equal to each other
