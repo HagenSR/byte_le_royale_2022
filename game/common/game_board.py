@@ -26,7 +26,7 @@ class GameBoard(GameObject):
         self.height = height
 
         self.partition = PartitionGrid(
-            width, height, int(width / 25), int(height / 25))
+            width, height, 25, 25)
         self.ray_list = []
 
         # this calculates starting radius to totally encompass the map at start

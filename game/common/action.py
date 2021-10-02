@@ -24,7 +24,6 @@ class Action:
 
     def to_json(self):
         data = dict()
-
         data['object_type'] = self.object_type
         data['chosen_action'] = self._chosen_action
 

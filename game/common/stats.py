@@ -19,13 +19,16 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
-    default_wall_health = 50
+    default_wall_health = 18
+
+    default_door_health = 18
 
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
-        'view_radius': 10,
+        'field_of_view': 120,
+        'view_distance': 100,
         'move_speed': 10,
     }
 
