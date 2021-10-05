@@ -271,7 +271,7 @@ def findPlotHitboxes():
         # position back to the starting x position
         hitbox_top_left_y += plot_width_height + GameStats.corridor_width_height
         hitbox_top_left_x = GameStats.corridor_width_height
-    return plot_hitbox_list  
+    return plot_hitbox_list
 
 
 def generate():
@@ -285,7 +285,8 @@ def generate():
     structures_list = []
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
-    # Use ../../launcher.pyz if opening in the utils folder or ./launcher.pyz for the .pyz
+    # Use ../../launcher.pyz if opening in the utils folder or ./launcher.pyz
+    # for the .pyz
     with zipfile.ZipFile('./launcher.pyz') as z:
         for filename in z.namelist():
             # Only load proper structure json

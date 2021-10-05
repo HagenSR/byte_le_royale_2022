@@ -155,7 +155,8 @@ class GameStats:
     door_opening_speed = 1
 
     num_loot_waves = 4
-    # self.ticks_between_waves and self.tick (var in loot gen controller) must be equal to each other
+    # self.ticks_between_waves and self.tick (var in loot gen controller) must
+    # be equal to each other
     ticks_between_waves = 200
 
     gun_cap = 50
