@@ -18,7 +18,10 @@ class TestLootGenerationController(unittest.TestCase):
     def test_does_not_place_loot(self):
         loot_gen_controller = LootGenerationController()
         loot_gen_controller.tick = 200
-        loot_gen_controller.handle_actions(GameBoard())
+        #circle should be too small to spawn items
+        game_board = GameBoard()
+        game_board.circle_radius = 4
+        loot_gen_controller.handle_actions(game_board)
         self.assertFalse((loot_gen_controller.gun_count +
                          loot_gen_controller.consumable_count +
                          loot_gen_controller.upgrade_count +
