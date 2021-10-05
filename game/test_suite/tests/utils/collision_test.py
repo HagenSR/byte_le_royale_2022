@@ -161,6 +161,20 @@ class TestCollision(unittest.TestCase):
                 self.hitOne,
                 heading))
 
+    def test_arc_intersect_rect_behind_false(self):
+        center = (3, 3)
+        radius = 5
+        arc_len_degree = GameStats.player_stats['field_of_view']
+        heading = 90
+
+        self.assertFalse(
+            arc_intersect_rect(
+                center,
+                radius,
+                arc_len_degree,
+                self.hitOne,
+                heading))
+
 
 if __name__ == '__main__':
     unittest.main
