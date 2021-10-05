@@ -159,10 +159,37 @@ def distance(x1, y1, x2, y2):
 def arc_splitting(center, radius, hitbox, heading, arc_len_deg):
     arc =
 
-def minkowski_arc_intersection(center, radius, hitbox, heading, arc_len_deg):
-    a1 = (radius * math.cos(math.radians(90 - arc_len_deg / 2)) + center[0], radius * math.sin(math.radians(90 - arc_len_deg / 2)) + center[1])
-    arc1 = [center, (radius * math.cos(math.radians(arc_len_deg / 2)) + center[0], radius * math.sin(math.radians(arc_len_deg / 2)) + center[1])]
 
+def minkowski_arc_intersection(center, radius, hitbox, heading, arc_len_deg):
+    a1 = (
+        radius *
+        math.cos(
+            math.radians(
+                90 -
+                arc_len_deg /
+                2)) +
+        center[0],
+        radius *
+        math.sin(
+            math.radians(
+                90 -
+                arc_len_deg /
+                2)) +
+        center[1])
+    arc1 = [
+        center,
+        (radius *
+         math.cos(
+             math.radians(
+                 arc_len_deg /
+                 2)) +
+         center[0],
+         radius *
+         math.sin(
+             math.radians(
+                 arc_len_deg /
+                 2)) +
+         center[1])]
 
     dilation = set()
     r = hitbox.bottomRight
@@ -193,7 +220,8 @@ def is_point_in_path(x: int, y: int, poly) -> bool:
             # point is a corner
             return True
         if (poly[i][1] > y) != (poly[j][1] > y):
-            slope = (x - poly[i][0]) * (poly[j][1] - poly[i][1]) - (poly[j][0] - poly[i][0]) * (y - poly[i][1])
+            slope = (x - poly[i][0]) * (poly[j][1] - poly[i][1]) - \
+                (poly[j][0] - poly[i][0]) * (y - poly[i][1])
             if slope == 0:
                 # point is on boundary
                 return True
