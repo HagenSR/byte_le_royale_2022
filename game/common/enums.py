@@ -1,4 +1,7 @@
-class DebugLevel:
+from enum import Enum
+
+
+class DebugLevel(Enum):
     none = 0
     client = 1
     controller = 2
@@ -24,6 +27,7 @@ class ObjectType:
     door = 15
     upgrade = 16
     consumable = 17
+    money = 18
 
 
 class ActionType:
