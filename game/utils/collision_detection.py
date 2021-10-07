@@ -70,11 +70,37 @@ def distance(x1, y1, x2, y2):
 
 def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
     # define left most point of arc
-    a1 = (radius * math.cos(math.radians(heading - arc_len_deg / 2)) + center[0],
-          radius * math.sin(math.radians(heading - arc_len_deg / 2)) + center[1])
+    a1 = (
+        radius *
+        math.cos(
+            math.radians(
+                heading -
+                arc_len_deg /
+                2)) +
+        center[0],
+        radius *
+        math.sin(
+            math.radians(
+                heading -
+                arc_len_deg /
+                2)) +
+        center[1])
     # define right most point of arc
-    a2 = (radius * math.cos(math.radians(heading + arc_len_deg / 2)) + center[0],
-          radius * math.sin(math.radians(heading + arc_len_deg / 2)) + center[1])
+    a2 = (
+        radius *
+        math.cos(
+            math.radians(
+                heading +
+                arc_len_deg /
+                2)) +
+        center[0],
+        radius *
+        math.sin(
+            math.radians(
+                heading +
+                arc_len_deg /
+                2)) +
+        center[1])
     # define left half of arc
     arc1 = [
         center,
@@ -94,7 +120,11 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
     for arc in arcs:
         dilation = set()
         r = hitbox.bottomRight
-        rect = [hitbox.topLeft, hitbox.topRight, hitbox.bottomLeft, hitbox.bottomRight]
+        rect = [
+            hitbox.topLeft,
+            hitbox.topRight,
+            hitbox.bottomLeft,
+            hitbox.bottomRight]
         for pa in arc:
             for pr in rect:
                 dilation.add((pa[0] + pr[0], pa[1] + pr[1]))
@@ -104,7 +134,8 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
                 math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
             )
         )
-        if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
+        if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - \
+                arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
             return True
     return False
 
