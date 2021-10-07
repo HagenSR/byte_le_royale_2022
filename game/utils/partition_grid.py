@@ -1,14 +1,10 @@
 import math
-from copy import deepcopy, copy
-
-from game.common import game_board
 from game.common.hitbox import Hitbox
 from game.common.items.item import Item
 from game.common.map_object import MapObject
 from game.common.moving.moving_object import MovingObject
 from game.common.stats import GameStats
 from game.utils import collision_detection
-from game.utils.collision_detection import arc_intersect_rect
 
 
 class PartitionGrid:
@@ -162,7 +158,7 @@ class PartitionGrid:
                 0, GameStats.game_board_height, self.partition_height):
             partition = self.get_partition_hitbox(x, y)
             # remove everything from a partition that isn't in view at all
-            if not arc_intersect_rect(
+            if not collision_detection.intersect_arc(
                     partition,
                     client_heading,
                     client_field_of_view,
@@ -173,7 +169,7 @@ class PartitionGrid:
                 # if a partition is in view, need to check each object to
                 # see if it's in view, remove it if it isn't
                 for obj in self.get_partition_objects(x, y):
-                    if not arc_intersect_rect(
+                    if not collision_detection.intersect_arc(
                             obj.hitbox,
                             client_heading,
                             client_field_of_view,
