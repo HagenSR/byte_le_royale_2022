@@ -130,9 +130,9 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
                 dilation.add((pa[0] + pr[0], pa[1] + pr[1]))
         r_polar = (
             distance(r[0], r[1], center[0], center[1]),
-            math.atan(
+            math.degrees(math.atan(
                 math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
-            )
+            ))
         )
         if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - \
                 arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
