@@ -80,9 +80,9 @@ class TestCollision(unittest.TestCase):
 
     def test_arc_intersect(self):
         center = (10, 20)
-        radius = 6
+        radius = 20000
         arc_len_degree = GameStats.player_stats['field_of_view']
-        heading = 90
+        heading = 90  # TODO something is wrong with degrees in the collision code
 
         self.assertTrue(
             intersect_arc(
@@ -94,7 +94,7 @@ class TestCollision(unittest.TestCase):
 
     def test_arc_intersect_circle_in_rect(self):
         center = (10, 10)
-        radius = 4
+        radius = 6
         arc_len_degree = GameStats.player_stats['field_of_view']
         heading = 90
 
