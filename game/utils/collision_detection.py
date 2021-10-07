@@ -8,23 +8,6 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
 
 
-def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
-    return point_in_hitbox(
-        center[0],
-        center[1],
-        hitbox) or intersect_arc(
-        center,
-        radius,
-        hitbox,
-        heading,
-        arc_len_degree)
-
-
-def point_in_hitbox(x, y, hitbox):
-    return (hitbox.bottomLeft[0] <= x <= hitbox.topRight[0] and
-            hitbox.topRight[1] <= y <= hitbox.bottomLeft[1])
-
-
 def intersect_circle(center, radius, hitbox):
     edges = [
         [hitbox.topLeft, hitbox.topRight],
@@ -85,25 +68,25 @@ def distance(x1, y1, x2, y2):
     return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1 / 2)
 
 
-def intersect_arc(center, radius, hitbox, heading, arc_len_deg):
+def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
     # define left most point of arc
-    a1 = (radius * math.cos(math.radians(90 - arc_len_deg / 2)) + center[0],
-          radius * math.sin(math.radians(90 - arc_len_deg / 2)) + center[1])
+    a1 = (radius * math.cos(math.radians(heading - arc_len_deg / 2)) + center[0],
+          radius * math.sin(math.radians(heading - arc_len_deg / 2)) + center[1])
     # define right most point of arc
-    a2 = (radius * math.cos(math.radians(90 + arc_len_deg / 2)) + center[0],
-          radius * math.sin(math.radians(90 + arc_len_deg / 2)) + center[1])
+    a2 = (radius * math.cos(math.radians(heading + arc_len_deg / 2)) + center[0],
+          radius * math.sin(math.radians(heading + arc_len_deg / 2)) + center[1])
     # define left half of arc
     arc1 = [
         center,
-        (radius * math.cos(math.radians(arc_len_deg / 2)) + center[0],
-         radius * math.sin(math.radians(arc_len_deg / 2)) + center[1]),
+        (radius * math.cos(math.radians(heading)) + center[0],
+         radius * math.sin(math.radians(heading)) + center[1]),
         a1
     ]
     # define right half of arc
     arc2 = [
         center,
-        (radius * math.cos(math.radians(arc_len_deg / 2)) + center[0],
-         radius * math.sin(math.radians(arc_len_deg / 2)) + center[1]),
+        (radius * math.cos(math.radians(heading)) + center[0],
+         radius * math.sin(math.radians(heading)) + center[1]),
         a2
     ]
     arcs = [arc1, arc2]
@@ -111,10 +94,17 @@ def intersect_arc(center, radius, hitbox, heading, arc_len_deg):
     for arc in arcs:
         dilation = set()
         r = hitbox.bottomRight
+        rect = [hitbox.topLeft, hitbox.topRight, hitbox.bottomLeft, hitbox.bottomRight]
         for pa in arc:
-            for pr in hitbox:
+            for pr in rect:
                 dilation.add((pa[0] + pr[0], pa[1] + pr[1]))
-        if is_point_in_path(r[0], r[1], list(dilation)):
+        r_polar = (
+            distance(r[0], r[1], center[0], center[1]),
+            math.atan(
+                math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
+            )
+        )
+        if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
             return True
     return False
 
