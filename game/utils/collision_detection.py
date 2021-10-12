@@ -33,6 +33,7 @@ def point_in_hitbox(x, y, hitbox):
 
 # def hitbox_angle(player_center, hitbox)
 
+
 def intersect_arc(center, radius, hitbox, heading, arc_len_deg):
     edges = [
         [hitbox.topLeft, hitbox.topRight],

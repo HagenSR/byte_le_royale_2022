@@ -88,15 +88,13 @@ class Engine:
                 # Add players one and two
                 ar = GameStats.player_stats["hitbox"][0]
                 hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter = Shooter(hitbox=hit))
+                player = Player(shooter=Shooter(hitbox=hit))
                 self.clients.append(player)
             else:
                 ar = GameStats.player_stats["hitbox"][1]
                 hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
                 player = Player(shooter=Shooter(hitbox=hit))
                 self.clients.append(player)
-
-
 
             # Verify client isn't using invalid imports or opening anything
             imports, opening = verify_code(filename + '.py')

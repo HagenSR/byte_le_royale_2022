@@ -56,7 +56,6 @@ class PartitionGrid:
             partitions.append((bottomLeft_row, bottomLeft_column))
         return partitions
 
-
     def add_object(self, obj: MapObject):
         """add object to it's correct partition"""
         if not isinstance(obj, MapObject):

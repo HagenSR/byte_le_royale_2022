@@ -1,3 +1,8 @@
+from game.common.enums import *
+from game.utils.collision_detection import check_collision
+from game.common.game_board import GameBoard
+from game.common.action import Action
+from game.common.moving.shooter import Shooter
 import math
 
 from game.common.hitbox import Hitbox
@@ -47,11 +52,7 @@ class MovementController(Controller):
                     # new_x = location[0] + math.cos(angle)
                     # new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
-                    if abs(
-                            new_x -
-                            target_location[0]) < 0.00001 and abs(
-                        new_y -
-                        target_location[1]) < 0.00001:
+                    if abs(new_x - target_location[0]) < 0.00001 and abs(new_y - target_location[1]) < 0.00001:
                         client.shooter.hitbox.position = target_location
                     location = client.shooter.hitbox.position
                 else:
