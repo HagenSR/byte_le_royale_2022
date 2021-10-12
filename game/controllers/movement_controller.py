@@ -1,15 +1,15 @@
+from game.common.enums import *
+from game.utils.collision_detection import check_collision
+from game.common.game_board import GameBoard
+from game.common.action import Action
+from game.common.moving.shooter import Shooter
 import math
 
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
-<<<<<<< HEAD
-from game.common.moving.shooter import Shooter
-from game.common.action import Action
-from game.common.game_board import GameBoard
-from game.utils.collision_detection import check_collision
-=======
->>>>>>> f306ba3d397ca2f4d9fa022188efe859967102ca
-from game.common.enums import *
+<< << << < HEAD
+== == == =
+>>>>>> > f306ba3d397ca2f4d9fa022188efe859967102ca
 
 
 # May need to import player and/or shooter
@@ -36,13 +36,16 @@ class MovementController(Controller):
             target_location = calculate_location(location, speed, angle)
             self.space_free = True
             while location != target_location and self.space_free:
-<<<<<<< HEAD
-                obj = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
+
+
+<< << << < HEAD
+                obj = world["game_board"].partition.find_object_hitbox(
+                    client.shooter.hitbox)
                 if not obj or not obj.collidable:
-=======
+== == == =
                 if not world["game_board"].partition.find_object_hitbox(
                         client.shooter.hitbox):
->>>>>>> f306ba3d397ca2f4d9fa022188efe859967102ca
+>>>>>> > f306ba3d397ca2f4d9fa022188efe859967102ca
                     new_x = location[0] + math.cos(angle)
                     new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
