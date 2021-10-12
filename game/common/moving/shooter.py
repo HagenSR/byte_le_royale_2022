@@ -26,7 +26,8 @@ class Shooter(MovingObject):
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
         self.visible = []
-        self.view_radius = GameStats.player_stats['view_radius']
+        self.field_of_view = GameStats.player_stats['field_of_view']
+        self.view_distance = GameStats.player_stats['view_distance']
         self.moving = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory

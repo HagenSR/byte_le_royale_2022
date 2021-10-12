@@ -6,6 +6,7 @@ from game.utils.calculate_new_location import calculate_location
 from game.common.moving.shooter import Shooter
 from game.common.action import Action
 from game.common.game_board import GameBoard
+from game.utils.collision_detection import check_collision
 from game.common.enums import *
 
 
@@ -33,8 +34,9 @@ class MovementController(Controller):
             target_location = calculate_location(location, speed, angle)
             # print(target_location)
             self.space_free = True
-            while (location != target_location and self.space_free):
-                if (world["game_board"].partition.find_object_hitbox(client.shooter.hitbox) == False):
+            while location != target_location and self.space_free:
+                obj = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
+                if not obj or not obj.collidable:
                     new_x = location[0] + math.cos(angle)
                     new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
@@ -47,3 +49,8 @@ class MovementController(Controller):
             # gameboard is updated with new client location
             world["game_board"].partition.add_object(client.shooter)
             print(self.space_free)
+
+
+
+
+

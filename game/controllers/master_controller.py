@@ -1,13 +1,19 @@
 from copy import deepcopy
+import random
 from game.common.stats import GameStats
 
 from game.common.action import Action
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
+from game.controllers.player_view_controller import PlayerViewController
+from game.controllers.shoot_controller import ShootController
+from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
+from game.controllers.kill_boundary_controller import KillBoundaryController
+from game.controllers.reload_controller import ReloadController
 
 
 class MasterController(Controller):
@@ -16,6 +22,13 @@ class MasterController(Controller):
         self.game_over = False
 
         self.current_world_data = None
+
+        self.boundary_controller = KillBoundaryController()
+        self.player_view_controller = PlayerViewController()
+        self.shoot_controller = ShootController()
+        self.shop_controller = ShopController()
+        self.seed = -1
+        self.turn = 1
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -35,11 +48,16 @@ class MasterController(Controller):
             # Increment the turn counter by 1
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
-
+            # Set the random class's seed to the given turns seed. Should
+            # propagate to all controllers
+            random.seed(self.seed)
     # Receives world data from the generated game log and is responsible for
     # interpreting it
+
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
+        # Set the current seed based on the turn
+        self.seed = world["seed"][(turn % len(world['seed']))]
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
@@ -55,13 +73,28 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        self.boundary_controller.handle_actions(
+            clients, self.current_world_data["game_map"].circle_radius)
+
+        self.player_view_controller.handle_actions(
+            clients, self.current_world_data["game_map"])
+
+        for client in clients:
+            ReloadController.handle_actions(client)
+            self.shoot_controller.handle_action(
+                client, self.current_world_data["game_map"])
+            self.shop_controller.handle_actions(client)
+
+        if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            self.game_over = True
         pass
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
         data = dict()
-        data['turn'] = turn
-        # Add things that should be thrown into the turn logs here.
+        data['tick'] = turn
+        data['clients'] = [client.to_json() for client in clients]
+        # Add things that should be thrown into the turn logs here
         data['game_map'] = self.current_world_data["game_map"].to_json()
         data['clients'] = [client.to_json() for client in clients]
         return data

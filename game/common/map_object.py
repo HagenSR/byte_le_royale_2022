@@ -11,6 +11,14 @@ class MapObject(GameObject):
         self.hitbox = hitbox
         self.collidable = collidable
 
+    @property
+    def health(self):
+        return self.__health
+
+    @health.setter
+    def health(self, val):
+        self.__health = val
+
     def to_json(self):
         data = super().to_json()
         data['health'] = self.health
