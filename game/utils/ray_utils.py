@@ -215,7 +215,9 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
                     -collidable.hitbox.bottomLeft[1], line_slope, x_intercept)
 
         if (collidable.hitbox.bottomLeft[0] <= x_intercept <=
-                collidable.hitbox.bottomRight[0]):
+                collidable.hitbox.bottomRight[0] and
+                collidable.hitbox.bottomLeft[1] <= corr_y <=
+                collidable.hitbox.bottomRight[1]):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0
@@ -245,9 +247,11 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
         if corr_y is math.nan:
             corr_y = min(collidable.hitbox.bottomRight[1],
                     collidable.hitbox.topRight[1])
-        if (collidable.hitbox.bottomRight[0] <= x_intercept <=
+        if ((collidable.hitbox.bottomRight[0] <= x_intercept <=
                 collidable.hitbox.topRight[0] or collidable.hitbox.bottomRight[0] >
-                x_intercept > collidable.hitbox.topRight[0]):
+                x_intercept > collidable.hitbox.topRight[0]) and
+                collidable.hitbox.bottomRight[1] <= corr_y <=
+                collidable.hitbox.topRight[1]):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0
@@ -282,7 +286,8 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
             corr_y = calculate_ray_y(player.shooter.hitbox.position[0],
                     -player.shooter.hitbox.position[1], ray_slope, x_intercept)
         if (collidable.hitbox.topLeft[0] <= x_intercept <=
-                collidable.hitbox.topRight[0]):
+                collidable.hitbox.topRight[0] and collidable.hitbox.topLeft[1]
+                <= corr_y <= collidable.hitbox.topRight[1]):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0
@@ -313,10 +318,11 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
             corr_y = min(collidable.hitbox.bottomLeft[1],
                     collidable.hitbox.topLeft[1])
 
-
         if (collidable.hitbox.bottomLeft[0] <= x_intercept <=
                 collidable.hitbox.topLeft[0] or collidable.hitbox.bottomLeft[0]
-                >= x_intercept > collidable.hitbox.topLeft[0]):
+                >= x_intercept > collidable.hitbox.topLeft[0] and
+                collidable.hitbox.topLeft[1] <= corr_y <=
+                collidable.hitbox.bottomLeft[1]):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0

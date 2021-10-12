@@ -9,7 +9,6 @@ from game.common.moving.shooter import Shooter
 from game.common.items.gun import Gun
 from game.common.hitbox import Hitbox
 from game.common.map_object import MapObject
-import pdb
 
 
 class TestRayCollision(unittest.TestCase):
@@ -239,7 +238,6 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
-        #breakpoint()
         self.assertEqual(ray.collision, obj_list[0])
         self.assertEqual(ray.endpoint[0], 20)
         self.assertEqual(ray.endpoint[1], 105)
@@ -287,7 +285,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
-        self.assertEqual(ray.endpoint[1], 100)
+        self.assertEqual(ray.endpoint[1], 102)
         self.assertEqual(ray.collision, obj_list[0])
 
 if __name__ == '__main__':
