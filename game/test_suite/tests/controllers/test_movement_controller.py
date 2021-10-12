@@ -22,7 +22,7 @@ class TestMovementController(unittest.TestCase):
         self.myPlayer = Player(
             action=act, shooter=Shooter(
                 0, 0, Hitbox(
-                    10, 10, (10, 10))))
+                    10, 10, (10, 10), 0)))
         self.movementController = MovementController()
         self.world_data = {'game_board': GameBoard()}
 
@@ -41,13 +41,14 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         x_val = self.myPlayer.shooter.hitbox.position[0]
         y_val = self.myPlayer.shooter.hitbox.position[1]
-        self.assertTrue(
-            self.world_data["game_board"].partition.find_object_coordinates(
-                x_val, y_val))
+        #self.assertTrue(
+           # self.world_data["game_board"].partition.find_object_coordinates(
+               # x_val, y_val))
+        self.assertTrue(target_location, self.myPlayer.shooter.hitbox.position)
 
     def test_player_removed(self):
         print("testing removed")
-        self.myPlayer.shooter.hitbox.position = (0, 0)
+        self.myPlayer.shooter.hitbox.position = (10, 10)
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.myPlayer.shooter.speed = 10
@@ -59,7 +60,7 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(
             self.world_data["game_board"].partition.find_object_coordinates(
-                0, 0))
+                10, 10))
 
     def test_edge_of_map_invalid(self):
         print("testing edge of map")
@@ -80,12 +81,12 @@ class TestMovementController(unittest.TestCase):
     def test_object_in_path(self):
         print("testing object path")
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        wall_object = Wall(hitbox=Hitbox(10, 10, (55, 50)))
+        wall_object = Wall( health = 21, hitbox=Hitbox(10, 10, (55, 50), 0))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
         self.myPlayer.shooter.speed = 50
-        self.myPlayer.shooter.heading = 1.5707
+        self.myPlayer.shooter.heading = 0
         location = self.myPlayer.shooter.hitbox.position
         speed = self.myPlayer.shooter.speed
         angle = self.myPlayer.shooter.heading

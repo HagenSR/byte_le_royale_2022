@@ -14,6 +14,7 @@ from game.utils.threadBytel import CommunicationThread
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
+from game.controllers.movement_controller import MovementController
 
 
 class MasterController(Controller):
@@ -27,6 +28,7 @@ class MasterController(Controller):
         self.player_view_controller = PlayerViewController()
         self.shoot_controller = ShootController()
         self.shop_controller = ShopController()
+        self.movement_controller = MovementController()
         self.seed = -1
         self.turn = 1
 
@@ -84,6 +86,8 @@ class MasterController(Controller):
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.shop_controller.handle_actions(client)
+            # might need to fix world argument
+            self.movement_controller.handle_actions(client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True

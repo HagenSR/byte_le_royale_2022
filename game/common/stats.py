@@ -32,6 +32,10 @@ class GameStats:
         'move_speed': 10,
     }
 
+    # might be replaced in player_stats?
+    player_max_distance = 100
+
+
     # format: 'slot_type': { num_of_slots, slot_obj_type }
     inventory_stats = {
         'guns': {

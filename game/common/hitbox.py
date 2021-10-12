@@ -1,16 +1,20 @@
 from game.common.game_object import GameObject
 from game.common.enums import *
 import game.common.stats as stats
+import math
 
 
 class Hitbox(GameObject):
-    def __init__(self, width, height, xy_tuple):
+    def __init__(self, width, height, xy_tuple, rotation = 0):
         super().__init__()
         self.object_type = ObjectType.hitbox
         self.width = width
         self.height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         self.position = xy_tuple
+        # added rotation to allow for diagonal hitboxes while keeping backwards
+        # compatibility
+        self.rotation = math.radians(rotation)
 
     @property
     def width(self):
@@ -30,15 +34,18 @@ class Hitbox(GameObject):
 
     @property
     def topRight(self):
-        return (self.position[0] + self.width, self.position[1])
+        return (self.position[0] + (self.width * math.cos(self.rotation)),
+                self.position[1] + (self.width * math.sin(self.rotation)))
 
     @property
     def bottomLeft(self):
-        return (self.position[0], self.position[1] + self.height)
+        return (self.position[0] + (self.height * math.sin(self.rotation)),
+                self.position[1] + (self.height * math.cos(self.rotation)))
 
     @property
     def bottomRight(self):
-        return (self.position[0] + self.width, self.position[1] + self.height)
+        return (self.bottomLeft[0] + (self.width * math.cos(self.rotation)),
+                self.bottomLeft[1] + (self.width * math.sin(self.rotation)))
 
     @property
     def middle(self):
