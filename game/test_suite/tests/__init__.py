@@ -21,8 +21,6 @@ from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 #from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 
 
-
-
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',

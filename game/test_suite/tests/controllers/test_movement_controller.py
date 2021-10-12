@@ -41,9 +41,9 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         x_val = self.myPlayer.shooter.hitbox.position[0]
         y_val = self.myPlayer.shooter.hitbox.position[1]
-        #self.assertTrue(
-           # self.world_data["game_board"].partition.find_object_coordinates(
-               # x_val, y_val))
+        # self.assertTrue(
+        # self.world_data["game_board"].partition.find_object_coordinates(
+        # x_val, y_val))
         self.assertTrue(target_location, self.myPlayer.shooter.hitbox.position)
 
     def test_player_removed(self):
@@ -81,7 +81,7 @@ class TestMovementController(unittest.TestCase):
     def test_object_in_path(self):
         print("testing object path")
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        wall_object = Wall( health = 21, hitbox=Hitbox(10, 10, (55, 50), 0))
+        wall_object = Wall(health=21, hitbox=Hitbox(10, 10, (55, 50), 0))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
