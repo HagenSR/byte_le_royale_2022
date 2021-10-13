@@ -216,15 +216,17 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
 
         if (collidable.hitbox.bottomLeft[0] <= x_intercept <=
                 collidable.hitbox.bottomRight[0] and
-                collidable.hitbox.bottomLeft[1] <= corr_y <=
-                collidable.hitbox.bottomRight[1]):
+                (collidable.hitbox.bottomLeft[1] <= corr_y <=
+                collidable.hitbox.bottomRight[1] or
+                collidable.hitbox.bottomLeft[1] >= corr_y >=
+                collidable.hitbox.bottomRight[1])):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0
 
         # right line
         line_slope = ((-collidable.hitbox.bottomRight[1] -
-                -collidable.hitbox.topRight[1]) / 
+                -collidable.hitbox.topRight[1]) /
                 (collidable.hitbox.bottomRight[0] -
                     collidable.hitbox.topRight[0]) if
                 collidable.hitbox.bottomRight[0] - collidable.hitbox.topRight[0]
@@ -286,18 +288,21 @@ def determine_gun_collision(player, gameboard, collidables, slope, ray_endpoint,
             corr_y = calculate_ray_y(player.shooter.hitbox.position[0],
                     -player.shooter.hitbox.position[1], ray_slope, x_intercept)
         if (collidable.hitbox.topLeft[0] <= x_intercept <=
-                collidable.hitbox.topRight[0] and collidable.hitbox.topLeft[1]
-                <= corr_y <= collidable.hitbox.topRight[1]):
+                collidable.hitbox.topRight[0] and (collidable.hitbox.topLeft[1]
+                <= corr_y <= collidable.hitbox.topRight[1] or 
+                collidable.hitbox.topLeft[1] >= corr_y >= 
+                collidable.hitbox.topRight[1])):
             ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
                 collidable, player.shooter.primary_gun.damage)
             collisions[ray] = 0
 
         # left line
         line_slope = ((-collidable.hitbox.bottomLeft[1] -
-                -collidable.hitbox.topLeft[1])/
-                (collidable.hitbox.bottomLeft[0] - collidable.hitbox.topLeft[0]) if
-                collidable.hitbox.bottomLeft[0] - collidable.hitbox.topLeft[0] != 0
-            else math.nan)
+                -collidable.hitbox.topLeft[1]) /
+                (collidable.hitbox.bottomLeft[0] -
+                    collidable.hitbox.topLeft[0])
+                if collidable.hitbox.bottomLeft[0] -
+                collidable.hitbox.topLeft[0] != 0 else math.nan)
         line_y = -collidable.hitbox.bottomLeft[1] - (line_slope *
                 collidable.hitbox.bottomLeft[0])
         if line_slope is math.nan:
