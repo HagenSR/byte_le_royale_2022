@@ -288,5 +288,6 @@ class TestRayCollision(unittest.TestCase):
         self.assertEqual(ray.endpoint[1], 102)
         self.assertEqual(ray.collision, obj_list[0])
 
+
 if __name__ == '__main__':
     unittest.main
