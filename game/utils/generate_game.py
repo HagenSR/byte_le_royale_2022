@@ -17,6 +17,8 @@ from game.common.stats import GameStats
 import zipfile
 import json
 
+import requests
+
 
 def create_structures_file(file_path):
     Structures = []
@@ -295,6 +297,8 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
+                   # print(requests.get(fl.read().decode('utf-8')).content)
+                    print(filename)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:

@@ -9,11 +9,15 @@ class TestLootGenerationController(unittest.TestCase):
 
     def test_places_loot(self):
         loot_gen_controller = LootGenerationController()
-        loot_gen_controller.handle_actions(GameBoard())
-        self.assertTrue((loot_gen_controller.gun_count +
-                         loot_gen_controller.consumable_count +
-                         loot_gen_controller.upgrade_count +
-                         loot_gen_controller.money_count > 0))
+        game_board = GameBoard()
+        loot_gen_controller.handle_actions(game_board)
+        num_items = 0
+        # get number of objects in each partition
+        for x in range(0,GameStats.game_board_width, game_board.partition.partition_width):
+            for y in range(0, GameStats.game_board_height, game_board.partition.partition_height):
+                for object in game_board.partition.get_partition_objects(x, y):
+                    num_items += 1
+        self.assertTrue(num_items > 0)
 
     def test_does_not_place_loot(self):
         loot_gen_controller = LootGenerationController()
@@ -22,10 +26,12 @@ class TestLootGenerationController(unittest.TestCase):
         game_board = GameBoard()
         game_board.circle_radius = 4
         loot_gen_controller.handle_actions(game_board)
-        self.assertFalse((loot_gen_controller.gun_count +
-                          loot_gen_controller.consumable_count +
-                          loot_gen_controller.upgrade_count +
-                          loot_gen_controller.money_count > 0))
+        num_items = 0
+        for x in range(0,500,25):
+            for y in range(0,500,25):
+                for object in game_board.partition.get_partition_objects(x, y):
+                    num_items += 1
+        self.assertEqual(num_items, 0)
 
 
 if __name__ == '__main__':
