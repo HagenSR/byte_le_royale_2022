@@ -19,8 +19,8 @@ class ItemGenUtils:
         self.money_count = 0
 
     def place_item(self,
-            game_board,
-            loot_wave_num):
+                   game_board,
+                   loot_wave_num):
         half_width = game_board.circle_radius
         half_height = game_board.circle_radius
         # Value is pined between 0 and game board height/width. Values are
@@ -50,13 +50,16 @@ class ItemGenUtils:
         if (potential_x - GameStats.game_board_width / 2) ** 2 + (potential_y -
                                                                   GameStats.game_board_height / 2) ** 2 > game_board.circle_radius ** 2 or object_collided > 10:
             return None
-        item = self.pick_item(xPos = potential_x, yPos = potential_y, loot_wave_num=loot_wave_num)
+        item = self.pick_item(
+            xPos=potential_x,
+            yPos=potential_y,
+            loot_wave_num=loot_wave_num)
         return item
 
     def pick_item(self,
-            xPos,
-            yPos,
-            loot_wave_num):
+                  xPos,
+                  yPos,
+                  loot_wave_num):
         type = random.choice([ObjectType.consumable,
                               ObjectType.consumable,
                               ObjectType.upgrade,
@@ -84,7 +87,7 @@ class ItemGenUtils:
         return rtnItem
 
     def has_reached_item_cap(self,
-            item):
+                             item):
         if item == ObjectType.consumable:
             if self.consumable_count >= GameStats.consumable_cap:
                 return True

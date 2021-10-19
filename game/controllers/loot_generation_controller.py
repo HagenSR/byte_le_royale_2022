@@ -20,7 +20,8 @@ class LootGenerationController(Controller):
             number_items = random.randrange(
                 20 - (self.next_wave * 2), 35 - (self.next_wave * 2), 1)
             for i in range(number_items):
-                item = self.item_gen_utils.place_item(game_board, self.next_wave)
+                item = self.item_gen_utils.place_item(
+                    game_board, self.next_wave)
                 if item is None:
                     continue
                 game_board.partition.add_object(item)

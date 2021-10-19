@@ -12,7 +12,7 @@ class GameObject:
         data = dict()
 
         data['id'] = self.id
-        if type(self.object_type) == int:
+        if isinstance(self.object_type, int):
             data['object_type'] = self.object_type
         else:
             data['object_type'] = self.object_type.value
