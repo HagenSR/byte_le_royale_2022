@@ -36,6 +36,8 @@ class TestMovementController(unittest.TestCase):
         angle = self.myPlayer.shooter.heading
         target_location = calculate_location(location, speed, angle)
         self.movementController.handle_actions(self.myPlayer, self.world_data)
+        x_val = self.myPlayer.shooter.hitbox.position[0]
+        y_val = self.myPlayer.shooter.hitbox.position[1]
         self.assertTrue(target_location, self.myPlayer.shooter.hitbox.position)
 
     def test_player_removed(self):

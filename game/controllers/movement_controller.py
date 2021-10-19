@@ -42,20 +42,31 @@ class MovementController(Controller):
             target_location = calculate_location(location, speed, angle)
             print('This is the target location {0}'.format(target_location))
             self.space_free = True
-            dummy_hitbox = Hitbox(10, 10, client.shooter.hitbox.position, client.shooter.hitbox.rotation)
+            dummy_hitbox = Hitbox(
+                10,
+                10,
+                client.shooter.hitbox.position,
+                client.shooter.hitbox.rotation)
             while location != target_location and self.space_free:
                 location = client.shooter.hitbox.position
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 dummy_hitbox.position = (new_x, new_y)
-                print('This is the dummy location {0}'.format(dummy_hitbox.position))
-                obj = world["game_board"].partition.find_object_hitbox(dummy_hitbox)
+                print(
+                    'This is the dummy location {0}'.format(
+                        dummy_hitbox.position))
+                obj = world["game_board"].partition.find_object_hitbox(
+                    dummy_hitbox)
                 print(obj)
                 if not obj or not obj.collidable:
                     # new_x = location[0] + math.cos(angle)
                     # new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
-                    if abs(new_x - target_location[0]) < 0.00001 and abs(new_y - target_location[1]) < 0.00001:
+                    if abs(
+                            new_x -
+                            target_location[0]) < 0.00001 and abs(
+                            new_y -
+                            target_location[1]) < 0.00001:
                         client.shooter.hitbox.position = target_location
                     location = client.shooter.hitbox.position
                 else:

@@ -5,7 +5,7 @@ import math
 
 
 class Hitbox(GameObject):
-    def __init__(self, width, height, xy_tuple, rotation = 0):
+    def __init__(self, width, height, xy_tuple, rotation=0):
         super().__init__()
         self.object_type = ObjectType.hitbox
         self.width = width

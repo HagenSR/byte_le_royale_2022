@@ -88,7 +88,8 @@ class MasterController(Controller):
                 client, self.current_world_data["game_map"])
             self.shop_controller.handle_actions(client)
             # might need to fix world argument
-            self.movement_controller.handle_actions(client, self.current_world_data["game_map"])
+            self.movement_controller.handle_actions(
+                client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
