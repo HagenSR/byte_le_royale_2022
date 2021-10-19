@@ -8,9 +8,6 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
 
 
-
-
-
 def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
     return point_in_hitbox(
         center[0],
