@@ -9,6 +9,7 @@ import game.config as config
 from game.controllers.player_view_controller import PlayerViewController
 from game.controllers.shoot_controller import ShootController
 from game.controllers.shop_controller import ShopController
+from game.utils.partition_grid import PartitionGrid
 from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
@@ -25,7 +26,6 @@ class MasterController(Controller):
         self.current_world_data = None
 
         self.boundary_controller = KillBoundaryController()
-        self.player_view_controller = PlayerViewController()
         self.shoot_controller = ShootController()
         self.shop_controller = ShopController()
         self.movement_controller = MovementController()
@@ -35,7 +35,8 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they
     # will control
     def give_clients_objects(self, clients):
-        pass
+        for client in clients:
+            client.game_board = self.current_world_data["game_map"].partition
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -68,18 +69,18 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        # Obfuscate data in objects that that player should not be able to see
+        partition_grid = self.current_world_data["game_map"].partition
 
-        args = (self.turn, actions, self.current_world_data)
+        # Obfuscate data in objects that that player should not be able to see
+        partition_grid.obfuscate()
+
+        args = (self.turn, actions, self.current_world_data, partition_grid)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
-
-        self.player_view_controller.handle_actions(
-            clients, self.current_world_data["game_map"])
 
         for client in clients:
             ReloadController.handle_actions(client)

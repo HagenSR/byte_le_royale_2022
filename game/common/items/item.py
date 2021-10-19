@@ -4,7 +4,7 @@ from game.common.enums import ObjectType
 
 class Item(MapObject):
     def __init__(self, hitbox, health=None, count=1):
-        super().__init__(health, hitbox, True)
+        super().__init__(health, hitbox, False)
         self.object_type = ObjectType.item
         self.count = count
 

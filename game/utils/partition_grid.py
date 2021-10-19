@@ -1,10 +1,9 @@
 import math
-from copy import deepcopy
-
 from game.common.hitbox import Hitbox
 from game.common.items.item import Item
 from game.common.map_object import MapObject
 from game.common.moving.moving_object import MovingObject
+from game.common.stats import GameStats
 from game.utils import collision_detection
 
 
@@ -17,9 +16,14 @@ class PartitionGrid:
             height: int,
             partitions_wide: int,
             partitions_tall: int):
+
+        if width % partitions_wide != 0 or width % partitions_tall != 0:
+            raise ValueError(
+                "Width and height must be evenly divisible by number of partitions")
+
         # define the length and width of each square partition
-        self.partition_width = width / partitions_wide
-        self.partition_height = height / partitions_tall
+        self.partition_width = width // partitions_wide
+        self.partition_height = height // partitions_tall
 
         # create a 3d list. The first 2 dimensions handle the partitions
         # and the 3rd dimension holds the objects in those partitions
@@ -82,6 +86,10 @@ class PartitionGrid:
              self.find_row(y) *
              self.partition_height))
 
+    def get_partition_objects_by_index(self, x: int, y: int):
+        """Returns objects that are in the partition at indices [y][x]"""
+        return self.__matrix[y][x]
+
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns the object if there is an object at the coordinates, or false otherwise"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
@@ -130,8 +138,47 @@ class PartitionGrid:
             if isinstance(obj, MovingObject) or isinstance(obj, Item):
                 self.remove_object(obj)
 
+    def obfuscate(self, client):
+        # get center of client hitbox for origin of view arc
+        client_shooter_xy = (
+            client.shooter.hitbox.topLeft[0] +
+            client.shooter.hitbox.topRight[0] /
+            2,
+            client.shooter.hitbox.topLeft[1] +
+            client.shooter.hitbox.bottomLeft[1] /
+            2)
+        client_heading = client.shooter.heading
+        client_view_distance = client.shooter.view_distance
+        client_field_of_view = client.shooter.field_of_view
+
+        # Check all partitions, if a partition isn't in view, obfuscate it
+        # if it is in view, remove only objects that aren't visible
+        for x, y in range(
+            0, GameStats.game_board_width, self.partition_width), range(
+                0, GameStats.game_board_height, self.partition_height):
+            partition = self.get_partition_hitbox(x, y)
+            # remove everything from a partition that isn't in view at all
+            if not collision_detection.intersect_arc(
+                    partition,
+                    client_heading,
+                    client_field_of_view,
+                    client_view_distance,
+                    client_shooter_xy):
+                self.obfuscate_partition(x, y)
+            else:
+                # if a partition is in view, need to check each object to
+                # see if it's in view, remove it if it isn't
+                for obj in self.get_partition_objects(x, y):
+                    if not collision_detection.intersect_arc(
+                            obj.hitbox,
+                            client_heading,
+                            client_field_of_view,
+                            client_view_distance,
+                            client_shooter_xy):
+                        self.remove_object(obj)
+
     def to_json(self):
-        data = {'matrix': [
+        data = {'partition_grid': [
             [
                 [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
@@ -147,5 +194,5 @@ class PartitionGrid:
                 [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
                 for column in row
             ]
-            for row in data['matrix']
+            for row in data['partition_grid']
         ]

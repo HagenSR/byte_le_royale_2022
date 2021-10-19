@@ -130,16 +130,20 @@ class Shooter(MovingObject):
     def move(self, heading, speed):
         """Set heading and speed to handle moving"""
         super().heading = heading
-        if speed < GameStats.player_stats['move_speed']:
-            super().speed = speed
-            self.moving = True
-        raise ValueError(
-            "Speed must be less than max move speed for the player")
+        self.hitbox.rotation = heading
+        # if speed < GameStats.player_stats['move_speed']:
+        super().speed = speed
+        self.moving = True
+        # raise ValueError(
+           #  "Speed must be less than max move speed for the player")
 
-    def stop(self):
-        """Define stop movement"""
-        super().speed = 0
-        self.moving = False
+
+
+
+   # def stop(self):
+        # """Define stop movement"""
+        # super().speed = 0
+        # self.moving = False
 
     def to_json(self):
         data = super().to_json()
