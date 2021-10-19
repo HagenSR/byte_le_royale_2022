@@ -13,8 +13,10 @@ class TestLootGenerationController(unittest.TestCase):
         loot_gen_controller.handle_actions(game_board)
         num_items = 0
         # get number of objects in each partition
-        for x in range(0,GameStats.game_board_width, game_board.partition.partition_width):
-            for y in range(0, GameStats.game_board_height, game_board.partition.partition_height):
+        for x in range(0, GameStats.game_board_width,
+                       game_board.partition.partition_width):
+            for y in range(0, GameStats.game_board_height,
+                           game_board.partition.partition_height):
                 for object in game_board.partition.get_partition_objects(x, y):
                     num_items += 1
         self.assertTrue(num_items > 0)
@@ -27,8 +29,8 @@ class TestLootGenerationController(unittest.TestCase):
         game_board.circle_radius = 4
         loot_gen_controller.handle_actions(game_board)
         num_items = 0
-        for x in range(0,500,25):
-            for y in range(0,500,25):
+        for x in range(0, 500, 25):
+            for y in range(0, 500, 25):
                 for object in game_board.partition.get_partition_objects(x, y):
                     num_items += 1
         self.assertEqual(num_items, 0)

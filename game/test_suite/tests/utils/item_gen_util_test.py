@@ -18,12 +18,14 @@ class TestItemGenerationUtil(unittest.TestCase):
     def test_pick_item(self):
         item_gen_utils = ItemGenUtils()
         item = item_gen_utils.pick_item(50, 50, 1)
-        self.assertTrue(item is ObjectType.consumable or ObjectType.upgrade or ObjectType.gun or ObjectType.money)
+        self.assertTrue(
+            item is ObjectType.consumable or ObjectType.upgrade or ObjectType.gun or ObjectType.money)
 
     def test_place_item(self):
         item_gen_utils = ItemGenUtils()
         game_board = GameBoard()
-        # create obstruction to force object to spawn where it usually has a low chance of spawning
+        # create obstruction to force object to spawn where it usually has a
+        # low chance of spawning
         big_boi_wall = Wall(Hitbox(300, 300, (100, 100)), 10, False)
         game_board.partition.add_object(big_boi_wall)
         item = item_gen_utils.place_item(game_board, loot_wave_num=1)
