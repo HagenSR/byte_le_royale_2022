@@ -27,8 +27,6 @@ class Gun(Item):
                                * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
                          if self.level > 0 else 0)
         self.mag_ammo = self.mag_size
-        self.reload_speed = (round(stats.GameStats.gun_stats[gun_type]['reload_speed'] * (
-            stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level)) if self.level > 0 else 0)
         if self.level > 0:
             self.cooldown = stats.GameStats.gun_stats[gun_type]['cooldown']
             self.cooldown['max'] = round(
@@ -48,7 +46,6 @@ class Gun(Item):
         data['fire_rate'] = self.fire_rate
         data['range'] = self.range
         data['mag_size'] = self.mag_size
-        data['reload_speed'] = self.reload_speed
         data['cooldown'] = self.cooldown
 
         return data
@@ -62,7 +59,6 @@ class Gun(Item):
         self.fire_rate = data['fire_rate']
         self.range = data['range']
         self.mag_size = data['mag_size']
-        self.reload_speed = data['reload_speed']
         self.cooldown = data['cooldown']
         return self
 
@@ -75,6 +71,5 @@ class Gun(Item):
             Fire Rate: {self.fire_rate}
             Range: {self.range}
             Mag Size: {self.mag_size}
-            Reload Speed: {self.reload_speed}
             Cooldown: {self.cooldown}
             """
