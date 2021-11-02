@@ -163,3 +163,4 @@ class GameStats:
     consumable_cap = 30
     upgrade_cap = 20
     money_cap = 50
+

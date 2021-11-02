@@ -60,8 +60,8 @@ class ItemGenUtils:
                   xPos,
                   yPos,
                   loot_wave_num):
-        type = random.choice([ObjectType.consumable,
-                              ObjectType.consumable,
+        type = random.choice([ObjectType.money,
+                              ObjectType.money,
                               ObjectType.upgrade,
                               ObjectType.gun,
                               ObjectType.money])
