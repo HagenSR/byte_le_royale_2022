@@ -28,6 +28,7 @@ class ObjectType(Enum):
     upgrade = 16
     consumable = 17
     money = 18
+    teleporter = 19
 
 
 class ActionType(Enum):
@@ -38,6 +39,7 @@ class ActionType(Enum):
     reload = 4
     shop = 5
     use_item = 6
+    use_teleporter = 7
 
 
 class Upgrades(Enum):

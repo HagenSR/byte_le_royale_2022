@@ -15,6 +15,7 @@ from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
 from game.common.door import Door
+from game.common.teleporter import Teleporter
 import zipfile
 import json
 
@@ -383,6 +384,16 @@ def generate():
                 wall_copy.hitbox.position = (x_offset, y_offset)
                 game_map.partition.add_object(wall_copy)
 
+
+    # place 5 teleporters
+    for i in range(5):
+        teleporter_x, teleporter_y = GameStats.game_board_width + 1, GameStats.game_board_height + 1
+        dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
+        while game_map.partition.find_object_object(dummy_hitbox) is not False and teleporter_x <= GameStats.game_board_width and teleporter_y <= GameStats.game_board_height:
+            teleporter_x, teleporter_y = find_teleporter_position()
+            dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
+        game_map.partition.add_object(Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y))))
+
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):
         os.mkdir(GAME_MAP_DIR)
@@ -392,6 +403,33 @@ def generate():
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 
+def find_teleporter_position():
+    x_pos = None
+    y_pos = None
+    x_corridor = random.randint(1, 4)
+    y_corridor = random.randint(1, 4)
+    corridor_size = GameStats.corridor_width_height
+    plot_size = GameStats.plot_width_height
+
+    if x_corridor == 1:
+        x_pos = random.randint(0, GameStats.corridor_width_height)
+    elif x_corridor == 2:
+        x_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
+    elif x_corridor == 3:
+        x_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
+    elif x_corridor == 4:
+        x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width)
+
+    if y_corridor == 1:
+        y_pos = random.randint(0, GameStats.corridor_width_height)
+    elif y_corridor == 2:
+        y_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
+    elif y_corridor == 3:
+        y_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
+    elif y_corridor == 4:
+        y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width)
+
+    return x_pos, y_pos
 
 if __name__ == '__main__':
     create_structures_file("./structures/structureDescriptiveName.json")
