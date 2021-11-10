@@ -1,4 +1,7 @@
-class DebugLevel:
+from enum import Enum
+
+
+class DebugLevel(Enum):
     none = 0
     client = 1
     controller = 2
