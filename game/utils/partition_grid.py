@@ -147,9 +147,7 @@ class PartitionGrid:
             client.shooter.hitbox.topLeft[1] +
             client.shooter.hitbox.bottomLeft[1] /
             2)
-        client_heading = client.shooter.heading
         client_view_distance = client.shooter.view_distance
-        client_field_of_view = client.shooter.field_of_view
 
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
@@ -167,12 +165,10 @@ class PartitionGrid:
                 # if a partition is in view, need to check each object to
                 # see if it's in view, remove it if it isn't
                 for obj in self.get_partition_objects(x, y):
-                    if not collision_detection.intersect_arc(
-                            obj.hitbox,
-                            client_heading,
-                            client_field_of_view,
+                    if not collision_detection.intersect_circle(
+                            client_shooter_xy,
                             client_view_distance,
-                            client_shooter_xy):
+                            obj.hitbox):
                         self.remove_object(obj)
 
     def to_json(self):

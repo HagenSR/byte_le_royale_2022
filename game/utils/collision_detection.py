@@ -138,14 +138,14 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
                 math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
             ))
         )
-        print('START')
-        print(is_point_in_path(r[0], r[1], list(dilation)))
-        print(r_polar[0] < radius)
-        print(heading -
-              arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2)
+        # print('START')
+        # print(is_point_in_path(r[0], r[1], list(dilation)))
+        # print(r_polar[0] < radius)
+        # print(heading -
+        #       arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2)
         if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - \
                 arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
-            # TODO something is screwy with this polar coord checking
+            # to do something is screwy with this polar coord checking
             return True
     return False
 
