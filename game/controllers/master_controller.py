@@ -14,6 +14,7 @@ from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
+from game.controllers.teleporter_controller import TeleporterController
 
 
 class MasterController(Controller):
@@ -23,7 +24,7 @@ class MasterController(Controller):
 
         self.current_world_data = None
 
-        self.boundry_controller = KillBoundaryController()
+        self.boundary_controller = KillBoundaryController()
         self.shop_controller = ShopController()
         self.loot_generation_controller = LootGenerationController()
 
@@ -67,7 +68,7 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        self.boundry_controller.handle_actions(
+        self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
         for client in clients:

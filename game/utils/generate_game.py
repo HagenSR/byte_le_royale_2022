@@ -389,7 +389,7 @@ def generate():
     for i in range(5):
         teleporter_x, teleporter_y = GameStats.game_board_width + 1, GameStats.game_board_height + 1
         dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
-        while game_map.partition.find_object_object(dummy_hitbox) is not False and teleporter_x <= GameStats.game_board_width and teleporter_y <= GameStats.game_board_height:
+        while game_map.partition.find_object_object(dummy_hitbox) is not False or teleporter_x <= GameStats.game_board_width or teleporter_y <= GameStats.game_board_height or determine_teleporter_nearby(dummy_hitbox, game_map) :
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
         game_map.partition.add_object(Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y))))
@@ -430,6 +430,13 @@ def find_teleporter_position():
         y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width)
 
     return x_pos, y_pos
+
+def determine_teleporter_nearby(teleporter, game_board):
+    for x in range(max(0, teleporter.hitbox.topLeft(0) - 5), min(teleporter.hitbox.topRight(1) + 5, GameStats.game_board_width)):
+        for y in range(max(0, teleporter.hitbox.topLeft(0) - 5), min(teleporter.hitbox.bottomLeft(1) + 5, GameStats.game_board_width)):
+            if game_board.partition.find_object_coordinates(x, y) is not False:
+                return True
+    return False
 
 if __name__ == '__main__':
     create_structures_file("./structures/structureDescriptiveName.json")
