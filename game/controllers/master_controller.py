@@ -3,14 +3,8 @@ import random
 from game.common.stats import GameStats
 
 from game.common.action import Action
-from game.common.enums import *
-from game.common.player import Player
-import game.config as config
-from game.controllers.player_view_controller import PlayerViewController
 from game.controllers.shoot_controller import ShootController
 from game.controllers.shop_controller import ShopController
-from game.utils.partition_grid import PartitionGrid
-from game.utils.threadBytel import CommunicationThread
 
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
@@ -33,8 +27,9 @@ class MasterController(Controller):
     # Receives all clients for the purpose of giving them the objects they
     # will control
     def give_clients_objects(self, clients):
-        for client in clients:
-            client.game_board = self.current_world_data["game_map"].partition
+        pass
+        # for client in clients:
+            # client.game_board = self.current_world_data["game_map"].partition
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -70,7 +65,7 @@ class MasterController(Controller):
         partition_grid = self.current_world_data["game_map"].partition
 
         # Obfuscate data in objects that that player should not be able to see
-        partition_grid.obfuscate()
+        partition_grid.obfuscate(client)
 
         args = (self.turn, actions, self.current_world_data, partition_grid)
         return args
