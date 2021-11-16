@@ -104,4 +104,3 @@ class Hitbox(GameObject):
              X: {self.position[0]}
              Y: {self.position[1]}
              """
-

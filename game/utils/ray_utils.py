@@ -29,25 +29,29 @@ def load_collidables_in_ray_range(
     if math.pi / 2 >= heading >= 0:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif math.pi >= heading > math.pi / 2:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 >= heading > math.pi:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 < heading <= 2 * math.pi:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects_by_index(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(
+                        x, y):
                     if z not in exclusions:
                         collidables[z] = 0
 
@@ -229,35 +233,35 @@ def determine_gun_collision(
     for collidable in collidables.keys():
         intersections = []
         top = line_intersection(
-                (collidable.hitbox.topLeft, collidable.hitbox.topRight),
-                (player.shooter.hitbox.position, ray_endpoint)
+            (collidable.hitbox.topLeft, collidable.hitbox.topRight),
+            (player.shooter.hitbox.position, ray_endpoint)
         )
         if top is not None:
             intersections.append(top)
         bottom = line_intersection(
-                (collidable.hitbox.bottomLeft, collidable.hitbox.bottomRight),
-                (player.shooter.hitbox.position, ray_endpoint)
+            (collidable.hitbox.bottomLeft, collidable.hitbox.bottomRight),
+            (player.shooter.hitbox.position, ray_endpoint)
         )
         if bottom is not None:
             intersections.append(bottom)
         left = line_intersection(
-                (collidable.hitbox.topLeft, collidable.hitbox.bottomLeft),
-                (player.shooter.hitbox.position, ray_endpoint)
+            (collidable.hitbox.topLeft, collidable.hitbox.bottomLeft),
+            (player.shooter.hitbox.position, ray_endpoint)
         )
         if left is not None:
             intersections.append(left)
         right = line_intersection(
-                (collidable.hitbox.topRight, collidable.hitbox.bottomRight),
-                (player.shooter.hitbox.position, ray_endpoint)
+            (collidable.hitbox.topRight, collidable.hitbox.bottomRight),
+            (player.shooter.hitbox.position, ray_endpoint)
         )
         if right is not None:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
-                    player.shooter.hitbox.position,
-                    intersection,
-                    collidable,
-                    player.shooter.primary_gun.damage
+                player.shooter.hitbox.position,
+                intersection,
+                collidable,
+                player.shooter.primary_gun.damage
             )
             collisions[ray] = 0
 
