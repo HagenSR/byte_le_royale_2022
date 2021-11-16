@@ -15,9 +15,10 @@ class Client(UserClient):
         return 'Team Name'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions, world):
+    def take_turn(self, turn, actions, world, partition_grid):
         """
         This is where your AI will decide what to do.
+        :param partition_grid: This is the representation of the game map divided into partitions
         :param turn:        The current turn of the game.
         :param actions:     This is the actions object that you will add effort allocations or decrees to.
         :param world:       Generic world information

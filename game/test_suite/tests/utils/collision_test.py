@@ -1,6 +1,7 @@
 import unittest
 from game.common.hitbox import Hitbox
-from game.utils.collision_detection import check_collision
+from game.common.stats import GameStats
+from game.utils.collision_detection import check_collision, intersect_circle
 
 
 class TestCollision(unittest.TestCase):
@@ -71,6 +72,51 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.height = 10
         self.hitTwo.width = 20
         self.assertFalse(check_collision(self.hitOne, self.hitTwo))
+
+    # tests for methods used in player view controller
+    def test_circle(self):
+        hitbox1 = Hitbox(2, 2, (2, 2))
+        self.assertTrue(intersect_circle((3, 1), 5, hitbox1))
+
+    def test_arc_intersect_circle_in_rect(self):
+        center = (10, 10)
+        radius = 6
+
+        self.assertTrue(
+            intersect_circle(
+                center,
+                radius,
+                self.hitOne))
+
+    def test_arc_intersect_circle_on_edge(self):
+        center = (10, 15)
+        radius = 4
+
+        self.assertTrue(
+            intersect_circle(
+                center,
+                radius,
+                self.hitOne))
+
+    def test_arc_intersect_circle_to_side_and_top(self):
+        center = (3, 3)
+        radius = 5
+
+        self.assertTrue(
+            intersect_circle(
+                center,
+                radius,
+                self.hitOne))
+
+    def test_arc_intersect_false(self):
+        center = (3, 3)
+        radius = 1
+
+        self.assertFalse(
+            intersect_circle(
+                center,
+                radius,
+                self.hitOne))
 
 
 if __name__ == '__main__':

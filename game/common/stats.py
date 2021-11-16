@@ -27,7 +27,8 @@ class GameStats:
         'starting_health': 10,
         'starting_money': 10,
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
-        'view_radius': 10,
+        'field_of_view': 90,
+        'view_distance': 100,
         'move_speed': 10,
     }
 

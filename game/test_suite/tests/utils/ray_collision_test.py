@@ -285,7 +285,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object(player.shooter)
         ray = get_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
-        self.assertEqual(ray.endpoint[1], 102)
+        self.assertEqual(ray.endpoint[1], 100)
         self.assertEqual(ray.collision, obj_list[0])
 
 

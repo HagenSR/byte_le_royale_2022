@@ -40,7 +40,7 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.add_object(wall)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
-        object_list = self.game_board.partition.get_coordinate_partition_objects(
+        object_list = self.game_board.partition.get_partition_objects(
             20, 0)
         self.assertNotIn(wall, object_list)
 
@@ -59,7 +59,7 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.add_object(door)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
-        object_list = self.game_board.partition.get_coordinate_partition_objects(
+        object_list = self.game_board.partition.get_partition_objects(
             20, 0)
         self.assertNotIn(door, object_list)
 

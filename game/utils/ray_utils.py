@@ -3,6 +3,7 @@ from game.config import *
 from game.common.enums import *
 
 import math
+import numpy as np
 
 
 # Get relevant collidables in partitions bounded by furthest x, y and origin
@@ -28,25 +29,25 @@ def load_collidables_in_ray_range(
     if math.pi / 2 >= heading >= 0:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif math.pi >= heading > math.pi / 2:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y - 1, -1):
-                for z in gameboard.partition.get_partition_objects(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 >= heading > math.pi:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(x, y):
                     if z not in exclusions:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 < heading <= 2 * math.pi:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y + 1):
-                for z in gameboard.partition.get_partition_objects(x, y):
+                for z in gameboard.partition.get_partition_objects_by_index(x, y):
                     if z not in exclusions:
                         collidables[z] = 0
 
@@ -196,6 +197,25 @@ def sort_objects(x1, y1, collidables, max_range):
     return collidables
 
 
+# Function written by Paul Draper on Stack Exchange
+def line_intersection(line1, line2):
+    xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
+    ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
+
+    def det(a, b):
+        return a[0] * b[1] - a[1] * b[0]
+
+    div = det(xdiff, ydiff)
+    if div == 0:
+        return None
+
+    d = (det(*line1), det(*line2))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
+
+    return x, y
+
+
 # Determine which object ray collides with first
 def determine_gun_collision(
         player,
@@ -205,157 +225,45 @@ def determine_gun_collision(
         ray_endpoint,
         damage):
     # Ray object used to provide data for visualizer
-    ray_y = -player.shooter.hitbox.position[1] - \
-        (slope * player.shooter.hitbox.position[0])
-    ray_slope = slope
     collisions = {}
     for collidable in collidables.keys():
-        # bottom line
-        line_slope = ((-collidable.hitbox.bottomLeft[1] -
-                       -collidable.hitbox.bottomRight[1]) /
-                      (collidable.hitbox.bottomLeft[0] -
-                       collidable.hitbox.bottomRight[0]))
-        line_y = -collidable.hitbox.bottomLeft[1] - \
-            (line_slope * collidable.hitbox.bottomLeft[0])
-        if (round(ray_slope - line_slope, 4) != 0 and ray_slope is not
-                math.nan):
-            x_intercept = (line_y - ray_y) / (ray_slope - line_slope)
-        else:
-            x_intercept = player.shooter.hitbox.position[0]
-        if round(line_slope, 4) == 0:
-            corr_y = collidable.hitbox.bottomLeft[1]
-        else:
-            corr_y = calculate_ray_y(
-                collidable.hitbox.bottomLeft[0], -collidable.hitbox.bottomLeft[1], line_slope, x_intercept)
-
-        if (collidable.hitbox.bottomLeft[0] <= x_intercept <=
-                collidable.hitbox.bottomRight[0] and
-                (collidable.hitbox.bottomLeft[1] <= corr_y <=
-                 collidable.hitbox.bottomRight[1] or
-                 collidable.hitbox.bottomLeft[1] >= corr_y >=
-                 collidable.hitbox.bottomRight[1])):
-            ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
-                      collidable, player.shooter.primary_gun.damage)
-            collisions[ray] = 0
-
-        # right line
-        line_slope = ((-collidable.hitbox.bottomRight[1] -
-                       -collidable.hitbox.topRight[1]) /
-                      (collidable.hitbox.bottomRight[0] -
-                       collidable.hitbox.topRight[0]) if
-                      collidable.hitbox.bottomRight[0] - collidable.hitbox.topRight[0]
-                      != 0 else math.nan)
-        line_y = -collidable.hitbox.bottomRight[1] - \
-            (line_slope * collidable.hitbox.bottomRight[0])
-        if line_slope is math.nan:
-            x_intercept = calculate_ray_x(
-                player.shooter.hitbox.position[0],
-                -player.shooter.hitbox.position[1],
-                ray_slope,
-                -collidable.hitbox.bottomRight[1])
-            if x_intercept is math.nan:
-                x_intercept = max(collidable.hitbox.bottomRight[0],
-                                  collidable.hitbox.topRight[0])
-        elif round(ray_slope - line_slope, 4) != 0:
-            x_intercept = (line_y - ray_y) / (ray_slope - line_slope)
-        else:
-            x_intercept = player.shooter.hitbox.position[0]
-        corr_y = calculate_ray_y(
-            player.shooter.hitbox.position[0],
-            -player.shooter.hitbox.position[1],
-            ray_slope,
-            x_intercept)
-        if corr_y is math.nan:
-            corr_y = min(collidable.hitbox.bottomRight[1],
-                         collidable.hitbox.topRight[1])
-        if ((collidable.hitbox.bottomRight[0] <= x_intercept <=
-                collidable.hitbox.topRight[0] or collidable.hitbox.bottomRight[0] >
-                x_intercept > collidable.hitbox.topRight[0]) and
-                collidable.hitbox.bottomRight[1] <= corr_y <=
-                collidable.hitbox.topRight[1]):
-            ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
-                      collidable, player.shooter.primary_gun.damage)
-            collisions[ray] = 0
-
-        # top line
-        line_slope = (
-            (-collidable.hitbox.topLeft[1] - -collidable.hitbox.topRight[1]) / (
-                collidable.hitbox.topLeft[0] - collidable.hitbox.topRight[0]))
-        line_y = -collidable.hitbox.topLeft[1] - (line_slope *
-                                                  collidable.hitbox.topLeft[0])
-
-        if (round(ray_slope - line_slope, 4) != 0 and ray_slope is not
-                math.nan):
-            x_intercept = (line_y - ray_y) / round(ray_slope - line_slope, 4)
-        else:
-            if line_slope == 0:
-                if (player.shooter.hitbox.position[0] -
-                        collidable.hitbox.topLeft[0] >
-                        player.shooter.hitbox.position[0] -
-                        collidable.hitbox.topRight[0]):
-                    x_intercept = collidable.hitbox.topLeft[0]
-                else:
-                    x_intercept = collidable.hitbox.topRight[0]
-
-            else:
-                x_intercept = (player.shooter.hitbox.position[0] - line_y /
-                               line_slope)
-
-        if round(line_slope, 4) == 0:
-            corr_y = collidable.hitbox.topLeft[1]
-        else:
-            corr_y = calculate_ray_y(player.shooter.hitbox.position[0],
-                                     -player.shooter.hitbox.position[1], ray_slope, x_intercept)
-        if (collidable.hitbox.topLeft[0] <= x_intercept <=
-                collidable.hitbox.topRight[0] and (collidable.hitbox.topLeft[1]
-                                                   <= corr_y <= collidable.hitbox.topRight[1] or
-                                                   collidable.hitbox.topLeft[1] >= corr_y >=
-                                                   collidable.hitbox.topRight[1])):
-            ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
-                      collidable, player.shooter.primary_gun.damage)
-            collisions[ray] = 0
-
-        # left line
-        line_slope = ((-collidable.hitbox.bottomLeft[1] -
-                       -collidable.hitbox.topLeft[1]) /
-                      (collidable.hitbox.bottomLeft[0] -
-                       collidable.hitbox.topLeft[0])
-                      if collidable.hitbox.bottomLeft[0] -
-                      collidable.hitbox.topLeft[0] != 0 else math.nan)
-        line_y = -collidable.hitbox.bottomLeft[1] - \
-            (line_slope * collidable.hitbox.bottomLeft[0])
-        if line_slope is math.nan:
-            x_intercept = calculate_ray_x(player.shooter.hitbox.position[0],
-                                          -player.shooter.hitbox.position[1], ray_slope,
-                                          -collidable.hitbox.bottomLeft[1])
-            if x_intercept is math.nan:
-                x_intercept = min(collidable.hitbox.bottomLeft[0],
-                                  collidable.hitbox.topLeft[0])
-        elif round(ray_slope - line_slope, 4) != 0:
-            x_intercept = (line_y - ray_y) / (ray_slope - line_slope)
-        else:
-            x_intercept = (player.shooter.hitbox.position[0] - line_y /
-                           line_slope)
-        corr_y = calculate_ray_y(
-            player.shooter.hitbox.position[0],
-            -player.shooter.hitbox.position[1],
-            ray_slope,
-            x_intercept)
-        if corr_y is math.nan:
-            corr_y = min(collidable.hitbox.bottomLeft[1],
-                         collidable.hitbox.topLeft[1])
-
-        if (collidable.hitbox.bottomLeft[0] <= x_intercept <=
-                collidable.hitbox.topLeft[0] or collidable.hitbox.bottomLeft[0]
-                >= x_intercept > collidable.hitbox.topLeft[0] and
-                collidable.hitbox.topLeft[1] <= corr_y <=
-                collidable.hitbox.bottomLeft[1]):
-            ray = Ray(player.shooter.hitbox.position, (x_intercept, corr_y),
-                      collidable, player.shooter.primary_gun.damage)
+        intersections = []
+        top = line_intersection(
+                (collidable.hitbox.topLeft, collidable.hitbox.topRight),
+                (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if top is not None:
+            intersections.append(top)
+        bottom = line_intersection(
+                (collidable.hitbox.bottomLeft, collidable.hitbox.bottomRight),
+                (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if bottom is not None:
+            intersections.append(bottom)
+        left = line_intersection(
+                (collidable.hitbox.topLeft, collidable.hitbox.bottomLeft),
+                (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if left is not None:
+            intersections.append(left)
+        right = line_intersection(
+                (collidable.hitbox.topRight, collidable.hitbox.bottomRight),
+                (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if right is not None:
+            intersections.append(right)
+        for intersection in intersections:
+            ray = Ray(
+                    player.shooter.hitbox.position,
+                    intersection,
+                    collidable,
+                    player.shooter.primary_gun.damage
+            )
             collisions[ray] = 0
 
     rays = sort_objects(player.shooter.hitbox.position[0],
-                        player.shooter.hitbox.position[1], collisions,
+                        player.shooter.hitbox.position[1],
+                        collisions,
                         player.shooter.primary_gun.range)
     if len(rays) > 0:
         return rays[0][0]
