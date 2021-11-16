@@ -3,7 +3,6 @@ from game.config import *
 from game.common.enums import *
 
 import math
-import numpy as np
 
 
 # Get relevant collidables in partitions bounded by furthest x, y and origin
