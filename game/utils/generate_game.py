@@ -286,11 +286,16 @@ def create_structures_file(file_path):
     # Iterate over each structure and get its walls
     for i in range(len(Structures)):
         walls = []
-        for wall in Structures[i]:
-            walls.append(wall)
+        doors = []
+        for object in Structures[i]:
+            if isinstance(object, Wall):
+                walls.append(object)
+            elif isinstance(object, Door):
+                doors.append(object)
         with open('./structures/' + structure_name_list[i] + '.json', 'w') as fl:
             # Writes each object to json, then writes the string to file
             strs = [json.dumps(wall.to_json()) for wall in walls]
+            strs.append([json.dumps(door.to_json()) for door in doors])
             s = "[%s]" % ",\n".join(strs)
             fl.write(s)
 
@@ -362,9 +367,14 @@ def generate():
                     wallList = []
                     for entry in filejsn:
                         # Load in every wall in the structure
-                        wall = Wall(Hitbox(1, 1, (0, 0)))
-                        wall.from_json(entry)
-                        wallList.append(wall)
+                        if isinstance(entry, Wall):
+                            wall = Wall(Hitbox(1, 1, (0, 0)))
+                            wall.from_json(entry)
+                            wallList.append(wall)
+                        elif isinstance(entry, Door):
+                            door = Door(Hitbox(1, 1, (0, 0)))
+                            door.from_json(entry)
+                            wallList.append(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
         structures_list.append(None)
@@ -387,11 +397,15 @@ def generate():
 
     # place 5 teleporters
     for i in range(5):
-        teleporter_x, teleporter_y = GameStats.game_board_width + 1, GameStats.game_board_height + 1
-        dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
-        while game_map.partition.find_object_object(dummy_hitbox) is not False or teleporter_x <= GameStats.game_board_width or teleporter_y <= GameStats.game_board_height or determine_teleporter_nearby(dummy_hitbox, game_map) :
+        teleporter_x, teleporter_y = GameStats.game_board_width/2, GameStats.game_board_height/2
+        dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
+        while game_map.partition.find_object_object(dummy_wall) is not False\
+                or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
+                or teleporter_x < 0 or teleporter_y < 0\
+                or determine_teleporter_nearby(dummy_wall, game_map):
             teleporter_x, teleporter_y = find_teleporter_position()
-            dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
+            dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
+        print(f'tel_x:{teleporter_x} tel_y:{teleporter_y}')
         game_map.partition.add_object(Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y))))
 
     # Verify logs location exists
@@ -402,6 +416,9 @@ def generate():
     data['seed'] = generateRandomNumbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
+
+
+
 
 def find_teleporter_position():
     x_pos = None
@@ -432,8 +449,8 @@ def find_teleporter_position():
     return x_pos, y_pos
 
 def determine_teleporter_nearby(teleporter, game_board):
-    for x in range(max(0, teleporter.hitbox.topLeft(0) - 5), min(teleporter.hitbox.topRight(1) + 5, GameStats.game_board_width)):
-        for y in range(max(0, teleporter.hitbox.topLeft(0) - 5), min(teleporter.hitbox.bottomLeft(1) + 5, GameStats.game_board_width)):
+    for x in range(int(max(0, teleporter.hitbox.topLeft[0] - 5)), int(min(teleporter.hitbox.topRight[1] + 5, GameStats.game_board_width))):
+        for y in range(int(max(0, teleporter.hitbox.topLeft[0] - 5)), int(min(teleporter.hitbox.bottomLeft[1] + 5, GameStats.game_board_width))):
             if game_board.partition.find_object_coordinates(x, y) is not False:
                 return True
     return False
