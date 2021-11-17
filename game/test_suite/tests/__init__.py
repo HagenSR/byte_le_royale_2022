@@ -19,6 +19,7 @@ from game.test_suite.tests.controllers.test_kill_boundary_controller import Test
 from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
 from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
 from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
+from game.test_suite.tests.controllers.teleporter_controller_test import TestTeleporterController
 
 
 __all__ = [
@@ -38,5 +39,6 @@ __all__ = [
     'TestRayCollision',
     'TestReloadController',
     'TestLootGenerationController',
-    'TestItemGenerationUtil'
+    'TestItemGenerationUtil',
+    'TestTeleporterController'
 ]
