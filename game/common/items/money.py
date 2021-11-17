@@ -8,9 +8,9 @@ class Money(Item):
 
     def __init__(
             self,
-            hitbox,
-            health,
-            count):
+            hitbox=None,
+            health=None,
+            count=None):
         super().__init__(hitbox, health, count)
 
         self.object_type = ObjectType.money

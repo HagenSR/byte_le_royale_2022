@@ -6,7 +6,7 @@ from game.common.stats import GameStats
 class Door(MapObject):
     def __init__(
             self,
-            hitbox,
+            hitbox=None,
             health=GameStats.default_wall_health,
             open_speed=GameStats.door_opening_speed):
         super().__init__(health, hitbox, collidable=True)
