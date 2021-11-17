@@ -5,13 +5,19 @@ import os
 import random
 import importlib.resources
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.upgrade import Upgrade
 from game.common.wall import Wall
+from game.common.items.gun import Gun
+from game.common.items.item import Item
 from game.config import *
 from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
 import zipfile
 import json
+
+import requests
 
 
 def create_structures_file(file_path):
@@ -230,17 +236,14 @@ def create_structures_file(file_path):
             fl.write(s)
 
 
-def generate_random_numbers():
-    """
-    Generate and return a list of random numbers, between 0 and the int maximum
-    """
+def generateRandomNumbers():
     rtn = []
     for i in range(10000):
         rtn.append(random.randint(0, sys.maxsize))
     return rtn
 
 
-def find_plot_hitboxes():
+def findPlotHitboxes():
     plot_hitbox_list = []
 
     # find the width and height of each plot, assuming 6 plots on a game board
@@ -284,8 +287,9 @@ def generate():
     structures_list = []
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
-    # Use ../../launcher.pyz if opening in the utils folder
-    with zipfile.ZipFile('launcher.pyz') as z:
+    # Use ../../launcher.pyz if opening in the utils folder or ./launcher.pyz
+    # for the .pyz
+    with zipfile.ZipFile('./launcher.pyz') as z:
         for filename in z.namelist():
             # Only load proper structure json
             if filename.startswith(
@@ -293,6 +297,8 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
+                   # print(requests.get(fl.read().decode('utf-8')).content)
+                    print(filename)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:
@@ -305,7 +311,7 @@ def generate():
         structures_list.append(None)
 
     # Choose what structure goes in what plot
-    plot_list = find_plot_hitboxes()
+    plot_list = findPlotHitboxes()
     for plot in plot_list:
         struct = random.choice(structures_list)
         if struct:
@@ -324,8 +330,7 @@ def generate():
         os.mkdir(GAME_MAP_DIR)
 
     data['game_map'] = game_map.to_json()
-    # Add the list of seeds to the game map json
-    data['seed'] = generate_random_numbers()
+    data['seed'] = generateRandomNumbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 

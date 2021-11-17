@@ -35,7 +35,7 @@ class TestShopController(unittest.TestCase):
     def test_user_inventory_error(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed_boost]["cost"]
         self.myPlayer.action.item_to_purchase = Consumables.speed_boost
-        an_item = Consumable(hitbox=None, health=None, count=None,
+        an_item = Consumable(hitbox=None, health=None,
                              consumable_enum=Consumables.speed_boost)
         # All consumable slots in player's inventory should be full after the
         # for loop
@@ -64,7 +64,7 @@ class TestShopController(unittest.TestCase):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.health_pack]["cost"]
         self.myPlayer.action.item_to_purchase = Consumables.health_pack
         self.shopController.handle_actions(self.myPlayer)
-        an_item = Consumable(hitbox=None, health=None, count=None,
+        an_item = Consumable(hitbox=None, health=None,
                              consumable_enum=Consumables.health_pack)
         # When the consumable_enum attributes are being compared, they should be pointing at the same int value in
         # the consumable enum. In this case, they should both contain the value

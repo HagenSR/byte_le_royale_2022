@@ -9,7 +9,7 @@ class Consumable(Item):
             health=None,
             count=None,
             consumable_enum=None):
-        super().__init__(hitbox, health, count)
+        super().__init__(hitbox, health)
         self.object_type = ObjectType.consumable
         self.consumable_enum = consumable_enum
 

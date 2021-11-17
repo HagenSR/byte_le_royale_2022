@@ -154,6 +154,12 @@ class GameStats:
 
     door_opening_speed = 1
 
-    Upgrades.gun_upgrades = 20  # Could potentially incease bullet speed?
-    Upgrades.movement_upgrades = 20  # May be used to make the player go faster?
-    Upgrades.sight_upgrades = 20  # Increase how far player can see?
+    num_loot_waves = 4
+    # self.ticks_between_waves and self.tick (var in loot gen controller) must
+    # be equal to each other
+    ticks_between_waves = 200
+
+    gun_cap = 50
+    consumable_cap = 30
+    upgrade_cap = 20
+    money_cap = 50
