@@ -27,6 +27,7 @@ class MasterController(Controller):
         self.boundary_controller = KillBoundaryController()
         self.shop_controller = ShopController()
         self.loot_generation_controller = LootGenerationController()
+        self.shoot_controller = ShootController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -64,7 +65,7 @@ class MasterController(Controller):
         partition_grid = self.current_world_data["game_map"].partition
 
         # Obfuscate data in objects that that player should not be able to see
-        partition_grid.obfuscate()
+        partition_grid.obfuscate(client)
 
         args = (self.turn, actions, self.current_world_data, partition_grid)
         return args

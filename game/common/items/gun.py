@@ -4,7 +4,7 @@ from game.common.items.item import Item
 
 
 class Gun(Item):
-    def __init__(self, gun_type=GunType.none, level=None, hitbox=None):
+    def __init__(self, gun_type=GunType.none, level=0, hitbox=None):
         super().__init__(hitbox)
         self.object_type = ObjectType.gun
 
