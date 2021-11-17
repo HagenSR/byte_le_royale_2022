@@ -199,25 +199,26 @@ class PartitionGrid:
             ]
             for row in data['partition_grid']
         ]
+        return self
 
     def from_json_helper(self, data: dict):
         obj_list = list()
         for obj in data:
             if obj['object_type'] == ObjectType.consumable:
-                obj_list.append(Consumable.from_json(obj, Consumable()))
+                obj_list.append(Consumable.from_json(Consumable(), obj))
             if obj['object_type'] == ObjectType.gun:
-                obj_list.append(Gun.from_json(obj, Gun()))
+                obj_list.append(Gun.from_json(Gun(), obj))
             if obj['object_type'] == ObjectType.item:
-                obj_list.append(Item.from_json(obj, Item()))
+                obj_list.append(Item.from_json(Item(), obj))
             if obj['object_type'] == ObjectType.money:
-                obj_list.append(Money.from_json(obj, Money()))
+                obj_list.append(Money.from_json(Money(), obj))
             if obj['object_type'] == ObjectType.upgrade:
-                obj_list.append(Upgrade.from_json(obj, Upgrade()))
+                obj_list.append(Upgrade.from_json(Upgrade(), obj))
             if obj['object_type'] == ObjectType.shooter:
-                obj_list.append(Shooter.from_json(obj, Shooter()))
+                obj_list.append(Shooter.from_json(Shooter(), obj))
             if obj['object_type'] == ObjectType.door:
-                obj_list.append(Door.from_json(obj, Door()))
+                obj_list.append(Door.from_json(Door(), obj))
             if obj['object_type'] == ObjectType.wall:
-                obj_list.append(Wall.from_json(obj, Wall()))
+                obj_list.append(Wall.from_json(Wall(), obj))
 
         return obj_list
