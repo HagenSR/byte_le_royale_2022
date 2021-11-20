@@ -5,6 +5,7 @@ from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
+import math
 
 
 class Shooter(MovingObject):
@@ -22,6 +23,7 @@ class Shooter(MovingObject):
             hitbox,
             collidable=True
         )
+        self.heading = math.radians(heading)
         self.object_type = ObjectType.shooter
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
@@ -51,6 +53,8 @@ class Shooter(MovingObject):
         # set initial primary gun to be none
         self.__primary_pointer = 0
         self.__primary = self.__inventory['guns'][self.__primary_pointer]
+
+
 
     @property
     def inventory(self):
@@ -129,10 +133,10 @@ class Shooter(MovingObject):
     # distance attribute later
     def move(self, heading, speed):
         """Set heading and speed to handle moving"""
-        super().heading = heading
-        self.hitbox.rotation = heading
+        self.heading = heading
+        self.hitbox.rotation = math.radians(heading)
         # if speed < GameStats.player_stats['move_speed']:
-        super().speed = speed
+        self.speed = speed
         self.moving = True
         # raise ValueError(
            #  "Speed must be less than max move speed for the player")

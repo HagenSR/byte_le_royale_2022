@@ -1,4 +1,6 @@
 import math
+# My work
+import numpy as np
 
 
 def check_collision(hitbox_one, hitbox_two):
@@ -8,8 +10,117 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
 
 
+###############################################################################
 
 
+def collide_rect_hb(hb1, hb2):
+    p1 = [hb1.topRight, hb1.topLeft, hb1.bottomLeft,
+          hb1.bottomRight]
+    p2 = [hb2.topRight, hb2.topLeft, hb2.bottomLeft,
+          hb2.bottomRight]
+
+    """
+    Return True and the MPV if the shapes collide. Otherwise, return False and
+    None.
+
+    p1 and p2 are lists of ordered pairs, the vertices of the polygons in the
+    counterclockwise direction.
+    """
+
+    # p1 = [np.array(v, 'float64') for v in p1]
+    # p2 = [np.array(v, 'float64') for v in p2]
+
+    edges = edges_of(p1)
+    edges += edges_of(p2)
+    orthogonals = [orthogonal(e) for e in edges]
+
+    push_vectors = []
+    for o in orthogonals:
+        separates, pv = is_separating_axis(o, p1, p2)
+
+        if separates:
+            # they do not collide and there is no push vector
+            return False
+        else:
+            push_vectors.append(pv)
+
+    # they do collide and the push_vector with the smallest length is the MPV
+    mpv = min(push_vectors, key=(lambda v: np.dot(v, v)))
+
+    # assert mpv pushes p1 away from p2
+    d = centers_displacement(p1, p2)  # direction from p1 to p2
+    if np.dot(d, mpv) > 0:  # if it's the same direction, then invert
+        mpv = -mpv
+
+    # return True, mpv
+    return True
+
+
+def centers_displacement(p1, p2):
+    """
+    Return the displacement between the geometric center of p1 and p2.
+    """
+    # geometric center
+    c1 = np.mean(np.array(p1), axis=0)
+    c2 = np.mean(np.array(p2), axis=0)
+    return c2 - c1
+
+
+def edges_of(vertices):
+    """
+    Return the vectors for the edges of the polygon p.
+
+    p is a polygon.
+    """
+    edges = []
+    N = len(vertices)
+
+    for i in range(N):
+        edge = [vertices[(i + 1) % N][j] - vertices[i][j] for j in range(len(vertices[i]))]
+        edges.append(edge)
+
+    return edges
+
+
+def orthogonal(v):
+    """
+    Return a 90 degree clockwise rotation of the vector v.
+    """
+    return np.array([-v[1], v[0]])
+
+
+def is_separating_axis(o, p1, p2):
+    """
+    Return True and the push vector if o is a separating axis of p1 and p2.
+    Otherwise, return False and None.
+    """
+    min1, max1 = float('+inf'), float('-inf')
+    min2, max2 = float('+inf'), float('-inf')
+
+    for v in p1:
+        projection = np.dot(v, o)
+
+        min1 = min(min1, projection)
+        max1 = max(max1, projection)
+
+    for v in p2:
+        projection = np.dot(v, o)
+
+        min2 = min(min2, projection)
+        max2 = max(max2, projection)
+
+    if max1 >= min2 and max2 >= min1:
+        d = min(max2 - min1, max1 - min2)
+        # push a bit more than needed so the shapes do not overlap in future
+        # tests due to float precision
+        d_over_o_squared = d / np.dot(o, o) + 1e-10
+        pv = d_over_o_squared * o
+        return False, pv
+    else:
+        return True, None
+
+
+##################################################################################
 
 def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
     return point_in_hitbox(
@@ -26,6 +137,7 @@ def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
 def point_in_hitbox(x, y, hitbox):
     return (hitbox.bottomLeft[0] <= x <= hitbox.topRight[0] and
             hitbox.topRight[1] <= y <= hitbox.bottomLeft[1])
+
 
 # def hitbox_angle(player_center, hitbox)
 
@@ -69,7 +181,7 @@ def intersect_circle(center, radius, hitbox):
             # calculate y coord of the intercept of the edge and the radius
             # perpendicular to the edge
             yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                y3 - ((x2 - x1) / (y1 - y2)) * xi
+                 y3 - ((x2 - x1) / (y1 - y2)) * xi
 
         # calculate length of perpendicular line segment from radius to the
         # edge
@@ -82,7 +194,6 @@ def intersect_circle(center, radius, hitbox):
         # lines of the arc
         if (seg_len < radius and ((distance(x1, y1, x3, y3) < radius or distance(
                 x2, y2, x3, y3) < radius) or x1 <= xi <= x2 and y1 <= yi <= y2)):
-
             return True
 
     return False
@@ -195,7 +306,7 @@ def is_point_in_path(x: int, y: int, poly) -> bool:
             return True
         if (poly[i][1] > y) != (poly[j][1] > y):
             slope = (x - poly[i][0]) * (poly[j][1] - poly[i][1]) - \
-                (poly[j][0] - poly[i][0]) * (y - poly[i][1])
+                    (poly[j][0] - poly[i][0]) * (y - poly[i][1])
             if slope == 0:
                 # point is on boundary
                 return True

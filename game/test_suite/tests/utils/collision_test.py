@@ -1,7 +1,7 @@
 import unittest
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
-from game.utils.collision_detection import check_collision, intersect_arc
+from game.utils.collision_detection import check_collision, intersect_arc, collide_rect_hb
 
 
 class TestCollision(unittest.TestCase):
@@ -21,7 +21,8 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (5, 6)
         self.hitTwo.height = 5
         self.hitTwo.width = 8
-        self.assertTrue(check_collision(self.hitOne, self.hitTwo))
+
+        self.assertTrue(collide_rect_hb(self.hitOne, self.hitTwo))
 
     def test_collision_false_one(self):
         self.hitOne.position = (5, 5)
@@ -31,7 +32,8 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (20, 20)
         self.hitTwo.height = 5
         self.hitTwo.width = 8
-        self.assertFalse(check_collision(self.hitOne, self.hitTwo))
+        # self.assertFalse(check_collision(self.hitOne, self.hitTwo))
+        self.assertFalse(collide_rect_hb(self.hitOne, self.hitTwo))
 
     def test_collision_true_two(self):
         self.hitOne.position = (5, 5)
@@ -41,7 +43,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (1, 3)
         self.hitTwo.height = 6
         self.hitTwo.width = 6
-        self.assertTrue(check_collision(self.hitOne, self.hitTwo))
+        self.assertTrue(collide_rect_hb(self.hitOne, self.hitTwo))
 
     def test_collision_false_two(self):
         self.hitOne.position = (5, 5)
@@ -51,7 +53,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (20, 20)
         self.hitTwo.height = 6
         self.hitTwo.width = 2
-        self.assertFalse(check_collision(self.hitOne, self.hitTwo))
+        self.assertFalse(collide_rect_hb(self.hitOne, self.hitTwo))
 
     def test_collision_true_three(self):
         self.hitOne.position = (60, 50)
@@ -61,7 +63,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (20, 20)
         self.hitTwo.height = 50
         self.hitTwo.width = 60
-        self.assertTrue(check_collision(self.hitOne, self.hitTwo))
+        self.assertTrue(collide_rect_hb(self.hitOne, self.hitTwo))
 
     def test_collision_false_three(self):
         self.hitOne.position = (60, 50)
@@ -71,7 +73,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (20, 20)
         self.hitTwo.height = 10
         self.hitTwo.width = 20
-        self.assertFalse(check_collision(self.hitOne, self.hitTwo))
+        self.assertFalse(collide_rect_hb(self.hitOne, self.hitTwo))
 
     # tests for methods used in player view controller
     def test_arc_intersect(self):

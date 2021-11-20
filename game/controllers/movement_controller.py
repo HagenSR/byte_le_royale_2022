@@ -46,7 +46,7 @@ class MovementController(Controller):
                 10,
                 10,
                 client.shooter.hitbox.position,
-                client.shooter.hitbox.rotation)
+                math.degrees(client.shooter.hitbox.rotation))
             while location != target_location and self.space_free:
                 location = client.shooter.hitbox.position
                 new_x = location[0] + math.cos(angle)

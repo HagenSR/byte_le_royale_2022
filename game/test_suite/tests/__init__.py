@@ -18,12 +18,9 @@ from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 
-<<<<<<< HEAD
+
 # from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 
-
-=======
->>>>>>> 040da51bc4296b70afd8c54669f9363211b18512
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',
