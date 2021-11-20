@@ -32,7 +32,6 @@ class GameStats:
         'max_distance_per_turn': 50
     }
 
-
     # format: 'slot_type': { num_of_slots, slot_obj_type }
     inventory_stats = {
         'guns': {

@@ -122,6 +122,7 @@ def is_separating_axis(o, p1, p2):
 
 ##################################################################################
 
+
 def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
     return point_in_hitbox(
         center[0],

@@ -139,10 +139,7 @@ class Shooter(MovingObject):
         self.speed = speed
         self.moving = True
         # raise ValueError(
-           #  "Speed must be less than max move speed for the player")
-
-
-
+        #  "Speed must be less than max move speed for the player")
 
    # def stop(self):
         # """Define stop movement"""

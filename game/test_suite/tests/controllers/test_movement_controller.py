@@ -80,8 +80,16 @@ class TestMovementController(unittest.TestCase):
     def test_walk_over_item(self):
         print("testing walk over item")
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        an_item = Consumable(hitbox=Hitbox(10, 10, (65, 50), 0), health=None, count=None,
-                             consumable_enum=Consumables.speed_boost)
+        an_item = Consumable(
+            hitbox=Hitbox(
+                10,
+                10,
+                (55,
+                 50),
+                0),
+            health=None,
+            count=None,
+            consumable_enum=Consumables.speed_boost)
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(an_item)
@@ -107,7 +115,8 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.movementController.space_free)
 
-    # player moves straight line past object that is also level to x axis, no collision should occur
+    # player moves straight line past object that is also level to x axis, no
+    # collision should occur
     def test_passing_object_no_angle_pass(self):
         print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
@@ -130,7 +139,8 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(self.movementController.space_free)
 
-    # player attempts to brush by object that is level to x axis, will be stopped by object
+    # player attempts to brush by object that is level to x axis, will be
+    # stopped by object
     def test_passing_object_no_angle_fail(self):
         print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
@@ -147,7 +157,8 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.movementController.space_free)
 
-    # player moves straight line past object that is at an angle, they should not collide.
+    # player moves straight line past object that is at an angle, they should
+    # not collide.
     def test_passing_object_angle_pass(self):
         print("testing object angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
@@ -163,7 +174,8 @@ class TestMovementController(unittest.TestCase):
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(self.movementController.space_free)
 
-    # player moves straight line past object that is at an angle, they should be stopped from colliding
+    # player moves straight line past object that is at an angle, they should
+    # be stopped from colliding
     def test_passing_object_angle_fail(self):
         print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)

@@ -30,7 +30,8 @@ class MovementController(Controller):
             # shooter object is removed from old location on gameboard to avoid
             # object duplicates
             if client.shooter.speed > GameStats.player_stats["max_distance_per_turn"]:
-                raise Exception("Player tried exceeding maximum distance per turn")
+                raise Exception(
+                    "Player tried exceeding maximum distance per turn")
             world["game_board"].partition.remove_object(client.shooter)
             # variable for client's location prior to movement
             location = client.shooter.hitbox.position
