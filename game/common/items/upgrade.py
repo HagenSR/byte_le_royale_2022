@@ -7,8 +7,9 @@ class Upgrade(Item):
 
     def __init__(
             self,
-            hitbox,
-            health,
+            hitbox=None,
+            health=None,
+            count=None,
             upgrade_enum=None,
             movement_enum=None,
             sight_enum=None):

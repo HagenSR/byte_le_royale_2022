@@ -1,16 +1,27 @@
+import math
+
 from game.common.game_object import GameObject
 from game.common.enums import *
 import game.common.stats as stats
 
+import math
+
 
 class Hitbox(GameObject):
-    def __init__(self, width, height, xy_tuple):
+    def __init__(self, width, height, xy_tuple, rotation=0):
         super().__init__()
         self.object_type = ObjectType.hitbox
         self.width = width
         self.height = height
+        self.rotation = math.radians(rotation)
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
+        # Here, it is coerced into being the middle
         self.position = xy_tuple
+
+
+        #self.position = xy_tuple
+        # added rotation to allow for diagonal hitboxes while keeping backwards
+        # compatibility
 
     @property
     def width(self):
@@ -26,29 +37,23 @@ class Hitbox(GameObject):
 
     @property
     def topLeft(self):
-        return self.position
+        return self.rotate(self.middle, (self.position[0] - (self.width/2), self.position[1] - (self.height/2)), self.rotation)
 
     @property
     def topRight(self):
-        return (self.position[0] + self.width, self.position[1])
+        return self.rotate(self.middle, (self.position[0] + (self.width/2), self.position[1] - (self.height/2)), self.rotation)
 
     @property
     def bottomLeft(self):
-        return (self.position[0], self.position[1] + self.height)
+        return self.rotate(self.middle, (self.position[0] - (self.width/2), self.position[1] + (self.height/2)), self.rotation)
 
     @property
     def bottomRight(self):
-        return (self.position[0] + self.width, self.position[1] + self.height)
+        return self.rotate(self.middle, (self.position[0] + (self.width/2), self.position[1] + (self.height/2)), self.rotation)
 
     @property
     def middle(self):
-        return (
-            self.position[0] +
-            self.width /
-            2,
-            self.position[1] +
-            self.height /
-            2)
+        return self.position
 
     # set height between 0 and max
     @height.setter
@@ -56,7 +61,8 @@ class Hitbox(GameObject):
         if val > 0:
             self.__height = val
         else:
-            raise ValueError("Tried to set an invalid height for hitbox")
+            raise ValueError(
+                "Tried to set an invalid height for hitbox: {0}".format(val))
 
     # Set width for hitbox between 0 and max
     @width.setter
@@ -64,17 +70,33 @@ class Hitbox(GameObject):
         if val > 0:
             self.__width = val
         else:
-            raise ValueError("Tried to set an invalid width for hitbox")
+            raise ValueError(
+                "Tried to set an invalid width for hitbox: {0}".format(val))
 
     # set x between 0 and max game board width
     @position.setter
-    def position(self, val):
-        if (0 <= val[0] <= stats.GameStats.game_board_width) and (
-                0 <= val[1] <= stats.GameStats.game_board_height):
-            self.__position = val
-        else:
+    def position(self, xy_tuple):
+        self.__position = (xy_tuple[0] + (self.width / 2),
+                          xy_tuple[1] + (self.height / 2)
+                          )
+        self.check_corner_outside()
+
+    def check_corner_outside(self):
+        '''
+        Returns True if one of the corners of a hitbox is outside the gamemap
+        '''
+        if stats.GameStats.game_board_width < self.topLeft[0] or self.topLeft[0] < 0  or stats.GameStats.game_board_height < self.topLeft[1] or self.topLeft[1] < 0:
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox")
+                "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(self.position, self.topLeft))
+        elif stats.GameStats.game_board_width < self.topRight[0] or self.topRight[0] < 0 or stats.GameStats.game_board_height < self.topRight[1] or self.topRight[1] < 0:
+            raise ValueError(
+                "Tried to set an invalid xy position tuple for hitbox: {0}, top right is out of bounds at {1}".format(self.position, self.topRight))
+        elif stats.GameStats.game_board_width < self.bottomLeft[0] or self.bottomLeft[0] < 0 or stats.GameStats.game_board_height < self.bottomLeft[1] or self.bottomLeft[1] < 0:
+            raise ValueError(
+                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom left is out of bounds at {1}".format(self.position, self.bottomLeft))
+        elif stats.GameStats.game_board_width < self.bottomRight[0] or self.bottomRight[0] < 0 or stats.GameStats.game_board_height < self.bottomRight[1] or self.bottomRight[1] < 0:
+            raise ValueError(
+                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom right is out of bounds at {1}".format(self.position, self.bottomRight))
 
     def to_json(self):
         data = super().to_json()
@@ -88,6 +110,19 @@ class Hitbox(GameObject):
         self.width = data['width']
         self.height = data['height']
         self.position = data['position']
+
+    def rotate(self, origin, point, angle):
+        """
+        Rotate a point counterclockwise by a given angle around a given origin.
+
+        The angle should be given in radians.
+        """
+        ox, oy = origin
+        px, py = point
+
+        qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
+        qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+        return qx, qy
 
     def __str__(self):
         return f"""

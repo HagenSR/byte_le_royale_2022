@@ -149,7 +149,7 @@ class Shooter(MovingObject):
 
         data['money'] = self.money
         data['armor'] = self.armor
-        data['view_radius'] = self.view_radius
+        data['field_of_view'] = self.field_of_view
         data['moving'] = self.moving
 
         return data
@@ -160,6 +160,6 @@ class Shooter(MovingObject):
         self.money = data['money']
         self.armor = data['armor']
         self.visible = data['visible']
-        self.view_radius = data['view_radius']
+        self.field_of_view = data['field_of_view']
         self.moving = data['moving']
         return self

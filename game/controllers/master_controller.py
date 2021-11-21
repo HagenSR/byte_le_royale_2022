@@ -1,5 +1,4 @@
 from copy import deepcopy
-from game.controllers.loot_generation_controller import LootGenerationController
 import random
 from game.common.stats import GameStats
 
@@ -9,6 +8,7 @@ from game.common.player import Player
 import game.config as config
 from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
+from game.controllers.shoot_controller import ShootController
 
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
@@ -31,13 +31,14 @@ class MasterController(Controller):
     # will control
     def give_clients_objects(self, clients):
         pass
+        # for client in clients:
+            # client.game_board = self.current_world_data["game_map"].partition
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
     # world information
     def game_loop_logic(self, start=1):
         self.turn = start
-        self.loot_generation_controller.handle_actions()
         # Basic loop from 1 to max turns
         while True:
             # Wait until the next call to give the number
@@ -61,12 +62,15 @@ class MasterController(Controller):
 
         # Create deep copies of all objects sent to the player
         # Obfuscate data in objects that that player should not be able to see
+        #partition_grid.obfuscate(client)
 
-        args = (self.turn, actions, self.current_world_data)
+        args = (self.turn, actions, self.current_world_data, None)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        self.loot_generation_controller.handle_actions(self.current_world_data["game_map"])
+
         self.boundry_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
