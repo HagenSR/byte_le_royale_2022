@@ -43,7 +43,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
     def test_determine_collision_quadrant2(self):
@@ -64,7 +64,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
     def test_determine_collision_quadrant3(self):
@@ -85,7 +85,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
     def test_determine_collision_quadrant4(self):
@@ -106,7 +106,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
 
     def test_miss_collision(self):
@@ -127,7 +127,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint[0], 26.87, 2)
         self.assertAlmostEqual(ray.endpoint[1], 28.87, 2)
 
@@ -149,7 +149,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint[0], 2, 2)
         self.assertEqual(ray.endpoint[1], 0)
 
@@ -171,7 +171,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertAlmostEqual(ray.endpoint[0], 2, 2)
         self.assertEqual(ray.endpoint[1], 0, 2)
 
@@ -193,7 +193,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 0)
         self.assertEqual(ray.endpoint[1], 40)
 
@@ -215,7 +215,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 0)
         self.assertEqual(ray.endpoint[1], 12)
 
@@ -237,7 +237,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
         self.assertEqual(ray.endpoint[0], 20)
         self.assertEqual(ray.endpoint[1], 105)
@@ -260,7 +260,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
         self.assertEqual(ray.endpoint[1], 100)
         self.assertEqual(ray.collision, obj_list[0])
@@ -283,7 +283,7 @@ class TestRayCollision(unittest.TestCase):
         ]
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
-        ray = get_ray_collision(player, gameboard)
+        ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
         self.assertEqual(ray.endpoint[1], 100)
         self.assertEqual(ray.collision, obj_list[0])
