@@ -60,7 +60,8 @@ def load_collidables_in_ray_range(
 def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
     collidables = {}
     if coords[0] - max_range >= 0:
-        start_partition_x = gameboard.partition.find_column(coords[0] - max_range)
+        start_partition_x = gameboard.partition.find_column(
+            coords[0] - max_range)
     else:
         start_partition_x = gameboard.partition.find_column(0)
     if coords[1] - max_range >= 0:
@@ -68,11 +69,13 @@ def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
     else:
         start_partition_y = gameboard.partition.find_row(0)
     if coords[0] + max_range <= gameboard.width:
-        end_partition_x = gameboard.partition.find_column(coords[0] + max_range)
+        end_partition_x = gameboard.partition.find_column(
+            coords[0] + max_range)
     else:
         end_partition_x = gameboard.partition.find_column(gameboard.width)
     if coords[1] + max_range <= gameboard.height:
-        end_partition_y = gameboard.partition.find_column(coords[1] + max_range)
+        end_partition_y = gameboard.partition.find_column(
+            coords[1] + max_range)
     else:
         end_partition_y = gameboard.partition.find_column(gameboard.height)
     for x in range(start_partition_x, end_partition_x + 1):

@@ -155,7 +155,7 @@ class GameStats:
     }
 
     shot_pattern_multi_pellet_count = 9
-    shot_pattern_multi_arc = math.pi/10
+    shot_pattern_multi_arc = math.pi / 10
 
     door_opening_speed = 1
 
