@@ -294,7 +294,7 @@ def create_structures_file(file_path):
             fl.write(s)
 
 
-def generateRandomNumbers():
+def generate_random_numbers():
     rtn = []
     for i in range(10000):
         rtn.append(random.randint(0, sys.maxsize))
@@ -392,7 +392,7 @@ def generate():
         os.mkdir(GAME_MAP_DIR)
 
     data['game_map'] = game_map.to_json()
-    data['seed'] = generateRandomNumbers()
+    data['seed'] = generate_random_numbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 
