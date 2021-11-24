@@ -14,13 +14,13 @@ from game.utils.partition_grid import PartitionGrid
 class TestReloadController(unittest.TestCase):
     def setUp(self):
         act = Action()
-        act.set_action(ActionType.reload_weapon)
+        act.set_action(ActionType.reload)
         self.myPlayer = Player(
             action=act, shooter=Shooter(
                 0, 0, Hitbox(
                     10, 10, (10, 10))))
         self.myPlayer.shooter.append_inventory(
-            Gun(GunType.shotgun, GunLevel.level_two, hitbox=Hitbox(10, 10, (10, 10))))
+            Gun(GunType.shotgun, 2, hitbox=Hitbox(10, 10, (10, 10))))
         self.reloadController = ReloadController()
 
     def test_reload_when_empty(self):
