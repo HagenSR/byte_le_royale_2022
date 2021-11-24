@@ -161,7 +161,10 @@ class PartitionGrid:
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
         for x in range(0, GameStats.game_board_width, self.partition_width):
-            for y in range(0, GameStats.game_board_height, self.partition_height):
+            for y in range(
+                    0,
+                    GameStats.game_board_height,
+                    self.partition_height):
                 partition = self.get_partition_hitbox(x, y)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
@@ -182,7 +185,7 @@ class PartitionGrid:
     def to_json(self):
         data = {'partition_grid': [
             [
-                [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
+                [obj.to_json() for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
             ]
             for row in range(len(self.__matrix))

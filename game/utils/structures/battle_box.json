@@ -1,104 +1,12 @@
-[
-    {
-        "id": "82261fc7-8207-4b5e-81eb-e98f8584ee94",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "4d56b0cc-40a5-4986-a7c8-8c68d7a04889",
-            "object_type": 14,
-            "width": 20,
-            "height": 40,
-            "position": [
-                0,
-                0
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    },
-    {
-        "id": "a753f09b-a929-4a16-9c38-594c94d0754a",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "20c3b921-fe9b-4003-8fa2-f140cde3a3fa",
-            "object_type": 14,
-            "width": 100,
-            "height": 10,
-            "position": [
-                20,
-                0
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    },
-    {
-        "id": "07d2e1f9-6b7c-43ea-ba89-98e7ed529840",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "46c18ab2-be38-4273-8deb-d248dd4831a5",
-            "object_type": 14,
-            "width": 20,
-            "height": 40,
-            "position": [
-                120,
-                0
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    },
-    {
-        "id": "8d60a8e8-7ade-424b-a093-e898cc7890ce",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "779238cc-5a3a-4cf8-b50c-b5db217063fb",
-            "object_type": 14,
-            "width": 20,
-            "height": 40,
-            "position": [
-                0,
-                100
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    },
-    {
-        "id": "32663233-1041-4bc4-8525-39c10c546438",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "c44918da-5812-4c17-ad03-b4e26fca3e3d",
-            "object_type": 14,
-            "width": 100,
-            "height": 10,
-            "position": [
-                20,
-                130
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    },
-    {
-        "id": "48b7d2dd-8d66-49c6-bd8f-8b1af9491a0e",
-        "object_type": 13,
-        "health": 18,
-        "hitbox": {
-            "id": "0762c822-94d7-498b-952f-4fb235a058f6",
-            "object_type": 14,
-            "width": 20,
-            "height": 40,
-            "position": [
-                120,
-                100
-            ]
-        },
-        "collidable": true,
-        "destructible": true
-    }
-]
+[{"id": "bb17ae85-a96c-4f8e-9e40-93fe579aa660", "object_type": 13, "health": 18, "hitbox": {"id": "81153c20-dfaa-4337-afc3-5a021f991c45", "object_type": 14, "width": 20, "height": 40, "position": [0, 0]}, "collidable": true, "destructible": true},
+{"id": "4c4401f8-a120-4d93-b8ab-b209dc2836e1", "object_type": 13, "health": 18, "hitbox": {"id": "c0a88437-3e91-43c0-84a7-400ab8473347", "object_type": 14, "width": 100, "height": 10, "position": [20, 0]}, "collidable": true, "destructible": true},
+{"id": "de1d06df-140a-4715-afe9-d41f956d744e", "object_type": 13, "health": 18, "hitbox": {"id": "31724d15-27cf-4078-aeec-5ea9b1dd0fa3", "object_type": 14, "width": 20, "height": 40, "position": [120, 0]}, "collidable": true, "destructible": true},
+{"id": "6ea72fed-8871-4969-ac1c-526517ca6777", "object_type": 13, "health": 18, "hitbox": {"id": "1aebd25f-2985-4e88-aacb-4780e5797c6b", "object_type": 14, "width": 20, "height": 40, "position": [0, 100]}, "collidable": true, "destructible": true},
+{"id": "813e679d-02b2-469c-827e-0ed5eab4092f", "object_type": 13, "health": 18, "hitbox": {"id": "0167878c-c323-4d91-ade4-adc570816006", "object_type": 14, "width": 100, "height": 10, "position": [20, 130]}, "collidable": true, "destructible": true},
+{"id": "4464abba-9b21-4878-9538-c35b6cca156f", "object_type": 13, "health": 18, "hitbox": {"id": "ffb9215c-3279-406a-8fdf-4806708e2b44", "object_type": 14, "width": 20, "height": 40, "position": [120, 100]}, "collidable": true, "destructible": true},
+{"id": "4b9e620c-db26-415b-8a30-2c556b0a4a3d", "object_type": 13, "health": 18, "hitbox": {"id": "6883c7fc-2a0e-4915-a9e6-edf8526e52b5", "object_type": 14, "width": 10, "height": 25, "position": [5, 40]}, "collidable": true, "destructible": true},
+{"id": "6990dd8e-8858-4a8c-a6ee-ea227b4d4ce8", "object_type": 13, "health": 18, "hitbox": {"id": "1379ee1c-4c18-4fc2-9af1-f7f438f75bbd", "object_type": 14, "width": 10, "height": 25, "position": [5, 75]}, "collidable": true, "destructible": true},
+{"id": "caa7a372-af8f-4439-8251-bef39dbd4a23", "object_type": 15, "health": 18, "hitbox": {"id": "8aa44255-c3ed-4a42-b779-3e0db1780993", "object_type": 14, "width": 3, "height": 10, "position": [10, 65]}, "collidable": true, "opening_speed": 1, "open_state": false},
+{"id": "3f48f0ce-ffd1-4810-bd8a-72164a52a9bd", "object_type": 13, "health": 18, "hitbox": {"id": "c5344773-03cc-4320-a8f3-ea35ba4cd4ee", "object_type": 14, "width": 10, "height": 25, "position": [125, 40]}, "collidable": true, "destructible": true},
+{"id": "46600d03-2100-466b-872c-ba04ce73fbd4", "object_type": 13, "health": 18, "hitbox": {"id": "3b05396e-9a46-4000-a024-76349cdce3e1", "object_type": 14, "width": 10, "height": 25, "position": [125, 75]}, "collidable": true, "destructible": true},
+{"id": "d4a93561-f93e-4031-9853-bd2f59f33615", "object_type": 15, "health": 18, "hitbox": {"id": "ad57c0fb-ae6e-46e2-a1c9-acb7988dda82", "object_type": 14, "width": 3, "height": 10, "position": [130, 65]}, "collidable": true, "opening_speed": 1, "open_state": false}]

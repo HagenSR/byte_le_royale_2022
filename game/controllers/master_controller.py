@@ -3,6 +3,7 @@ import random
 from game.common.stats import GameStats
 
 from game.common.action import Action
+from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
 from game.common.player import Player
 import game.config as config
@@ -23,9 +24,10 @@ class MasterController(Controller):
 
         self.current_world_data = None
 
-        self.boundry_controller = KillBoundaryController()
+        self.boundary_controller = KillBoundaryController()
         self.shop_controller = ShopController()
         self.loot_generation_controller = LootGenerationController()
+        self.shoot_controller = ShootController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -61,21 +63,23 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        # Obfuscate data in objects that that player should not be able to see
-        #partition_grid.obfuscate(client)
+        partition_grid = self.current_world_data["game_map"].partition
 
-        args = (self.turn, actions, self.current_world_data, None)
+        # Obfuscate data in objects that that player should not be able to see
+        partition_grid.obfuscate(client)
+
+        args = (self.turn, actions, self.current_world_data, partition_grid)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
-        self.loot_generation_controller.handle_actions(self.current_world_data["game_map"])
-
-        self.boundry_controller.handle_actions(
+        self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
 
         for client in clients:
             ReloadController.handle_actions(client)
+            self.shoot_controller.handle_action(
+                client, self.current_world_data["game_map"])
             self.shop_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
