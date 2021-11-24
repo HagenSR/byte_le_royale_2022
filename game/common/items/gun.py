@@ -52,8 +52,8 @@ class Gun(Item):
 
     def from_json(self, data):
         super().from_json(data)
-        self.gun_type = data['gun_type']
         self.level = data['level']
+        self.gun_type = data['gun_type']
         self.pattern = data['pattern']
         self.damage = data['damage']
         self.fire_rate = data['fire_rate']

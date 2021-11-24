@@ -297,8 +297,7 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
-                   # print(requests.get(fl.read().decode('utf-8')).content)
-                    print(filename)
+                    # print(requests.get(fl.read().decode('utf-8')).content)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:
@@ -336,4 +335,5 @@ def generate():
 
 
 if __name__ == '__main__':
-    create_structures_file("./structures/structureDescriptiveName.json")
+    for file in os.listdir():
+        create_structures_file(file)

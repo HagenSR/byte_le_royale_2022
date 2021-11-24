@@ -185,7 +185,7 @@ class PartitionGrid:
     def to_json(self):
         data = {'partition_grid': [
             [
-                [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
+                [obj.to_json() for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
             ]
             for row in range(len(self.__matrix))
