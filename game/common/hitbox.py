@@ -18,7 +18,6 @@ class Hitbox(GameObject):
         # Here, it is coerced into being the middle
         self.position = xy_tuple
 
-
         #self.position = xy_tuple
         # added rotation to allow for diagonal hitboxes while keeping backwards
         # compatibility
@@ -37,23 +36,25 @@ class Hitbox(GameObject):
 
     @property
     def topLeft(self):
-        return self.rotate(self.middle, (self.position[0] - (self.width/2), self.position[1] - (self.height/2)), self.rotation)
+        return self.rotate(self.middle, self.position, self.rotation)
 
     @property
     def topRight(self):
-        return self.rotate(self.middle, (self.position[0] + (self.width/2), self.position[1] - (self.height/2)), self.rotation)
+        return self.rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation)
 
     @property
     def bottomLeft(self):
-        return self.rotate(self.middle, (self.position[0] - (self.width/2), self.position[1] + (self.height/2)), self.rotation)
+        return self.rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation)
 
     @property
     def bottomRight(self):
-        return self.rotate(self.middle, (self.position[0] + (self.width/2), self.position[1] + (self.height/2)), self.rotation)
+        return self.rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
 
     @property
     def middle(self):
-        return self.position
+        return ( self.position[0] + (self.width / 2),
+                 self.position[1] + (self.height / 2)
+                )
 
     # set height between 0 and max
     @height.setter
@@ -76,16 +77,14 @@ class Hitbox(GameObject):
     # set x between 0 and max game board width
     @position.setter
     def position(self, xy_tuple):
-        self.__position = (xy_tuple[0] + (self.width / 2),
-                          xy_tuple[1] + (self.height / 2)
-                          )
+        self.__position = xy_tuple
         self.check_corner_outside()
 
     def check_corner_outside(self):
         '''
         Returns True if one of the corners of a hitbox is outside the gamemap
         '''
-        if stats.GameStats.game_board_width < self.topLeft[0] or self.topLeft[0] < 0  or stats.GameStats.game_board_height < self.topLeft[1] or self.topLeft[1] < 0:
+        if stats.GameStats.game_board_width < self.topLeft[0] or self.topLeft[0] < 0 or stats.GameStats.game_board_height < self.topLeft[1] or self.topLeft[1] < 0:
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(self.position, self.topLeft))
         elif stats.GameStats.game_board_width < self.topRight[0] or self.topRight[0] < 0 or stats.GameStats.game_board_height < self.topRight[1] or self.topRight[1] < 0:
@@ -122,6 +121,7 @@ class Hitbox(GameObject):
 
         qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
         qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+
         return qx, qy
 
     def __str__(self):

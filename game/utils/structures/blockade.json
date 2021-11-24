@@ -1,6 +1,104 @@
-[{"id": "b0abf7e9-b668-4dc4-bd81-a1a9533f8602", "object_type": 13, "health": 18, "hitbox": {"id": "a68af333-8389-4883-b64b-dfa57de1d52a", "object_type": 14, "width": 30, "height": 30, "position": [10, 10]}, "collidable": true, "destructible": true},
-{"id": "951223cb-f1d6-407a-87c3-13c8fd8ac772", "object_type": 13, "health": 18, "hitbox": {"id": "e46dfd6a-90f2-4d4b-a0f5-cc0d2cb9c6ed", "object_type": 14, "width": 30, "height": 30, "position": [70, 10]}, "collidable": true, "destructible": true},
-{"id": "6a1704e1-413a-4c4f-b05f-088b16990abe", "object_type": 13, "health": 18, "hitbox": {"id": "aea4e925-628b-41a2-8ec3-2ebed4448674", "object_type": 14, "width": 30, "height": 30, "position": [110, 10]}, "collidable": true, "destructible": true},
-{"id": "88647b0f-bd47-4c62-9fac-5544b959a044", "object_type": 13, "health": 18, "hitbox": {"id": "3645ea80-8695-4947-a33a-525730a3819e", "object_type": 14, "width": 30, "height": 30, "position": [35, 60]}, "collidable": true, "destructible": true},
-{"id": "d033068d-ea5a-4252-aebc-8c59538cb04a", "object_type": 13, "health": 18, "hitbox": {"id": "67756f35-adea-427d-8910-1240d0ffb00a", "object_type": 14, "width": 30, "height": 30, "position": [90, 60]}, "collidable": true, "destructible": true},
-{"id": "2b92ab0b-b6b7-45d0-94e6-3399508f3ed3", "object_type": 13, "health": 18, "hitbox": {"id": "8d539a74-7ed4-40d6-8d4e-46205e7ffc9c", "object_type": 14, "width": 30, "height": 30, "position": [70, 100]}, "collidable": true, "destructible": true}]
+[
+    {
+        "id": "b0abf7e9-b668-4dc4-bd81-a1a9533f8602",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "a68af333-8389-4883-b64b-dfa57de1d52a",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                10,
+                10
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    },
+    {
+        "id": "951223cb-f1d6-407a-87c3-13c8fd8ac772",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "e46dfd6a-90f2-4d4b-a0f5-cc0d2cb9c6ed",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                70,
+                10
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    },
+    {
+        "id": "6a1704e1-413a-4c4f-b05f-088b16990abe",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "aea4e925-628b-41a2-8ec3-2ebed4448674",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                110,
+                10
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    },
+    {
+        "id": "88647b0f-bd47-4c62-9fac-5544b959a044",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "3645ea80-8695-4947-a33a-525730a3819e",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                35,
+                60
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    },
+    {
+        "id": "d033068d-ea5a-4252-aebc-8c59538cb04a",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "67756f35-adea-427d-8910-1240d0ffb00a",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                90,
+                60
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    },
+    {
+        "id": "2b92ab0b-b6b7-45d0-94e6-3399508f3ed3",
+        "object_type": 13,
+        "health": 18,
+        "hitbox": {
+            "id": "8d539a74-7ed4-40d6-8d4e-46205e7ffc9c",
+            "object_type": 14,
+            "width": 30,
+            "height": 30,
+            "position": [
+                70,
+                100
+            ]
+        },
+        "collidable": true,
+        "destructible": true
+    }
+]
