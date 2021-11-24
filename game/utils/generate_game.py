@@ -357,13 +357,18 @@ def generate():
                     # load it into json
                     # print(requests.get(fl.read().decode('utf-8')).content)
                     filejsn = json.loads(fl.read().decode('utf-8'))
-                    wallList = []
+                    struct_obj_list = []
                     for entry in filejsn:
-                        # Load in every wall in the structure
-                        wall = Wall(Hitbox(1, 1, (0, 0)))
-                        wall.from_json(entry)
-                        wallList.append(wall)
-                    structures_list.append(wallList)
+                        # Load in every wall or door in the structure
+                        if entry['object_type'] == ObjectType.wall:
+                            wall = Wall(Hitbox(1, 1, (0, 0)))
+                            wall.from_json(entry)
+                            struct_obj_list.append(wall)
+                        elif entry['object_type'] == ObjectType.door:
+                            door = Door(Hitbox(1, 1, (0, 0)))
+                            door.from_json(entry)
+                            struct_obj_list.append(door)
+                    structures_list.append(struct_obj_list)
         # Plots can potentially be empty
         structures_list.append(None)
 
