@@ -30,14 +30,14 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.position, (10, 0))
 
     def test_set_get_tuple_y_boundary_high(self):
-        self.hitbox.position = (10, GameStats.game_board_height)
+        self.hitbox.position = (10, GameStats.game_board_height - self.hitbox.height)
         self.assertEqual(self.hitbox.position,
-                         (10, GameStats.game_board_height))
+                         (10, GameStats.game_board_height- self.hitbox.height))
 
     def test_set_get_tuple_x_boundary_high(self):
-        self.hitbox.position = (GameStats.game_board_width, 10)
+        self.hitbox.position = (GameStats.game_board_width - self.hitbox.width, 10)
         self.assertEqual(self.hitbox.position,
-                         (GameStats.game_board_width, 10))
+                         (GameStats.game_board_width - self.hitbox.width, 10))
 
     def test_set_get_tuple_x_invalid_high(self):
         self.assertRaises(ValueError, self.setPosition,
