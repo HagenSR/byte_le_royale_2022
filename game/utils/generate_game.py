@@ -295,7 +295,7 @@ def create_structures_file(file_path):
         with open('./structures/' + structure_name_list[i] + '.json', 'w') as fl:
             # Writes each object to json, then writes the string to file
             strs = [json.dumps(wall.to_json()) for wall in walls]
-            strs.append([json.dumps(door.to_json()) for door in doors])
+            strs += ([json.dumps(door.to_json()) for door in doors])
             s = "[%s]" % ",\n".join(strs)
             fl.write(s)
 
