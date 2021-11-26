@@ -38,7 +38,8 @@ class MasterController(Controller):
     # world information
     def game_loop_logic(self, start=1):
         self.turn = start
-
+        self.loot_generation_controller.handle_actions(
+            self.current_world_data['game_map'])
         # Basic loop from 1 to max turns
         while True:
             # Wait until the next call to give the number
