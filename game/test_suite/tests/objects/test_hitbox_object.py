@@ -30,12 +30,21 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.position, (10, 0))
 
     def test_set_get_tuple_y_boundary_high(self):
-        self.hitbox.position = (10, GameStats.game_board_height - self.hitbox.height)
-        self.assertEqual(self.hitbox.position,
-                         (10, GameStats.game_board_height- self.hitbox.height))
+        self.hitbox.position = (
+            10,
+            GameStats.game_board_height -
+            self.hitbox.height)
+        self.assertEqual(
+            self.hitbox.position,
+            (10,
+             GameStats.game_board_height -
+             self.hitbox.height))
 
     def test_set_get_tuple_x_boundary_high(self):
-        self.hitbox.position = (GameStats.game_board_width - self.hitbox.width, 10)
+        self.hitbox.position = (
+            GameStats.game_board_width -
+            self.hitbox.width,
+            10)
         self.assertEqual(self.hitbox.position,
                          (GameStats.game_board_width - self.hitbox.width, 10))
 
@@ -89,15 +98,15 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.middle, (11, 11))
 
     def test_rotation_0(self):
-        self.hitbox.position = (10,10)
+        self.hitbox.position = (10, 10)
         self.hitbox.rotation = 0
-        self.assertEqual(self.hitbox.topLeft, (10,10))
-        self.assertEqual(self.hitbox.topRight, (12,10))
-        self.assertEqual(self.hitbox.bottomLeft, (10,12))
-        self.assertEqual(self.hitbox.bottomRight, (12,12))
+        self.assertEqual(self.hitbox.topLeft, (10, 10))
+        self.assertEqual(self.hitbox.topRight, (12, 10))
+        self.assertEqual(self.hitbox.bottomLeft, (10, 12))
+        self.assertEqual(self.hitbox.bottomRight, (12, 12))
 
     def test_rotation_45(self):
-        self.hitbox.position = (10,10)
+        self.hitbox.position = (10, 10)
         self.hitbox.rotation = 45
         self.assertEqual(self.hitbox.topLeft, (11.0, 9.585786437626904))
         self.assertEqual(self.hitbox.topRight, (12.414213562373096, 11.0))
@@ -105,12 +114,12 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.bottomRight, (11.0, 12.414213562373096))
 
     def test_rotation_90(self):
-        self.hitbox.position = (10,10)
+        self.hitbox.position = (10, 10)
         self.hitbox.rotation = 90
-        self.assertEqual(self.hitbox.topLeft, (12,10))
-        self.assertEqual(self.hitbox.topRight, (12,12))
-        self.assertEqual(self.hitbox.bottomLeft, (10,10))
-        self.assertEqual(self.hitbox.bottomRight, (10,12))
+        self.assertEqual(self.hitbox.topLeft, (12, 10))
+        self.assertEqual(self.hitbox.topRight, (12, 12))
+        self.assertEqual(self.hitbox.bottomLeft, (10, 10))
+        self.assertEqual(self.hitbox.bottomRight, (10, 12))
 
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)

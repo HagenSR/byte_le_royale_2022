@@ -34,7 +34,7 @@ class MasterController(Controller):
     def give_clients_objects(self, clients):
         pass
         # for client in clients:
-            # client.game_board = self.current_world_data["game_map"].partition
+        # client.game_board = self.current_world_data["game_map"].partition
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate

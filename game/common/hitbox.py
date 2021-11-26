@@ -40,20 +40,36 @@ class Hitbox(GameObject):
 
     @property
     def topRight(self):
-        return self.rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation)
+        return self.rotate(
+            self.middle,
+            (self.position[0] +
+             self.width,
+             self.position[1]),
+            self.rotation)
 
     @property
     def bottomLeft(self):
-        return self.rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation)
+        return self.rotate(
+            self.middle,
+            (self.position[0],
+             self.position[1] +
+             self.height),
+            self.rotation)
 
     @property
     def bottomRight(self):
-        return self.rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
+        return self.rotate(
+            self.middle,
+            (self.position[0] +
+             self.width,
+             self.position[1] +
+             self.height),
+            self.rotation)
 
     @property
     def middle(self):
-        return ( self.position[0] + (self.width / 2),
-                 self.position[1] + (self.height / 2)
+        return (self.position[0] + (self.width / 2),
+                self.position[1] + (self.height / 2)
                 )
 
     # set height between 0 and max
@@ -84,18 +100,23 @@ class Hitbox(GameObject):
         '''
         Returns True if one of the corners of a hitbox is outside the gamemap
         '''
-        if stats.GameStats.game_board_width < self.topLeft[0] or self.topLeft[0] < 0 or stats.GameStats.game_board_height < self.topLeft[1] or self.topLeft[1] < 0:
+        if stats.GameStats.game_board_width < self.topLeft[0] or self.topLeft[
+                0] < 0 or stats.GameStats.game_board_height < self.topLeft[1] or self.topLeft[1] < 0:
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(self.position, self.topLeft))
+                "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(
+                    self.position, self.topLeft))
         elif stats.GameStats.game_board_width < self.topRight[0] or self.topRight[0] < 0 or stats.GameStats.game_board_height < self.topRight[1] or self.topRight[1] < 0:
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, top right is out of bounds at {1}".format(self.position, self.topRight))
+                "Tried to set an invalid xy position tuple for hitbox: {0}, top right is out of bounds at {1}".format(
+                    self.position, self.topRight))
         elif stats.GameStats.game_board_width < self.bottomLeft[0] or self.bottomLeft[0] < 0 or stats.GameStats.game_board_height < self.bottomLeft[1] or self.bottomLeft[1] < 0:
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom left is out of bounds at {1}".format(self.position, self.bottomLeft))
+                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom left is out of bounds at {1}".format(
+                    self.position, self.bottomLeft))
         elif stats.GameStats.game_board_width < self.bottomRight[0] or self.bottomRight[0] < 0 or stats.GameStats.game_board_height < self.bottomRight[1] or self.bottomRight[1] < 0:
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom right is out of bounds at {1}".format(self.position, self.bottomRight))
+                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom right is out of bounds at {1}".format(
+                    self.position, self.bottomRight))
 
     def to_json(self):
         data = super().to_json()
