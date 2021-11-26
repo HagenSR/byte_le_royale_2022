@@ -88,6 +88,30 @@ class TestHitboxObject(unittest.TestCase):
         self.hitbox.position = (10, 10)
         self.assertEqual(self.hitbox.middle, (11, 11))
 
+    def test_rotation_0(self):
+        self.hitbox.position = (10,10)
+        self.hitbox.rotation = 0
+        self.assertEqual(self.hitbox.topLeft, (10,10))
+        self.assertEqual(self.hitbox.topRight, (12,10))
+        self.assertEqual(self.hitbox.bottomLeft, (10,12))
+        self.assertEqual(self.hitbox.bottomRight, (12,12))
+
+    def test_rotation_45(self):
+        self.hitbox.position = (10,10)
+        self.hitbox.rotation = 45
+        self.assertEqual(self.hitbox.topLeft, (11.0, 9.585786437626904))
+        self.assertEqual(self.hitbox.topRight, (12.414213562373096, 11.0))
+        self.assertEqual(self.hitbox.bottomLeft, (9.585786437626904, 11.0))
+        self.assertEqual(self.hitbox.bottomRight, (11.0, 12.414213562373096))
+
+    def test_rotation_90(self):
+        self.hitbox.position = (10,10)
+        self.hitbox.rotation = 90
+        self.assertEqual(self.hitbox.topLeft, (12,10))
+        self.assertEqual(self.hitbox.topRight, (12,12))
+        self.assertEqual(self.hitbox.bottomLeft, (10,10))
+        self.assertEqual(self.hitbox.bottomRight, (10,12))
+
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)
         self.assertIsNotNone(self.hitbox.object_type)

@@ -110,15 +110,16 @@ class Hitbox(GameObject):
         self.height = data['height']
         self.position = data['position']
 
-    def rotate(self, origin, point, angle):
+    def rotate(self, origin, point, ngle):
         """
         Rotate a point counterclockwise by a given angle around a given origin.
 
-        The angle should be given in radians.
+        The angle should be given in degrees, then is converted to rads.
         """
+
+        angle = math.radians(ngle)
         ox, oy = origin
         px, py = point
-
         qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
         qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
 
