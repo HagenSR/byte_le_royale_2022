@@ -148,6 +148,7 @@ class GameStats:
             'level_mod': 1.25}}
 
     grenade_stats = {
+        'range': 40,
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
