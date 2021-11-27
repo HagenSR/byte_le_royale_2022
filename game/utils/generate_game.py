@@ -382,8 +382,8 @@ def generate():
                 # A copy of wall is needed, because the original wall will
                 # persist in the structures list after it's position is altered
                 wall_copy = copy.deepcopy(wall)
-                x_offset = plot.topLeft[0] + wall_copy.hitbox.topLeft[0]
-                y_offset = plot.topLeft[1] + wall_copy.hitbox.topLeft[1]
+                x_offset = plot.top_left[0] + wall_copy.hitbox.top_left[0]
+                y_offset = plot.top_left[1] + wall_copy.hitbox.top_left[1]
                 wall_copy.hitbox.position = (x_offset, y_offset)
                 game_map.partition.add_object(wall_copy)
 
