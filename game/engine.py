@@ -32,6 +32,8 @@ class Engine:
 
         self.quiet_mode = quiet_mode
 
+        self.data = []
+
         # Delete logs, then recreate logs dir
         for file in os.scandir(LOGS_DIR):
             if ('map' not in file.path):
@@ -274,25 +276,23 @@ class Engine:
     # the game log for the turn
     def post_tick(self):
         # Add logs to logs list
-        data = None
         if SET_NUMBER_OF_CLIENTS_START == 1:
-            data = self.master_controller.create_turn_log(
-                self.clients[0], self.tick_number)
+            self.data.append(self.master_controller.create_turn_log(
+                self.clients[0], self.tick_number))
         else:
-            data = self.master_controller.create_turn_log(
-                self.clients, self.tick_number)
+            self.data.append(self.master_controller.create_turn_log(
+                self.clients, self.tick_number))
 
-        # self.game_logs[self.tick_number] = data
-
-        with open(os.path.join(LOGS_DIR, f"turn_{self.tick_number:04d}.json"), 'w+') as f:
-            json.dump(data, f)
-
-        # Perform a game over check
-        if self.master_controller.game_over:
-            self.shutdown()
+        # write data every 100 ticks
+        if self.tick_number % 101 == 100:
+            with open(os.path.join(LOGS_DIR, f"ticks_{self.tick_number-100:04d}_to_{self.tick_number:04d}.json"), 'w+') as f:
+                json.dump(self.data, f)
+            self.data = []
 
         # Perform a game over check
         if self.master_controller.game_over:
+            with open(os.path.join(LOGS_DIR, f"tick_ending_{self.tick_number:04d}.json"), 'w+') as f:
+                json.dump(self.data, f)
             self.shutdown()
 
     # Attempts to safely handle an engine shutdown given any game state
