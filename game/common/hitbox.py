@@ -11,12 +11,15 @@ class Hitbox(GameObject):
     def __init__(self, width, height, xy_tuple, rotation=0):
         super().__init__()
         self.object_type = ObjectType.hitbox
-        self.width = width
-        self.height = height
-        self.rotation = math.radians(rotation)
+        # Set width, height, rotation like this due to deadlock from both position and rotation needing eachother
+        # to check if corners are out of bounds
+        self.__width = width
+        self.__height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
-        # Here, it is coerced into being the middle
+        self.__rotation = rotation
         self.position = xy_tuple
+        self.update_corners()
+
 
         #self.position = xy_tuple
         # added rotation to allow for diagonal hitboxes while keeping backwards
@@ -35,36 +38,24 @@ class Hitbox(GameObject):
         return self.__position
 
     @property
+    def rotation(self):
+        return self.__rotation
+
+    @property
     def topLeft(self):
-        return self.rotate(self.middle, self.position, self.rotation)
+        return self.__top_left
 
     @property
     def topRight(self):
-        return self.rotate(
-            self.middle,
-            (self.position[0] +
-             self.width,
-             self.position[1]),
-            self.rotation)
+        return self.__top_right
 
     @property
     def bottomLeft(self):
-        return self.rotate(
-            self.middle,
-            (self.position[0],
-             self.position[1] +
-             self.height),
-            self.rotation)
+        return self.__bottom_left
 
     @property
     def bottomRight(self):
-        return self.rotate(
-            self.middle,
-            (self.position[0] +
-             self.width,
-             self.position[1] +
-             self.height),
-            self.rotation)
+        return self.__bottom_right
 
     @property
     def middle(self):
@@ -77,6 +68,7 @@ class Hitbox(GameObject):
     def height(self, val):
         if val > 0:
             self.__height = val
+            self.update_corners()
         else:
             raise ValueError(
                 "Tried to set an invalid height for hitbox: {0}".format(val))
@@ -86,6 +78,7 @@ class Hitbox(GameObject):
     def width(self, val):
         if val > 0:
             self.__width = val
+            self.update_corners()
         else:
             raise ValueError(
                 "Tried to set an invalid width for hitbox: {0}".format(val))
@@ -94,7 +87,37 @@ class Hitbox(GameObject):
     @position.setter
     def position(self, xy_tuple):
         self.__position = xy_tuple
+        self.update_corners()
         self.check_corner_outside()
+
+    # set rotation
+    @rotation.setter
+    def rotation(self, rotation):
+        self.__rotation = rotation
+        self.update_corners()
+        self.check_corner_outside()
+
+    def update_corners(self):
+        self.__top_left = self.rotate(self.middle, self.position, self.rotation)
+        self.__top_right = self.rotate(
+            self.middle,
+            (self.position[0] +
+             self.width,
+             self.position[1]),
+            self.rotation)
+        self.__bottom_left = self.rotate(
+            self.middle,
+            (self.position[0],
+             self.position[1] +
+             self.height),
+            self.rotation)
+        self.__bottom_right = self.rotate(
+            self.middle,
+            (self.position[0] +
+             self.width,
+             self.position[1] +
+             self.height),
+            self.rotation)
 
     def check_corner_outside(self):
         '''
