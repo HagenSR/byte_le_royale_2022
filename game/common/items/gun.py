@@ -4,7 +4,7 @@ from game.common.items.item import Item
 
 
 class Gun(Item):
-    def __init__(self, gun_type, level, hitbox=None):
+    def __init__(self, gun_type=GunType.none, level=0, hitbox=None):
         super().__init__(hitbox)
         self.object_type = ObjectType.gun
 
@@ -16,21 +16,18 @@ class Gun(Item):
             round(
                 stats.GameStats.gun_stats[gun_type]['damage'] * (
                     stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level),
-                1) if self.level > GunLevel.level_zero else 0)
+                1) if self.level > 0 else 0)
         self.fire_rate = (round(stats.GameStats.gun_stats[gun_type]['fire_rate']
                                 * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                          if self.level > GunLevel.level_zero else 0)
+                          if self.level > 0 else 0)
         self.range = (round(stats.GameStats.gun_stats[gun_type]['range']
                             * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                      if self.level > GunLevel.level_zero else 0)
+                      if self.level > 0 else 0)
         self.mag_size = (round(stats.GameStats.gun_stats[gun_type]['mag_size']
                                * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                         if self.level > GunLevel.level_zero else 0)
+                         if self.level > 0 else 0)
         self.mag_ammo = self.mag_size
-        self.reload_speed = (round(stats.GameStats.gun_stats[gun_type]['reload_speed']
-                                   * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                             if self.level > GunLevel.level_zero else 0)
-        if self.level > GunLevel.level_zero:
+        if self.level > 0:
             self.cooldown = stats.GameStats.gun_stats[gun_type]['cooldown']
             self.cooldown['max'] = round(
                 self.cooldown['max'] * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
@@ -49,21 +46,19 @@ class Gun(Item):
         data['fire_rate'] = self.fire_rate
         data['range'] = self.range
         data['mag_size'] = self.mag_size
-        data['reload_speed'] = self.reload_speed
         data['cooldown'] = self.cooldown
 
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.gun_type = data['gun_type']
         self.level = data['level']
+        self.gun_type = data['gun_type']
         self.pattern = data['pattern']
         self.damage = data['damage']
         self.fire_rate = data['fire_rate']
         self.range = data['range']
         self.mag_size = data['mag_size']
-        self.reload_speed = data['reload_speed']
         self.cooldown = data['cooldown']
         return self
 
@@ -76,6 +71,5 @@ class Gun(Item):
             Fire Rate: {self.fire_rate}
             Range: {self.range}
             Mag Size: {self.mag_size}
-            Reload Speed: {self.reload_speed}
             Cooldown: {self.cooldown}
             """
