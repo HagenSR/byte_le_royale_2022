@@ -93,7 +93,8 @@ class Hitbox(GameObject):
         self.check_corner_outside()
 
     def update_corners(self):
-        self.__top_left = self.rotate(self.middle, self.position, self.rotation)
+        self.__top_left = self.rotate(
+            self.middle, self.position, self.rotation)
         self.__top_right = self.rotate(
             self.middle,
             (self.position[0] +
