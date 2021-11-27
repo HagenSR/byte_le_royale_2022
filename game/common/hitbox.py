@@ -20,11 +20,6 @@ class Hitbox(GameObject):
         self.position = xy_tuple
         self.update_corners()
 
-
-        #self.position = xy_tuple
-        # added rotation to allow for diagonal hitboxes while keeping backwards
-        # compatibility
-
     @property
     def width(self):
         return self.__width
