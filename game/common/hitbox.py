@@ -11,7 +11,8 @@ class Hitbox(GameObject):
         self.height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         # It is coerced here to be the middle
-        self.position = (xy_tuple[0] + (self.width / 2), xy_tuple[1] + (self.height / 2))
+        self.position = (xy_tuple[0] + (self.width / 2),
+                         xy_tuple[1] + (self.height / 2))
 
     @property
     def width(self):
@@ -27,19 +28,23 @@ class Hitbox(GameObject):
 
     @property
     def topLeft(self):
-        return (self.position[0] - (self.width/2), self.position[1] + (self.height/2))
+        return (self.position[0] - (self.width / 2),
+                self.position[1] + (self.height / 2))
 
     @property
     def topRight(self):
-        return (self.position[0] + (self.width/2), self.position[1] + (self.height/2))
+        return (self.position[0] + (self.width / 2),
+                self.position[1] + (self.height / 2))
 
     @property
     def bottomLeft(self):
-        return (self.position[0] - (self.width/2), self.position[1] - (self.height/2))
+        return (self.position[0] - (self.width / 2),
+                self.position[1] - (self.height / 2))
 
     @property
     def bottomRight(self):
-        return (self.position[0] + (self.width/2), self.position[1] - (self.height/2))
+        return (self.position[0] + (self.width / 2),
+                self.position[1] - (self.height / 2))
 
     @property
     def middle(self):
