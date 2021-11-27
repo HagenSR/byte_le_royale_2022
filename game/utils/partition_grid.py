@@ -52,21 +52,21 @@ class PartitionGrid:
 
     def check_overlap(self, hitbox: Hitbox):
         partitions = []
-        topLeft_row = self.find_row(hitbox.topLeft[1])
-        topLeft_column = self.find_column(hitbox.topLeft[0])
-        topRight_row = self.find_row(hitbox.topRight[1])
-        topRight_column = self.find_column(hitbox.topRight[0])
-        bottomRight_row = self.find_row(hitbox.bottomRight[1])
-        bottomRight_column = self.find_column(hitbox.bottomRight[0])
-        bottomLeft_row = self.find_row(hitbox.bottomLeft[1])
-        bottomLeft_column = self.find_column(hitbox.bottomLeft[0])
-        partitions.append((topLeft_row, topLeft_column))
-        if topLeft_row != topRight_row and topLeft_column != topRight_column:
-            partitions.append((topRight_row, topRight_column))
-        if topRight_row != bottomRight_row and topRight_column != bottomRight_column:
-            partitions.append((bottomRight_row, bottomRight_column))
-        if topLeft_row != bottomLeft_row and topLeft_column != bottomLeft_column:
-            partitions.append((bottomLeft_row, bottomLeft_column))
+        top_left_row = self.find_row(hitbox.top_left[1])
+        top_left_column = self.find_column(hitbox.top_left[0])
+        top_right_row = self.find_row(hitbox.top_right[1])
+        top_right_column = self.find_column(hitbox.top_right[0])
+        bottom_right_row = self.find_row(hitbox.bottom_right[1])
+        bottom_right_column = self.find_column(hitbox.bottom_right[0])
+        bottom_left_row = self.find_row(hitbox.bottom_left[1])
+        bottom_left_column = self.find_column(hitbox.bottom_left[0])
+        partitions.append((top_left_row, top_left_column))
+        if top_left_row != top_right_row and top_left_column != top_right_column:
+            partitions.append((top_right_row, top_right_column))
+        if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
+            partitions.append((bottom_right_row, bottom_right_column))
+        if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
+            partitions.append((bottom_left_row, bottom_left_column))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -102,8 +102,8 @@ class PartitionGrid:
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns the object if there is an object at the coordinates, or false otherwise"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
-            if (obj.hitbox.topLeft[0] <= x <= obj.hitbox.bottomRight[0]
-                    and obj.hitbox.topLeft[1] <= y <= obj.hitbox.bottomRight[1]):
+            if (obj.hitbox.top_left[0] <= x <= obj.hitbox.bottom_right[0]
+                    and obj.hitbox.top_left[1] <= y <= obj.hitbox.bottom_right[1]):
                 return obj
         return False
 
@@ -150,11 +150,11 @@ class PartitionGrid:
     def obfuscate(self, client):
         # get center of client hitbox for origin of view arc
         client_shooter_xy = (
-            client.shooter.hitbox.topLeft[0] +
-            client.shooter.hitbox.topRight[0] /
+            client.shooter.hitbox.top_left[0] +
+            client.shooter.hitbox.top_right[0] /
             2,
-            client.shooter.hitbox.topLeft[1] +
-            client.shooter.hitbox.bottomLeft[1] /
+            client.shooter.hitbox.top_left[1] +
+            client.shooter.hitbox.bottom_left[1] /
             2)
         client_view_distance = client.shooter.view_distance
 

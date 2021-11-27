@@ -2,18 +2,18 @@ import math
 
 
 def check_collision(hitbox_one, hitbox_two):
-    return (hitbox_one.topLeft[0] < hitbox_two.topRight[0] and
-            hitbox_one.topRight[0] > hitbox_two.topLeft[0] and
-            hitbox_one.topLeft[1] < hitbox_two.bottomLeft[1] and
-            hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
+    return (hitbox_one.top_left[0] < hitbox_two.top_right[0] and
+            hitbox_one.top_right[0] > hitbox_two.top_left[0] and
+            hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
+            hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
 
 
 def intersect_circle(center, radius, hitbox):
     edges = [
-        [hitbox.topLeft, hitbox.topRight],
-        [hitbox.topRight, hitbox.bottomRight],
-        [hitbox.bottomLeft, hitbox.bottomRight],
-        [hitbox.topLeft, hitbox.bottomLeft]
+        [hitbox.top_left, hitbox.top_right],
+        [hitbox.top_right, hitbox.bottom_right],
+        [hitbox.bottom_left, hitbox.bottom_right],
+        [hitbox.top_left, hitbox.bottom_left]
     ]
     x3 = center[0]
     y3 = center[1]
@@ -123,12 +123,12 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
 
     for arc in arcs:
         dilation = set()
-        r = hitbox.bottomRight
+        r = hitbox.bottom_right
         rect = [
-            hitbox.topLeft,
-            hitbox.topRight,
-            hitbox.bottomLeft,
-            hitbox.bottomRight]
+            hitbox.top_left,
+            hitbox.top_right,
+            hitbox.bottom_left,
+            hitbox.bottom_right]
         for pa in arc:
             for pr in rect:
                 dilation.add((pa[0] + pr[0], pa[1] + pr[1]))
