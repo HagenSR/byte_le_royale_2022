@@ -75,6 +75,8 @@ class MasterController(Controller):
     def turn_logic(self, clients, turn):
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
+        self.loot_generation_controller.handle_actions(
+            self.current_world_data['game_map'])
 
         for client in clients:
             ReloadController.handle_actions(client)
