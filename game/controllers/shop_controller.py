@@ -40,7 +40,6 @@ class ShopController(Controller):
                 bought_item = Consumable(
                     hitbox=None,
                     health=None,
-                    count=None,
                     consumable_enum=client.action.item_to_purchase)
                 client.shooter.append_inventory(bought_item)
                 self.shop_inventory[item]["quantity"] = self.shop_inventory[item]["quantity"] - 1

@@ -40,7 +40,7 @@ class TestShooterObject(unittest.TestCase):
     def test_inventory_consumables(self):
         self.assertTrue(self.shooter.has_empty_slot('consumables'))
 
-        test_consumable = Consumable(hitbox=None, health=None, count=None,
+        test_consumable = Consumable(hitbox=None, health=None,
                                      consumable_enum=None)
 
         for slot in self.shooter.inventory['consumables']:
