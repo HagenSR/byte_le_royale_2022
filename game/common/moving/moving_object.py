@@ -30,7 +30,7 @@ class MovingObject(MapObject):
     @heading.setter
     def heading(self, val):
         if 0 <= val <= 360:
-        # if 0 <= val <= (math.pi * 2):
+            # if 0 <= val <= (math.pi * 2):
             self.__heading = math.radians(val)
         else:
             raise Exception("Heading value outside bounds, Not set")
