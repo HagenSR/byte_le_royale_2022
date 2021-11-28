@@ -168,7 +168,6 @@ class Engine:
         if os.path.exists(LOGS_FILE):
             os.remove(LOGS_FILE)
 
-        world = None
         with open(GAME_MAP_FILE) as json_file:
             world = json.load(json_file)
         # Yes, this is a bit ugly. Load game map json to game map object

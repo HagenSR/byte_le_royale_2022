@@ -35,7 +35,6 @@ class ItemGenUtils:
         # object will not spawn
         object_collided = 0
         while game_board.partition.find_object_hitbox(dummy_hitbox):
-            print(f'x: {potential_x}, y: {potential_y}')
             object_collided += 1
             potential_x = max(min(random.gauss(
                 half_width, half_width * .005), game_board.circle_radius - 1), 1)

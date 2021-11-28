@@ -1,0 +1,2 @@
+tdqm
+requests

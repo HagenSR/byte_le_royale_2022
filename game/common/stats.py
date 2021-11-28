@@ -27,7 +27,7 @@ class GameStats:
         'starting_health': 10,
         'starting_money': 10,
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
-        'field_of_view': 120,
+        'field_of_view': 90,
         'view_distance': 100,
         'move_speed': 10,
     }
@@ -148,6 +148,7 @@ class GameStats:
             'level_mod': 1.25}}
 
     grenade_stats = {
+        'range': 40,
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
