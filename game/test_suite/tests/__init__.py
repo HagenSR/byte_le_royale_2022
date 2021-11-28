@@ -17,20 +17,17 @@ from game.test_suite.tests.objects.test_bullet import TestBullet
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
-
-<<<<<<< HEAD
-=======
-<< << << < HEAD
+from game.test_suite.tests.controllers.test_shop_controller import TestShopController
+from game.test_suite.tests.utils.ray_collision_test import TestRayCollision
 # from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
->>>>>>> da6ad0a537c142a7bdb63e750c7d02513a8a57d4
+from game.test_suite.tests.utils.collision_test import TestCollision
+from game.test_suite.tests.controllers.shoot_controller_test import TestShootController
+from game.test_suite.tests.controllers.test_kill_boundary_controller import TestKillBoundary
+from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
+from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
+from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 
-# from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 
-<<<<<<< HEAD
-=======
-== == == =
->>>>>> > 040da51bc4296b70afd8c54669f9363211b18512
->>>>>>> da6ad0a537c142a7bdb63e750c7d02513a8a57d4
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',
@@ -47,5 +44,7 @@ __all__ = [
     'TestKillBoundary',
     'TestRayCollision',
     'TestReloadController',
+    'TestLootGenerationController',
+    'TestItemGenerationUtil',
     'TestMovementController'
 ]

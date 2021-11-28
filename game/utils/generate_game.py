@@ -5,13 +5,20 @@ import os
 import random
 import importlib.resources
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.upgrade import Upgrade
 from game.common.wall import Wall
+from game.common.items.gun import Gun
+from game.common.items.item import Item
 from game.config import *
 from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
+from game.common.door import Door
 import zipfile
 import json
+
+import requests
 
 
 def create_structures_file(file_path):
@@ -23,7 +30,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(50, 20, (50, 10)), destructible=True),
         Wall(Hitbox(10, 75, (30, 45)), destructible=True),
         Wall(Hitbox(10, 75, (100, 45)), destructible=True),
-        Wall(Hitbox(140, 20, (0, 120)), destructible=True)
+        Wall(Hitbox(140, 20, (0, 120)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(5, 5, (45, 40)), destructible=True),
+        Wall(Hitbox(5, 5, (100, 40)), destructible=True),
+        Door(Hitbox(3, 10, (45, 30))),
+        Door(Hitbox(3, 10, (100, 30)))
     ]
     Structures.append(outlet)
     the_end = [
@@ -35,7 +47,16 @@ def create_structures_file(file_path):
         Wall(Hitbox(18, 18, (90, 60)), destructible=True),
         Wall(Hitbox(18, 18, (30, 90)), destructible=True),
         Wall(Hitbox(18, 18, (60, 90)), destructible=True),
-        Wall(Hitbox(18, 18, (90, 90)), destructible=True)
+        Wall(Hitbox(18, 18, (90, 90)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(2, 1, (48, 46)), destructible=True),
+        Door(Hitbox(10, 3, (50, 47))),
+        Wall(Hitbox(2, 1, (88, 46)), destructible=True),
+        Door(Hitbox(10, 3, (78, 47))),
+        Wall(Hitbox(2, 1, (60, 78)), destructible=True),
+        Door(Hitbox(3, 10, (61, 80))),
+        Wall(Hitbox(2, 1, (106, 88))),
+        Door(Hitbox(3, 10, (106, 88)))
     ]
     Structures.append(the_end)
     smile = [
@@ -45,7 +66,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(20, 20, (25, 80)), destructible=True),
         Wall(Hitbox(50, 20, (50, 100)), destructible=True),
         Wall(Hitbox(20, 20, (100, 80)), destructible=True),
-        Wall(Hitbox(20, 20, (120, 60)), destructible=True)
+        Wall(Hitbox(20, 20, (120, 60)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(5, 5, (15, 55)), destructible=True),
+        Door(Hitbox(10, 3, (20, 55))),
+        Wall(Hitbox(5, 5, (140, 55)), destructible=True),
+        Door(Hitbox(3, 10, (130, 55)))
     ]
     Structures.append(smile)
     funnel = [
@@ -56,13 +82,17 @@ def create_structures_file(file_path):
         Wall(Hitbox(15, 44, (76, 45)), destructible=True),
         Wall(Hitbox(15, 76, (92, 30)), destructible=True),
         Wall(Hitbox(15, 108, (108, 15)), destructible=True),
-        Wall(Hitbox(15, 140, (124, 0)), destructible=True)
+        Wall(Hitbox(15, 140, (124, 0)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(5, 10, (60, 70)), destructible=True),
+        Wall(Hitbox(5, 10, (80, 70)), destructible=True),
+        Door(Hitbox(3, 10, (65, 75)))
     ]
     Structures.append(funnel)
     right_u = [
         Wall(Hitbox(140, 30, (0, 0)), destructible=True),
         Wall(Hitbox(30, 80, (0, 30)), destructible=True),
-        Wall(Hitbox(140, 30, (0, 110)), destructible=True)
+        Wall(Hitbox(140, 30, (0, 110)), destructible=True),
     ]
     Structures.append(right_u)
     plus_sign = [
@@ -102,7 +132,14 @@ def create_structures_file(file_path):
         Wall(Hitbox(28, 28, (28, 84)), destructible=True),
         Wall(Hitbox(28, 28, (0, 112)), destructible=True),
         Wall(Hitbox(28, 28, (84, 84)), destructible=True),
-        Wall(Hitbox(28, 28, (112, 112)), destructible=True)
+        Wall(Hitbox(28, 28, (112, 112)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(9, 10, (56, 42)), destructible=True),
+        Wall(Hitbox(9, 10, (78, 42)), destructible=True),
+        Door(Hitbox(10, 3, (65, 43))),
+        Wall(Hitbox(9, 10, (56, 98)), destructible=True),
+        Wall(Hitbox(9, 10, (78, 98)), destructible=True),
+        Door(Hitbox(10, 3, (65, 100)))
     ]
     Structures.append(incomplete_x)
     multi_directional = [
@@ -112,7 +149,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(30, 40, (110, 100)), destructible=True),
         Wall(Hitbox(30, 30, (32, 60)), destructible=True),
         Wall(Hitbox(30, 30, (55, 110)), destructible=True),
-        Wall(Hitbox(30, 30, (100, 60)), destructible=True)
+        Wall(Hitbox(30, 30, (100, 60)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(38, 10, (32, 50)), destructible=True),
+        Door(Hitbox(3, 10, (32, 40))),
+        Wall(Hitbox(38, 10, (82, 50)), destructible=True),
+        Door(Hitbox(3, 10, (82, 40)))
     ]
     Structures.append(multi_directional)
     center_stage = [
@@ -143,7 +185,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(40, 20, (50, 0)), destructible=True),
         Wall(Hitbox(140, 45, (0, 30)), destructible=True),
         Wall(Hitbox(140, 10, (0, 100)), destructible=True),
-        Wall(Hitbox(40, 20, (50, 120)), destructible=True)
+        Wall(Hitbox(40, 20, (50, 120)), destructible=True),
+        # Door Additions
+        Door(Hitbox(3, 10, (70, 20))),
+        Wall(Hitbox(10, 15, (65, 75)), destructible=True),
+        Door(Hitbox(3, 10, (70, 80))),
+        Door(Hitbox(3, 10, (70, 110)))
     ]
     Structures.append(train_station)
     blockade = [
@@ -152,7 +199,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(30, 30, (110, 10)), destructible=True),
         Wall(Hitbox(30, 30, (35, 60)), destructible=True),
         Wall(Hitbox(30, 30, (90, 60)), destructible=True),
-        Wall(Hitbox(30, 30, (70, 100)), destructible=True)
+        Wall(Hitbox(30, 30, (70, 100)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(20, 10, (40, 15)), destructible=True),
+        Door(Hitbox(10, 3, (60, 18))),
+        Wall(Hitbox(10, 10, (50, 90)), destructible=True),
+        Door(Hitbox(3, 10, (95, 40)))
     ]
     Structures.append(blockade)
     pyramid_scheme = [
@@ -161,7 +213,12 @@ def create_structures_file(file_path):
         Wall(Hitbox(30, 30, (90, 60)), destructible=True),
         Wall(Hitbox(30, 30, (10, 100)), destructible=True),
         Wall(Hitbox(30, 30, (70, 100)), destructible=True),
-        Wall(Hitbox(30, 30, (110, 100)), destructible=True)
+        Wall(Hitbox(30, 30, (110, 100)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(10, 10, (70, 50)), destructible=True),
+        Door(Hitbox(3, 10, (75, 40))),
+        Wall(Hitbox(20, 16, (40, 100)), destructible=True),
+        Door(Hitbox(10, 3, (60, 108)))
     ]
     Structures.append(pyramid_scheme)
     battle_box = [
@@ -170,7 +227,14 @@ def create_structures_file(file_path):
         Wall(Hitbox(20, 40, (120, 0)), destructible=True),
         Wall(Hitbox(20, 40, (0, 100)), destructible=True),
         Wall(Hitbox(100, 10, (20, 130)), destructible=True),
-        Wall(Hitbox(20, 40, (120, 100)), destructible=True)
+        Wall(Hitbox(20, 40, (120, 100)), destructible=True),
+        # Door Additions
+        Wall(Hitbox(10, 25, (5, 40)), destructible=True),
+        Wall(Hitbox(10, 25, (5, 75)), destructible=True),
+        Door(Hitbox(3, 10, (10, 65))),
+        Wall(Hitbox(10, 25, (125, 40)), destructible=True),
+        Wall(Hitbox(10, 25, (125, 75)), destructible=True),
+        Door(Hitbox(3, 10, (130, 65)))
     ]
     Structures.append(battle_box)
     structure_i = [
@@ -231,16 +295,13 @@ def create_structures_file(file_path):
 
 
 def generate_random_numbers():
-    """
-    Generate and return a list of random numbers, between 0 and the int maximum
-    """
     rtn = []
     for i in range(10000):
         rtn.append(random.randint(0, sys.maxsize))
     return rtn
 
 
-def find_plot_hitboxes():
+def findPlotHitboxes():
     plot_hitbox_list = []
 
     # find the width and height of each plot, assuming 6 plots on a game board
@@ -284,8 +345,9 @@ def generate():
     structures_list = []
 
     # Load in all of the structures from the zipped .pyz file. Note this assumes the terminal is open at the project root
-    # Use ../../launcher.pyz if opening in the utils folder
-    with zipfile.ZipFile('launcher.pyz') as z:
+    # Use ../../launcher.pyz if opening in the utils folder or ./launcher.pyz
+    # for the .pyz
+    with zipfile.ZipFile('./launcher.pyz') as z:
         for filename in z.namelist():
             # Only load proper structure json
             if filename.startswith(
@@ -293,19 +355,25 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
+                    # print(requests.get(fl.read().decode('utf-8')).content)
                     filejsn = json.loads(fl.read().decode('utf-8'))
-                    wallList = []
+                    struct_obj_list = []
                     for entry in filejsn:
-                        # Load in every wall in the structure
-                        wall = Wall(Hitbox(1, 1, (0, 0)))
-                        wall.from_json(entry)
-                        wallList.append(wall)
-                    structures_list.append(wallList)
+                        # Load in every wall or door in the structure
+                        if entry['object_type'] == ObjectType.wall:
+                            wall = Wall(Hitbox(1, 1, (0, 0)))
+                            wall.from_json(entry)
+                            struct_obj_list.append(wall)
+                        elif entry['object_type'] == ObjectType.door:
+                            door = Door(Hitbox(1, 1, (0, 0)))
+                            door.from_json(entry)
+                            struct_obj_list.append(door)
+                    structures_list.append(struct_obj_list)
         # Plots can potentially be empty
         structures_list.append(None)
 
     # Choose what structure goes in what plot
-    plot_list = find_plot_hitboxes()
+    plot_list = findPlotHitboxes()
     for plot in plot_list:
         struct = random.choice(structures_list)
         if struct:
@@ -314,8 +382,8 @@ def generate():
                 # A copy of wall is needed, because the original wall will
                 # persist in the structures list after it's position is altered
                 wall_copy = copy.deepcopy(wall)
-                x_offset = plot.position[0] + wall_copy.hitbox.position[0]
-                y_offset = plot.position[1] + wall_copy.hitbox.position[1]
+                x_offset = plot.top_left[0] + wall_copy.hitbox.top_left[0]
+                y_offset = plot.top_left[1] + wall_copy.hitbox.top_left[1]
                 wall_copy.hitbox.position = (x_offset, y_offset)
                 game_map.partition.add_object(wall_copy)
 
@@ -324,11 +392,11 @@ def generate():
         os.mkdir(GAME_MAP_DIR)
 
     data['game_map'] = game_map.to_json()
-    # Add the list of seeds to the game map json
     data['seed'] = generate_random_numbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 
 
 if __name__ == '__main__':
-    create_structures_file("./structures/structureDescriptiveName.json")
+    for file in os.listdir():
+        create_structures_file(file)
