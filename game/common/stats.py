@@ -19,13 +19,16 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
-    default_wall_health = 50
+    default_wall_health = 18
+
+    default_door_health = 18
 
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
-        'view_radius': 10,
+        'field_of_view': 90,
+        'view_distance': 100,
         'move_speed': 10,
     }
 
@@ -44,6 +47,10 @@ class GameStats:
             'type': game.common.items.consumable.Consumable
         },
     }
+
+    # stats for money located on the gameboard
+    min_money_amount = 25
+    max_money_amount = 500
 
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be

@@ -1,5 +1,6 @@
 import copy
 import json
+import sys
 import os
 import random
 import importlib.resources
@@ -229,11 +230,17 @@ def create_structures_file(file_path):
             fl.write(s)
 
 
-def read_structures_file(file_path):
-    print("MAKE ME!")
+def generate_random_numbers():
+    """
+    Generate and return a list of random numbers, between 0 and the int maximum
+    """
+    rtn = []
+    for i in range(10000):
+        rtn.append(random.randint(0, sys.maxsize))
+    return rtn
 
 
-def findPlotHitboxes():
+def find_plot_hitboxes():
     plot_hitbox_list = []
 
     # find the width and height of each plot, assuming 6 plots on a game board
@@ -298,7 +305,7 @@ def generate():
         structures_list.append(None)
 
     # Choose what structure goes in what plot
-    plot_list = findPlotHitboxes()
+    plot_list = find_plot_hitboxes()
     for plot in plot_list:
         struct = random.choice(structures_list)
         if struct:
@@ -317,6 +324,8 @@ def generate():
         os.mkdir(GAME_MAP_DIR)
 
     data['game_map'] = game_map.to_json()
+    # Add the list of seeds to the game map json
+    data['seed'] = generate_random_numbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
 
