@@ -76,7 +76,8 @@ def edges_of(vertices):
     N = len(vertices)
 
     for i in range(N):
-        edge = [vertices[(i + 1) % N][j] - vertices[i][j] for j in range(len(vertices[i]))]
+        edge = [vertices[(i + 1) % N][j] - vertices[i][j]
+                for j in range(len(vertices[i]))]
         edges.append(edge)
 
     return edges
@@ -120,7 +121,7 @@ def is_separating_axis(o, p1, p2):
         return True, None
 
 
-##################################################################################
+##########################################################################
 
 
 def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
@@ -182,7 +183,7 @@ def intersect_circle(center, radius, hitbox):
             # calculate y coord of the intercept of the edge and the radius
             # perpendicular to the edge
             yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                 y3 - ((x2 - x1) / (y1 - y2)) * xi
+                y3 - ((x2 - x1) / (y1 - y2)) * xi
 
         # calculate length of perpendicular line segment from radius to the
         # edge
