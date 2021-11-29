@@ -293,25 +293,25 @@ def determine_gun_collision(
     for collidable in collidables.keys():
         intersections = []
         top = line_intersection(
-            (collidable.hitbox.topLeft, collidable.hitbox.topRight),
+            (collidable.hitbox.top_left, collidable.hitbox.top_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
         if top is not None:
             intersections.append(top)
         bottom = line_intersection(
-            (collidable.hitbox.bottomLeft, collidable.hitbox.bottomRight),
+            (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
         if bottom is not None:
             intersections.append(bottom)
         left = line_intersection(
-            (collidable.hitbox.topLeft, collidable.hitbox.bottomLeft),
+            (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
             (player.shooter.hitbox.position, ray_endpoint)
         )
         if left is not None:
             intersections.append(left)
         right = line_intersection(
-            (collidable.hitbox.topRight, collidable.hitbox.bottomRight),
+            (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
         if right is not None:
