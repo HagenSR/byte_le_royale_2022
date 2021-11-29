@@ -9,6 +9,9 @@ from game.common.enums import *
 
 class ShootController(Controller):
 
+    def __init__(self):
+        super().__init__()
+
     def handle_action(self, client, game_board):
         if(client.action is ActionType.shoot):
             gun = client.shooter.primary_gun
