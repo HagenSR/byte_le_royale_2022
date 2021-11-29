@@ -17,20 +17,9 @@ from game.test_suite.tests.objects.test_bullet import TestBullet
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
-
-<<<<<<< HEAD
-=======
-<< << << < HEAD
-# from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
->>>>>>> da6ad0a537c142a7bdb63e750c7d02513a8a57d4
-
 # from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
 
-<<<<<<< HEAD
-=======
-== == == =
->>>>>> > 040da51bc4296b70afd8c54669f9363211b18512
->>>>>>> da6ad0a537c142a7bdb63e750c7d02513a8a57d4
+
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',
