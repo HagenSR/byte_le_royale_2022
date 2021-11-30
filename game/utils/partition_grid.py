@@ -1,9 +1,18 @@
 import math
+
+from game.common.door import Door
+from game.common.enums import ObjectType
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.gun import Gun
 from game.common.items.item import Item
+from game.common.items.money import Money
+from game.common.items.upgrade import Upgrade
 from game.common.map_object import MapObject
 from game.common.moving.moving_object import MovingObject
+from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
+from game.common.wall import Wall
 from game.utils import collision_detection
 
 
@@ -35,29 +44,29 @@ class PartitionGrid:
 
     def find_row(self, y: float):
         """Find which row of the structure the y coordinate is in"""
-        return math.floor(y / self.partition_height) - 1
+        return math.floor(y / self.partition_height)
 
     def find_column(self, x: float):
         """Find which column of the structure the x coordinate is in"""
-        return math.floor(x / self.partition_height) - 1
+        return math.floor(x / self.partition_height)
 
     def check_overlap(self, hitbox: Hitbox):
         partitions = []
-        topLeft_row = self.find_row(hitbox.topLeft[1])
-        topLeft_column = self.find_column(hitbox.topLeft[0])
-        topRight_row = self.find_row(hitbox.topRight[1])
-        topRight_column = self.find_column(hitbox.topRight[0])
-        bottomRight_row = self.find_row(hitbox.bottomRight[1])
-        bottomRight_column = self.find_column(hitbox.bottomRight[0])
-        bottomLeft_row = self.find_row(hitbox.bottomLeft[1])
-        bottomLeft_column = self.find_column(hitbox.bottomLeft[0])
-        partitions.append((topLeft_row, topLeft_column))
-        if topLeft_row != topRight_row and topLeft_column != topRight_column:
-            partitions.append((topRight_row, topRight_column))
-        if topRight_row != bottomRight_row and topRight_column != bottomRight_column:
-            partitions.append((bottomRight_row, bottomRight_column))
-        if topLeft_row != bottomLeft_row and topLeft_column != bottomLeft_column:
-            partitions.append((bottomLeft_row, bottomLeft_column))
+        top_left_row = self.find_row(hitbox.top_left[1])
+        top_left_column = self.find_column(hitbox.top_left[0])
+        top_right_row = self.find_row(hitbox.top_right[1])
+        top_right_column = self.find_column(hitbox.top_right[0])
+        bottom_right_row = self.find_row(hitbox.bottom_right[1])
+        bottom_right_column = self.find_column(hitbox.bottom_right[0])
+        bottom_left_row = self.find_row(hitbox.bottom_left[1])
+        bottom_left_column = self.find_column(hitbox.bottom_left[0])
+        partitions.append((top_left_row, top_left_column))
+        if top_left_row != top_right_row and top_left_column != top_right_column:
+            partitions.append((top_right_row, top_right_column))
+        if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
+            partitions.append((bottom_right_row, bottom_right_column))
+        if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
+            partitions.append((bottom_left_row, bottom_left_column))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -93,8 +102,8 @@ class PartitionGrid:
     def find_object_coordinates(self, x: float, y: float) -> bool:
         """Returns the object if there is an object at the coordinates, or false otherwise"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
-            if (obj.hitbox.topLeft[0] <= x <= obj.hitbox.bottomRight[0]
-                    and obj.hitbox.topLeft[1] <= y <= obj.hitbox.bottomRight[1]):
+            if (obj.hitbox.top_left[0] <= x <= obj.hitbox.bottom_right[0]
+                    and obj.hitbox.top_left[1] <= y <= obj.hitbox.bottom_right[1]):
                 return obj
         return False
 
@@ -104,8 +113,8 @@ class PartitionGrid:
             raise ValueError("Hitbox to check must be of type Hitbox")
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
-                # if collision_detection.check_collision(obj.hitbox, hitbox):
-                if collision_detection.collide_rect_hb(obj.hitbox, hitbox):
+                if collision_detection.check_collision(obj.hitbox, hitbox):
+                # if collision_detection.collide_rect_hb(obj.hitbox, hitbox):
                     return obj
         return False
 
@@ -142,18 +151,17 @@ class PartitionGrid:
     def obfuscate(self, client):
         # get center of client hitbox for origin of view arc
         client_shooter_xy = (
-            client.shooter.hitbox.topLeft[0] +
-            client.shooter.hitbox.topRight[0] /
+            client.shooter.hitbox.top_left[0] +
+            client.shooter.hitbox.top_right[0] /
             2,
-            client.shooter.hitbox.topLeft[1] +
-            client.shooter.hitbox.bottomLeft[1] /
+            client.shooter.hitbox.top_left[1] +
+            client.shooter.hitbox.bottom_left[1] /
             2)
-        client_heading = client.shooter.heading
         client_view_distance = client.shooter.view_distance
-        client_field_of_view = client.shooter.field_of_view
 
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
+# <<<<<<< HEAD
         for x, y in range(
                 0, GameStats.game_board_width, self.partition_width), range(
             0, GameStats.game_board_height, self.partition_height):
@@ -177,11 +185,34 @@ class PartitionGrid:
                             client_view_distance,
                             client_shooter_xy):
                         self.remove_object(obj)
+# =======
+#         for x in range(0, GameStats.game_board_width, self.partition_width):
+#             for y in range(
+#                     0,
+#                     GameStats.game_board_height,
+#                     self.partition_height):
+#                 partition = self.get_partition_hitbox(x, y)
+#                 # remove everything from a partition that isn't in view at all
+#                 if not collision_detection.intersect_circle(
+#                         client_shooter_xy,
+#                         client_view_distance,
+#                         partition):
+#                     self.obfuscate_partition(x, y)
+#                 else:
+#                     # if a partition is in view, need to check each object to
+#                     # see if it's in view, remove it if it isn't
+#                     for obj in self.get_partition_objects(x, y):
+#                         if not collision_detection.intersect_circle(
+#                                 client_shooter_xy,
+#                                 client_view_distance,
+#                                 obj.hitbox):
+#                             self.remove_object(obj)
+# >>>>>>> 67659c4cb932d52b1dbd050e69601b7d13e52a7a
 
     def to_json(self):
         data = {'partition_grid': [
             [
-                [obj.to_json() if "to_json" in dir(obj) else obj for obj in self.__matrix[row][column]]
+                [obj.to_json() for obj in self.__matrix[row][column]]
                 for column in range(len(self.__matrix[row]))
             ]
             for row in range(len(self.__matrix))
@@ -192,8 +223,32 @@ class PartitionGrid:
     def from_json(self, data):
         self.__matrix = [
             [
-                [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
+                self.from_json_helper(column)
+                # [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
                 for column in row
             ]
             for row in data['partition_grid']
         ]
+        return self
+
+    def from_json_helper(self, data: dict):
+        obj_list = list()
+        for obj in data:
+            if obj['object_type'] == ObjectType.consumable:
+                obj_list.append(Consumable.from_json(Consumable(), obj))
+            if obj['object_type'] == ObjectType.gun:
+                obj_list.append(Gun.from_json(Gun(), obj))
+            if obj['object_type'] == ObjectType.item:
+                obj_list.append(Item.from_json(Item(), obj))
+            if obj['object_type'] == ObjectType.money:
+                obj_list.append(Money.from_json(Money(), obj))
+            if obj['object_type'] == ObjectType.upgrade:
+                obj_list.append(Upgrade.from_json(Upgrade(), obj))
+            if obj['object_type'] == ObjectType.shooter:
+                obj_list.append(Shooter.from_json(Shooter(), obj))
+            if obj['object_type'] == ObjectType.door:
+                obj_list.append(Door.from_json(Door(), obj))
+            if obj['object_type'] == ObjectType.wall:
+                obj_list.append(Wall.from_json(Wall(), obj))
+
+        return obj_list

@@ -17,8 +17,8 @@ from game.test_suite.tests.objects.test_bullet import TestBullet
 from game.test_suite.tests.objects.test_initialization import TestInit
 from game.test_suite.tests.objects.test_shooter import TestShooterObject
 from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
-# from game.test_suite.tests.utils.test_game_board_generation import TestGameBoardGeneration
-
+from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
+from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 
 __all__ = [
     'TestGameBoard',
@@ -29,12 +29,13 @@ __all__ = [
     'TestBullet',
     'TestInit',
     'TestHitboxObject',
-    # 'TestGameBoardGeneration'
     'TestCollision',
     'TestShootController',
     'TestShopController',
     'TestKillBoundary',
     'TestRayCollision',
     'TestReloadController',
-    'TestMovementController'
+    'TestMovementController',
+    'TestLootGenerationController',
+    'TestItemGenerationUtil'
 ]

@@ -7,7 +7,8 @@ def check_collision(hitbox_one, hitbox_two):
     return (hitbox_one.top_left[0] < hitbox_two.top_right[0] and
             hitbox_one.top_right[0] > hitbox_two.top_left[0] and
             hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
-            hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
+            hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
+
 
 
 ###############################################################################
@@ -259,7 +260,7 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
 
     for arc in arcs:
         dilation = set()
-        r = hitbox.bottomRight
+        r = hitbox.bottom_right
         rect = [
             hitbox.top_left,
             hitbox.top_right,
@@ -274,14 +275,14 @@ def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
                 math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
             ))
         )
-        print('START')
-        print(is_point_in_path(r[0], r[1], list(dilation)))
-        print(r_polar[0] < radius)
-        print(heading -
-              arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2)
+        # print('START')
+        # print(is_point_in_path(r[0], r[1], list(dilation)))
+        # print(r_polar[0] < radius)
+        # print(heading -
+        #       arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2)
         if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - \
                 arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
-            # TODO something is screwy with this polar coord checking
+            # to do something is screwy with this polar coord checking
             return True
     return False
 
