@@ -20,6 +20,8 @@ from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
 from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 
+
+
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',
@@ -38,4 +40,5 @@ __all__ = [
     'TestMovementController',
     'TestLootGenerationController',
     'TestItemGenerationUtil'
+
 ]

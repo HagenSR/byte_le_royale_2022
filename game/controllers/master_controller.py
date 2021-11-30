@@ -1,7 +1,6 @@
 from copy import deepcopy
 import random
 from game.common.stats import GameStats
-
 from game.common.action import Action
 from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
@@ -10,15 +9,12 @@ import game.config as config
 from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 from game.controllers.shoot_controller import ShootController
-
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
-<<<<<<< HEAD
-from game.controllers.movement_controller import MovementController
-=======
 from game.controllers.loot_generation_controller import LootGenerationController
->>>>>>> 67659c4cb932d52b1dbd050e69601b7d13e52a7a
+from game.controllers.movement_controller import MovementController
+
 
 
 class MasterController(Controller):
@@ -30,14 +26,12 @@ class MasterController(Controller):
 
         self.boundary_controller = KillBoundaryController()
         self.shop_controller = ShopController()
-<<<<<<< HEAD
+
         self.movement_controller = MovementController()
         self.seed = -1
         self.turn = 1
-=======
-        self.loot_generation_controller = LootGenerationController()
         self.shoot_controller = ShootController()
->>>>>>> 67659c4cb932d52b1dbd050e69601b7d13e52a7a
+
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -108,7 +102,7 @@ class MasterController(Controller):
         data['clients'] = [client.to_json() for client in clients]
         # Add things that should be thrown into the turn logs here
         data['game_map'] = self.current_world_data["game_map"].to_json()
-        data['clients'] = [client.to_json() for client in clients]
+
         return data
 
     # Gather necessary data together in results file

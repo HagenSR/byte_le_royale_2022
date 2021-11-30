@@ -1,9 +1,6 @@
-import math
-
 from game.common.game_object import GameObject
 from game.common.enums import *
 import game.common.stats as stats
-import math
 
 import math
 
@@ -19,9 +16,6 @@ class Hitbox(GameObject):
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
         self.__rotation = rotation
         self.position = xy_tuple
-        # added rotation to allow for diagonal hitboxes while keeping backwards
-        # compatibility
-        self.rotation = math.radians(rotation)
         self.update_corners()
 
 
