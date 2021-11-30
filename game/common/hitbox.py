@@ -18,7 +18,6 @@ class Hitbox(GameObject):
         self.position = xy_tuple
         self.update_corners()
 
-
     @property
     def width(self):
         return self.__width

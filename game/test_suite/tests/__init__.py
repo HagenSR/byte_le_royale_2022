@@ -21,7 +21,6 @@ from game.test_suite.tests.controllers.test_loot_generation_controller import Te
 from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 
 
-
 __all__ = [
     'TestGameBoard',
     'TestMovingObject',

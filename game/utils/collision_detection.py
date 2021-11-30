@@ -183,7 +183,7 @@ def intersect_circle(center, radius, hitbox):
             # calculate y coord of the intercept of the edge and the radius
             # perpendicular to the edge
             yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                 y3 - ((x2 - x1) / (y1 - y2)) * xi
+                y3 - ((x2 - x1) / (y1 - y2)) * xi
 
         # calculate length of perpendicular line segment from radius to the
         # edge

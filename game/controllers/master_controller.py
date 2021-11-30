@@ -16,7 +16,6 @@ from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.movement_controller import MovementController
 
 
-
 class MasterController(Controller):
     def __init__(self):
         super().__init__()
@@ -32,9 +31,9 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
 
-
     # Receives all clients for the purpose of giving them the objects they
     # will control
+
     def give_clients_objects(self, clients):
         pass
         # for client in clients:

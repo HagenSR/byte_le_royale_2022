@@ -7,8 +7,6 @@ from game.common.stats import GameStats
 from game.utils.collision_detection import check_collision, intersect_circle
 
 
-
-
 class TestCollision(unittest.TestCase):
 
     def setUp(self):
