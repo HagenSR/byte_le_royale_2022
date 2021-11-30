@@ -1,6 +1,7 @@
 import math
-# My work
 
+
+# My work
 
 
 def check_collision(hitbox_one, hitbox_two):
@@ -10,65 +11,8 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
 
 
-
 ###############################################################################
 
-<<<<<<< HEAD
-=======
-def centers_displacement(p1, p2):
-    """
-    Return the displacement between the geometric center of p1 and p2.
-    """
-    # geometric center
-    c1 = np.mean(np.array(p1), axis=0)
-    c2 = np.mean(np.array(p2), axis=0)
-    return c2 - c1
-
-
-def edges_of(vertices):
-    """
-    Return the vectors for the edges of the polygon p.
-
-    p is a polygon.
-    """
-    edges = []
-    N = len(vertices)
-
-    for i in range(N):
-        edge = [vertices[(i + 1) % N][j] - vertices[i][j]
-                for j in range(len(vertices[i]))]
-        edges.append(edge)
-
-    return edges
-
-
-def orthogonal(v):
-    """
-    Return a 90 degree clockwise rotation of the vector v.
-    """
-    return np.array([-v[1], v[0]])
-
-
-def is_separating_axis(o, p1, p2):
-    """
-    Return True and the push vector if o is a separating axis of p1 and p2.
-    Otherwise, return False and None.
-    """
-    min1, max1 = float('+inf'), float('-inf')
-    min2, max2 = float('+inf'), float('-inf')
-
-    for v in p1:
-        projection = np.dot(v, o)
-
-        min1 = min(min1, projection)
-        max1 = max(max1, projection)
-
-    for v in p2:
-        projection = np.dot(v, o)
-
-        min2 = min(min2, projection)
-        max2 = max(max2, projection)
->>>>>>> d0ac613effa0cfa06cbda2c9a0c78285284b417d
 
 # def collide_rect_hb(hb1, hb2):
 #     p1 = [hb1.topRight, hb1.topLeft, hb1.bottomLeft,
@@ -239,7 +183,7 @@ def intersect_circle(center, radius, hitbox):
             # calculate y coord of the intercept of the edge and the radius
             # perpendicular to the edge
             yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                y3 - ((x2 - x1) / (y1 - y2)) * xi
+                 y3 - ((x2 - x1) / (y1 - y2)) * xi
 
         # calculate length of perpendicular line segment from radius to the
         # edge

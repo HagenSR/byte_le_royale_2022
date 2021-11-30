@@ -114,7 +114,7 @@ class PartitionGrid:
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
                 if collision_detection.check_collision(obj.hitbox, hitbox):
-                # if collision_detection.collide_rect_hb(obj.hitbox, hitbox):
+                    # if collision_detection.collide_rect_hb(obj.hitbox, hitbox):
                     return obj
         return False
 
@@ -161,55 +161,7 @@ class PartitionGrid:
 
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
-<<<<<<< HEAD
-# <<<<<<< HEAD
-        for x, y in range(
-                0, GameStats.game_board_width, self.partition_width), range(
-            0, GameStats.game_board_height, self.partition_height):
-            partition = self.get_partition_hitbox(x, y)
-            # remove everything from a partition that isn't in view at all
-            if not collision_detection.intersect_arc(
-                    partition,
-                    client_heading,
-                    client_field_of_view,
-                    client_view_distance,
-                    client_shooter_xy):
-                self.obfuscate_partition(x, y)
-            else:
-                # if a partition is in view, need to check each object to
-                # see if it's in view, remove it if it isn't
-                for obj in self.get_partition_objects(x, y):
-                    if not collision_detection.intersect_arc(
-                            obj.hitbox,
-                            client_heading,
-                            client_field_of_view,
-                            client_view_distance,
-                            client_shooter_xy):
-                        self.remove_object(obj)
-# =======
-#         for x in range(0, GameStats.game_board_width, self.partition_width):
-#             for y in range(
-#                     0,
-#                     GameStats.game_board_height,
-#                     self.partition_height):
-#                 partition = self.get_partition_hitbox(x, y)
-#                 # remove everything from a partition that isn't in view at all
-#                 if not collision_detection.intersect_circle(
-#                         client_shooter_xy,
-#                         client_view_distance,
-#                         partition):
-#                     self.obfuscate_partition(x, y)
-#                 else:
-#                     # if a partition is in view, need to check each object to
-#                     # see if it's in view, remove it if it isn't
-#                     for obj in self.get_partition_objects(x, y):
-#                         if not collision_detection.intersect_circle(
-#                                 client_shooter_xy,
-#                                 client_view_distance,
-#                                 obj.hitbox):
-#                             self.remove_object(obj)
-# >>>>>>> 67659c4cb932d52b1dbd050e69601b7d13e52a7a
-=======
+
         for x in range(0, GameStats.game_board_width, self.partition_width):
             for y in range(
                     0,
@@ -231,7 +183,6 @@ class PartitionGrid:
                                 client_view_distance,
                                 obj.hitbox):
                             self.remove_object(obj)
->>>>>>> d0ac613effa0cfa06cbda2c9a0c78285284b417d
 
     def to_json(self):
         data = {'partition_grid': [

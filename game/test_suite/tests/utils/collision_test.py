@@ -1,14 +1,12 @@
 import unittest
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
-<<<<<<< HEAD
+
 
 # from game.utils.collision_detection import check_collision, intersect_arc, collide_rect_hb
 from game.utils.collision_detection import check_collision, intersect_circle
 
-=======
-from game.utils.collision_detection import intersect_circle, collide_rect_hb
->>>>>>> d0ac613effa0cfa06cbda2c9a0c78285284b417d
+
 
 
 class TestCollision(unittest.TestCase):
