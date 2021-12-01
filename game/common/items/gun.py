@@ -4,7 +4,7 @@ from game.common.items.item import Item
 
 
 class Gun(Item):
-    def __init__(self, gun_type, level, hitbox=None):
+    def __init__(self, gun_type=GunType.none, level=0, hitbox=None):
         super().__init__(hitbox)
         self.object_type = ObjectType.gun
 
@@ -52,8 +52,8 @@ class Gun(Item):
 
     def from_json(self, data):
         super().from_json(data)
-        self.gun_type = data['gun_type']
         self.level = data['level']
+        self.gun_type = data['gun_type']
         self.pattern = data['pattern']
         self.damage = data['damage']
         self.fire_rate = data['fire_rate']

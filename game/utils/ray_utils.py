@@ -13,8 +13,8 @@ def load_collidables_in_ray_range(
         gameboard,
         ray_endpoint,
         exclusions=[]):
-    ray_x_limit = ray_endpoint['x']
-    ray_y_limit = ray_endpoint['y']
+    ray_x_limit = ray_endpoint[0]
+    ray_y_limit = ray_endpoint[1]
     # starting partition
     partition_x = gameboard.partition.find_column(x)
     partition_y = gameboard.partition.find_row(y)
@@ -118,8 +118,8 @@ def calculate_ray_x(x1, y1, slope, y):
     return ray_x
 
 
-# Get final x and y coordinates given gun range and heading
 def get_ray_limits(heading, x1, y1, gameboard, slope, ray_range):
+    # Get final x and y coordinates given gun range and heading
     if (0 <= heading < math.pi / 2
             or (3 * math.pi) / 2 < heading <= 2 * math.pi):
         if heading == 0 or heading == 2 * math.pi:
@@ -180,27 +180,43 @@ def get_ray_limits(heading, x1, y1, gameboard, slope, ray_range):
             ray_y_limit = gameboard.height
             ray_x_limit = calculate_ray_x(x1, y1, slope, gameboard.height)
 
-    return {'x': ray_x_limit, 'y': ray_y_limit}
+    return (ray_x_limit, ray_y_limit)
 
 
-# Sort objects by distance from given player's shooter
-# This logic has failing cases, but will need to be fixed for hitbox rotation.
-# Will fix in subsequent PR
 def sort_objects(x1, y1, collidables, max_range):
     # assign distances, discard if out of bounds
-    for collidable in list(collidables.keys()):
-        dist = math.sqrt(
-            ((collidable.hitbox.position[0] - x1) ** 2) + (
-                (-collidable.hitbox.position[1] - -y1) ** 2))
+    for ray in list(collidables.keys()):
+        dist = round(math.sqrt(
+            ((ray.endpoint[0] - x1) ** 2) + (
+                (-ray.endpoint[1] - -y1) ** 2)))
         if max_range is not math.nan:
             if dist > max_range:
-                collidables.pop(collidable)
-        else:
-            collidables[collidable] = dist
+                collidables.pop(ray)
+            else:
+                collidables[ray] = dist
     # sort collidables by distance
     collidables = sorted(collidables.items(), key=lambda x: x[1])
 
     return collidables
+
+
+# Function written by Paul Draper on Stack Exchange
+def line_intersection(line1, line2):
+    xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
+    ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
+
+    def det(a, b):
+        return a[0] * b[1] - a[1] * b[0]
+
+    div = det(xdiff, ydiff)
+    if div == 0:
+        return None
+
+    d = (det(*line1), det(*line2))
+    x = det(d, xdiff) / div
+    y = det(d, ydiff) / div
+
+    return x, y
 
 
 # Determine which object ray collides with first
@@ -212,226 +228,56 @@ def determine_gun_collision(
         ray_endpoint,
         damage):
     # Ray object used to provide data for visualizer
-    ray = Ray(player.shooter.hitbox.position, ray_endpoint, None, None)
-
-    # AABB collision
+    collisions = {}
     for collidable in collidables.keys():
-        left_x = collidable.hitbox.position[0] - (collidable.hitbox.width / 2)
-        right_x = collidable.hitbox.position[0] + (collidable.hitbox.width / 2)
-        upper_y = - \
-            collidable.hitbox.position[1] + (collidable.hitbox.height / 2)
-        lower_y = - \
-            collidable.hitbox.position[1] - (collidable.hitbox.height / 2)
-        if 0 <= player.shooter.heading <= math.pi / 2:
-            ray_y = (
-                calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    left_x) if calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    left_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    lower_y) if calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    lower_y) is not math.nan else left_x)
-        elif (3 * math.pi) / 2 < player.shooter.heading <= 2 * math.pi:
-            ray_y = (
-                calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    left_x) if calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    left_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    upper_y) if calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    upper_y) is not math.nan else left_x)
-        elif math.pi < player.shooter.heading <= ((3 * math.pi) / 2):
-            ray_y = (
-                calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    right_x) if calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    right_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    upper_y) if calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    upper_y) is not math.nan else right_x)
-        elif math.pi / 2 < player.shooter.heading <= math.pi:
-            ray_y = (
-                calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    right_x) if calculate_ray_y(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    right_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    lower_y) if calculate_ray_x(
-                    player.shooter.hitbox.position[0],
-                    player.shooter.hitbox.position[1],
-                    slope,
-                    lower_y) is not math.nan else right_x)
-        if (lower_y <= ray_y <= upper_y) and (left_x <= ray_x <= right_x):
-            endpoint = {'x': ray_x, 'y': -ray_y}
+        intersections = []
+        top = line_intersection(
+            (collidable.hitbox.top_left, collidable.hitbox.top_right),
+            (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if top is not None:
+            intersections.append(top)
+        bottom = line_intersection(
+            (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
+            (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if bottom is not None:
+            intersections.append(bottom)
+        left = line_intersection(
+            (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
+            (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if left is not None:
+            intersections.append(left)
+        right = line_intersection(
+            (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
+            (player.shooter.hitbox.position, ray_endpoint)
+        )
+        if right is not None:
+            intersections.append(right)
+        for intersection in intersections:
             ray = Ray(
                 player.shooter.hitbox.position,
-                endpoint,
+                intersection,
                 collidable,
-                damage)
-            break
+                player.shooter.primary_gun.damage
+            )
+            collisions[ray] = 0
 
-    return ray
-
-
-def determine_collision(
-        heading,
-        x,
-        y,
-        gameboard,
-        collidables,
-        slope,
-        ray_endpoint,
-        damage):
-    # Ray object used to provide data for visualizer
-    ray = Ray((x, y), ray_endpoint, None, None)
-    heading = math.radians(heading)
-
-    # AABB collision
-    for collidable in collidables.keys():
-        left_x = x - (collidable.hitbox.width / 2)
-        right_x = x + (collidable.hitbox.width / 2)
-        upper_y = - \
-            y + (collidable.hitbox.height / 2)
-        lower_y = - \
-            y - (collidable.hitbox.height / 2)
-        if 0 <= heading <= math.pi / 2:
-            ray_y = (
-                calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    left_x) if calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    left_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    lower_y) if calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    lower_y) is not math.nan else left_x)
-        elif (3 * math.pi) / 2 < heading <= 2 * math.pi:
-            ray_y = (
-                calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    left_x) if calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    left_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    upper_y) if calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    upper_y) is not math.nan else left_x)
-        elif math.pi < heading <= ((3 * math.pi) / 2):
-            ray_y = (
-                calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    right_x) if calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    right_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    upper_y) if calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    upper_y) is not math.nan else right_x)
-        elif math.pi / 2 < heading <= math.pi:
-            ray_y = (
-                calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    right_x) if calculate_ray_y(
-                    x,
-                    y,
-                    slope,
-                    right_x) is not math.nan else lower_y)
-            ray_x = (
-                calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    lower_y) if calculate_ray_x(
-                    x,
-                    y,
-                    slope,
-                    lower_y) is not math.nan else right_x)
-        if (lower_y <= ray_y <= upper_y) and (left_x <= ray_x <= right_x):
-            endpoint = {'x': ray_x, 'y': -ray_y}
-            ray = Ray(
-                (x, y),
-                endpoint,
-                collidable,
-                damage)
-            break
-    return ray
+    rays = sort_objects(player.shooter.hitbox.position[0],
+                        player.shooter.hitbox.position[1],
+                        collisions,
+                        player.shooter.primary_gun.range)
+    if len(rays) > 0:
+        return rays[0][0]
+    else:
+        ray = Ray(
+            player.shooter.hitbox.position,
+            ray_endpoint,
+            None,
+            player.shooter.primary_gun.damage
+        )
+        return ray
 
 
 # Method to be called by controller
@@ -451,10 +297,7 @@ def get_ray_collision(player, gameboard):
         ray_endpoint,
         [player.shooter]
     )
-    sort_objects(player.shooter.hitbox.position[0],
-                 player.shooter.hitbox.position[1],
-                 collidables,
-                 player.shooter.primary_gun.range)
+
     ray = determine_gun_collision(
         player,
         gameboard,

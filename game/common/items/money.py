@@ -8,8 +8,8 @@ class Money(Item):
 
     def __init__(
             self,
-            hitbox,
-            health,):
+            hitbox=None,
+            health=None):
         super().__init__(hitbox, health)
 
         self.object_type = ObjectType.money

@@ -3,7 +3,7 @@ from game.common.enums import ObjectType
 
 
 class Item(MapObject):
-    def __init__(self, hitbox, health=None):
+    def __init__(self, hitbox=None, health=None):
         super().__init__(health, hitbox, True)
         self.object_type = ObjectType.item
 
