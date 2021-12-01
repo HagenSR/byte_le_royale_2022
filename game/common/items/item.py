@@ -4,9 +4,8 @@ from game.common.enums import ObjectType
 
 class Item(MapObject):
 
-
     def __init__(self, hitbox, health=None, count=1):
-        super().__init__(health, hitbox, False) # note
+        super().__init__(health, hitbox, False)  # note
         self.object_type = ObjectType.item
 
     def to_json(self):

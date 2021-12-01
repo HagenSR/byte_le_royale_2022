@@ -114,7 +114,8 @@ class PartitionGrid:
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
                 if collision_detection.check_collision(obj.hitbox, hitbox):
-                    # if collision_detection.collide_rect_hb(obj.hitbox, hitbox):
+                    # if collision_detection.collide_rect_hb(obj.hitbox,
+                    # hitbox):
                     return obj
         return False
 
