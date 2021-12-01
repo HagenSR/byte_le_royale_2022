@@ -1,4 +1,5 @@
 from game.common.enums import *
+from game.common.stats import GameStats
 
 
 class Action:
@@ -8,7 +9,6 @@ class Action:
         self._chosen_action = None
         # item_to_purchase should be set using the Consumables enum
         self.item_to_purchase = None
-        self.action_parameter = None
 
     def set_action(self, act):
         if isinstance(act, int) and act in ActionType.__dict__.values():

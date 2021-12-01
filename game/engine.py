@@ -84,17 +84,9 @@ class Engine:
                 continue
 
             # Otherwise, instantiate the player
-            if len(self.clients) == 0:
-                # Add players one and two
-                ar = GameStats.player_stats["hitbox"][0]
-                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter=Shooter(hitbox=hit))
-                self.clients.append(player)
-            else:
-                ar = GameStats.player_stats["hitbox"][1]
-                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter=Shooter(hitbox=hit))
-                self.clients.append(player)
+            # Add players one and two
+            player = Player()
+            self.clients.append(player)
 
             # Verify client isn't using invalid imports or opening anything
             imports, opening = verify_code(filename + '.py')
@@ -178,6 +170,10 @@ class Engine:
         world.pop("game_map", None)
         self.world["game_map"] = game_map
         self.world['seed'] = world['seed']
+
+        # attach shooters to the game map
+        for client in self.clients:
+            self.world["game_map"].partition.add_objects(client.shooter)
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn

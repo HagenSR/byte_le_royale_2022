@@ -41,7 +41,7 @@ class MovementController(Controller):
             angle = client.shooter.heading
             # new location is calculated using utils method
             target_location = calculate_location(location, speed, angle)
-            print('This is the target location {0}'.format(target_location))
+           # print('This is the target location {0}'.format(target_location))
             self.space_free = True
             dummy_hitbox = Hitbox(
                 10,
@@ -53,12 +53,12 @@ class MovementController(Controller):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 dummy_hitbox.position = (new_x, new_y)
-                print(
-                    'This is the dummy location {0}'.format(
-                        dummy_hitbox.position))
+                #print(
+                 #   'This is the dummy location {0}'.format(
+                   #     dummy_hitbox.position))
                 obj = world["game_board"].partition.find_object_hitbox(
                     dummy_hitbox)
-                print(obj)
+               # print(obj)
                 if not obj or not obj.collidable:
                     # new_x = location[0] + math.cos(angle)
                     # new_y = location[1] + math.sin(angle)

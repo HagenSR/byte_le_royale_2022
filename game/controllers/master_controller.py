@@ -1,5 +1,8 @@
 from copy import deepcopy
 import random
+
+from game.common.hitbox import Hitbox
+from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
 from game.controllers.shoot_controller import ShootController
@@ -14,7 +17,6 @@ from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.movement_controller import MovementController
-
 
 
 class MasterController(Controller):
@@ -32,13 +34,12 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
 
-
-    # Receives all clients for the purpose of giving them the objects they
-    # will control
+    # Receives all clients for the purpose of giving them the objects they will control
     def give_clients_objects(self, clients):
-        pass
-        # for client in clients:
-        # client.game_board = self.current_world_data["game_map"].partition
+        for index, client in enumerate(clients):
+            ar = GameStats.player_stats["hitbox"][index]
+            hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+            client.shooter = Shooter(hit)
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate

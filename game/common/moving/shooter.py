@@ -66,7 +66,7 @@ class Shooter(MovingObject):
         return False
 
     def append_inventory(self, value):
-        """Add object to inventory"""
+        """Add object to inventory. Not allowed for client use! Will be disqualified if called in contestant's code"""
         if not isinstance(
             value, tuple(
                 slot_type[1] for slot_type in self.slot_obj_types)):
@@ -129,20 +129,18 @@ class Shooter(MovingObject):
 
     # set the heading and direction in a controlled way, might need to add
     # distance attribute later
-    def move(self, heading, speed):
-        """Set heading and speed to handle moving"""
-        self.heading = math.radians(heading)
+    def set_movement_parameters(self, heading, speed):
+        """Set heading and speed to handle moving, does not set the action to move"""
+        self.heading = math.radians(heading)  # TODO change this to not be converted to radians
         self.hitbox.rotation = heading
-        # if speed < GameStats.player_stats['move_speed']:
-        self.speed = speed
-        self.moving = True
-        # raise ValueError(
-        #  "Speed must be less than max move speed for the player")
+        if speed <= GameStats.player_stats['max_distance_per_turn']:
+            self.speed = speed
+        else:
+            raise ValueError("Speed must be less than max move speed for the player")
 
-   # def stop(self):
-        # """Define stop movement"""
-        # super().speed = 0
-        # self.moving = False
+    def stop(self):
+        """Stop player movement"""
+        self.speed = 0
 
     def to_json(self):
         data = super().to_json()

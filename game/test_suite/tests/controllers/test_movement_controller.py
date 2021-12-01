@@ -111,21 +111,21 @@ class TestMovementController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(wall_object)
         # self.myPlayer.shooter.speed = 50
         # self.myPlayer.shooter.heading = 0
-        self.myPlayer.shooter.move(0, 50)
+        self.myPlayer.shooter.set_movement_parameters(0, 50)
         self.movementController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.movementController.space_free)
 
     # player moves straight line past object that is also level to x axis, no
     # collision should occur
     def test_passing_object_no_angle_pass(self):
-        print("testing object no angle pass")
+        #print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
         # self.myPlayer.shooter.heading = 90
         # self.myPlayer.shooter.hitbox.rotation = 90
         # self.myPlayer.shooter.speed = 50
         self.myPlayer.shooter.move(90, 50)
-        print(self.myPlayer.shooter.heading)
-        print(self.myPlayer.shooter.hitbox.rotation)
+        #print(self.myPlayer.shooter.heading)
+        #print(self.myPlayer.shooter.hitbox.rotation)
         # print(self.myPlayer.shooter.hitbox.topRight)
         # self.myPlayer.shooter.hitbox.rotation = 90
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (70, 70), 0))
@@ -162,7 +162,7 @@ class TestMovementController(unittest.TestCase):
     def test_passing_object_angle_pass(self):
         print("testing object angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.myPlayer.shooter.move(90, 50)
+        self.myPlayer.shooter.set_movement_parameters(90, 50)
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (60, 70), 290))
         print(wall_object.hitbox.top_left)
         print(wall_object.hitbox.top_right)
@@ -177,9 +177,8 @@ class TestMovementController(unittest.TestCase):
     # player moves straight line past object that is at an angle, they should
     # be stopped from colliding
     def test_passing_object_angle_fail(self):
-        print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.myPlayer.shooter.move(90, 50)
+        self.myPlayer.shooter.set_movement_parameters(0, 50)
         wall_object = Wall(health=21, hitbox=Hitbox(10, 10, (60, 50), 70))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
