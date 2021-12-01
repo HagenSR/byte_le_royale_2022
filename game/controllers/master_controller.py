@@ -34,7 +34,8 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
 
-    # Receives all clients for the purpose of giving them the objects they will control
+    # Receives all clients for the purpose of giving them the objects they
+    # will control
     def give_clients_objects(self, clients):
         for index, client in enumerate(clients):
             ar = GameStats.player_stats["hitbox"][index]

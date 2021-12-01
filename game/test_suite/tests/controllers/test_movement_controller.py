@@ -124,8 +124,8 @@ class TestMovementController(unittest.TestCase):
         # self.myPlayer.shooter.hitbox.rotation = 90
         # self.myPlayer.shooter.speed = 50
         self.myPlayer.shooter.move(90, 50)
-        #print(self.myPlayer.shooter.heading)
-        #print(self.myPlayer.shooter.hitbox.rotation)
+        # print(self.myPlayer.shooter.heading)
+        # print(self.myPlayer.shooter.hitbox.rotation)
         # print(self.myPlayer.shooter.hitbox.topRight)
         # self.myPlayer.shooter.hitbox.rotation = 90
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (70, 70), 0))

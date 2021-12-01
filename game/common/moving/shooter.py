@@ -131,12 +131,14 @@ class Shooter(MovingObject):
     # distance attribute later
     def set_movement_parameters(self, heading, speed):
         """Set heading and speed to handle moving, does not set the action to move"""
-        self.heading = math.radians(heading)  # TODO change this to not be converted to radians
+        self.heading = math.radians(
+            heading)  # TODO change this to not be converted to radians
         self.hitbox.rotation = heading
         if speed <= GameStats.player_stats['max_distance_per_turn']:
             self.speed = speed
         else:
-            raise ValueError("Speed must be less than max move speed for the player")
+            raise ValueError(
+                "Speed must be less than max move speed for the player")
 
     def stop(self):
         """Stop player movement"""

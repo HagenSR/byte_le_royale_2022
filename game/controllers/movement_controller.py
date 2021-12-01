@@ -53,9 +53,9 @@ class MovementController(Controller):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 dummy_hitbox.position = (new_x, new_y)
-                #print(
-                 #   'This is the dummy location {0}'.format(
-                   #     dummy_hitbox.position))
+                # print(
+                #   'This is the dummy location {0}'.format(
+                #     dummy_hitbox.position))
                 obj = world["game_board"].partition.find_object_hitbox(
                     dummy_hitbox)
                # print(obj)
