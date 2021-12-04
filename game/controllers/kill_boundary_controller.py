@@ -6,6 +6,10 @@ import math
 
 
 class KillBoundaryController(Controller):
+
+    def __init__(self):
+        super().__init__()
+
     # Determine damage to player based on distance from edge of circle
     # If distance to center > Current size
     # damage = player_distance - current_radius
