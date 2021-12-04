@@ -26,19 +26,22 @@ class TestInteractController(unittest.TestCase):
     # def test_interact_object_invalid(self):
 
     # def test_interact_door(self):
+    #
+    # def test_pickup_consumable(self):
+    #     an_item = Consumable(hitbox=None, health=None,
+    #                          consumable_enum=Consumables.speed_boost)
+    #     self.
 
-    # def test_pickup_upgrade(self):
-
-   # def test_pickup_money(self):
-       # self.myPlayer.shooter.money = 150
-       # old_money = self.myPlayer.shooter.money
-       # print(old_money)
-       # money_object = Money(Hitbox(10, 10, (10, 10), health=10, count=1))
-       # self.world_data["game_board"].partition.add_object(
-            #money_object)
-       # print(money_object.amount)
-        #self.interactController.handle_actions(self.myPlayer, self.world_data)
-        #self.assertTrue(self.myPlayer.shooter.money, (old_money + money_object.amount))
+    def test_pickup_money(self):
+        self.myPlayer.shooter.money = 150
+        old_money = self.myPlayer.shooter.money
+        print(old_money)
+        money_object = Money(Hitbox(10, 10, (10, 10)))
+        self.world_data["game_board"].partition.add_object(
+            money_object)
+        print(money_object.amount)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(self.myPlayer.shooter.money, (old_money + money_object.amount))
 
     if __name__ == '__main__':
         unittest.main
