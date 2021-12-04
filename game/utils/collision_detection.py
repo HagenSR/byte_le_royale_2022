@@ -5,8 +5,16 @@ import math
 
 
 def check_collision(hitbox_one, hitbox_two):
-    hitbox1_corners = [hitbox_one.top_left, hitbox_one.top_right, hitbox_one.bottom_right, hitbox_one.bottom_left]
-    hitbox2_corners = [hitbox_two.top_left, hitbox_two.top_right, hitbox_two.bottom_right, hitbox_two.bottom_left]
+    hitbox1_corners = [
+        hitbox_one.top_left,
+        hitbox_one.top_right,
+        hitbox_one.bottom_right,
+        hitbox_one.bottom_left]
+    hitbox2_corners = [
+        hitbox_two.top_left,
+        hitbox_two.top_right,
+        hitbox_two.bottom_right,
+        hitbox_two.bottom_left]
 
     for i in range(4):
         for j in range(4):
