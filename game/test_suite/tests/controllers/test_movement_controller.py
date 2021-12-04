@@ -123,7 +123,7 @@ class TestMovementController(unittest.TestCase):
         # self.myPlayer.shooter.heading = 90
         # self.myPlayer.shooter.hitbox.rotation = 90
         # self.myPlayer.shooter.speed = 50
-        self.myPlayer.shooter.move(90, 50)
+        self.myPlayer.shooter.set_movement_parameters(90, 50)
         # print(self.myPlayer.shooter.heading)
         # print(self.myPlayer.shooter.hitbox.rotation)
         # print(self.myPlayer.shooter.hitbox.topRight)
@@ -145,7 +145,7 @@ class TestMovementController(unittest.TestCase):
         print("testing object no angle pass")
         self.myPlayer.shooter.hitbox.position = (50, 50)
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (50, 70), 0))
-        self.myPlayer.shooter.move(90, 50)
+        self.myPlayer.shooter.set_movement_parameters(90, 50)
         # self.myPlayer.shooter.hitbox.rotation = 0
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)

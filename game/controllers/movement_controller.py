@@ -1,22 +1,12 @@
-from game.common.enums import *
-from game.common.stats import GameStats
-from game.utils.collision_detection import check_collision
-from game.common.game_board import GameBoard
-from game.common.action import Action
-from game.common.moving.shooter import Shooter
 import math
+import copy
 
+from game.common.stats import GameStats
 from game.common.hitbox import Hitbox
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
-from game.common.moving.shooter import Shooter
-from game.common.action import Action
-from game.common.game_board import GameBoard
-from game.utils.collision_detection import check_collision
 from game.common.enums import *
 
-
-# May need to import player and/or shooter
 
 class MovementController(Controller):
 
@@ -41,27 +31,16 @@ class MovementController(Controller):
             angle = client.shooter.heading
             # new location is calculated using utils method
             target_location = calculate_location(location, speed, angle)
-           # print('This is the target location {0}'.format(target_location))
             self.space_free = True
-            dummy_hitbox = Hitbox(
-                10,
-                10,
-                client.shooter.hitbox.position,
-                math.degrees(client.shooter.hitbox.rotation))
+            dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
             while location != target_location and self.space_free:
                 location = client.shooter.hitbox.position
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 dummy_hitbox.position = (new_x, new_y)
-                # print(
-                #   'This is the dummy location {0}'.format(
-                #     dummy_hitbox.position))
                 obj = world["game_board"].partition.find_object_hitbox(
                     dummy_hitbox)
-               # print(obj)
                 if not obj or not obj.collidable:
-                    # new_x = location[0] + math.cos(angle)
-                    # new_y = location[1] + math.sin(angle)
                     client.shooter.hitbox.position = (new_x, new_y)
                     if abs(
                             new_x -

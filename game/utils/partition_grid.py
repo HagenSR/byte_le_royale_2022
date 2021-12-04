@@ -51,6 +51,7 @@ class PartitionGrid:
         return math.floor(x / self.partition_height)
 
     def check_overlap(self, hitbox: Hitbox):
+        # TODO adjust this for rotation madness
         partitions = []
         top_left_row = self.find_row(hitbox.top_left[1])
         top_left_column = self.find_column(hitbox.top_left[0])
@@ -114,8 +115,6 @@ class PartitionGrid:
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
                 if collision_detection.check_collision(obj.hitbox, hitbox):
-                    # if collision_detection.collide_rect_hb(obj.hitbox,
-                    # hitbox):
                     return obj
         return False
 

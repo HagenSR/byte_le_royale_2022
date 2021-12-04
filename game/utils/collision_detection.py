@@ -5,10 +5,24 @@ import math
 
 
 def check_collision(hitbox_one, hitbox_two):
-    return (hitbox_one.top_left[0] < hitbox_two.top_right[0] and
-            hitbox_one.top_right[0] > hitbox_two.top_left[0] and
-            hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
-            hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
+    hitbox1_corners = [hitbox_one.top_left, hitbox_one.top_right, hitbox_one.bottom_right, hitbox_one.bottom_left]
+    hitbox2_corners = [hitbox_two.top_left, hitbox_two.top_right, hitbox_two.bottom_right, hitbox_two.bottom_left]
+
+    for i in range(4):
+        for j in range(4):
+            if (
+                hitbox1_corners[i][0] < hitbox2_corners[(1 + j) % 4][0] and
+                hitbox1_corners[(1 + i) % 4][0] > hitbox2_corners[j][0] and
+                hitbox1_corners[i][1] < hitbox2_corners[(3 + j) % 4][1] and
+                hitbox1_corners[(2 + i) % 4][1] > hitbox2_corners[(1 + j) % 4][1]
+            ):
+                return True
+    return False
+
+    # return (hitbox_one.top_left[0] < hitbox_two.top_right[0] and
+    #         hitbox_one.top_right[0] > hitbox_two.top_left[0] and
+    #         hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
+    #         hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
 
 
 ###############################################################################
