@@ -88,11 +88,10 @@ def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
 
 
 # Calculate slope from player heading
-def calculate_slope(heading):
-    headingInRadians = math.radians(heading)
-    if (headingInRadians != math.pi / 2
-            and headingInRadians != ((3 * math.pi) / 2)):
-        slope = math.tan(headingInRadians)
+def calculate_slope(heading_in_radians):
+    if (heading_in_radians != math.pi / 2
+            and heading_in_radians != ((3 * math.pi) / 2)):
+        slope = math.tan(heading_in_radians)
     else:
         slope = math.nan
 
