@@ -66,4 +66,9 @@ class ShootController(Controller):
                     )
                     game_board.ray_list.append(ray)
                     collision_object = ray.collision
-                    apply_damage(collision_object, ray, gun, game_board, GameStats.shot_pattern_multi_pellet_count)
+                    apply_damage(
+                        collision_object,
+                        ray,
+                        gun,
+                        game_board,
+                        GameStats.shot_pattern_multi_pellet_count)
