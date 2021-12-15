@@ -173,7 +173,7 @@ class Engine:
 
         # attach shooters to the game map
         for client in self.clients:
-            self.world["game_map"].partition.add_objects(client.shooter)
+            self.world["game_map"].partition.add_object(client.shooter)
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn

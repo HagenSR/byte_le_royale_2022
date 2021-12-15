@@ -33,6 +33,7 @@ class MasterController(Controller):
         self.seed = -1
         self.turn = 1
         self.shoot_controller = ShootController()
+        self.loot_generation_controller = LootGenerationController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -40,7 +41,7 @@ class MasterController(Controller):
         for index, client in enumerate(clients):
             ar = GameStats.player_stats["hitbox"][index]
             hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-            client.shooter = Shooter(hit)
+            client.shooter = Shooter(hitbox=hit)
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
