@@ -11,7 +11,7 @@ class Consumable(Item):
             consumable_enum=None):
         super().__init__(hitbox, health)
         self.object_type = ObjectType.consumable
-        self.consumable_enum = consumable_enum
+        self.consumable_type = consumable_enum
 
     def to_json(self):
         data = super().to_json()

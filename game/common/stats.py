@@ -49,6 +49,12 @@ class GameStats:
         },
     }
 
+    consumable_stats = {
+        "health_pack_heal_amount": 50,
+        "speed_increase_percent": .2,
+        "radar_range_increase_percent": .2,
+    }
+
     # stats for money located on the gameboard
     min_money_amount = 25
     max_money_amount = 500
@@ -75,7 +81,7 @@ class GameStats:
     }
 
     shop_stats = {
-        Consumables.speed_boost: {
+        Consumables.speed: {
             'cost': 20,
             'quantity': 5
         },
@@ -83,7 +89,7 @@ class GameStats:
             'cost': 25,
             'quantity': 5
         },
-        Consumables.armor_pack: {
+        Consumables.shield: {
             'cost': 30,
             'quantity': 5
         }

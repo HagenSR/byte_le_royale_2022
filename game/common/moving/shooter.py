@@ -31,6 +31,7 @@ class Shooter(MovingObject):
         self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
         self.moving = False
+        self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
         # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
@@ -139,10 +140,6 @@ class Shooter(MovingObject):
         else:
             raise ValueError(
                 "Speed must be less than max move speed for the player")
-
-    def stop(self):
-        """Stop player movement"""
-        self.speed = 0
 
     def to_json(self):
         data = super().to_json()
