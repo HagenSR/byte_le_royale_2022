@@ -1,14 +1,11 @@
 import unittest
 
 from game.common.action import Action
-from game.common.enums import ActionType, GunType, GunLevel
-from game.common.hitbox import Hitbox
+from game.common.enums import ActionType, GunType
 from game.common.items.gun import Gun
-from game.common.map_object import MapObject
 from game.common.moving.shooter import Shooter
 from game.common.player import Player
 from game.controllers.reload_controller import ReloadController
-from game.utils.partition_grid import PartitionGrid
 
 
 class TestReloadController(unittest.TestCase):
