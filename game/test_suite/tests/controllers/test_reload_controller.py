@@ -2,6 +2,7 @@ import unittest
 
 from game.common.action import Action
 from game.common.enums import ActionType, GunType
+from game.common.hitbox import Hitbox
 from game.common.items.gun import Gun
 from game.common.moving.shooter import Shooter
 from game.common.player import Player
