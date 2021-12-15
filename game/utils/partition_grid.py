@@ -51,23 +51,28 @@ class PartitionGrid:
         return math.floor(x / self.partition_height)
 
     def check_overlap(self, hitbox: Hitbox):
-        # TODO adjust this for rotation madness
-        partitions = []
-        top_left_row = self.find_row(hitbox.top_left[1])
-        top_left_column = self.find_column(hitbox.top_left[0])
-        top_right_row = self.find_row(hitbox.top_right[1])
-        top_right_column = self.find_column(hitbox.top_right[0])
-        bottom_right_row = self.find_row(hitbox.bottom_right[1])
-        bottom_right_column = self.find_column(hitbox.bottom_right[0])
-        bottom_left_row = self.find_row(hitbox.bottom_left[1])
-        bottom_left_column = self.find_column(hitbox.bottom_left[0])
-        partitions.append((top_left_row, top_left_column))
-        if top_left_row != top_right_row and top_left_column != top_right_column:
-            partitions.append((top_right_row, top_right_column))
-        if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
-            partitions.append((bottom_right_row, bottom_right_column))
-        if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
-            partitions.append((bottom_left_row, bottom_left_column))
+        hitbox_corners = [
+            hitbox.top_left,
+            hitbox.top_right,
+            hitbox.bottom_right,
+            hitbox.bottom_left]
+        partitions = set()
+        for i in range(4):
+            top_left_row = self.find_row(hitbox_corners[i][1])
+            top_left_column = self.find_column(hitbox_corners[i][0])
+            top_right_row = self.find_row(hitbox_corners[(1 + i) % 4][1])
+            top_right_column = self.find_column(hitbox_corners[(1 + i) % 4][0])
+            bottom_right_row = self.find_row(hitbox_corners[(2 + i) % 4][1])
+            bottom_right_column = self.find_column(hitbox_corners[(2 + i) % 4][0])
+            bottom_left_row = self.find_row(hitbox_corners[(3 + i) % 4][1])
+            bottom_left_column = self.find_column(hitbox_corners[(3 + i) % 4][0])
+            partitions.add((top_left_row, top_left_column))
+            if top_left_row != top_right_row and top_left_column != top_right_column:
+                partitions.add((top_right_row, top_right_column))
+            if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
+                partitions.add((bottom_right_row, bottom_right_column))
+            if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
+                partitions.add((bottom_left_row, bottom_left_column))
         return partitions
 
     def add_object(self, obj: MapObject):

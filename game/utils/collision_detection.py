@@ -21,7 +21,7 @@ def check_collision(hitbox_one, hitbox_two):
             if (
                 hitbox1_corners[i][0] < hitbox2_corners[(1 + j) % 4][0] and
                 hitbox1_corners[(1 + i) % 4][0] > hitbox2_corners[j][0] and
-                hitbox1_corners[i][1] < hitbox2_corners[(3 + j) % 4][1] and
+            hitbox1_corners[i][1] < hitbox2_corners[(3 + j) % 4][1] and
                 hitbox1_corners[(2 + i) % 4][1] > hitbox2_corners[(1 + j) % 4][1]
             ):
                 return True

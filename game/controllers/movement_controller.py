@@ -2,7 +2,6 @@ import math
 import copy
 
 from game.common.stats import GameStats
-from game.common.hitbox import Hitbox
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
 from game.common.enums import *
@@ -17,7 +16,7 @@ class MovementController(Controller):
     def handle_actions(self, client, world):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
-            # shooter object is removed from old location on gameboard to avoid
+            # shooter object is removed from old location on game board to avoid
             # object duplicates
             if client.shooter.speed > GameStats.player_stats["max_distance_per_turn"]:
                 raise Exception(
@@ -53,4 +52,3 @@ class MovementController(Controller):
                     self.space_free = False
             # gameboard is updated with new client location
             world["game_board"].partition.add_object(client.shooter)
-            print('Space free? {0}'.format(self.space_free))
