@@ -34,10 +34,12 @@ class ActionType(int, Enum):
     none = 0
     move = 1
     shoot = 2
-    pickup = 3
-    reload = 4
+    interact = 3
+    reload_weapon = 4
     shop = 5
-    use_item = 6
+    pickup = 6
+    reload = 7
+    use_item = 8
 
 
 class Upgrades(int, Enum):

@@ -30,7 +30,7 @@ class GameStats:
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
         'field_of_view': 90,
         'view_distance': 100,
-        'move_speed': 10,
+        'max_distance_per_turn': 50
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }

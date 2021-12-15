@@ -1,7 +1,9 @@
 from copy import deepcopy
 import random
-from game.common.stats import GameStats
 
+from game.common.hitbox import Hitbox
+from game.common.moving.shooter import Shooter
+from game.common.stats import GameStats
 from game.common.action import Action
 from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
@@ -10,11 +12,11 @@ import game.config as config
 from game.controllers.shop_controller import ShopController
 from game.utils.threadBytel import CommunicationThread
 from game.controllers.shoot_controller import ShootController
-
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
+from game.controllers.movement_controller import MovementController
 
 
 class MasterController(Controller):
@@ -26,15 +28,20 @@ class MasterController(Controller):
 
         self.boundary_controller = KillBoundaryController()
         self.shop_controller = ShopController()
-        self.loot_generation_controller = LootGenerationController()
+
+        self.movement_controller = MovementController()
+        self.seed = -1
+        self.turn = 1
         self.shoot_controller = ShootController()
+        self.loot_generation_controller = LootGenerationController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
     def give_clients_objects(self, clients):
-        pass
-        # for client in clients:
-        # client.game_board = self.current_world_data["game_map"].partition
+        for index, client in enumerate(clients):
+            ar = GameStats.player_stats["hitbox"][index]
+            hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
+            client.shooter = Shooter(hitbox=hit)
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -83,6 +90,9 @@ class MasterController(Controller):
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.shop_controller.handle_actions(client)
+            # might need to fix world argument
+            self.movement_controller.handle_actions(
+                client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
