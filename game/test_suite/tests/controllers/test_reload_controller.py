@@ -11,8 +11,8 @@ from game.controllers.reload_controller import ReloadController
 class TestReloadController(unittest.TestCase):
     def setUp(self):
         self.myPlayer = Player(shooter=Shooter(
-                0, 0, Hitbox(
-                    10, 10, (10, 10))))
+            0, 0, Hitbox(
+                10, 10, (10, 10))))
         self.myPlayer.action._chosen_action = ActionType.reload
         self.myPlayer.shooter.append_inventory(
             Gun(GunType.shotgun, 2, hitbox=Hitbox(10, 10, (10, 10))))
