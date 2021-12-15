@@ -16,12 +16,11 @@ from game.common.wall import Wall
 class TestMovementController(unittest.TestCase):
 
     def setUp(self):
-        act = Action()
-        act.set_action(ActionType.move)
         self.myPlayer = Player(
-            action=act, shooter=Shooter(
+            shooter=Shooter(
                 0, 0, Hitbox(
                     10, 10, (10, 10), 0)))
+        self.myPlayer.action._chosen_action = ActionType.move
         self.movementController = MovementController()
         self.world_data = {'game_board': GameBoard()}
 
@@ -66,8 +65,7 @@ class TestMovementController(unittest.TestCase):
                  50),
                 0),
             health=None,
-            count=None,
-            consumable_enum=Consumables.speed_boost)
+            consumable_enum=Consumables.speed)
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(an_item)

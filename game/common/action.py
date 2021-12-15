@@ -1,6 +1,5 @@
 from game.common.enums import *
 from game.common.items.consumable import Consumable
-from game.common.stats import GameStats
 
 
 class Action:
