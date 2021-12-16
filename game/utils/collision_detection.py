@@ -227,6 +227,10 @@ def distance(x1, y1, x2, y2):
     return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1 / 2)
 
 
+def distance_tuples(coord_tuple1, coord_tuple2):
+    return distance(coord_tuple1[0], coord_tuple1[1], coord_tuple2[0], coord_tuple2[1])
+
+
 def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
     # This method checks intersection with an arc
     # However, for simplification it cuts the chord off and assumes it's a

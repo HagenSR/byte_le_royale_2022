@@ -23,14 +23,17 @@ class Shooter(MovingObject):
             hitbox,
             collidable=True
         )
-        self.heading = math.radians(heading)
         self.object_type = ObjectType.shooter
-        self.money = GameStats.player_stats['starting_money']
-        self.armor = None
-        self.visible = []
+
         self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
-        self.moving = False
+        self.max_speed = GameStats.player_stats['max_distance_per_turn']
+
+        self.heading = heading
+        self.speed = speed
+
+        self.money = GameStats.player_stats['starting_money']
+        self.armor = None
         self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
@@ -128,29 +131,24 @@ class Shooter(MovingObject):
                     break
         return self.primary_gun
 
-    # set the heading and direction in a controlled way, might need to add
-    # distance attribute later
-    def set_movement_parameters(self, heading, speed):
-        """Set heading and speed to handle moving, does not set the action to move"""
-        self.heading = math.radians(
-            heading)  # TODO change this to not be converted to radians
+    @property
+    def heading(self):
+        return self._heading
+
+    @heading.setter
+    def heading(self, heading):
+        if not 0 <= heading <= 360:
+            raise ValueError("Heading must be between 0 and 360")
+        self._heading = heading
         self.hitbox.rotation = heading
-        if speed <= GameStats.player_stats['max_distance_per_turn']:
-            self.speed = speed
-        else:
-            raise ValueError(
-                "Speed must be less than max move speed for the player")
 
     def to_json(self):
         data = super().to_json()
 
         data['inventory'] = self.inventory
-        data['visible'] = [obj.to_json() for obj in self.visible]
-
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
-        data['moving'] = self.moving
 
         return data
 

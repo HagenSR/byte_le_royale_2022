@@ -17,6 +17,6 @@ class UseController(Controller):
             if obj.consumable_type == Consumables.shield:
                 client.shooter.shield = True
             if obj.consumable_type == Consumables.speed:
-                client.shooter.speed *= 1 + GameStats.consumable_stats['speed_increase_percent']
+                client.shooter.max_speed *= 1 + GameStats.consumable_stats['speed_increase_percent']
             if obj.consumable_type == Consumables.radar:
                 client.shooter.view_distance *= 1 + GameStats.consumable_stats['radar_range_increase_percent']
