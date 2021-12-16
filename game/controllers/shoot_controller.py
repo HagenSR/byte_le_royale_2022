@@ -33,7 +33,7 @@ class ShootController(Controller):
         super().__init__()
 
     def handle_action(self, client, game_board):
-        if client.action is ActionType.shoot:
+        if client.action._chosen_action is ActionType.shoot:
             gun = client.shooter.primary_gun
             if gun.pattern == ShotPattern.single:
                 ray = get_gun_ray_collision(client, game_board)

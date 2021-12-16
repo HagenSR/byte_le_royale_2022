@@ -1,5 +1,5 @@
 from game.common.enums import *
-from game.common.stats import GameStats
+from game.common.items.consumable import Consumable
 
 
 class Action:
@@ -9,6 +9,7 @@ class Action:
         self._chosen_action = None
         # item_to_purchase should be set using the Consumables enum
         self.item_to_purchase = None
+        self.item_to_use = None
 
     def set_action(self, act):
         if isinstance(act, int) and act in ActionType.__dict__.values():
@@ -24,6 +25,14 @@ class Action:
         else:
             raise ValueError(
                 "value entered does not retrieve consumable enum.")
+
+    def select_item_to_use(self, obj):
+        """Sets item to use and action to use. Must be same object reference as is in player inventory"""
+        if isinstance(obj, Consumable):
+            self._chosen_action = ActionType.use
+            self.item_to_use = obj
+        else:
+            raise ValueError("Item to buy must be of type Consumable")
 
     def to_json(self):
         data = dict()

@@ -10,6 +10,7 @@ from game.common.enums import *
 from game.common.player import Player
 import game.config as config
 from game.controllers.shop_controller import ShopController
+from game.controllers.use_controller import UseController
 from game.utils.threadBytel import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
@@ -34,6 +35,8 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
         self.loot_generation_controller = LootGenerationController()
+
+        self.use_controller = UseController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -86,17 +89,16 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
-            ReloadController.handle_actions(client)
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
-            self.shop_controller.handle_actions(client)
-            # might need to fix world argument
             self.movement_controller.handle_actions(
                 client, self.current_world_data["game_map"])
+            self.use_controller.handle_actions(client)
+            self.shop_controller.handle_actions(client)
+            ReloadController.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
-        pass
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):

@@ -1,24 +1,19 @@
 import unittest
 
-from game.common.action import Action
-from game.common.enums import ActionType, GunType, GunLevel
+from game.common.enums import ActionType, GunType
 from game.common.hitbox import Hitbox
 from game.common.items.gun import Gun
-from game.common.map_object import MapObject
 from game.common.moving.shooter import Shooter
 from game.common.player import Player
 from game.controllers.reload_controller import ReloadController
-from game.utils.partition_grid import PartitionGrid
 
 
 class TestReloadController(unittest.TestCase):
     def setUp(self):
-        act = Action()
-        act.set_action(ActionType.reload)
-        self.myPlayer = Player(
-            action=act, shooter=Shooter(
-                0, 0, Hitbox(
-                    10, 10, (10, 10))))
+        self.myPlayer = Player(shooter=Shooter(
+            0, 0, Hitbox(
+                10, 10, (10, 10))))
+        self.myPlayer.action._chosen_action = ActionType.reload
         self.myPlayer.shooter.append_inventory(
             Gun(GunType.shotgun, 2, hitbox=Hitbox(10, 10, (10, 10))))
         self.reloadController = ReloadController()
