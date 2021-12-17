@@ -16,11 +16,15 @@ class InteractController(Controller):
         super().__init__()
 
     def handle_actions(self, client, world):
-        # world["game_board"].partition.add_object(client.shooter)
+        object_target = False
         if client.action._chosen_action is ActionType.interact:
-            object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
+            object_list = world["game_board"].partition.get_partition_objects(client.shooter.hitbox.position[0],
+                                                                              client.shooter.hitbox.position[1])
+            for obj in object_list:
+                if check_collision(client.shooter.hitbox, obj.hitbox) and not isinstance(obj, Shooter):
+                    object_target = obj
             print(object_target)
-            if object_target is False:
+            if not object_target:
                 raise ValueError("There is no object it interact with.")
             if isinstance(object_target, Upgrade):
                 self.interact_upgrade(client, world, object_target)
