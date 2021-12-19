@@ -13,6 +13,7 @@ from game.common.moving.moving_object import MovingObject
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.wall import Wall
+from game.common.teleporter import Teleporter
 from game.utils import collision_detection
 
 
@@ -223,5 +224,8 @@ class PartitionGrid:
                 obj_list.append(Door.from_json(Door(), obj))
             if obj['object_type'] == ObjectType.wall:
                 obj_list.append(Wall.from_json(Wall(), obj))
-
+            if obj['object_type'] == ObjectType.teleporter:
+                obj_list.append(Teleporter.from_json(Teleporter(), obj))
+        for object in obj_list:
+            print(type(object))
         return obj_list

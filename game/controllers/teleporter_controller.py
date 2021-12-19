@@ -29,8 +29,6 @@ class TeleporterController(Controller):
             for y in range(0, GameStats.game_board_height,
                            game_board.partition.partition_height):
                 for object in game_board.partition.get_partition_objects(x, y):
-                    print(type(object))
                     if isinstance(object, Teleporter):
-
                         teleporter_list.append(object)
         return teleporter_list

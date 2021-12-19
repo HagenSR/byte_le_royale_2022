@@ -397,7 +397,7 @@ def generate():
 
     # place 5 teleporters
     for i in range(5):
-        teleporter_x, teleporter_y = GameStats.game_board_width/2, GameStats.game_board_height/2
+        teleporter_x, teleporter_y = find_teleporter_position()
         dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
         while game_map.partition.find_object_object(dummy_wall) is not False\
                 or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
@@ -435,7 +435,8 @@ def find_teleporter_position():
     elif x_corridor == 3:
         x_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
     elif x_corridor == 4:
-        x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width)
+        # teleporters are 10 x 10 so they must spawn 10 left of game board width
+        x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 10)
 
     if y_corridor == 1:
         y_pos = random.randint(0, GameStats.corridor_width_height)
@@ -444,13 +445,15 @@ def find_teleporter_position():
     elif y_corridor == 3:
         y_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
     elif y_corridor == 4:
-        y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width)
+        # teleporters are 10 x 10 so they must spawn 10 left of game board height
+        y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 10)
 
     return x_pos, y_pos
 
 def determine_teleporter_nearby(teleporter, game_board):
-    for x in range(int(max(0, teleporter.hitbox.topLeft[0] - 5)), int(min(teleporter.hitbox.topRight[1] + 5, GameStats.game_board_width))):
-        for y in range(int(max(0, teleporter.hitbox.topLeft[0] - 5)), int(min(teleporter.hitbox.bottomLeft[1] + 5, GameStats.game_board_width))):
+    # min & max make sure bounds are within the game board
+    for x in range(int(max(0, teleporter.hitbox.position[0] - 5)), int(min(teleporter.hitbox.position[1] + 5, GameStats.game_board_width))):
+        for y in range(int(max(0, teleporter.hitbox.position[0] - 5)), int(min(teleporter.hitbox.position[1] + 5, GameStats.game_board_width))):
             if game_board.partition.find_object_coordinates(x, y) is not False:
                 return True
     return False

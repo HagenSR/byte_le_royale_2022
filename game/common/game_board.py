@@ -60,6 +60,7 @@ class GameBoard(GameObject):
 
         data['circle_radius'] = self.circle_radius
 
+
         return data
 
     def from_json(self, data):
