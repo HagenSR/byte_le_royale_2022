@@ -226,6 +226,4 @@ class PartitionGrid:
                 obj_list.append(Wall.from_json(Wall(), obj))
             if obj['object_type'] == ObjectType.teleporter:
                 obj_list.append(Teleporter.from_json(Teleporter(), obj))
-        for object in obj_list:
-            print(type(object))
         return obj_list

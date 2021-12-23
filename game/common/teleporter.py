@@ -4,18 +4,20 @@ from game.common.enums import ObjectType
 
 class Teleporter(MapObject):
 
-    def __init__(self, hitbox=None, cooldown=20, health=10):
+    def __init__(self, hitbox=None, turn_cooldown=5, health=10):
         super().__init__(health=health, hitbox=hitbox, collidable=False)
-        # cooldown is in terms of seconds
-        self.cooldown = cooldown
+        self.turn_cooldown = turn_cooldown
+        self.usable = True
         self.object_type = ObjectType.teleporter
 
     def to_json(self):
         data = super().to_json()
-        data['cooldown'] = self.cooldown
+        data['turn_cooldown'] = self.turn_cooldown
+        data['usable'] = self.usable
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.cooldown = data['cooldown']
+        self.turn_cooldown = data['turn_cooldown']
+        self.usable = data['usable']
         return self
