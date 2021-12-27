@@ -72,6 +72,7 @@ class MasterController(Controller):
 
         if not self.instantiated_teleporter_controller:
             self.teleporter_controller = TeleporterController(self.current_world_data["game_map"])
+            self.instantiated_teleporter_controller = True
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
