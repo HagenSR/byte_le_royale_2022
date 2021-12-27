@@ -1,6 +1,9 @@
 import unittest
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
+
+
+# from game.utils.collision_detection import check_collision, intersect_arc, collide_rect_hb
 from game.utils.collision_detection import check_collision, intersect_circle
 
 
@@ -21,6 +24,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (5, 6)
         self.hitTwo.height = 5
         self.hitTwo.width = 8
+
         self.assertTrue(check_collision(self.hitOne, self.hitTwo))
 
     def test_collision_false_one(self):
@@ -31,6 +35,7 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.position = (20, 20)
         self.hitTwo.height = 5
         self.hitTwo.width = 8
+        # self.assertFalse(check_collision(self.hitOne, self.hitTwo))
         self.assertFalse(check_collision(self.hitOne, self.hitTwo))
 
     def test_collision_true_two(self):

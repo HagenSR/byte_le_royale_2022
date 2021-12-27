@@ -9,8 +9,7 @@ class Wall(MapObject):
             hitbox=None,
             health=GameStats.default_wall_health,
             destructible=False):
-        super().__init__(health, hitbox, collidable=destructible)
-        self.destructible = destructible
+        super().__init__(health, hitbox, collidable=True)
         self.object_type = ObjectType.wall
 
     def to_json(self):
