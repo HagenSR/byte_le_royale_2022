@@ -14,6 +14,7 @@ class MovingObject(MapObject):
             hitbox=None,
             collidable=None):
         super().__init__(health, hitbox, collidable)
+        self.max_speed = GameStats.moving_object_stats["max_speed"]
         self.heading = heading
         self.speed = speed
         self.object_type = ObjectType.moving_object
@@ -39,7 +40,7 @@ class MovingObject(MapObject):
     # Set speed must be greater than 0
     @speed.setter
     def speed(self, val):
-        if val >= 0 and val <= GameStats.moving_object_stats['max_speed']:
+        if 0 <= val <= self.max_speed:
             self.__speed = val
         else:
             raise Exception("Speed value outside bounds, Not set")

@@ -92,8 +92,7 @@ class Engine:
             imports, opening = verify_code(filename + '.py')
             if len(imports) != 0:
                 player.functional = False
-                player.error = ImportError(
-                    f'Player has attempted illegal imports: {imports}')
+                player.error = f'Player has attempted illegal imports: {imports}'
 
             if opening:
                 player.functional = False
@@ -304,7 +303,6 @@ class Engine:
         else:
             results_information = self.master_controller.return_final_results(
                 self.clients, self.tick_number)
-
         if source:
             results_information['reason'] = source
 

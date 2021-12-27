@@ -10,6 +10,7 @@ from game.common.enums import *
 from game.common.player import Player
 import game.config as config
 from game.controllers.shop_controller import ShopController
+from game.controllers.use_controller import UseController
 from game.utils.threadBytel import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
@@ -35,6 +36,8 @@ class MasterController(Controller):
         self.shoot_controller = ShootController()
         self.loot_generation_controller = LootGenerationController()
 
+        self.use_controller = UseController()
+
     # Receives all clients for the purpose of giving them the objects they
     # will control
     def give_clients_objects(self, clients):
@@ -56,9 +59,9 @@ class MasterController(Controller):
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
             random.seed(self.seed)
+
     # Receives world data from the generated game log and is responsible for
     # interpreting it
-
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
@@ -74,8 +77,9 @@ class MasterController(Controller):
 
         # Obfuscate data in objects that that player should not be able to see
         partition_grid.obfuscate(client)
+        shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid)
+        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
         return args
 
     # Perform the main logic that happens per turn
@@ -86,17 +90,21 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
-            ReloadController.handle_actions(client)
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
-            self.shop_controller.handle_actions(client)
-            # might need to fix world argument
             self.movement_controller.handle_actions(
                 client, self.current_world_data["game_map"])
+            self.use_controller.handle_actions(client)
+            self.shop_controller.handle_actions(client)
+            ReloadController.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            print(f"\nGame is ending because player(s) "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
+                  f"is out of health, player "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
+                  f"wins")
             self.game_over = True
-        pass
 
     # Return serialized version of game
     def create_turn_log(self, clients, turn):
@@ -111,7 +119,6 @@ class MasterController(Controller):
     # Gather necessary data together in results file
     def return_final_results(self, clients, turn):
         data = dict()
-
         data['players'] = list()
         # Determine results
         for client in clients:

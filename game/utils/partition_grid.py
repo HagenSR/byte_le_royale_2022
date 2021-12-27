@@ -133,7 +133,10 @@ class PartitionGrid:
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         for partition in self.check_overlap(obj.hitbox):
-            self.__matrix[partition[0]][partition[1]].remove(obj)
+            try:
+                self.__matrix[partition[0]][partition[1]].remove(obj)
+            except ValueError:
+                pass
 
     def get_partitions_wide(self):
         return len(self.__matrix)
