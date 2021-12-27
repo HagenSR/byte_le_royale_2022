@@ -45,7 +45,7 @@ class TestTeleporterController(unittest.TestCase):
 
     def test_players_teleport(self):
         shooter = Shooter(hitbox=Hitbox(10, 10, (5, 5)))
-        player = Player(action=Action(), shooter=shooter)
+        player = Player(shooter=shooter)
         player.action._chosen_action = ActionType.use_teleporter
         tel_one = Teleporter(hitbox=Hitbox(10, 10, (5, 5)))
         tel_two = Teleporter(hitbox=Hitbox(10, 10, (20, 20)))
@@ -59,7 +59,7 @@ class TestTeleporterController(unittest.TestCase):
 
     def test_player_spam_teleport(self):
         shooter = Shooter(hitbox=Hitbox(10, 10, (5, 5)))
-        player = Player(action=Action(), shooter=shooter)
+        player = Player(shooter=shooter)
         player.action._chosen_action = ActionType.use_teleporter
         tel_one = Teleporter(hitbox=Hitbox(10, 10, (5, 5)))
         tel_two = Teleporter(hitbox=Hitbox(10, 10, (20, 20)))
@@ -74,7 +74,7 @@ class TestTeleporterController(unittest.TestCase):
 
     def test_cooldown_works(self):
         shooter = Shooter(hitbox=Hitbox(10, 10, (5, 5)))
-        player = Player(action=Action(), shooter=shooter)
+        player = Player(shooter=shooter)
         player.action._chosen_action = ActionType.use_teleporter
         tel_one = Teleporter(hitbox=Hitbox(10, 10, (5, 5)), turn_cooldown=5)
         tel_two = Teleporter(hitbox=Hitbox(10, 10, (20, 20)), turn_cooldown=5)
