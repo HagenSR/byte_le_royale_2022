@@ -27,8 +27,15 @@ class TeleporterController(Controller):
                 return None
             # Player should not be able to teleport to same location
             self.teleporter_list.remove(curr_teleporter)
+            # Player should not be able to teleport to deactivated teleporter
+            for teleporter in self.disabled_teleporters:
+                if teleporter in self.teleporter_list:
+                    self.teleporter_list.remove(teleporter)
             if curr_teleporter in self.disabled_teleporters:
+                # Add teleporters back to list
                 self.teleporter_list.append(curr_teleporter)
+                for teleporter in self.disabled_teleporters:
+                    self.teleporter_list.append(teleporter)
                 return None
             elif len(self.teleporter_list) == 0:
                 return None
@@ -37,7 +44,10 @@ class TeleporterController(Controller):
             else:
                 teleport_to = random.choice(self.teleporter_list)
             client.shooter.hitbox.position = teleport_to.hitbox.position
+            # Add teleporters back to list
             self.teleporter_list.append(curr_teleporter)
+            for teleporter in self.disabled_teleporters:
+                self.teleporter_list.append(teleporter)
             # Decrement other teleporters cooldowns, then Disable receently used teleporter
             self.process_turn()
             self.disabled_teleporters[teleport_to] = teleport_to.turn_cooldown
@@ -58,11 +68,14 @@ class TeleporterController(Controller):
 
     # Decrement cooldown of teleporters
     def process_turn(self):
+        to_remove = []
         for teleporter in self.disabled_teleporters:
             new_value = self.disabled_teleporters.get(teleporter) - 1
             if new_value == 0:
-                self.disabled_teleporters.pop(teleporter)
+                to_remove.append(teleporter)
             else:
                 self.disabled_teleporters[teleporter] = new_value
+        for removal in to_remove:
+            self.disabled_teleporters.pop(removal)
 
 
