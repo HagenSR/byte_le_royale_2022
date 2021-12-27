@@ -20,7 +20,7 @@ class TestTeleporterController(unittest.TestCase):
 
     def test_teleporters_generate(self):
         game_board = self.gameboard
-        teleporter_list = TeleporterController.game_board_teleporters(self, game_board = game_board)
+        teleporter_list = TeleporterController.game_board_teleporters(self, game_board=game_board)
         flag = False
         corridor_size = GameStats.corridor_width_height
         plot_size = GameStats.plot_width_height

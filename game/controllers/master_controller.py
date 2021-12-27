@@ -21,7 +21,6 @@ from game.controllers.teleporter_controller import TeleporterController
 from game.controllers.movement_controller import MovementController
 
 
-
 class MasterController(Controller):
     def __init__(self):
         super().__init__()

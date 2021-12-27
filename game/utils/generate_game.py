@@ -394,7 +394,6 @@ def generate():
                 wall_copy.hitbox.position = (x_offset, y_offset)
                 game_map.partition.add_object(wall_copy)
 
-
     # place 5 teleporters
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
@@ -416,8 +415,6 @@ def generate():
     data['seed'] = generateRandomNumbers()
     # Write game map to file
     write_json_file(data, GAME_MAP_FILE)
-
-
 
 
 def find_teleporter_position():
@@ -450,13 +447,19 @@ def find_teleporter_position():
 
     return x_pos, y_pos
 
+
 def determine_teleporter_nearby(teleporter, game_board):
     # min & max make sure bounds are within the game board
-    for x in range(int(max(0, teleporter.hitbox.position[0] - 11)), int(min(teleporter.hitbox.position[1] + 11, GameStats.game_board_width))):
-        for y in range(int(max(0, teleporter.hitbox.position[0] - 11)), int(min(teleporter.hitbox.position[1] + 11, GameStats.game_board_width))):
+    for x in range(int(max(0, teleporter.hitbox.position[0] -
+                           11)), int(min(teleporter.hitbox.position[1] +
+                                         11, GameStats.game_board_width))):
+        for y in range(int(max(0, teleporter.hitbox.position[0] -
+                               11)), int(min(teleporter.hitbox.position[1] +
+                                             11, GameStats.game_board_width))):
             if game_board.partition.find_object_coordinates(x, y) is not False:
                 return True
     return False
+
 
 if __name__ == '__main__':
     create_structures_file("./structures/structureDescriptiveName.json")
