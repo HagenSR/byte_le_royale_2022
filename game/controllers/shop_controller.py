@@ -9,14 +9,14 @@ class ShopController(Controller):
     # shop_inventory keeps track of how many of each consumables are in the shop throughout the game
     # Each purchase shrinks the quantity for that consumables object
     shop_inventory = {
-        Consumables.speed_boost: {
-            'quantity': GameStats.shop_stats[Consumables.speed_boost]['quantity']
+        Consumables.speed: {
+            'quantity': GameStats.shop_stats[Consumables.speed]['quantity']
         },
         Consumables.health_pack: {
             'quantity': GameStats.shop_stats[Consumables.health_pack]['quantity']
         },
-        Consumables.armor_pack: {
-            'quantity': GameStats.shop_stats[Consumables.armor_pack]['quantity']
+        Consumables.shield: {
+            'quantity': GameStats.shop_stats[Consumables.shield]['quantity']
         }
     }
 

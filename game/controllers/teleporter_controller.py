@@ -77,5 +77,3 @@ class TeleporterController(Controller):
                 self.disabled_teleporters[teleporter] = new_value
         for removal in to_remove:
             self.disabled_teleporters.pop(removal)
-
-
