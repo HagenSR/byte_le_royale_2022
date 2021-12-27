@@ -37,6 +37,9 @@ class MasterController(Controller):
         self.shoot_controller = ShootController()
         self.loot_generation_controller = LootGenerationController()
 
+        self.instantiated_teleporter_controller = False
+        self.teleporter_controller = None
+
         self.use_controller = UseController()
 
     # Receives all clients for the purpose of giving them the objects they
@@ -66,6 +69,9 @@ class MasterController(Controller):
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
+
+        if not self.instantiated_teleporter_controller:
+            self.teleporter_controller = TeleporterController(self.current_world_data["game_map"])
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
@@ -97,6 +103,7 @@ class MasterController(Controller):
             self.use_controller.handle_actions(client)
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
+            self.teleporter_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
