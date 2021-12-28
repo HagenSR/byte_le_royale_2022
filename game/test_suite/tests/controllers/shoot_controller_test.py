@@ -76,8 +76,7 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.remove_object(shooter)
 
     def test_shooter_removal(self):
-        shooter = Shooter(heading=(math.pi / 2), speed=0,
-                          hitbox=Hitbox(30, 30, (20, 0)))
+        shooter = Shooter(heading=(math.pi / 2), speed=0, hitbox=Hitbox(30, 30, (20, 0), 0))
         self.game_board.partition.add_object(shooter)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)

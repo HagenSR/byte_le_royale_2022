@@ -1,11 +1,11 @@
 from copy import deepcopy
 
+from game.common.hitbox import Hitbox
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
-import math
 
 
 class Shooter(MovingObject):
@@ -15,7 +15,7 @@ class Shooter(MovingObject):
             self,
             heading=0,
             speed=0,
-            hitbox=None):
+            hitbox=Hitbox(10, 10, (250, 250), 0)):
         super().__init__(
             heading,
             speed,
@@ -28,9 +28,6 @@ class Shooter(MovingObject):
         self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
         self.max_speed = GameStats.player_stats['max_distance_per_turn']
-
-        self.heading = heading
-        self.speed = speed
 
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
@@ -131,17 +128,6 @@ class Shooter(MovingObject):
                     break
         return self.primary_gun
 
-    @property
-    def heading(self):
-        return self._heading
-
-    @heading.setter
-    def heading(self, heading):
-        if not 0 <= heading <= 360:
-            raise ValueError("Heading must be between 0 and 360")
-        self._heading = heading
-        self.hitbox.rotation = heading
-
     def to_json(self):
         data = super().to_json()
 
@@ -154,7 +140,7 @@ class Shooter(MovingObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.inventory = data['inventory']
+        self.__inventory = data['inventory']  # TODO fix this from_json
         self.money = data['money']
         self.armor = data['armor']
         self.visible = data['visible']

@@ -36,7 +36,7 @@ class TestMovingObject(
         self.assertRaises(Exception, self.setSpeed, -1)
 
     def test_set_get_heading_invalid_high(self):
-        self.assertRaises(Exception, self.setHeading, (math.pi * 3))
+        self.assertRaises(Exception, self.setHeading, 760)
 
     def test_set_get_speed_invalid_high(self):
         self.assertRaises(
@@ -70,14 +70,8 @@ class TestMovingObject(
         self.assertIsNotNone(test_mov.hitbox.position)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)
-        self.assertIsNone(self.movObj.hitbox)
-        self.assertIsNone(self.movObj.collidable)
-
-    def setHeading(self, newHeading):
-        self.movObj.heading = newHeading
-
-    def setSpeed(self, newSpeed):
-        self.movObj.speed = newSpeed
+        self.assertIsNotNone(self.movObj.hitbox)
+        self.assertTrue(self.movObj.collidable)
 
     def setHeading(self, newHeading):
         self.movObj.heading = newHeading

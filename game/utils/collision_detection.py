@@ -2,10 +2,10 @@ import math
 
 
 def check_collision(hitbox_one, hitbox_two):
-    return (hitbox_one.topLeft[0] < hitbox_two.topRight[0] and
-            hitbox_one.topRight[0] > hitbox_two.topLeft[0] and
-            hitbox_one.topLeft[1] < hitbox_two.bottomLeft[1] and
-            hitbox_one.bottomRight[1] > hitbox_two.topRight[1])
+    return (hitbox_one.top_left[0] < hitbox_two.top_right[0] and
+            hitbox_one.top_right[0] > hitbox_two.top_left[0] and
+            hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
+            hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
 
 
 def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):

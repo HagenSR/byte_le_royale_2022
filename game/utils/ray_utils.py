@@ -55,7 +55,7 @@ def load_collidables_in_ray_range(
 
     return collidables
 
-##TODO: Ray function; returns a list of x,y pairs of the ray
+# TODO: Ray function; returns a list of x,y pairs of the ray
 # def get_partition_coordinates_in_range()
 
 

@@ -5,18 +5,18 @@ import game.common.stats as stats
 import math
 
 
-def rotate(origin, point, ngle):
+def rotate(origin, point, angle_deg):
     """
     Rotate a point counterclockwise by a given angle around a given origin.
 
     The angle should be given in degrees, then is converted to rads.
     """
 
-    angle = math.radians(ngle)
+    angle_rad = math.radians(angle_deg)
     ox, oy = origin
     px, py = point
-    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
-    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+    qx = ox + math.cos(angle_rad) * (px - ox) - math.sin(angle_rad) * (py - oy)
+    qy = oy + math.sin(angle_rad) * (px - ox) + math.cos(angle_rad) * (py - oy)
 
     return qx, qy
 
@@ -25,7 +25,7 @@ class Hitbox(GameObject):
     def __init__(self, width, height, xy_tuple, rotation=0):
         super().__init__()
         self.object_type = ObjectType.hitbox
-        # Set width, height, rotation like this due to deadlock from both position and rotation needing eachother
+        # Set width, height, rotation like this due to deadlock from both position and rotation needing each other
         # to check if corners are out of bounds
         self.__width = width
         self.__height = height
@@ -109,7 +109,7 @@ class Hitbox(GameObject):
     def update_corners(self):
         corners = [
             rotate(self.middle, self.position, self.rotation),
-            rotate(self.middle,(self.position[0] + self.width, self.position[1]), self.rotation),
+            rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
             rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
             rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
         ]
