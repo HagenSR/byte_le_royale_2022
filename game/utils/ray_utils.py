@@ -11,7 +11,9 @@ def load_collidables_in_ray_range(
         coords,
         gameboard,
         ray_endpoint,
-        exclusions=[]):
+        exclusions=None):
+    if exclusions is None:
+        exclusions = []
     ray_x_limit = ray_endpoint[0]
     ray_y_limit = ray_endpoint[1]
     # starting partition
@@ -146,7 +148,7 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
             ray_y_limit = gameboard.height
             ray_x_limit = calculate_ray_x(coords, slope, gameboard.height)
 
-    return (ray_x_limit, ray_y_limit)
+    return ray_x_limit, ray_y_limit
 
 
 def sort_objects(coords, collidables, max_range):
@@ -186,10 +188,8 @@ def line_intersection(line1, line2):
 
 
 def determine_ray_collision(
-        gameboard,
         collidables,
         ray_start,
-        slope,
         ray_endpoint,
         dist,
         damage):
@@ -321,10 +321,8 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
     )
 
     ray = determine_ray_collision(
-        gameboard,
         collidables,
         ray_start,
-        slope,
         ray_endpoint,
         dist,
         damage
