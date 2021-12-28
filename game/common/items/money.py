@@ -21,6 +21,7 @@ class Money(Item):
     def amount(self):
         return self.__amount
 
+
     def to_json(self):
         data = super().to_json()
         data['amount'] = self.amount

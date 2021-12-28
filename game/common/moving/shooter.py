@@ -1,6 +1,9 @@
 from copy import deepcopy
 
 from game.common.hitbox import Hitbox
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
@@ -40,9 +43,10 @@ class Shooter(MovingObject):
         # this statement grabs the slot_type as a string, the object type as a
         # Type, and puts it into a list of tuples
         self.slot_obj_types = [
-            (slot_type,
-             slot_stats['type']) for slot_type,
-            slot_stats in GameStats.inventory_stats.items()]
+            ('guns', game.common.items.gun.Gun),
+            ('upgrades', game.common.items.upgrade.Upgrade),
+            ('consumables', game.common.items.consumable.Consumable)]
+
         # this generates an empty inventory, with number of slots for each slot
         # type taken from game stats
         self.__inventory = {
