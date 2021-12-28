@@ -5,6 +5,7 @@ from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
+import math
 
 
 class Shooter(MovingObject):
@@ -22,6 +23,7 @@ class Shooter(MovingObject):
             hitbox,
             collidable=True
         )
+        self.heading = math.radians(heading)
         self.object_type = ObjectType.shooter
         self.money = GameStats.player_stats['starting_money']
         self.armor = None
@@ -29,6 +31,7 @@ class Shooter(MovingObject):
         self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
         self.moving = False
+        self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
         # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
@@ -64,7 +67,7 @@ class Shooter(MovingObject):
         return False
 
     def append_inventory(self, value):
-        """Add object to inventory"""
+        """Add object to inventory. Not allowed for client use! Will be disqualified if called in contestant's code"""
         if not isinstance(
             value, tuple(
                 slot_type[1] for slot_type in self.slot_obj_types)):
@@ -127,19 +130,16 @@ class Shooter(MovingObject):
 
     # set the heading and direction in a controlled way, might need to add
     # distance attribute later
-    def move(self, heading, speed):
-        """Set heading and speed to handle moving"""
-        super().heading = heading
-        if speed < GameStats.player_stats['move_speed']:
-            super().speed = speed
-            self.moving = True
-        raise ValueError(
-            "Speed must be less than max move speed for the player")
-
-    def stop(self):
-        """Define stop movement"""
-        super().speed = 0
-        self.moving = False
+    def set_movement_parameters(self, heading, speed):
+        """Set heading and speed to handle moving, does not set the action to move"""
+        self.heading = math.radians(
+            heading)  # TODO change this to not be converted to radians
+        self.hitbox.rotation = heading
+        if speed <= GameStats.player_stats['max_distance_per_turn']:
+            self.speed = speed
+        else:
+            raise ValueError(
+                "Speed must be less than max move speed for the player")
 
     def to_json(self):
         data = super().to_json()

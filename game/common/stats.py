@@ -30,7 +30,7 @@ class GameStats:
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
         'field_of_view': 90,
         'view_distance': 100,
-        'move_speed': 10,
+        'max_distance_per_turn': 50
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }
@@ -47,6 +47,12 @@ class GameStats:
             'slots': 4,
             'type': game.common.items.consumable.Consumable
         },
+    }
+
+    consumable_stats = {
+        "health_pack_heal_amount": 50,
+        "speed_increase_percent": .2,
+        "radar_range_increase_percent": .2,
     }
 
     # stats for money located on the gameboard
@@ -75,7 +81,7 @@ class GameStats:
     }
 
     shop_stats = {
-        Consumables.speed_boost: {
+        Consumables.speed: {
             'cost': 20,
             'quantity': 5
         },
@@ -83,7 +89,7 @@ class GameStats:
             'cost': 25,
             'quantity': 5
         },
-        Consumables.armor_pack: {
+        Consumables.shield: {
             'cost': 30,
             'quantity': 5
         }

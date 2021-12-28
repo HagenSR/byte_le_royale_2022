@@ -1,5 +1,3 @@
-import math
-
 from game.common.game_object import GameObject
 from game.common.enums import *
 import game.common.stats as stats
@@ -124,15 +122,18 @@ class Hitbox(GameObject):
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(
                     self.position, self.top_left))
-        elif stats.GameStats.game_board_width < self.top_right[0] or self.top_right[0] < 0 or stats.GameStats.game_board_height < self.top_right[1] or self.top_right[1] < 0:
+        elif stats.GameStats.game_board_width < self.top_right[0] or self.top_right[
+                0] < 0 or stats.GameStats.game_board_height < self.top_right[1] or self.top_right[1] < 0:
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, top right is out of bounds at {1}".format(
                     self.position, self.top_right))
-        elif stats.GameStats.game_board_width < self.bottom_left[0] or self.bottom_left[0] < 0 or stats.GameStats.game_board_height < self.bottom_left[1] or self.bottom_left[1] < 0:
+        elif stats.GameStats.game_board_width < self.bottom_left[0] or self.bottom_left[
+                0] < 0 or stats.GameStats.game_board_height < self.bottom_left[1] or self.bottom_left[1] < 0:
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, bottom left is out of bounds at {1}".format(
                     self.position, self.bottom_left))
-        elif stats.GameStats.game_board_width < self.bottom_right[0] or self.bottom_right[0] < 0 or stats.GameStats.game_board_height < self.bottom_right[1] or self.bottom_right[1] < 0:
+        elif stats.GameStats.game_board_width < self.bottom_right[0] or self.bottom_right[
+                0] < 0 or stats.GameStats.game_board_height < self.bottom_right[1] or self.bottom_right[1] < 0:
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, bottom right is out of bounds at {1}".format(
                     self.position, self.bottom_right))

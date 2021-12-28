@@ -34,10 +34,13 @@ class ActionType(int, Enum):
     none = 0
     move = 1
     shoot = 2
-    pickup = 3
-    reload = 4
+    interact = 3
+    reload_weapon = 4
     shop = 5
-    use_item = 6
+    pickup = 6
+    reload = 7
+    use_item = 8
+    use = 9
 
 
 class Upgrades(int, Enum):
@@ -77,6 +80,9 @@ class ShotPattern(int, Enum):
 
 class Consumables(int, Enum):
     none = 0
-    speed_boost = 1
-    health_pack = 2
-    armor_pack = 3
+    health_pack = 1
+    shield = 2
+    speed = 3
+    radar = 4
+    air_strike = 5
+    grenade = 6
