@@ -88,10 +88,10 @@ def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
 
 
 # Calculate slope from player heading
-def calculate_slope(heading):
-    if (heading != math.pi / 2
-            and heading != ((3 * math.pi) / 2)):
-        slope = math.tan(heading)
+def calculate_slope(heading_in_radians):
+    if (heading_in_radians != math.pi / 2
+            and heading_in_radians != ((3 * math.pi) / 2)):
+        slope = math.tan(heading_in_radians)
     else:
         slope = math.nan
 
@@ -341,14 +341,15 @@ def determine_gun_collision(
 
 
 def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
-    slope = calculate_slope(heading)
-    ray_endpoint = get_ray_limits(heading,
+    radians = math.radians(heading)
+    slope = calculate_slope(radians)
+    ray_endpoint = get_ray_limits(radians,
                                   ray_start,
                                   gameboard,
                                   slope,
                                   dist)
     collidables = load_collidables_in_ray_range(
-        heading,
+        radians,
         ray_start,
         gameboard,
         ray_endpoint,
@@ -369,14 +370,15 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 
 
 def get_gun_ray_collision(player, gameboard):
-    slope = calculate_slope(player.shooter.heading)
-    ray_endpoint = get_ray_limits(player.shooter.heading,
+    radians = math.radians(player.shooter.heading)
+    slope = calculate_slope(radians)
+    ray_endpoint = get_ray_limits(radians,
                                   player.shooter.hitbox.position,
                                   gameboard,
                                   slope,
                                   player.shooter.primary_gun.range)
     collidables = load_collidables_in_ray_range(
-        player.shooter.heading,
+        radians,
         player.shooter.hitbox.position,
         gameboard,
         ray_endpoint,
