@@ -65,8 +65,7 @@ class TestShootController(unittest.TestCase):
         self.assertNotIn(door, object_list)
 
     def test_health_removal_shooter(self):
-        shooter = Shooter(heading=(math.pi / 2), speed=0,
-                          hitbox=Hitbox(30, 30, (20, 0)))
+        shooter = Shooter(heading=90, speed=0, hitbox=Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(shooter)
         self.shoot_controller.handle_action(self.player, self.game_board)
         self.assertEqual(
@@ -76,7 +75,7 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.remove_object(shooter)
 
     def test_shooter_removal(self):
-        shooter = Shooter(heading=(math.pi / 2), speed=0, hitbox=Hitbox(30, 30, (20, 0), 0))
+        shooter = Shooter(heading=90, speed=0, hitbox=Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(shooter)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
@@ -84,7 +83,7 @@ class TestShootController(unittest.TestCase):
 
     def test_shot_pattern_spread(self):
         self.game_board = GameBoard()
-        shooter = Shooter(heading=(0), speed=0,
+        shooter = Shooter(heading=0, speed=0,
                           hitbox=Hitbox(10, 10, (0, 0)))
         gun = Gun(GunType.shotgun, level=1, hitbox=Hitbox(2, 2, (0, 0)))
         shooter.append_inventory(gun)
