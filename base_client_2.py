@@ -12,7 +12,7 @@ class Client(UserClient):
         Allows the team to set a team name.
         :return: Your team name
         """
-        return 'Team Name 2'
+        return 'Dumb AI Client'
 
     # This is where your AI will decide what to do
     def take_turn(self, turn, actions, world, partition_grid, player):

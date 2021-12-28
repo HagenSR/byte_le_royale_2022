@@ -34,7 +34,10 @@ class MovementController(Controller):
                 location = client.shooter.hitbox.position
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
-                dummy_hitbox.position = (new_x, new_y)  # TODO this position can go out of bounds, which throws an error
+                try:
+                    dummy_hitbox.position = (new_x, new_y)
+                except ValueError:
+                    self.space_free = False
                 obj = game_board.partition.find_object_hitbox(
                     dummy_hitbox)
                 if not obj or not obj.collidable:
