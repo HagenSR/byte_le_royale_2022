@@ -31,7 +31,7 @@ class TestInteractController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         # self.world_data["game_board"].partition.add_object(
-            # door_object)
+        # door_object)
         self.assertRaises(ValueError,
                           self.interactController.handle_actions,
                           self.myPlayer, self.world_data)
