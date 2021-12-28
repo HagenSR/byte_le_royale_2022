@@ -1,7 +1,7 @@
+from game.common.hitbox import Hitbox
 from game.common.map_object import MapObject
 from game.common.stats import GameStats
 from game.common.enums import *
-import math
 
 
 # Inherits MapObject
@@ -14,6 +14,7 @@ class MovingObject(MapObject):
             hitbox=Hitbox(10, 10, (250, 250), 0),
             collidable=True):
         super().__init__(health, hitbox, collidable)
+        self.max_speed = GameStats.moving_object_stats["max_speed"]
         self.heading = heading
         self.speed = speed
         self.object_type = ObjectType.moving_object
