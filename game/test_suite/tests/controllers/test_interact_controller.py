@@ -23,19 +23,6 @@ class TestInteractController(unittest.TestCase):
         self.interactController = InteractController()
         self.world_data = {'game_board': GameBoard()}
 
-    # def test_interact_object_valid(self):
-
-    def test_interact_door_too_far(self):
-        self.myPlayer.shooter.hitbox.position = (50, 50)
-        door_object = Door(Hitbox(3, 10, (80, 50)))
-        self.world_data["game_board"].partition.add_object(
-            self.myPlayer.shooter)
-        # self.world_data["game_board"].partition.add_object(
-            # door_object)
-        self.assertRaises(ValueError,
-                          self.interactController.handle_actions,
-                          self.myPlayer, self.world_data)
-
     def test_interact_object_invalid(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         self.world_data["game_board"].partition.add_object(
@@ -68,6 +55,71 @@ class TestInteractController(unittest.TestCase):
             self.myPlayer.shooter)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(self.myPlayer.shooter.money, (old_money + money_object.amount))
+
+    def test_interact_door_too_far(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(3, 10, (80, 50)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object)
+        self.assertRaises(ValueError,
+                          self.interactController.handle_actions,
+                          self.myPlayer, self.world_data)
+
+    def test_open_door_1(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(3, 10, (61, 50)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(door_object.open_state)
+
+    def test_open_door_2(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(3, 10, (49, 50)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(door_object.open_state)
+
+    def test_open_door_3(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(10, 3, (50, 46)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(door_object.open_state)
+
+    def test_open_door_4(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(10, 3, (50, 61)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(door_object.open_state)
+
+    def test_correct_door_opened(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object_1 = Door(Hitbox(3, 10, (61, 50)))  # is within range
+        door_object_2 = Door(Hitbox(10, 3, (50, 63)))  # is out of range
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            door_object_1)
+        self.world_data["game_board"].partition.add_object(
+            door_object_1)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertTrue(door_object_1.open_state)
+        self.assertFalse(door_object_2.open_state)
 
     if __name__ == '__main__':
         unittest.main

@@ -1,3 +1,5 @@
+import math
+
 from game.controllers.controller import Controller
 from game.common.stats import GameStats
 from game.common.items.upgrade import Upgrade
@@ -23,17 +25,16 @@ class InteractController(Controller):
             for obj in object_list:
                 if check_collision(client.shooter.hitbox, obj.hitbox) and not isinstance(obj, Shooter):
                     object_target = obj
-            print(object_target)
-            if not object_target:
-                raise ValueError("There is no object it interact with.")
             if isinstance(object_target, Upgrade):
                 self.interact_upgrade(client, world, object_target)
-            elif isinstance(object_target, Door):
-                self.interact_door(client, object_target)
             elif isinstance(object_target, Money):
                 self.interact_money(client, world, object_target)
             else:
-                pass
+                object_target = self.find_doors(client, world)
+                if isinstance(object_target, Door):
+                    self.interact_door(object_target)
+                else:
+                    raise ValueError("There is no object to interact with.")
 
     def interact_upgrade(self, client, world, upgrade):
         if client.shooter.has_empty_slot('upgrades'):
@@ -47,3 +48,22 @@ class InteractController(Controller):
     def interact_door(self, door):
         if not door.open_state:
             door.open_state = True
+            door.collidable = False
+
+    def find_doors(self, client, world):
+        obj = False
+        position = client.shooter.hitbox.middle
+        if world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6):
+            obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6)
+            return obj
+        elif world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6):
+            obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6)
+            return obj
+        elif world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1]):
+            obj = world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1])
+            return obj
+        elif world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1]):
+            obj = world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1])
+            return obj
+        else:
+            return obj
