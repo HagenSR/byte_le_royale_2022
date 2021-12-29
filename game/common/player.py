@@ -7,14 +7,14 @@ from game.common.moving.shooter import Shooter
 
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None, shooter=None):
+    def __init__(self, code=None, team_name=None, shooter=None):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True
         self.error = None
         self.team_name = team_name
         self.code = code
-        self.action = action
+        self.action = Action()
         self.shooter = shooter
 
     def to_json(self):

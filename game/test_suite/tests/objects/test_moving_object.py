@@ -20,8 +20,8 @@ class TestMovingObject(
 
     # Test if a valid heading set works
     def test_set_get_heading_valid(self):
-        self.movObj.heading = math.pi
-        self.assertEqual(self.movObj.heading, math.pi)
+        self.movObj.heading = 180
+        self.assertEqual(self.movObj.heading, 180)
 
     # Test if a valid speed set works
     def test_set_get_speed_valid(self):
@@ -36,7 +36,7 @@ class TestMovingObject(
         self.assertRaises(Exception, self.setSpeed, -1)
 
     def test_set_get_heading_invalid_high(self):
-        self.assertRaises(Exception, self.setHeading, (math.pi * 3))
+        self.assertRaises(Exception, self.setHeading, 361)
 
     def test_set_get_speed_invalid_high(self):
         self.assertRaises(
@@ -46,8 +46,8 @@ class TestMovingObject(
 
     # Check if boundary sets do work
     def test_set_get_heading_boundary_high(self):
-        self.movObj.heading = math.pi * 2
-        self.assertEqual(self.movObj.heading, math.pi * 2)
+        self.movObj.heading = 360
+        self.assertEqual(self.movObj.heading, 360)
 
     def test_set_get_speed_boundary_high(self):
         self.movObj.speed = GameStats.moving_object_stats['max_speed']

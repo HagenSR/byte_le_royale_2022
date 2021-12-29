@@ -29,7 +29,7 @@ class MovingObject(MapObject):
     # setter for heading. Should be degrees between 0 and 360 inclusive
     @heading.setter
     def heading(self, val):
-        if 0 <= val <= (math.pi * 2):
+        if 0 <= val <= 360:
             self.__heading = val
         else:
             raise Exception("Heading value outside bounds, Not set")
