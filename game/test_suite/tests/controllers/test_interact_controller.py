@@ -16,10 +16,10 @@ class TestInteractController(unittest.TestCase):
     def setUp(self):
         act = Action()
         act.set_action(ActionType.interact)
-        self.myPlayer = Player(
-            action=act, shooter=Shooter(
-                0, 0, Hitbox(
-                    10, 10, (10, 10), 0)))
+        self.myPlayer = Player(shooter=Shooter(
+            0, 0, Hitbox(
+                10, 10, (10, 10), 0)))
+        self.myPlayer.action._chosen_action = ActionType.interact
         self.interactController = InteractController()
         self.world_data = {'game_board': GameBoard()}
 
@@ -67,7 +67,8 @@ class TestInteractController(unittest.TestCase):
                           self.interactController.handle_actions,
                           self.myPlayer, self.world_data)
 
-    def test_open_door_1(self):
+    # standing beside door left side
+    def test_beside_open_door_1(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         door_object = Door(Hitbox(3, 10, (61, 50)))
         self.world_data["game_board"].partition.add_object(
@@ -77,7 +78,8 @@ class TestInteractController(unittest.TestCase):
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(door_object.open_state)
 
-    def test_open_door_2(self):
+    # standing beside door right side
+    def test_beside_open_door_2(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         door_object = Door(Hitbox(3, 10, (49, 50)))
         self.world_data["game_board"].partition.add_object(
@@ -87,7 +89,8 @@ class TestInteractController(unittest.TestCase):
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(door_object.open_state)
 
-    def test_open_door_3(self):
+    # standing beside door top
+    def test_beside_open_door_3(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         door_object = Door(Hitbox(10, 3, (50, 46)))
         self.world_data["game_board"].partition.add_object(
@@ -97,7 +100,8 @@ class TestInteractController(unittest.TestCase):
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(door_object.open_state)
 
-    def test_open_door_4(self):
+    # standing beside door bottom
+    def test_beside_open_door_4(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         door_object = Door(Hitbox(10, 3, (50, 61)))
         self.world_data["game_board"].partition.add_object(
@@ -107,7 +111,8 @@ class TestInteractController(unittest.TestCase):
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertTrue(door_object.open_state)
 
-    def test_correct_door_opened(self):
+    # two door near player; two within range, should pick closest door
+    def test_correct_door_opened_1(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         door_object_1 = Door(Hitbox(3, 10, (61, 50)))  # is within range
         door_object_2 = Door(Hitbox(10, 3, (50, 63)))  # is out of range

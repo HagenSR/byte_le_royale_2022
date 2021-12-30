@@ -51,19 +51,47 @@ class InteractController(Controller):
             door.collidable = False
 
     def find_doors(self, client, world):
-        obj = False
-        position = client.shooter.hitbox.middle
-        if world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6):
-            obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6)
-            return obj
-        elif world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6):
-            obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6)
-            return obj
-        elif world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1]):
-            obj = world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1])
-            return obj
-        elif world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1]):
-            obj = world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1])
-            return obj
+        middle = client.shooter.hitbox.middle
+        door_dist_list = []
+        for x in range(int(middle[0]), int(middle[0] + GameStats.max_allowed_dist_from_door)):
+            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
+            if isinstance(obj, Door):
+                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], obj.hitbox.middle[1]))
+                door_dist_list.append((obj, distance))
+        for x in range(int(middle[0] - GameStats.max_allowed_dist_from_door), int(middle[0])):
+            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
+            if isinstance(obj, Door):
+                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], obj.hitbox.middle[1]))
+                door_dist_list.append((obj, distance))
+        for x in range(int(middle[1]), int(middle[1] + GameStats.max_allowed_dist_from_door)):
+            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
+            if isinstance(obj, Door):
+                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], obj.hitbox.middle[1]))
+                door_dist_list.append((obj, distance))
+        for x in range(int(middle[1] - GameStats.max_allowed_dist_from_door), int(middle[1])):
+            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
+            if isinstance(obj, Door):
+                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], obj.hitbox.middle[1]))
+                door_dist_list.append((obj, distance))
+        if len(door_dist_list) > 0:
+            sorted_list = sorted(door_dist_list, key=lambda z: z[1])
+            return sorted_list[0][0]
         else:
-            return obj
+            return False
+
+        # obj = False
+        # position = client.shooter.hitbox.middle
+        # if world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6):
+        #     obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] + 6)
+        #     return obj
+        # elif world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6):
+        #     obj = world["game_board"].partition.find_object_coordinates(position[0], position[1] - 6)
+        #     return obj
+        # elif world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1]):
+        #     obj = world["game_board"].partition.find_object_coordinates(position[0] + 6, position[1])
+        #     return obj
+        # elif world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1]):
+        #     obj = world["game_board"].partition.find_object_coordinates(position[0] - 6, position[1])
+        #     return obj
+        # else:
+        #     return obj
