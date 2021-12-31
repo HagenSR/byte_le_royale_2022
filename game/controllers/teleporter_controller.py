@@ -1,24 +1,25 @@
-import time
-
 from game.controllers.controller import Controller
 import random
 from game.common.enums import *
 from game.common.stats import GameStats
 from game.common.teleporter import Teleporter
 from game.utils.collision_detection import *
-import asyncio
+from game.common.hitbox import Hitbox
+import json
 
 
 class TeleporterController(Controller):
 
-    def __init__(self, game_board):
-        self.teleporter_list = self.game_board_teleporters(game_board)
+    def __init__(self):
+        self.teleporter_list = self.game_board_teleporters()
+
         # Teleporter object will be the key, value will be cooldown turns
         self.disabled_teleporters = {}
 
     def handle_actions(self, client):
         if client.action._chosen_action is ActionType.use_teleporter:
             # Get teleporter player is on
+            print(len(self.teleporter_list))
             for teleporter in self.teleporter_list:
                 if check_collision(teleporter.hitbox, client.shooter.hitbox):
                     curr_teleporter = teleporter
@@ -48,22 +49,36 @@ class TeleporterController(Controller):
             self.teleporter_list.append(curr_teleporter)
             for teleporter in self.disabled_teleporters:
                 self.teleporter_list.append(teleporter)
-            # Decrement other teleporters cooldowns, then Disable receently used teleporter
+            # Decrement other teleporters cooldowns, then Disable recently used teleporter
             self.process_turn()
             self.disabled_teleporters[teleport_to] = teleport_to.turn_cooldown
         else:
             # Teleport was not chosen action, need to decrement teleporter cooldowns
             self.process_turn()
 
-    def game_board_teleporters(self, game_board):
+    def game_board_teleporters(self):
         teleporter_list = []
-        for x in range(0, GameStats.game_board_width,
-                       game_board.partition.partition_width):
-            for y in range(0, GameStats.game_board_height,
-                           game_board.partition.partition_height):
-                for object in game_board.partition.get_partition_objects(x, y):
-                    if isinstance(object, Teleporter):
-                        teleporter_list.append(object)
+        with open('./game_teleporters.json', 'r') as fl:
+            filejsn = json.loads(fl.read())
+            for entry in filejsn:
+                teleporter = Teleporter(Hitbox(1, 1, (2, 2)))
+                teleporter.from_json(entry)
+                teleporter_list.append(teleporter)
+
+            # WILL DELETE LATER
+    #     # for x in range(0, GameStats.game_board_width,
+    #     #                game_board.partition.partition_width):
+    #     #     for y in range(0, GameStats.game_board_height,
+    #     #                    game_board.partition.partition_height):
+    #     #         for object in game_board.partition.get_partition_objects(x, y):
+    #     #             if isinstance(object, Teleporter):
+    #     #                 teleporter_list.append(object)
+    #     #------------------------------------
+    #     # for x in range(1, GameStats.game_board_width, 10):
+    #     #     for y in range(1, GameStats.game_board_height, 10):
+    #     #         game_obj = game_board.partition.find_object_coordinates(x, y)
+    #     #         if isinstance(game_obj, Teleporter):
+    #     #             teleporter_list.append(game_obj)
         return teleporter_list
 
     # Decrement cooldown of teleporters

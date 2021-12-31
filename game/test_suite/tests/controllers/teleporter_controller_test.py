@@ -53,7 +53,7 @@ class TestTeleporterController(unittest.TestCase):
         local_game_board.partition.add_object(player.shooter)
         local_game_board.partition.add_object(tel_one)
         local_game_board.partition.add_object(tel_two)
-        tel_controller = TeleporterController(local_game_board)
+        tel_controller = TeleporterController()
         tel_controller.handle_actions(player)
         self.assertEqual(shooter.hitbox.position, tel_two.hitbox.position)
 
@@ -67,7 +67,7 @@ class TestTeleporterController(unittest.TestCase):
         local_game_board.partition.add_object(player.shooter)
         local_game_board.partition.add_object(tel_one)
         local_game_board.partition.add_object(tel_two)
-        tel_controller = TeleporterController(local_game_board)
+        tel_controller = TeleporterController()
         tel_controller.handle_actions(player)
         tel_controller.handle_actions(player)
         self.assertEqual(shooter.hitbox.position, tel_two.hitbox.position)
@@ -82,7 +82,7 @@ class TestTeleporterController(unittest.TestCase):
         local_game_board.partition.add_object(player.shooter)
         local_game_board.partition.add_object(tel_one)
         local_game_board.partition.add_object(tel_two)
-        tel_controller = TeleporterController(local_game_board)
+        tel_controller = TeleporterController()
         tel_controller.handle_actions(player)
         player.action._chosen_action = ActionType.none
         for i in range(6):
