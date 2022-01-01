@@ -42,7 +42,8 @@ class TestTeleporterController(unittest.TestCase):
         start_tel = tel_controller.teleporter_list[0]
         tel_controller.handle_actions(player)
         tel_controller.teleporter_list.remove(start_tel)
-        self.assertIn(shooter.hitbox.position, [teleporter.hitbox.position for teleporter in tel_controller.teleporter_list])
+        self.assertIn(shooter.hitbox.position,
+                      [teleporter.hitbox.position for teleporter in tel_controller.teleporter_list])
 
     def test_player_spam_teleport(self):
         tel_controller = TeleporterController()
