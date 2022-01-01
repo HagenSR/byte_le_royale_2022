@@ -13,7 +13,7 @@ class TeleporterController(Controller):
     def __init__(self):
         self.teleporter_list = self.game_board_teleporters()
 
-        # Teleporter object will be the key, value will be cooldown turns
+        # Teleporter object will be the key, value will be cooldown turns left
         self.disabled_teleporters = {}
 
     def handle_actions(self, client):
@@ -52,6 +52,7 @@ class TeleporterController(Controller):
             # Decrement other teleporters cooldowns, then Disable recently used teleporter
             self.process_turn()
             self.disabled_teleporters[teleport_to] = teleport_to.turn_cooldown
+            self.disabled_teleporters[curr_teleporter] = curr_teleporter.turn_cooldown
         else:
             # Teleport was not chosen action, need to decrement teleporter cooldowns
             self.process_turn()

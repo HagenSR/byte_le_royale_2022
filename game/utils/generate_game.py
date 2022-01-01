@@ -408,11 +408,12 @@ def generate():
         new_teleporter = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
         game_map.partition.add_object(new_teleporter)
         gen_teleporters.append(new_teleporter)
-        with open('./game_teleporters.json', 'w') as fl:
-            # Writes each object to json, then writes the string to file
-            strs = [json.dumps(teleporter.to_json()) for teleporter in gen_teleporters]
-            s = "[%s]" % ",\n".join(strs)
-            fl.write(s)
+
+    with open('./game_teleporters.json', 'w') as fl:
+        # Writes each object to json, then writes the string to file
+        strs = [json.dumps(teleporter.to_json()) for teleporter in gen_teleporters]
+        s = "[%s]" % ",\n".join(strs)
+        fl.write(s)
 
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):
