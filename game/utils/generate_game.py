@@ -398,13 +398,13 @@ def generate():
     gen_teleporters = []
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
-        dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
-        while game_map.partition.find_object_object(dummy_wall) is not False\
+        dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
+        while game_map.partition.find_object_hitbox(dummy_hitbox) is not False\
                 or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
                 or teleporter_x < 0 or teleporter_y < 0\
-                or determine_teleporter_nearby(dummy_wall, game_map):
+                or determine_teleporter_nearby(dummy_hitbox, game_map):
             teleporter_x, teleporter_y = find_teleporter_position()
-            dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
+            dummy_hitbox = Hitbox(10, 10, (teleporter_x, teleporter_y))
         new_teleporter = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
         game_map.partition.add_object(new_teleporter)
         gen_teleporters.append(new_teleporter)
@@ -458,11 +458,11 @@ def find_teleporter_position():
 
 def determine_teleporter_nearby(teleporter, game_board):
     # min & max make sure bounds are within the game board
-    for x in range(int(max(0, teleporter.hitbox.position[0] -
-                           11)), int(min(teleporter.hitbox.position[1] +
+    for x in range(int(max(0, teleporter.position[0] -
+                           11)), int(min(teleporter.position[1] +
                                          11, GameStats.game_board_width))):
-        for y in range(int(max(0, teleporter.hitbox.position[0] -
-                               11)), int(min(teleporter.hitbox.position[1] +
+        for y in range(int(max(0, teleporter.position[0] -
+                               11)), int(min(teleporter.position[1] +
                                              11, GameStats.game_board_width))):
             if game_board.partition.find_object_coordinates(x, y) is not False:
                 return True

@@ -18,8 +18,8 @@ class TeleporterController(Controller):
 
     def handle_actions(self, client):
         if client.action._chosen_action is ActionType.use_teleporter:
+            print(f'list len: {len(self.teleporter_list)}')
             # Get teleporter player is on
-            print(len(self.teleporter_list))
             for teleporter in self.teleporter_list:
                 if check_collision(teleporter.hitbox, client.shooter.hitbox):
                     curr_teleporter = teleporter
@@ -29,16 +29,23 @@ class TeleporterController(Controller):
             # Player should not be able to teleport to same location
             self.teleporter_list.remove(curr_teleporter)
             # Player should not be able to teleport to deactivated teleporter
-            for teleporter in self.disabled_teleporters:
-                if teleporter in self.teleporter_list:
+            for teleporter in self.disabled_teleporters.keys():
+                if teleporter is not curr_teleporter:
                     self.teleporter_list.remove(teleporter)
-            if curr_teleporter in self.disabled_teleporters:
+            # Determine where to teleport to
+            if curr_teleporter in self.disabled_teleporters.keys():
                 # Add teleporters back to list
+                print('hit here')
                 self.teleporter_list.append(curr_teleporter)
-                for teleporter in self.disabled_teleporters:
+                for teleporter in self.disabled_teleporters.keys():
                     self.teleporter_list.append(teleporter)
+                self.process_turn()
                 return None
             elif len(self.teleporter_list) == 0:
+                self.teleporter_list.append(curr_teleporter)
+                for teleporter in self.disabled_teleporters.keys():
+                    self.teleporter_list.append(teleporter)
+                self.process_turn()
                 return None
             elif len(self.teleporter_list) == 1:
                 teleport_to = self.teleporter_list[0]
@@ -47,8 +54,9 @@ class TeleporterController(Controller):
             client.shooter.hitbox.position = teleport_to.hitbox.position
             # Add teleporters back to list
             self.teleporter_list.append(curr_teleporter)
-            for teleporter in self.disabled_teleporters:
-                self.teleporter_list.append(teleporter)
+            for teleporter in self.disabled_teleporters.keys():
+                if teleporter is not curr_teleporter:
+                    self.teleporter_list.append(teleporter)
             # Decrement other teleporters cooldowns, then Disable recently used teleporter
             self.process_turn()
             self.disabled_teleporters[teleport_to] = teleport_to.turn_cooldown
@@ -65,21 +73,6 @@ class TeleporterController(Controller):
                 teleporter = Teleporter(Hitbox(1, 1, (2, 2)))
                 teleporter.from_json(entry)
                 teleporter_list.append(teleporter)
-
-            # WILL DELETE LATER
-    #     # for x in range(0, GameStats.game_board_width,
-    #     #                game_board.partition.partition_width):
-    #     #     for y in range(0, GameStats.game_board_height,
-    #     #                    game_board.partition.partition_height):
-    #     #         for object in game_board.partition.get_partition_objects(x, y):
-    #     #             if isinstance(object, Teleporter):
-    #     #                 teleporter_list.append(object)
-    #     #------------------------------------
-    #     # for x in range(1, GameStats.game_board_width, 10):
-    #     #     for y in range(1, GameStats.game_board_height, 10):
-    #     #         game_obj = game_board.partition.find_object_coordinates(x, y)
-    #     #         if isinstance(game_obj, Teleporter):
-    #     #             teleporter_list.append(game_obj)
         return teleporter_list
 
     # Decrement cooldown of teleporters

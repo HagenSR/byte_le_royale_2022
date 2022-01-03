@@ -61,7 +61,7 @@ class TestTeleporterController(unittest.TestCase):
         player.action._chosen_action = ActionType.use_teleporter
         tel_controller.handle_actions(player)
         cooldown_tel_position = player.shooter.hitbox.position
-        for i in range(6):
+        for i in range(8):
             tel_controller.handle_actions(player)
         self.assertNotEqual(player.shooter.hitbox.position, cooldown_tel_position)
 
