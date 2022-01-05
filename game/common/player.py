@@ -7,14 +7,14 @@ from game.common.moving.shooter import Shooter
 
 
 class Player(GameObject):
-    def __init__(self, code=None, team_name=None, action=None, shooter=None):
+    def __init__(self, code=None, team_name=None, shooter=None):
         super().__init__()
         self.object_type = ObjectType.player
         self.functional = True
         self.error = None
         self.team_name = team_name
         self.code = code
-        self.action = action
+        self.action = Action()
         self.shooter = shooter
 
     def to_json(self):
@@ -23,7 +23,8 @@ class Player(GameObject):
         data['functional'] = self.functional
         data['error'] = self.error
         data['team_name'] = self.team_name
-        data['shooter'] = self.shooter.to_json()
+        if self.shooter:
+            data['shooter'] = self.shooter.to_json()
         data['action'] = self.action.to_json(
         ) if self.action is not None else None
 

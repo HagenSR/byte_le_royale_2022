@@ -84,24 +84,15 @@ class Engine:
                 continue
 
             # Otherwise, instantiate the player
-            if len(self.clients) == 0:
-                # Add players one and two
-                ar = GameStats.player_stats["hitbox"][0]
-                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter=Shooter(hitbox=hit))
-                self.clients.append(player)
-            else:
-                ar = GameStats.player_stats["hitbox"][1]
-                hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
-                player = Player(shooter=Shooter(hitbox=hit))
-                self.clients.append(player)
+            # Add players one and two
+            player = Player()
+            self.clients.append(player)
 
             # Verify client isn't using invalid imports or opening anything
             imports, opening = verify_code(filename + '.py')
             if len(imports) != 0:
                 player.functional = False
-                player.error = ImportError(
-                    f'Player has attempted illegal imports: {imports}')
+                player.error = f'Player has attempted illegal imports: {imports}'
 
             if opening:
                 player.functional = False
@@ -178,6 +169,10 @@ class Engine:
         world.pop("game_map", None)
         self.world["game_map"] = game_map
         self.world['seed'] = world['seed']
+
+        # attach shooters to the game map
+        for client in self.clients:
+            self.world["game_map"].partition.add_object(client.shooter)
 
     # Sits on top of all actions that need to happen before the player takes
     # their turn
@@ -308,7 +303,6 @@ class Engine:
         else:
             results_information = self.master_controller.return_final_results(
                 self.clients, self.tick_number)
-
         if source:
             results_information['reason'] = source
 

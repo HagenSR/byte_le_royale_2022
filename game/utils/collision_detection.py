@@ -8,6 +8,23 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
 
 
+def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
+    return point_in_hitbox(
+        center[0],
+        center[1],
+        hitbox) or intersect_arc(
+        center,
+        radius,
+        hitbox,
+        heading,
+        arc_len_degree)
+
+
+def point_in_hitbox(x, y, hitbox):
+    return (hitbox.bottom_left[0] <= x <= hitbox.top_right[0] and
+            hitbox.top_right[1] <= y <= hitbox.bottom_left[1])
+
+
 def intersect_circle(center, radius, hitbox):
     edges = [
         [hitbox.top_left, hitbox.top_right],
@@ -58,7 +75,6 @@ def intersect_circle(center, radius, hitbox):
         # lines of the arc
         if (seg_len < radius and ((distance(x1, y1, x3, y3) < radius or distance(
                 x2, y2, x3, y3) < radius) or x1 <= xi <= x2 and y1 <= yi <= y2)):
-
             return True
 
     return False
@@ -66,6 +82,10 @@ def intersect_circle(center, radius, hitbox):
 
 def distance(x1, y1, x2, y2):
     return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1 / 2)
+
+
+def distance_tuples(coord_tuple1, coord_tuple2):
+    return distance(coord_tuple1[0], coord_tuple1[1], coord_tuple2[0], coord_tuple2[1])
 
 
 def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
@@ -171,7 +191,7 @@ def is_point_in_path(x: int, y: int, poly) -> bool:
             return True
         if (poly[i][1] > y) != (poly[j][1] > y):
             slope = (x - poly[i][0]) * (poly[j][1] - poly[i][1]) - \
-                (poly[j][0] - poly[i][0]) * (y - poly[i][1])
+                    (poly[j][0] - poly[i][0]) * (y - poly[i][1])
             if slope == 0:
                 # point is on boundary
                 return True

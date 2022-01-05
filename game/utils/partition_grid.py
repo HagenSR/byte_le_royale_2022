@@ -133,7 +133,10 @@ class PartitionGrid:
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         for partition in self.check_overlap(obj.hitbox):
-            self.__matrix[partition[0]][partition[1]].remove(obj)
+            try:
+                self.__matrix[partition[0]][partition[1]].remove(obj)
+            except ValueError:
+                pass
 
     def get_partitions_wide(self):
         return len(self.__matrix)
@@ -160,6 +163,7 @@ class PartitionGrid:
 
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
+
         for x in range(0, GameStats.game_board_width, self.partition_width):
             for y in range(
                     0,
