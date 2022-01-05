@@ -127,19 +127,19 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
     # Get final x and y coordinates given gun range and heading
     if ((0 <= heading <= math.pi / 2
             or (3 * math.pi) / 2 <= heading <= 2 * math.pi)
-            or math.isclose((3*math.pi/2), heading, abs_tol=1e-8)
-            or math.isclose((2*math.pi), heading, abs_tol=1e-8)):
+            or math.isclose((3 * math.pi / 2), heading, abs_tol=1e-8)
+            or math.isclose((2 * math.pi), heading, abs_tol=1e-8)):
         if math.isclose(heading, 0, abs_tol=1e-8) or math.isclose(heading,
-                2*math.pi, abs_tol=1e-8):
+                                                                  2 * math.pi, abs_tol=1e-8):
             ray_x_limit = coords[0] + ray_range
         else:
-            if heading < math.pi/2:
+            if heading < math.pi / 2:
                 ray_x_limit = (
                     coords[0] +
                     abs(
                         ray_range *
                         math.sin(
-                            ((math.pi/2)-heading) %
+                            ((math.pi / 2) - heading) %
                             (math.pi / 2))))
             else:
                 ray_x_limit = (
@@ -154,13 +154,13 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
         if heading == math.pi or math.isclose(math.pi, heading, abs_tol=1e-8):
             ray_x_limit = coords[0] - ray_range
         else:
-            if (3*math.pi/2)> heading > math.pi:
+            if (3 * math.pi / 2) > heading > math.pi:
                 ray_x_limit = (
                     coords[0] -
                     abs(
                         ray_range *
                         math.sin(
-                            ((3*math.pi/2)-heading) % (math.pi / 2))))
+                            ((3 * math.pi / 2) - heading) % (math.pi / 2))))
             else:
                 ray_x_limit = (
                     coords[0] -
@@ -169,27 +169,27 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
                         math.sin(
                             heading % (math.pi / 2))))
     if (math.isclose(heading, 0, abs_tol=1e-8)
-            or math.isclose(heading, 2*math.pi, abs_tol=1e-8)
+            or math.isclose(heading, 2 * math.pi, abs_tol=1e-8)
             or math.isclose(math.pi, heading, abs_tol=1e-8)):
         ray_y_limit = coords[1]
-    elif (heading == math.pi/2):
+    elif (heading == math.pi / 2):
         ray_y_limit = coords[1] - ray_range
-    elif math.isclose(heading, (3*math.pi/2), abs_tol=1e-8):
+    elif math.isclose(heading, (3 * math.pi / 2), abs_tol=1e-8):
         ray_y_limit = coords[1] + ray_range
     else:
         if (0 <= heading <= math.pi
                 or math.isclose(heading, 0, abs_tol=1e-8)
                 or math.isclose(heading, math.pi, abs_tol=1e-8)):
-            if heading < math.pi/2:
+            if heading < math.pi / 2:
                 ray_y_limit = -(-coords[1] + abs(
-                    ray_range * math.cos(((math.pi/2)-heading) % (math.pi / 2))))
+                    ray_range * math.cos(((math.pi / 2) - heading) % (math.pi / 2))))
             else:
                 ray_y_limit = -(-coords[1] + abs(
                     ray_range * math.cos(heading % (math.pi / 2))))
         else:
-            if heading < 3*math.pi/2:
+            if heading < 3 * math.pi / 2:
                 ray_y_limit = -(-coords[1] - abs(
-                    ray_range * math.cos(((3*math.pi/2)-heading) % (math.pi / 2))))
+                    ray_range * math.cos(((3 * math.pi / 2) - heading) % (math.pi / 2))))
             else:
                 ray_y_limit = -(-coords[1] - abs(
                     ray_range * math.cos(heading % (math.pi / 2))))
@@ -433,33 +433,33 @@ def get_gun_ray_collision(player, gameboard):
 
 # This sucks. Used to test rays, will replace later
 def get_grenade_collisions(gameboard, start_coords, grenade_range, damage,
-        exclusions):
+                           exclusions):
     collisions = []
     for i in range(360000):
         heading = math.radians(i / 1000)
         slope = calculate_slope(heading)
         ray_endpoint = get_ray_limits(
-                heading,
-                start_coords,
-                gameboard,
-                slope,
-                grenade_range
+            heading,
+            start_coords,
+            gameboard,
+            slope,
+            grenade_range
         )
         collidables = load_collidables_in_ray_range(
-                heading,
-                start_coords,
-                gameboard,
-                ray_endpoint,
-                exclusions
+            heading,
+            start_coords,
+            gameboard,
+            ray_endpoint,
+            exclusions
         )
         ray = determine_ray_collision(
-                gameboard,
-                collidables,
-                start_coords,
-                slope,
-                ray_endpoint,
-                grenade_range,
-                damage
+            gameboard,
+            collidables,
+            start_coords,
+            slope,
+            ray_endpoint,
+            grenade_range,
+            damage
         )
         collisions.append(ray)
 
