@@ -70,14 +70,8 @@ class TestMovingObject(
         self.assertIsNotNone(test_mov.hitbox.position)
         self.assertIsNotNone(test_mov.hitbox)
         self.assertIsNotNone(test_mov.collidable)
-        self.assertIsNone(self.movObj.hitbox)
-        self.assertIsNone(self.movObj.collidable)
-
-    def setHeading(self, newHeading):
-        self.movObj.heading = newHeading
-
-    def setSpeed(self, newSpeed):
-        self.movObj.speed = newSpeed
+        self.assertIsNotNone(self.movObj.hitbox)
+        self.assertTrue(self.movObj.collidable)
 
     def setHeading(self, newHeading):
         self.movObj.heading = newHeading

@@ -1,11 +1,14 @@
 from copy import deepcopy
 
+from game.common.hitbox import Hitbox
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
-import math
 
 
 class Shooter(MovingObject):
@@ -15,7 +18,7 @@ class Shooter(MovingObject):
             self,
             heading=0,
             speed=0,
-            hitbox=None):
+            hitbox=Hitbox(10, 10, (250, 250), 0)):
         super().__init__(
             heading,
             speed,
@@ -23,14 +26,14 @@ class Shooter(MovingObject):
             hitbox,
             collidable=True
         )
-        self.heading = math.radians(heading)
         self.object_type = ObjectType.shooter
-        self.money = GameStats.player_stats['starting_money']
-        self.armor = None
-        self.visible = []
+
         self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
-        self.moving = False
+        self.max_speed = GameStats.player_stats['max_distance_per_turn']
+
+        self.money = GameStats.player_stats['starting_money']
+        self.armor = None
         self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
@@ -40,9 +43,10 @@ class Shooter(MovingObject):
         # this statement grabs the slot_type as a string, the object type as a
         # Type, and puts it into a list of tuples
         self.slot_obj_types = [
-            (slot_type,
-             slot_stats['type']) for slot_type,
-            slot_stats in GameStats.inventory_stats.items()]
+            ('guns', game.common.items.gun.Gun),
+            ('upgrades', game.common.items.upgrade.Upgrade),
+            ('consumables', game.common.items.consumable.Consumable)]
+
         # this generates an empty inventory, with number of slots for each slot
         # type taken from game stats
         self.__inventory = {
@@ -128,35 +132,19 @@ class Shooter(MovingObject):
                     break
         return self.primary_gun
 
-    # set the heading and direction in a controlled way, might need to add
-    # distance attribute later
-    def set_movement_parameters(self, heading, speed):
-        """Set heading and speed to handle moving, does not set the action to move"""
-        self.heading = math.radians(
-            heading)  # TODO change this to not be converted to radians
-        self.hitbox.rotation = heading
-        if speed <= GameStats.player_stats['max_distance_per_turn']:
-            self.speed = speed
-        else:
-            raise ValueError(
-                "Speed must be less than max move speed for the player")
-
     def to_json(self):
         data = super().to_json()
 
         data['inventory'] = self.inventory
-        data['visible'] = [obj.to_json() for obj in self.visible]
-
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
-        data['moving'] = self.moving
 
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.inventory = data['inventory']
+        self.__inventory = data['inventory']  # TODO fix this from_json
         self.money = data['money']
         self.armor = data['armor']
         self.visible = data['visible']
