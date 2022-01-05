@@ -270,25 +270,25 @@ def determine_ray_collision(
             (collidable.hitbox.top_left, collidable.hitbox.top_right),
             (ray_start, ray_endpoint)
         )
-        if top is not None:
+        if top:
             intersections.append(top)
         bottom = line_intersection(
             (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
             (ray_start, ray_endpoint)
         )
-        if bottom is not None:
+        if bottom:
             intersections.append(bottom)
         left = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
             (ray_start, ray_endpoint)
         )
-        if left is not None:
+        if left:
             intersections.append(left)
         right = line_intersection(
             (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
             (ray_start, ray_endpoint)
         )
-        if right is not None:
+        if right:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
@@ -391,8 +391,10 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
     )
 
     ray = determine_ray_collision(
+        gameboard,
         collidables,
         ray_start,
+        slope,
         ray_endpoint,
         dist,
         damage
