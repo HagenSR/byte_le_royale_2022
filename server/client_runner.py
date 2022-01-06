@@ -43,8 +43,6 @@ class client_runner:
 
         self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
 
-        self.tpc_id = -1
-
         # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
         

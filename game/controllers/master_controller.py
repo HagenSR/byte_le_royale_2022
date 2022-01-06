@@ -99,11 +99,19 @@ class MasterController(Controller):
             ReloadController.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
-            print(f"\nGame is ending because player(s) "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
-                  f"is out of health, player "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
-                  f"wins")
+            players_dead = [player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]
+            players_alive = [player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]
+            if len(players_alive) > 0:
+                print(f"\nGame is ending because player "
+                    f"{players_dead} "
+                    f"is out of health, player "
+                    f"{players_alive} "
+                    f"wins")
+            else:
+                print(f"\nGame is ending both players are out of health, "
+                    f"player "
+                    f"{players_dead[0]} "
+                    f"wins by arbitrary decision")
             self.game_over = True
 
     # Return serialized version of game

@@ -292,8 +292,6 @@ class Engine:
 
     # Attempts to safely handle an engine shutdown given any game state
     def shutdown(self, source=None):
-        # Write log files
-        write_json_file(self.game_logs, LOGS_FILE)
 
         # Retrieve and write results information
         results_information = None

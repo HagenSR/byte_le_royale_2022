@@ -1,9 +1,6 @@
 import os
-
 from requests.models import HTTPError
-#from game.config import CLIENT_DIRECTORY, CLIENT_KEYWORD
 from server.client.client_utils import ClientUtils
-import argparse
 import json
 
 CLIENT_DIRECTORY = "./"
