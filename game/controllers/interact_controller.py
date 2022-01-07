@@ -23,10 +23,8 @@ class InteractController(Controller):
             object_list = world["game_board"].partition.get_partition_objects(client.shooter.hitbox.position[0],
                                                                               client.shooter.hitbox.position[1])
 
-            # for loop checks in any of the objects in the partition collide with the player
-            for obj in object_list:
-                if check_collision(client.shooter.hitbox, obj.hitbox) and not isinstance(obj, Shooter):
-                    object_target = obj
+            # partition grid checks to see if any objects collide with the player's hitbox
+            object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
             if isinstance(object_target, Upgrade):
                 self.interact_upgrade(client, world, object_target)
             elif isinstance(object_target, Money):
@@ -34,7 +32,7 @@ class InteractController(Controller):
             else:
                 # if there are no objects beneath the player, the controller checks if there are nearby doors
                 # to interact with.
-                object_target = self.find_doors(client, world)
+                object_target = self.find_doors(client.shooter, world["game_board"].partition)
                 if isinstance(object_target, Door):
                     self.interact_door(object_target)
                 else:
@@ -58,20 +56,20 @@ class InteractController(Controller):
             door.collidable = False
 
     # method used to find the closest door to interact with
-    def find_doors(self, client, world):
-        middle = client.shooter.hitbox.middle
+    def find_doors(self, shooter, partition_grid):
+        middle = shooter.hitbox.middle
         end_value = GameStats.max_allowed_dist_from_door
         door_dist_list = []
         # checks for doors in range from the right
         for x in range(int(middle[0]), int(middle[0] + end_value + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
+            obj = partition_grid.find_object_coordinates(x, middle[1])
             if isinstance(obj, Door) and (
                     len(door_dist_list) == 0 or obj is not door_dist_list[len(door_dist_list) - 1][0]):
                 distance = math.dist((middle[0], middle[1]), (x, obj.hitbox.middle[1]))
                 door_dist_list.append((obj, distance))
         # checks for doors in range from the left
         for x in range(int(middle[0] - end_value), int(middle[0] + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
+            obj = partition_grid.find_object_coordinates(x, middle[1])
             if isinstance(obj, Door):
                 distance = math.dist((middle[0], middle[1]), (x, middle[1]))
                 if len(door_dist_list) == 0 or (obj is not door_dist_list[len(door_dist_list) - 1][0]):
@@ -82,14 +80,14 @@ class InteractController(Controller):
                     door_dist_list.append((obj, distance))
         # checks for doors in range from the bottom
         for x in range(int(middle[1]), int(middle[1] + end_value + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
+            obj = partition_grid.find_object_coordinates(middle[0], x)
             if isinstance(obj, Door) and (
                     len(door_dist_list) == 0 or obj is not door_dist_list[len(door_dist_list) - 1][0]):
                 distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], x))
                 door_dist_list.append((obj, distance))
         # checks for doors in range from the top
         for x in range(int(middle[1] - end_value), int(middle[1] + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
+            obj = partition_grid.find_object_coordinates(middle[0], x)
             if isinstance(obj, Door):
                 distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], x))
                 if len(door_dist_list) == 0 or (obj is not door_dist_list[len(door_dist_list) - 1][0]):

@@ -119,7 +119,7 @@ class PartitionGrid:
             raise ValueError("Hitbox to check must be of type Hitbox")
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
-                if collision_detection.check_collision(obj.hitbox, hitbox):
+                if collision_detection.check_collision(obj.hitbox, hitbox) and obj.hitbox is not hitbox:
                     return obj
         return False
 
