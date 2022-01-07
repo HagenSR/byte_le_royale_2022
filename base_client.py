@@ -10,7 +10,7 @@ from game.common.moving.shooter import Shooter
 from game.utils.partition_grid import PartitionGrid
 ######################################################
 
-from game.utils.collision_detection import distance_tuples
+from game.utils.player_utils import *
 
 
 class Client(UserClient):
@@ -36,8 +36,6 @@ class Client(UserClient):
         :param player:      This is your in-game character object
         """
         game_board = world["game_map"]
-        angle = int(math.degrees(math.acos(
-            abs(player.hitbox.position[1] - game_board.center[1]) /
-            distance_tuples(player.hitbox.position, game_board.center))))
+        angle = angle_to_point(player, game_board.center)
 
         actions.set_move(angle, player.max_speed)
