@@ -1,2 +1,2 @@
 @echo off
-python .\launcher.pyz run -q
+python .\launcher.pyz run -q -fn

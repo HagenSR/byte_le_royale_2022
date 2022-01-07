@@ -1,5 +1,7 @@
+from collections import deque
+import itertools
 import os, shutil
-from typing import NewType
+from typing import Deque, NewType
 import psycopg2
 import subprocess
 import json
@@ -37,9 +39,9 @@ class client_runner:
         # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
-        self.NUMBER_OF_RUNS_FOR_CLIENT = 3
+        self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 3
 
-        self.number_of_clients = -1
+        self.number_of_unique_games = -1
 
         self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
 
@@ -66,14 +68,13 @@ class client_runner:
                 self.group_id = -1
                 time.sleep(150)
         except (KeyboardInterrupt, Exception) as e:
-            logging.warning("Ending server due to {0}".format(e))
+            logging.warning("Ending runner due to {0}".format(e))
         finally:
             self.close_server()
 
 
     def external_runner(self):
         clients = self.fetch_clients()
-        self.number_of_clients = len(clients)
         self.group_id = self.insert_new_group_run()
 
         if not os.path.exists(self.runner_temp_dir):
@@ -82,7 +83,7 @@ class client_runner:
         if not os.path.exists(self.seed_path ):
             os.mkdir(self.seed_path )
 
-        for index in range(self.NUMBER_OF_RUNS_FOR_CLIENT):
+        for index in range(self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM):
             path = f'{self.seed_path }/{index}'
             os.mkdir(path)
             shutil.copy('launcher.pyz', path)
@@ -91,11 +92,14 @@ class client_runner:
             with open(f'{path}/logs/game_map.json') as fl:
                 fldict = "".join(fl.readlines())
             self.index_to_seed_id[index] = self.insert_seed_file(fldict)
-        # repeat the clients list by the number of times defined in the constant
-        clients = clients * (self.NUMBER_OF_RUNS_FOR_CLIENT)
+
+
+        # get the games as a list of client tuples
+        submission_id_list = list(map(lambda x: x["submission_id"] ,clients))
+        games = self.return_team_parings(clients)
  
         #then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs = 6, backend="threading")(map(delayed(self.internal_runner), clients, [i for i in range(len(clients))]))
+        res = Parallel(n_jobs = 6, backend="threading")(map(delayed(self.internal_runner), games, [i for i in range(len(games))]))
 
     def internal_runner(self, row, index):
         score = 0
@@ -115,7 +119,7 @@ class client_runner:
                 f.write(row['file_text'])
 
             # Determine what seed this run needs based on it's serial index
-            seed_index = int(index / self.number_of_clients)
+            seed_index = int(index / self.number_of_unique_games)
             logging.warning("running run {0} for submission {1} using seed index {2}".format(index, row["submission_id"], seed_index))
 
             # Copy the seed into the run folder
@@ -207,7 +211,7 @@ class client_runner:
         Inserts a new group run. Relates all the runs in this process together
         '''
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
-        cur.execute("SELECT insert_group_run(%s, %s)", (self.version, self.NUMBER_OF_RUNS_FOR_CLIENT))
+        cur.execute("SELECT insert_group_run(%s, %s)", (self.version, self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM))
         self.conn.commit()
         return cur.fetchall()[0]["insert_group_run"]
 
@@ -282,6 +286,12 @@ class client_runner:
                 break
             except PermissionError:
                 continue
+        
+    def return_team_parings(self, submissions):
+        fixtures = list(itertools.combinations(submissions,2))
+        self.number_of_unique_games = len(fixtures)
+        repeated = fixtures * self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM
+        return repeated
         
 if __name__ == "__main__":
     client_runner().external_runner()

@@ -41,4 +41,3 @@ class Client(UserClient):
             distance_tuples(player.hitbox.position, game_board.center))))
 
         actions.set_move(angle, player.max_speed)
-        aaa

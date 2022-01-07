@@ -39,6 +39,9 @@ if __name__ == '__main__':
     run_subpar.add_argument('-quiet', '-q', action='store_true', default=False,
                             dest='q_bool', help='Runs your AI... quietly :)')
 
+    run_subpar.add_argument('-fn', '-fn', action='store_true', default=False,
+                        dest='fn_bool', help='Replaces team names with file names, for server usage')
+
 
         #Version Subparser
     upd_subpar = spar.add_parser('version', help='Prints the current version of the launcher')
@@ -94,7 +97,7 @@ if __name__ == '__main__':
         if par_args.q_bool:
             quiet = True
 
-        engine = Engine(quiet)
+        engine = Engine(quiet, par_args.fn_bool)
         engine.loop()
 
     # Boot up the scrimmage server client

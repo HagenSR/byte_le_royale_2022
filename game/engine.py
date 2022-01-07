@@ -21,7 +21,7 @@ from tqdm import tqdm
 
 
 class Engine:
-    def __init__(self, quiet_mode=False):
+    def __init__(self, quiet_mode=False, use_filenames_as_team_names = False):
         self.clients = list()
         self.master_controller = MasterController()
         self.tick_number = 0
@@ -31,6 +31,7 @@ class Engine:
         self.current_world_key = None
 
         self.quiet_mode = quiet_mode
+        self.use_filenames = use_filenames_as_team_names
 
         # Delete logs, then recreate logs dir
         for file in os.scandir(LOGS_DIR):
@@ -112,6 +113,8 @@ class Engine:
 
             player.code = obj
 
+
+
             # Retrieve team name
             thr = CommunicationThread(player.code.team_name, list(), str)
             thr.start()
@@ -126,7 +129,12 @@ class Engine:
                 player.functional = False
                 player.error = thr.error
 
-            player.team_name = thr.retrieve_value()
+            # Note: I keep the above thread for both naming conventions to check for client errors
+            if self.use_filenames:
+                player.team_name = filename
+                thr.retrieve_value()
+            else:
+                player.team_name = thr.retrieve_value()
 
         # Verify correct number of clients have connected to start
         func_clients = [client for client in self.clients if client.functional]
