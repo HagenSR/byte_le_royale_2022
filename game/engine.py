@@ -42,26 +42,29 @@ class Engine:
     # basic game loop until over
     def loop(self):
         # If quiet mode is activated, replace stdout with devnull
-        f = sys.stdout
-        if self.quiet_mode:
-            f = open(os.devnull, 'w')
-            sys.stdout = f
+        error = ""
+        try:
+            f = sys.stdout
+            if self.quiet_mode:
+                f = open(os.devnull, 'w')
+                sys.stdout = f
+            self.boot()
+            self.load()
 
-        self.boot()
-        self.load()
-
-        for self.current_world_key in tqdm(
-                self.master_controller.game_loop_logic(),
-                bar_format=TQDM_BAR_FORMAT,
-                unit=TQDM_UNITS,
-                file=f):
-            self.pre_tick()
-            self.tick()
-            self.post_tick()
-            if self.tick_number >= MAX_TICKS:
-                break
-
-        self.shutdown()
+            for self.current_world_key in tqdm(
+                    self.master_controller.game_loop_logic(),
+                    bar_format=TQDM_BAR_FORMAT,
+                    unit=TQDM_UNITS,
+                    file=f):
+                self.pre_tick()
+                self.tick()
+                self.post_tick()
+                if self.tick_number >= MAX_TICKS:
+                    break
+        except Exception as e:
+            print(str(e))
+        finally:
+            self.shutdown()
 
     # Finds, checks, and instantiates clients
     def boot(self):

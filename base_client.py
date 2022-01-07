@@ -1,16 +1,5 @@
-import math
-
 from game.client.user_client import UserClient
 from game.common.enums import *
-
-######################################################
-# imports for type hints
-from game.common.action import Action
-from game.common.moving.shooter import Shooter
-from game.utils.partition_grid import PartitionGrid
-######################################################
-
-from game.utils.collision_detection import distance_tuples
 
 
 class Client(UserClient):
@@ -23,10 +12,10 @@ class Client(UserClient):
         Allows the team to set a team name.
         :return: Your team name
         """
-        return 'Example Client'
+        return 'Dumb AI Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, player: Shooter) -> None:
+    def take_turn(self, turn, actions, world, partition_grid, player):
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
@@ -35,9 +24,4 @@ class Client(UserClient):
         :param world:       Generic world information
         :param player:      This is your in-game character object
         """
-        game_board = world["game_map"]
-        angle = int(math.degrees(math.acos(
-            abs(player.hitbox.position[1] - game_board.center[1]) /
-            distance_tuples(player.hitbox.position, game_board.center))))
-
-        actions.set_move(angle, player.max_speed)
+        pass

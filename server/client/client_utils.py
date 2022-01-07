@@ -101,7 +101,6 @@ class ClientUtils:
             print("Bad Vid and RunID combination (probably)")
         else:
             content = resp.content.decode("utf-8") 
-            breakpoint()
             with open(f"./seed_for_run_{runid}.json", "w") as fl:
                 fl.write(content)
             with open(f"./logs/game_map.json", "w") as fl:

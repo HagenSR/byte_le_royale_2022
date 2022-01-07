@@ -25,6 +25,9 @@ Please note that not all of the functionality needs to be implemented. Only what
 
 Which will be covered in the following sections.
 
+## Really Important things to note:
+1. For the API to reflect changes made to Postgresql Functions, tables, schemas etc it needs to be restarted
+
 ## Postgres SQL Database
 
 ### Set up
