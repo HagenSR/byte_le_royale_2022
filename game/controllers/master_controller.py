@@ -71,7 +71,7 @@ class MasterController(Controller):
         self.seed = world["seed"][(turn % len(world['seed']))]
 
         if not self.instantiated_teleporter_controller:
-            self.teleporter_controller = TeleporterController(self.current_world_data["game_map"])
+            self.teleporter_controller = TeleporterController()
             self.instantiated_teleporter_controller = True
 
     # Receive a specific client and send them what they get per turn. Also

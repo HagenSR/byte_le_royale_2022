@@ -11,6 +11,7 @@ class Wall(MapObject):
             destructible=False):
         super().__init__(health, hitbox, collidable=True)
         self.object_type = ObjectType.wall
+        self.destructible = destructible
 
     def to_json(self):
         data = super().to_json()
