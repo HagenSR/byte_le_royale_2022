@@ -104,7 +104,8 @@ class MasterController(Controller):
             self.use_controller.handle_actions(client)
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
-            self.teleporter_controller.handle_actions(client)
+            self.teleporter_controller.handle_actions(
+                client, self.current_world_data['game_map'])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True

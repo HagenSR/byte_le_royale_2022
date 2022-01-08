@@ -39,6 +39,5 @@ __all__ = [
     'TestReloadController',
     'TestMovementController',
     'TestLootGenerationController',
-    'TestItemGenerationUtil',
-    'TestTeleporterController'
+    'TestItemGenerationUtil'
 ]

@@ -1,79 +1,50 @@
-import time
-
 from game.controllers.controller import Controller
 import random
 from game.common.enums import *
-from game.common.stats import GameStats
 from game.common.teleporter import Teleporter
-from game.utils.collision_detection import *
-import asyncio
 
 
 class TeleporterController(Controller):
 
     def __init__(self, game_board):
-        self.teleporter_list = self.game_board_teleporters(game_board)
+        self.enabled_teleporters = game_board.teleporter_list
         # Teleporter object will be the key, value will be cooldown turns
-        self.disabled_teleporters = {}
+        self.disabled_teleporters = []
 
-    def handle_actions(self, client):
+    def handle_actions(self, client, game_board):
         if client.action._chosen_action is ActionType.use_teleporter:
             # Get teleporter player is on
-            for teleporter in self.teleporter_list:
-                if check_collision(teleporter.hitbox, client.shooter.hitbox):
-                    curr_teleporter = teleporter
-            # Player is not on a teleporter
-            if curr_teleporter is None:
+            curr_teleporter = game_board.partition.find_object_object(client.shooter)
+            if curr_teleporter is False or isinstance(curr_teleporter, Teleporter) is False or curr_teleporter in self.disabled_teleporters:
+                self.process_turn()
                 return None
             # Player should not be able to teleport to same location
-            self.teleporter_list.remove(curr_teleporter)
+            self.enabled_teleporters.remove(curr_teleporter)
             # Player should not be able to teleport to deactivated teleporter
-            for teleporter in self.disabled_teleporters:
-                if teleporter in self.teleporter_list:
-                    self.teleporter_list.remove(teleporter)
-            if curr_teleporter in self.disabled_teleporters:
-                # Add teleporters back to list
-                self.teleporter_list.append(curr_teleporter)
-                for teleporter in self.disabled_teleporters:
-                    self.teleporter_list.append(teleporter)
+            if len(self.enabled_teleporters) == 0:
+                self.enabled_teleporters.append(curr_teleporter)
+                self.process_turn()
                 return None
-            elif len(self.teleporter_list) == 0:
-                return None
-            elif len(self.teleporter_list) == 1:
-                teleport_to = self.teleporter_list[0]
             else:
-                teleport_to = random.choice(self.teleporter_list)
+                teleport_to = random.choice(self.enabled_teleporters)
             client.shooter.hitbox.position = teleport_to.hitbox.position
-            # Add teleporters back to list
-            self.teleporter_list.append(curr_teleporter)
-            for teleporter in self.disabled_teleporters:
-                self.teleporter_list.append(teleporter)
-            # Decrement other teleporters cooldowns, then Disable receently used teleporter
+            # Decrement other teleporters cooldowns, then Disable receently used teleporters
             self.process_turn()
-            self.disabled_teleporters[teleport_to] = teleport_to.turn_cooldown
+            self.disabled_teleporters.append(teleport_to)
+            self.enabled_teleporters.remove(teleport_to)
+            self.disabled_teleporters.append(curr_teleporter)
+            # curr_teleporter is disabled before if statement
         else:
             # Teleport was not chosen action, need to decrement teleporter cooldowns
             self.process_turn()
 
-    def game_board_teleporters(self, game_board):
-        teleporter_list = []
-        for x in range(0, GameStats.game_board_width,
-                       game_board.partition.partition_width):
-            for y in range(0, GameStats.game_board_height,
-                           game_board.partition.partition_height):
-                for object in game_board.partition.get_partition_objects(x, y):
-                    if isinstance(object, Teleporter):
-                        teleporter_list.append(object)
-        return teleporter_list
-
     # Decrement cooldown of teleporters
     def process_turn(self):
-        to_remove = []
-        for teleporter in self.disabled_teleporters:
-            new_value = self.disabled_teleporters.get(teleporter) - 1
-            if new_value == 0:
-                to_remove.append(teleporter)
-            else:
-                self.disabled_teleporters[teleporter] = new_value
-        for removal in to_remove:
-            self.disabled_teleporters.pop(removal)
+        for tel in self.disabled_teleporters:
+            tel.countdown -= 1
+            if tel.countdown == 0:
+                self.enabled_teleporters.append(tel)
+                self.disabled_teleporters.remove(tel)
+                # reset possible cooldown timer
+                tel.countdown = tel.turn_cooldown
+

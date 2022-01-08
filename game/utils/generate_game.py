@@ -395,6 +395,7 @@ def generate():
                 game_map.partition.add_object(wall_copy)
 
     # place 5 teleporters
+    gen_teleporters = []
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
         dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
@@ -405,7 +406,9 @@ def generate():
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
         print(f'tel_x:{teleporter_x} tel_y:{teleporter_y}')
-        game_map.partition.add_object(Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y))))
+        new_tel = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
+        game_map.partition.add_object(new_tel)
+        game_map.teleporter_list.append(new_tel)
 
     # Verify logs location exists
     if not os.path.exists(GAME_MAP_DIR):
