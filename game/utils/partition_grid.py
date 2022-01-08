@@ -91,6 +91,9 @@ class PartitionGrid:
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
 
+    def get_partition_objects_index(self, x, y):
+        return self.__matrix[x][y]
+
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
         return Hitbox(

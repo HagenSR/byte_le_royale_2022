@@ -5,6 +5,7 @@ from game.common.stats import GameStats
 from game.common.items.upgrade import Upgrade
 from game.common.door import Door
 from game.common.items.money import Money
+from game.utils import collision_detection
 from game.utils.collision_detection import check_collision
 from game.common.moving.shooter import Shooter
 from game.common.enums import *
@@ -57,51 +58,21 @@ class InteractController(Controller):
             door.open_state = True
             door.collidable = False
 
-    # method used to find the closest door to interact with
-    def find_doors(self, client, world):
-        middle = client.shooter.hitbox.middle
-        end_value = GameStats.max_allowed_dist_from_door
-        door_dist_list = []
-        # checks for doors in range from the right
-        for x in range(int(middle[0]), int(middle[0] + end_value + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
-            if isinstance(obj, Door) and (
-                    len(door_dist_list) == 0 or obj is not door_dist_list[len(door_dist_list) - 1][0]):
-                distance = math.dist((middle[0], middle[1]), (x, obj.hitbox.middle[1]))
-                door_dist_list.append((obj, distance))
-        # checks for doors in range from the left
-        for x in range(int(middle[0] - end_value), int(middle[0] + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(x, middle[1])
-            if isinstance(obj, Door):
-                distance = math.dist((middle[0], middle[1]), (x, middle[1]))
-                if len(door_dist_list) == 0 or (obj is not door_dist_list[len(door_dist_list) - 1][0]):
-                    door_dist_list.append((obj, distance))
-                if obj is door_dist_list[len(door_dist_list) - 1][0] and \
-                        distance < door_dist_list[len(door_dist_list) - 1][1]:
-                    door_dist_list.pop()
-                    door_dist_list.append((obj, distance))
-        # checks for doors in range from the bottom
-        for x in range(int(middle[1]), int(middle[1] + end_value + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
-            if isinstance(obj, Door) and (
-                    len(door_dist_list) == 0 or obj is not door_dist_list[len(door_dist_list) - 1][0]):
-                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], x))
-                door_dist_list.append((obj, distance))
-        # checks for doors in range from the top
-        for x in range(int(middle[1] - end_value), int(middle[1] + 1)):
-            obj = world["game_board"].partition.find_object_coordinates(middle[0], x)
-            if isinstance(obj, Door):
-                distance = math.dist((middle[0], middle[1]), (obj.hitbox.middle[0], x))
-                if len(door_dist_list) == 0 or (obj is not door_dist_list[len(door_dist_list) - 1][0]):
-                    door_dist_list.append((obj, distance))
-                if obj is door_dist_list[len(door_dist_list) - 1][0] and \
-                        distance < door_dist_list[len(door_dist_list) - 1][1]:
-                    door_dist_list.pop()
-                    door_dist_list.append((obj, distance))
-        if len(door_dist_list) > 0:
-            # sort the doors that are in range by distance
-            sorted_list = sorted(door_dist_list, key=lambda z: z[1])
-            # returns closest door
-            return sorted_list[0][0]
-        else:
-            return False
+    def find_doors(self, player_coords, partition):
+        objects = []
+        for x in range(0, GameStats.game_board_width, partition.partition_width):
+            for y in range(0, GameStats.game_board_height, partition.partition_height):
+                if collision_detection.intersect_circle(
+                        player_coords,
+                        GameStats.max_allowed_dist_from_door,
+                        partition.get_partition_hitbox(x, y)):
+
+                    objects.extend(partition.get_partition_objects_index(x, y))
+
+        filter(lambda obj: isinstance(obj, Door), objects)
+        return min(objects,
+                   key=lambda obj:
+                   collision_detection.distance(player_coords[0],
+                                                player_coords[1],
+                                                obj.hitbox.position[0],
+                                                obj.hitbox.position[1]))
