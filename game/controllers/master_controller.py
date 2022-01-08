@@ -61,9 +61,9 @@ class MasterController(Controller):
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
             random.seed(self.seed)
+
     # Receives world data from the generated game log and is responsible for
     # interpreting it
-
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
@@ -79,8 +79,9 @@ class MasterController(Controller):
 
         # Obfuscate data in objects that that player should not be able to see
         partition_grid.obfuscate(client)
+        shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid)
+        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
         return args
 
     # Perform the main logic that happens per turn
@@ -101,6 +102,11 @@ class MasterController(Controller):
             self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            print(f"\nGame is ending because player(s) "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
+                  f"is out of health, player "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
+                  f"wins")
             self.game_over = True
 
     # Return serialized version of game
@@ -116,7 +122,6 @@ class MasterController(Controller):
     # Gather necessary data together in results file
     def return_final_results(self, clients, turn):
         data = dict()
-
         data['players'] = list()
         # Determine results
         for client in clients:

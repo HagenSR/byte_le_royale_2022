@@ -6,11 +6,27 @@ from game.common.stats import GameStats
 import math
 
 
+def rotate(origin, point, angle_deg):
+    """
+    Rotate a point counterclockwise by a given angle around a given origin.
+
+    The angle should be given in degrees, then is converted to rads.
+    """
+
+    angle_rad = math.radians(angle_deg)
+    ox, oy = origin
+    px, py = point
+    qx = ox + math.cos(angle_rad) * (px - ox) - math.sin(angle_rad) * (py - oy)
+    qy = oy + math.sin(angle_rad) * (px - ox) + math.cos(angle_rad) * (py - oy)
+
+    return qx, qy
+
+
 class Hitbox(GameObject):
     def __init__(self, width, height, xy_tuple, rotation=0):
         super().__init__()
         self.object_type = ObjectType.hitbox
-        # Set width, height, rotation like this due to deadlock from both position and rotation needing eachother
+        # Set width, height, rotation like this due to deadlock from both position and rotation needing each other
         # to check if corners are out of bounds
         self.__width = width
         self.__height = height
@@ -92,27 +108,19 @@ class Hitbox(GameObject):
         self.check_corner_outside()
 
     def update_corners(self):
-        self.__top_left = self.rotate(
-            self.middle, self.position, self.rotation)
-        self.__top_right = self.rotate(
-            self.middle,
-            (self.position[0] +
-             self.width,
-             self.position[1]),
-            self.rotation)
-        self.__bottom_left = self.rotate(
-            self.middle,
-            (self.position[0],
-             self.position[1] +
-             self.height),
-            self.rotation)
-        self.__bottom_right = self.rotate(
-            self.middle,
-            (self.position[0] +
-             self.width,
-             self.position[1] +
-             self.height),
-            self.rotation)
+        corners = [
+            rotate(self.middle, self.position, self.rotation),
+            rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
+            rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
+            rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
+        ]
+
+        # this is so each corner is guaranteed to be in its spot
+        corners = sorted(corners, key=lambda coord: coord[0] + coord[1])
+        self.__top_left = corners[0]
+        self.__top_right = max([corners[1], corners[2]], key=lambda coord: coord[0])
+        self.__bottom_left = max([corners[1], corners[2]], key=lambda coord: coord[1])
+        self.__bottom_right = corners[3]
 
     def check_corner_outside(self):
         '''
@@ -148,21 +156,6 @@ class Hitbox(GameObject):
         self.width = data['width']
         self.height = data['height']
         self.position = data['position']
-
-    def rotate(self, origin, point, ngle):
-        """
-        Rotate a point counterclockwise by a given angle around a given origin.
-
-        The angle should be given in degrees, then is converted to rads.
-        """
-
-        angle = math.radians(ngle)
-        ox, oy = origin
-        px, py = point
-        qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
-        qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
-
-        return qx, qy
 
     def __str__(self):
         return f"""

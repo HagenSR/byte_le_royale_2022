@@ -5,34 +5,44 @@ from game.common.items.consumable import Consumable
 class Action:
     def __init__(self):
         self.object_type = ObjectType.action
+
         # _chosen_action should be set using the ActionType enum
         self._chosen_action = None
-        # item_to_purchase should be set using the Consumables enum
+
+        # these should be set using the Consumables enum
         self.item_to_purchase = None
         self.item_to_use = None
 
-    def set_action(self, act):
-        if isinstance(act, int) and act in ActionType.__dict__.values():
-            # if act in [ActionType.none, ActionType.move, ActionType.shoot, ActionType.pickup_item,
-            # ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
-            self._chosen_action = act
+        self.heading = None
+        self.speed = None
+
+    def set_action(self, act: int):
+        """Sets a general action. NOTE: For actions that require additional data,
+        please use other methods in action object"""
+        if not isinstance(act, int) and act in ActionType.__dict__.values():
+            raise ValueError("Values passed to action object methods must be of correct type")
+        self._chosen_action = act
+
+    def set_move(self, heading: int, speed: int):
+        """Sets movement intent and parameters"""
+        if not isinstance(heading, int) and isinstance(speed, int):
+            raise ValueError("Values passed to action object methods must be of correct type")
+        self._chosen_action = ActionType.move
+        self.heading = heading
+        self.speed = speed
 
     def select_item_to_buy(self, obj):
-        if isinstance(obj, int) and obj in Consumables.__dict__.values():
-            # if act in [ActionType.none, ActionType.move, ActionType.shoot, ActionType.pickup_item,
-            # ActionType.reload_weapon, ActionType.shop, ActionType.use_item]:
-            self.item_to_purchase = obj
-        else:
-            raise ValueError(
-                "value entered does not retrieve consumable enum.")
+        """Sets item to buy from shop"""
+        if not isinstance(obj, int) and obj in Consumables.__dict__.values():
+            raise ValueError("Values passed to action object methods must be of correct type")
+        self.item_to_purchase = obj
 
     def select_item_to_use(self, obj):
         """Sets item to use and action to use. Must be same object reference as is in player inventory"""
-        if isinstance(obj, Consumable):
-            self._chosen_action = ActionType.use
-            self.item_to_use = obj
-        else:
-            raise ValueError("Item to buy must be of type Consumable")
+        if not isinstance(obj, Consumable):
+            raise ValueError("Values passed to action object methods must be of correct type")
+        self._chosen_action = ActionType.use
+        self.item_to_use = obj
 
     def to_json(self):
         data = dict()

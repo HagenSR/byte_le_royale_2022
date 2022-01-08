@@ -13,15 +13,13 @@ class MovementController(Controller):
         super().__init__()
         self.space_free = None
 
-    def handle_actions(self, client, world):
+    def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
-            # shooter object is removed from old location on game board to avoid
-            # object duplicates
-            if client.shooter.speed > GameStats.player_stats["max_distance_per_turn"]:
-                raise Exception(
-                    "Player tried exceeding maximum distance per turn")
-            world["game_board"].partition.remove_object(client.shooter)
+            client.shooter.speed = client.action.speed
+            client.shooter.heading = client.action.heading
+            # shooter object is removed from old location on game board to avoid object duplicates
+            game_board.partition.remove_object(client.shooter)
             # variable for client's location prior to movement
             location = client.shooter.hitbox.position
             # client's desired speed
@@ -36,11 +34,17 @@ class MovementController(Controller):
                 location = client.shooter.hitbox.position
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
-                dummy_hitbox.position = (new_x, new_y)
-                obj = world["game_board"].partition.find_object_hitbox(
+                try:
+                    dummy_hitbox.position = (new_x, new_y)
+                except ValueError:
+                    self.space_free = False
+                obj = game_board.partition.find_object_hitbox(
                     dummy_hitbox)
                 if not obj or not obj.collidable:
-                    client.shooter.hitbox.position = (new_x, new_y)
+                    try:
+                        client.shooter.hitbox.position = (new_x, new_y)
+                    except ValueError:
+                        self.space_free = False
                     if abs(
                             new_x -
                             target_location[0]) < 0.00001 and abs(
@@ -51,4 +55,4 @@ class MovementController(Controller):
                 else:
                     self.space_free = False
             # gameboard is updated with new client location
-            world["game_board"].partition.add_object(client.shooter)
+            game_board.partition.add_object(client.shooter)

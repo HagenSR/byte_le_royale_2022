@@ -11,7 +11,9 @@ def load_collidables_in_ray_range(
         coords,
         gameboard,
         ray_endpoint,
-        exclusions=[]):
+        exclusions=None):
+    if exclusions is None:
+        exclusions = []
     ray_x_limit = ray_endpoint[0]
     ray_y_limit = ray_endpoint[1]
     # starting partition
@@ -55,36 +57,8 @@ def load_collidables_in_ray_range(
 
     return collidables
 
-
-# get collidables in a cube of partitions bounded by range
-def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
-    collidables = {}
-    if coords[0] - max_range >= 0:
-        start_partition_x = gameboard.partition.find_column(
-            coords[0] - max_range)
-    else:
-        start_partition_x = gameboard.partition.find_column(0)
-    if coords[1] - max_range >= 0:
-        start_partition_y = gameboard.partition.find_row(coords[1] - max_range)
-    else:
-        start_partition_y = gameboard.partition.find_row(0)
-    if coords[0] + max_range <= gameboard.width:
-        end_partition_x = gameboard.partition.find_column(
-            coords[0] + max_range)
-    else:
-        end_partition_x = gameboard.partition.find_column(gameboard.width)
-    if coords[1] + max_range <= gameboard.height:
-        end_partition_y = gameboard.partition.find_column(
-            coords[1] + max_range)
-    else:
-        end_partition_y = gameboard.partition.find_column(gameboard.height)
-    for x in range(start_partition_x, end_partition_x + 1):
-        for y in range(start_partition_y, end_partition_y + 1):
-            for z in gameboard.partition.get_partition_objects(x, y):
-                if z not in exclusions:
-                    collidables[z] = 0
-
-    return collidables
+# TODO: Ray function; returns a list of x,y pairs of the ray
+# def get_partition_coordinates_in_range()
 
 
 # Calculate slope from player heading
@@ -162,11 +136,7 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
             ray_x_limit = 0
             ray_y_limit = calculate_ray_y(coords, slope, 0)
     elif ray_x_limit > gameboard.width:
-        if 0 < calculate_ray_y(
-                coords[0],
-                coords[1],
-                slope,
-                gameboard.width) < gameboard.height:
+        if 0 < calculate_ray_y(coords, slope, 0) < gameboard.height:
             ray_x_limit = gameboard.width
             ray_y_limit = calculate_ray_y(coords, slope, gameboard.width)
     if ray_y_limit < 0:
@@ -174,15 +144,11 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
             ray_y_limit = 0
             ray_x_limit = calculate_ray_x(coords, slope, 0)
     elif ray_y_limit > gameboard.height:
-        if 0 < calculate_ray_x(
-                coords[0],
-                coords[1],
-                slope,
-                gameboard.height) < gameboard.width:
+        if 0 < calculate_ray_x(coords[0], coords[1], slope) < gameboard.width:
             ray_y_limit = gameboard.height
             ray_x_limit = calculate_ray_x(coords, slope, gameboard.height)
 
-    return (ray_x_limit, ray_y_limit)
+    return ray_x_limit, ray_y_limit
 
 
 def sort_objects(coords, collidables, max_range):
@@ -222,39 +188,37 @@ def line_intersection(line1, line2):
 
 
 def determine_ray_collision(
-        gameboard,
         collidables,
         ray_start,
-        slope,
         ray_endpoint,
         dist,
         damage):
     collisions = {}
-    for collidable in collidables.keys():
+    for collidable in collidables:
         intersections = []
         top = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.top_right),
             (ray_start, ray_endpoint)
         )
-        if top is not None:
+        if top:
             intersections.append(top)
         bottom = line_intersection(
             (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
             (ray_start, ray_endpoint)
         )
-        if bottom is not None:
+        if bottom:
             intersections.append(bottom)
         left = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
             (ray_start, ray_endpoint)
         )
-        if left is not None:
+        if left:
             intersections.append(left)
         right = line_intersection(
             (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
             (ray_start, ray_endpoint)
         )
-        if right is not None:
+        if right:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
@@ -290,31 +254,31 @@ def determine_gun_collision(
         damage):
     # Ray object used to provide data for visualizer
     collisions = {}
-    for collidable in collidables.keys():
+    for collidable in collidables:
         intersections = []
         top = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.top_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if top is not None:
+        if top:
             intersections.append(top)
         bottom = line_intersection(
             (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if bottom is not None:
+        if bottom:
             intersections.append(bottom)
         left = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if left is not None:
+        if left:
             intersections.append(left)
         right = line_intersection(
             (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if right is not None:
+        if right:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
@@ -357,10 +321,8 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
     )
 
     ray = determine_ray_collision(
-        gameboard,
         collidables,
         ray_start,
-        slope,
         ray_endpoint,
         dist,
         damage

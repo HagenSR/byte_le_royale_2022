@@ -1,7 +1,7 @@
+from game.common.hitbox import Hitbox
 from game.common.map_object import MapObject
 from game.common.stats import GameStats
 from game.common.enums import *
-import math
 
 
 # Inherits MapObject
@@ -11,9 +11,10 @@ class MovingObject(MapObject):
             heading=0,
             speed=0,
             health=None,
-            hitbox=None,
-            collidable=None):
+            hitbox=Hitbox(10, 10, (250, 250), 0),
+            collidable=True):
         super().__init__(health, hitbox, collidable)
+        self.max_speed = GameStats.moving_object_stats["max_speed"]
         self.heading = heading
         self.speed = speed
         self.object_type = ObjectType.moving_object
@@ -28,19 +29,18 @@ class MovingObject(MapObject):
 
     # setter for heading. Should be degrees between 0 and 360 inclusive
     @heading.setter
-    def heading(self, val):
-        if 0 <= val <= 360:
-            self.__heading = val
-        else:
-            raise Exception("Heading value outside bounds, Not set")
+    def heading(self, heading):
+        if not 0 <= heading <= 360:
+            raise ValueError("Heading must be between 0 and 360")
+        self.__heading = heading
+        self.hitbox.rotation = heading
 
     # Set speed must be greater than 0
     @speed.setter
     def speed(self, val):
-        if val >= 0 and val <= GameStats.moving_object_stats['max_speed']:
-            self.__speed = val
-        else:
+        if not 0 <= val <= self.max_speed:
             raise Exception("Speed value outside bounds, Not set")
+        self.__speed = val
 
     # To_json creates a dictionary representation of the object.
     # super().to_json() calls MapObject.to_json(), which calls gameObject.to_json()

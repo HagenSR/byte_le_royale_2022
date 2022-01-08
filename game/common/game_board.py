@@ -29,6 +29,8 @@ class GameBoard(GameObject):
             width, height, 25, 25)
         self.ray_list = []
 
+        self.center = (width / 2, height / 2)
+
         # this calculates starting radius to totally encompass the map at start
         # with delay
         self.circle_radius = math.sqrt(

@@ -4,7 +4,7 @@ from game.common.hitbox import Hitbox
 
 
 class MapObject(GameObject):
-    def __init__(self, health=None, hitbox=None, collidable=None):
+    def __init__(self, health=None, hitbox=None, collidable=True):
         super().__init__()
         self.object_type = ObjectType.map_object
         self.health = health

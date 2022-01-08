@@ -1,6 +1,4 @@
 import unittest
-import math
-import json
 
 from game.utils.ray_utils import *
 from game.common.game_board import GameBoard

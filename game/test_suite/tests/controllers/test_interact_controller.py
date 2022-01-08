@@ -17,6 +17,26 @@ class TestInteractController(unittest.TestCase):
     def setUp(self):
         act = Action()
         act.set_action(ActionType.interact)
+        self.myPlayer = Player(
+            action=act, shooter=Shooter(
+                0, 0, Hitbox(
+                    10, 10, (10, 10), 0)))
+        self.interactController = InteractController()
+        self.world_data = {'game_board': GameBoard()}
+
+    # def test_interact_object_valid(self):
+
+    def test_interact_door_too_far(self):
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        door_object = Door(Hitbox(3, 10, (80, 50)))
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        # self.world_data["game_board"].partition.add_object(
+        # door_object)
+        self.assertRaises(ValueError,
+                          self.interactController.handle_actions,
+                          self.myPlayer, self.world_data)
+
         self.myPlayer = Player(shooter=Shooter(
             0, 0, Hitbox(
                 10, 10, (10, 10), 0)))
