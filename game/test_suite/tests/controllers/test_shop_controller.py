@@ -19,17 +19,6 @@ class TestShopController(unittest.TestCase):
         self.myPlayer.action._chosen_action = ActionType.shop
         self.shopController = ShopController()
 
-    # Tests that shop controller inventory is updated after item purchase
-    def test_shop_inventory_update(self):
-        self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.shield]["cost"]
-        self.myPlayer.action.item_to_purchase = Consumables.shield
-        # before purchase, shop inventory for armor_pack will be 5
-        self.shopController.handle_actions(self.myPlayer)
-        # This assertion statement should prove that the item stock has gone
-        # down by one after the purchase
-        self.assertEqual(
-            self.shopController.shop_inventory[self.myPlayer.action.item_to_purchase]["quantity"], 4)
-
     # Tests to make sure player cannot buy items if inventory is full
     def test_user_inventory_error(self):
         self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed]["cost"]
