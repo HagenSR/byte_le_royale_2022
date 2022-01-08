@@ -41,7 +41,7 @@ class client_runner:
         # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
-        self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 1
+        self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 3
 
         # IE how many combinations of clients can you make
         self.number_of_unique_games = -1
