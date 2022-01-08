@@ -1,5 +1,8 @@
 from copy import deepcopy
 
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
 from game.common.hitbox import Hitbox
 import game.common.items.gun
 import game.common.items.upgrade

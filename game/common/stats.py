@@ -165,3 +165,6 @@ class GameStats:
     consumable_cap = 30
     upgrade_cap = 20
     money_cap = 50
+
+    # this distance goes from middle of player hitbox to coord within door hitbox
+    max_allowed_dist_from_door = 10

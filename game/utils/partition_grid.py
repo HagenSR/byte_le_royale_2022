@@ -85,6 +85,9 @@ class PartitionGrid:
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
 
+    def get_partition_objects_index(self, x, y):
+        return self.__matrix[x][y]
+
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
         return Hitbox(
@@ -113,7 +116,7 @@ class PartitionGrid:
             raise ValueError("Hitbox to check must be of type Hitbox")
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
-                if collision_detection.check_collision(obj.hitbox, hitbox):
+                if collision_detection.check_collision(obj.hitbox, hitbox) and obj.hitbox is not hitbox:
                     return obj
         return False
 
