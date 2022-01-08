@@ -118,7 +118,7 @@ def get_teams():
 def get_leaderboard():
     try:
         ell = request.json["include_inelligible"]
-        group_id = request.json["group_id"]
+        group_id = request.json["group_id"] 
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, group_id))
         if cur.rowcount == 0:
@@ -195,6 +195,7 @@ def get_stats():
     try:
         vid = request.json["vid"]
         cur = conn.cursor()
+        breakpoint()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
         res = cur.fetchone()
         if res is None:
