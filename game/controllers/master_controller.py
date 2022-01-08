@@ -2,6 +2,7 @@ from copy import deepcopy
 import random
 
 from game.common.hitbox import Hitbox
+from game.common.items.gun import Gun
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
@@ -45,6 +46,7 @@ class MasterController(Controller):
             ar = GameStats.player_stats["hitbox"][index]
             hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
             client.shooter = Shooter(hitbox=hit)
+            client.shooter.append_inventory(Gun(GunType.handgun, 1))
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -84,6 +86,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        # clear ray list of any rays from previous ticks
+        self.current_world_data["game_map"].ray_list = []
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
         self.loot_generation_controller.handle_actions(

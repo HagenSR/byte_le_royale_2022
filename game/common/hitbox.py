@@ -105,7 +105,7 @@ class Hitbox(GameObject):
     def rotation(self, rotation):
         self.__rotation = rotation
         self.update_corners()
-        self.check_corner_outside()
+        # self.check_corner_outside()
 
     def update_corners(self):
         corners = [

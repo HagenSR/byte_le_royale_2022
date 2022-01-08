@@ -135,7 +135,7 @@ class Shooter(MovingObject):
     def to_json(self):
         data = super().to_json()
 
-        data['inventory'] = self.inventory
+        # data['inventory'] = self.inventory
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
@@ -144,7 +144,7 @@ class Shooter(MovingObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.__inventory = data['inventory']  # TODO fix this from_json
+        # self.__inventory = data['inventory']  # TODO fix this from_json
         self.money = data['money']
         self.armor = data['armor']
         self.visible = data['visible']

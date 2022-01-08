@@ -17,13 +17,14 @@ class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):
         super().__init__()
+        self.prev_location = (0, 0)
 
     def team_name(self):
         """
         Allows the team to set a team name.
         :return: Your team name
         """
-        return 'Example Client'
+        return 'Awesome Example Client'
 
     # This is where your AI will decide what to do
     def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, player: Shooter) -> None:
@@ -38,4 +39,9 @@ class Client(UserClient):
         game_board = world["game_map"]
         angle = angle_to_point(player, game_board.center)
 
-        actions.set_move(angle, player.max_speed)
+        if self.prev_location != player.hitbox.position:
+            actions.set_move(int(angle), player.max_speed)
+            self.prev_location = player.hitbox.position
+        else:
+            actions.set_action(ActionType.shoot)
+            print([ray.collision.health for ray in game_board.ray_list])

@@ -34,6 +34,8 @@ class ShootController(Controller):
 
     def handle_action(self, client, game_board):
         if client.action._chosen_action is ActionType.shoot:
+            if client.shooter.primary_gun.mag_ammo <= 0:
+                return
             gun = client.shooter.primary_gun
             if gun.pattern == ShotPattern.single:
                 ray = get_gun_ray_collision(client, game_board)
@@ -72,3 +74,5 @@ class ShootController(Controller):
                         gun,
                         game_board,
                         GameStats.shot_pattern_multi_pellet_count)
+
+            client.shooter.primary_gun.mag_ammo -= 1
