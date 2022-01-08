@@ -35,6 +35,8 @@ class ShootController(Controller):
     def handle_action(self, client, game_board):
         if client.action._chosen_action is ActionType.shoot:
             gun = client.shooter.primary_gun
+            if not gun:
+                raise AttributeError("Client tried to shoot but doesn't have a primary gun equipped")
             if gun.pattern == ShotPattern.single:
                 ray = get_gun_ray_collision(client, game_board)
                 game_board.ray_list.append(ray)
