@@ -44,4 +44,3 @@ class Client(UserClient):
             self.prev_location = player.hitbox.position
         else:
             actions.set_action(ActionType.shoot)
-            print([ray.collision.health for ray in game_board.ray_list])
