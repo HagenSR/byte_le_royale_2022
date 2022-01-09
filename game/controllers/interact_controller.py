@@ -16,24 +16,21 @@ class InteractController(Controller):
         super().__init__()
 
     def handle_actions(self, client, world):
-        object_target = False
         if client.action._chosen_action is ActionType.interact:
-            object_list = world["game_board"].partition.get_partition_objects(client.shooter.hitbox.position[0],
-                                                                              client.shooter.hitbox.position[1])
-            for obj in object_list:
-                if check_collision(client.shooter.hitbox, obj.hitbox) and not isinstance(obj, Shooter):
-                    object_target = obj
-            print(object_target)
-            if not object_target:
-                raise ValueError("There is no object it interact with.")
+            # partition grid checks to see if any objects collide with the player's hitbox
+            object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
             if isinstance(object_target, Upgrade):
                 self.interact_upgrade(client, world, object_target)
-            elif isinstance(object_target, Door):
-                self.interact_door(client, object_target)
             elif isinstance(object_target, Money):
                 self.interact_money(client, world, object_target)
             else:
-                pass
+                # if there are no objects beneath the player, the controller checks if there are nearby doors
+                # to interact with.
+                object_target = self.find_doors(client.shooter.hitbox.middle, world["game_board"].partition)
+                if isinstance(object_target, Door):
+                    self.interact_door(object_target)
+                else:
+                    raise ValueError("There is no object to interact with.")
 
     def interact_upgrade(self, client, world, upgrade):
         if client.shooter.has_empty_slot('upgrades'):
