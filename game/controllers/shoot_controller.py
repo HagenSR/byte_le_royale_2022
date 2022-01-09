@@ -57,7 +57,7 @@ class ShootController(Controller):
                              (gun.fire_rate /
                               2) *
                              arc_diff)
-                for i in range(GameStats.gun.fire_rate):
+                for i in range(gun.fire_rate):
                     curr_arc = arc_start + (i * arc_diff)
                     ray = get_ray_collision(
                         game_board,

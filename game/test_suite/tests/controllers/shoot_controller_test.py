@@ -96,10 +96,10 @@ class TestShootController(unittest.TestCase):
         self.assertAlmostEqual(
             wall.health,
             (GameStats.default_wall_health -
-             4 *
+             2 *
              round(
                  gun.damage /
-                 GameStats.shot_pattern_multi_pellet_count)),
+                 gun.fire_rate)),
             4)
         self.game_board.partition.remove_object(wall)
-        self.assertEqual(len(self.game_board.ray_list), 9)
+        self.assertEqual(len(self.game_board.ray_list), 4)
