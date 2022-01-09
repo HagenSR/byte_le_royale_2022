@@ -42,20 +42,22 @@ class ShootController(Controller):
                 game_board.ray_list.append(ray)
                 collision_object = ray.collision
                 apply_damage(collision_object, ray, gun, game_board, 1)
+                gun.mag_ammo -= 1
             elif gun.pattern == ShotPattern.multi:
                 for i in range(gun.fire_rate):
                     ray = get_gun_ray_collision(client, game_board)
                     game_board.ray_list.append(ray)
                     collision_object = ray.collision
                     apply_damage(collision_object, ray, gun, game_board, 1)
+                    gun.mag_ammo -= 1
             elif gun.pattern == ShotPattern.spread:
                 arc_diff = (GameStats.shot_pattern_multi_arc /
-                            GameStats.shot_pattern_multi_pellet_count)
+                            gun.fire_rate)
                 arc_start = (client.shooter.heading -
-                             (GameStats.shot_pattern_multi_pellet_count /
+                             (gun.fire_rate /
                               2) *
                              arc_diff)
-                for i in range(GameStats.shot_pattern_multi_pellet_count):
+                for i in range(GameStats.gun.fire_rate):
                     curr_arc = arc_start + (i * arc_diff)
                     ray = get_ray_collision(
                         game_board,
@@ -63,7 +65,7 @@ class ShootController(Controller):
                         curr_arc,
                         gun.range,
                         gun.damage /
-                        GameStats.shot_pattern_multi_pellet_count,
+                        gun.fire_rate,
                         [client.shooter]
                     )
                     game_board.ray_list.append(ray)
@@ -73,4 +75,5 @@ class ShootController(Controller):
                         ray,
                         gun,
                         game_board,
-                        GameStats.shot_pattern_multi_pellet_count)
+                        gun.fire_rate)
+                    gun.mag_ammo -= 1
