@@ -155,10 +155,9 @@ class Shooter(MovingObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.__inventory = data['inventory']  # TODO fix this from_json
         self.__inventory = {
             slot_type:
-                helpers.from_json_helper(data['inventory'][slot_type])
+                self.from_json_helper(data['inventory'][slot_type])
             for slot_type in data['inventory']
         }
         self.money = data['money']
@@ -166,7 +165,7 @@ class Shooter(MovingObject):
         self.view_distance = data['view_distance']
         return self
 
-    def from_json_helper(data: dict):
+    def from_json_helper(self, data: dict):
         obj_list = list()
         for obj in data:
             if obj['object_type'] == ObjectType.consumable:
