@@ -32,6 +32,7 @@ class InteractController(Controller):
                 else:
                     raise ValueError("There is no object to interact with.")
 
+    # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_upgrade(self, client, world, upgrade):
         if client.shooter.has_empty_slot('upgrades'):
             client.shooter.append_inventory(upgrade)
