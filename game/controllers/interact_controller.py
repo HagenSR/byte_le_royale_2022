@@ -1,12 +1,12 @@
 from game.controllers.controller import Controller
+
 from game.common.stats import GameStats
 from game.common.items.upgrade import Upgrade
 from game.common.door import Door
 from game.common.items.money import Money
+from game.utils import collision_detection
 from game.utils.collision_detection import check_collision
 from game.common.moving.shooter import Shooter
-from game.common.action import Action
-from game.common.game_board import GameBoard
 from game.common.enums import *
 
 
@@ -40,10 +40,32 @@ class InteractController(Controller):
             client.shooter.append_inventory(upgrade)
             world["game_board"].partition.remove_object(upgrade)
 
+    # removes money from beneath the player and adds the money amount to their stats
     def interact_money(self, client, world, money):
         client.shooter.money = client.shooter.money + money.amount
         world["game_board"].partition.remove_object(money)
 
+    # changes door state to open and allows the users to walk through it
     def interact_door(self, door):
         if not door.open_state:
             door.open_state = True
+            door.collidable = False
+
+    def find_doors(self, player_coords, partition):
+        objects = []
+        for x in range(0, GameStats.game_board_width, partition.partition_width):
+            for y in range(0, GameStats.game_board_height, partition.partition_height):
+                if collision_detection.intersect_circle(
+                        player_coords,
+                        GameStats.max_allowed_dist_from_door,
+                        partition.get_partition_hitbox(x, y)):
+
+                    objects.extend(partition.get_partition_objects_index(x, y))
+
+        filter(lambda obj: isinstance(obj, Door), objects)
+        return min(objects,
+                   key=lambda obj:
+                   collision_detection.distance(player_coords[0],
+                                                player_coords[1],
+                                                obj.hitbox.position[0],
+                                                obj.hitbox.position[1]))

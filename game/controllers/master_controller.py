@@ -6,6 +6,7 @@ from game.common.items.gun import Gun
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
+from game.controllers.interact_controller import InteractController
 from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
 from game.common.player import Player
@@ -38,6 +39,7 @@ class MasterController(Controller):
         self.loot_generation_controller = LootGenerationController()
 
         self.use_controller = UseController()
+        self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -46,7 +48,7 @@ class MasterController(Controller):
             ar = GameStats.player_stats["hitbox"][index]
             hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
             client.shooter = Shooter(hitbox=hit)
-            client.shooter.append_inventory(Gun(GunType.handgun, 1))
+            client.shooter.append_inventory(Gun(GunType.handgun, 1, Hitbox(0, 0, (0, 0))))
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -101,6 +103,7 @@ class MasterController(Controller):
             self.use_controller.handle_actions(client)
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
+            self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             print(f"\nGame is ending because player(s) "
