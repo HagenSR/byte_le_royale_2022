@@ -13,7 +13,7 @@ from game.common.moving.moving_object import MovingObject
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.wall import Wall
-from game.utils import collision_detection
+from game.utils import collision_detection, helpers
 
 
 class PartitionGrid:
