@@ -71,14 +71,12 @@ class visualizer_runner:
             shutil.copytree('visualizer/assets', team_dir + "/visualizer")
 
             shutil.copy('server/runners/vis_runner.sh', team_dir)
-        breakpoint()
 
     def get_latest_group(self):
         print("Getting Latest Group Run")
         cur = self.conn.cursor(cursor_factory= RealDictCursor)
         cur.execute("SELECT get_latest_group_id()")
         id = cur.fetchone()['get_latest_group_id']
-        breakpoint()
         return id
 
     def delete_vis_temp(self):

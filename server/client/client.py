@@ -150,7 +150,6 @@ class Client:
         res = self.utils.get_submission_stats(self.vid)
         print("Current Submission stats for submission {0} in group run {1}".format(res["sub_id"], res["run_group_id"]))
         print(f"Your submission has been run {len(res['data'])} out of {res['runs_per_client']} times")
-        self.utils.determine_stats(res['data'])
         self.utils.to_table(res["data"])
 
     def verify(self):

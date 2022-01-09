@@ -195,7 +195,6 @@ def get_stats():
     try:
         vid = request.json["vid"]
         cur = conn.cursor()
-        breakpoint()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
         res = cur.fetchone()
         if res is None:

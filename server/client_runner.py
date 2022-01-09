@@ -41,7 +41,7 @@ class client_runner:
         # The group run ID. will be set by insert_new_group_run
         self.group_id = 0
 
-        self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 3
+        self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 4
 
         # IE how many combinations of clients can you make
         self.number_of_unique_games = -1
@@ -85,6 +85,10 @@ class client_runner:
         if not os.path.exists(self.seed_path):
             os.mkdir(self.seed_path)
 
+        # get the games as a list of client tuples
+        #submission_id_list = list(map(lambda x: x["submission_id"], clients))
+        games = self.return_team_parings(clients)
+
         for index in range(self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM):
             path = f'{self.seed_path }/{index}'
             os.mkdir(path)
@@ -95,13 +99,8 @@ class client_runner:
                 fldict = "".join(fl.readlines())
             self.index_to_seed_id[index] = self.insert_seed_file(fldict)
 
-        # get the games as a list of client tuples
-        #submission_id_list = list(map(lambda x: x["submission_id"], clients))
-        games = self.return_team_parings(clients)
-
         # then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs=1, backend="threading")(
-            map(delayed(self.internal_runner), games, [i for i in range(len(games))]))
+        res = Parallel(n_jobs = 1, backend="threading")(map(delayed(self.internal_runner), games, [i for i in range(len(games))]))
 
     def internal_runner(self, row_tuple, index):
         winner = -1
@@ -117,11 +116,12 @@ class client_runner:
             shutil.copy('launcher.pyz', end_path)
 
             # Write the clients into the folder
-            for row in row_tuple:
+            for index_2, row in enumerate(row_tuple):
                 # runner will run -fn argument, which makes the team name the file name
                 # So we can grab the submission_id out of the results later
-                with open(f"{end_path}/client_{row['submission_id']}.py", 'w') as f:
+                with open(f"{end_path}/client_{index_2}_{row['submission_id']}.py", 'w') as f:
                     f.write(row['file_text'])
+                index_2 += 1
 
             # Determine what seed this run needs based on it's serial index
             seed_index = int(index / self.number_of_unique_games)
@@ -144,14 +144,14 @@ class client_runner:
             winner = -1
             if len(results['players_alive']) == 1:
                 # Submission ID of player who won, otherwise it was a tie
-                winner = results['players_alive'][0].split("_")[1]
+                winner = results['players_alive'][0].split("_")[-1]
 
             # for result in results['players']:
             #     if 'error' in result and result['error'] is not None:
             #         logging.warning("Run had error")
             #         error[client] = result['error']
         finally:
-            player_sub_ids = [x["team_name"].split("_")[1] for x in results["players"]]
+            player_sub_ids = [x["team_name"].split("_")[-1] for x in results["players"]]
             run_id = self.insert_run(winner, player_sub_ids[0], player_sub_ids[1], self.group_id, error, self.index_to_seed_id[seed_index])
             # Update information in best run dict
             if winner != -1:
@@ -292,7 +292,7 @@ class client_runner:
                 continue
 
     def return_team_parings(self, submissions):
-        fixtures = list(itertools.combinations(submissions, 2))
+        fixtures = list(itertools.permutations(submissions, 2))
         self.number_of_unique_games = len(fixtures)
         repeated = fixtures * self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM
         return repeated

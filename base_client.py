@@ -1,7 +1,6 @@
 from game.client.user_client import UserClient
 from game.common.enums import *
 
-
 class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):
