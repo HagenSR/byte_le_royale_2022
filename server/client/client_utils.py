@@ -3,6 +3,7 @@ import json
 import urllib3
 import os
 
+
 class ClientUtils:
     def __init__(self):
         urllib3.disable_warnings()
@@ -11,7 +12,8 @@ class ClientUtils:
         self.path_to_public = "server/certs/cert.pem"
 
     def get_team_types(self):
-        resp = requests.get(self.IP + "get_team_types", verify=self.path_to_public)
+        resp = requests.get(self.IP + "get_team_types",
+                            verify=self.path_to_public)
         resp.raise_for_status()
         return json.loads(resp.content)
 
@@ -21,32 +23,41 @@ class ClientUtils:
         return json.loads(resp.content)
 
     def register(self, reg_data):
-        resp = requests.post(self.IP + "register", reg_data, verify=self.path_to_public)
+        resp = requests.post(self.IP + "register", reg_data,
+                             verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
-        resp = requests.post(self.IP + "submit", json=data, verify=self.path_to_public)
+        resp = requests.post(self.IP + "submit", json=data,
+                             verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
     def submit_file(self, file, vid):
         data = {"file": file, "vid": vid}
-        resp = requests.post(self.IP + "submit", json=data, verify=self.path_to_public)
+        resp = requests.post(self.IP + "submit", json=data,
+                             verify=self.path_to_public)
         resp.raise_for_status()
         return resp
 
     def get_leaderboard(self, include_inelligible, group_id):
         data = {"include_inelligible": include_inelligible, "group_id": group_id}
-        resp = requests.post(self.IP + "get_leaderboard", json=data, verify=self.path_to_public)
+        resp = requests.post(self.IP + "get_leaderboard",
+                             json=data, verify=self.path_to_public)
         resp.raise_for_status()
         jsn = json.loads(resp.content)
+        group_info = jsn['group_run_info']
         if not include_inelligible:
-            print("The following is the leaderboard for eligible contestants")
+            print(
+                f"The following is the leaderboard for eligible contestants for group run {group_info['group_run_id']}.")
         else:
-            print("The following is the leaderboard for all contestants")
-        self.to_table(jsn)
+            print(
+                f"The following is the leaderboard for all contestants for group run {group_info['group_run_id']}.")
+        print(
+            f"""This group run ran with the launcher version {group_info['launcher_version']} on {group_info['group_run_time']}. Each client was run {group_info['runs_per_client']} times.""")
+        self.to_table(jsn["data"])
 
     def get_team_score_over_time(self, vid):
         resp = requests.post(
@@ -62,7 +73,6 @@ class ClientUtils:
         resp.raise_for_status()
         return json.loads(resp.content)
 
-    
     def get_runs_for_submission(self, vid, subid):
         resp = requests.post(
             self.IP + "get_runs_for_submission", json={"vid": vid, "submissionid": subid}, verify=self.path_to_public)
@@ -70,7 +80,6 @@ class ClientUtils:
         jsn = json.loads(resp.content)
         self.to_table(jsn)
 
-    
     def get_team_runs_for_group_run(self, vid, groupid):
         resp = requests.post(
             self.IP + "get_team_runs_for_group_run", json={"vid": vid, "groupid": groupid}, verify=self.path_to_public)
@@ -92,21 +101,20 @@ class ClientUtils:
         jsn = json.loads(resp.content)
         self.to_table(jsn)
 
-
     def get_seed_for_run(self, vid, runid):
         resp = requests.post(
-            self.IP + "get_seed_from_run", json={"vid": vid, "runid" : runid}, verify=self.path_to_public)
+            self.IP + "get_seed_from_run", json={"vid": vid, "runid": runid}, verify=self.path_to_public)
         resp.raise_for_status()
         if resp.content is None:
             print("Bad Vid and RunID combination (probably)")
         else:
-            content = resp.content.decode("utf-8") 
+            content = resp.content.decode("utf-8")
             with open(f"./seed_for_run_{runid}.json", "w") as fl:
                 fl.write(content)
             with open(f"./logs/game_map.json", "w") as fl:
                 fl.write(content)
-            print(f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
-
+            print(
+                f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
 
     def get_longest_cell_in_cols(self, json, json_atribs):
         col_longest_length = {}
