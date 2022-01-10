@@ -43,6 +43,8 @@ class client_runner:
 
         self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM = 4
 
+        self.total_number_of_games = -1
+
         # IE how many combinations of clients can you make
         self.number_of_unique_games = -1
 
@@ -77,6 +79,11 @@ class client_runner:
 
     def external_runner(self):
         clients = self.fetch_clients()
+
+        # get the games as a list of client tuples
+        #submission_id_list = list(map(lambda x: x["submission_id"], clients))
+        games = self.return_team_parings(clients)
+        self.count_number_of_game_appearances(games)
         self.group_id = self.insert_new_group_run()
 
         if not os.path.exists(self.runner_temp_dir):
@@ -84,10 +91,6 @@ class client_runner:
 
         if not os.path.exists(self.seed_path):
             os.mkdir(self.seed_path)
-
-        # get the games as a list of client tuples
-        #submission_id_list = list(map(lambda x: x["submission_id"], clients))
-        games = self.return_team_parings(clients)
 
         for index in range(self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM):
             path = f'{self.seed_path }/{index}'
@@ -100,7 +103,7 @@ class client_runner:
             self.index_to_seed_id[index] = self.insert_seed_file(fldict)
 
         # then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs = 1, backend="threading")(map(delayed(self.internal_runner), games, [i for i in range(len(games))]))
+        res = Parallel(n_jobs = 1, backend="threading")(map(delayed(self.internal_runner), games, [i for i in range(self.total_number_of_games)]))
 
     def internal_runner(self, row_tuple, index):
         winner = -1
@@ -213,7 +216,7 @@ class client_runner:
         '''
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT insert_group_run(%s, %s)",
-                    (self.version, self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM))
+                    (self.version, self.total_number_of_games_for_one_client))
         self.conn.commit()
         return cur.fetchall()[0]["insert_group_run"]
 
@@ -295,7 +298,18 @@ class client_runner:
         fixtures = list(itertools.permutations(submissions, 2))
         self.number_of_unique_games = len(fixtures)
         repeated = fixtures * self.NUMBER_OF_GAMES_AGAINST_SAME_TEAM
+        self.total_number_of_games = len(repeated)
         return repeated
+
+    def count_number_of_game_appearances(self, games):
+        one_id = games[0][0]["submission_id"]
+        count = 0
+        for game in games:
+            if game[0]["submission_id"] == one_id or game[1]["submission_id"] == one_id:
+                count+= 1
+        self.total_number_of_games_for_one_client = count
+        breakpoint()
+
 
 
 if __name__ == "__main__":
