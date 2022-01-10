@@ -25,7 +25,7 @@ class Client(UserClient):
         return 'Awesome Example Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions, world, partition_grid, player):
+    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, player: Shooter) -> None:
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
