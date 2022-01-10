@@ -36,16 +36,6 @@ class TestShopController(unittest.TestCase):
             self.shopController.handle_actions,
             self.myPlayer)
 
-    # Tests to make sure error is thrown if player has insufficient funds for
-    # item
-    def test_user_cost_error(self):
-        self.myPlayer.shooter.money = 0
-        self.myPlayer.action.item_to_purchase = Consumables.shield
-        self.assertRaises(
-            ValueError,
-            self.shopController.handle_actions,
-            self.myPlayer)
-
     # Tests to make sure item is in player's inventory after the purchase is
     # made
     def test_shop_gives_item(self):
