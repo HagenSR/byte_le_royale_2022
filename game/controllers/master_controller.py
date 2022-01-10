@@ -98,7 +98,9 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
-<<<<<<< HEAD
+
+
+<< << << < HEAD
             try:
                 self.shoot_controller.handle_action(
                     client, self.current_world_data["game_map"])
@@ -112,7 +114,7 @@ class MasterController(Controller):
                 client.shooter.health = 0
                 print(f"Client {client.team_name} Raised an exception and lost")
                 break
-=======
+== == == =
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.movement_controller.handle_actions(
@@ -121,7 +123,7 @@ class MasterController(Controller):
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
             self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
->>>>>>> 8cb477450f6f4407065490169dc6f3a121f0c537
+>>>>>> > 8cb477450f6f4407065490169dc6f3a121f0c537
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True

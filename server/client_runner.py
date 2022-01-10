@@ -103,7 +103,8 @@ class client_runner:
             self.index_to_seed_id[index] = self.insert_seed_file(fldict)
 
         # then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs = 1, backend="threading")(map(delayed(self.internal_runner), games, [i for i in range(self.total_number_of_games)]))
+        res = Parallel(n_jobs=1, backend="threading")(
+            map(delayed(self.internal_runner), games, [i for i in range(self.total_number_of_games)]))
 
     def internal_runner(self, row_tuple, index):
         winner = -1
@@ -155,7 +156,13 @@ class client_runner:
             #         error[client] = result['error']
         finally:
             player_sub_ids = [x["team_name"].split("_")[-1] for x in results["players"]]
-            run_id = self.insert_run(winner, player_sub_ids[0], player_sub_ids[1], self.group_id, error, self.index_to_seed_id[seed_index])
+            run_id = self.insert_run(
+                winner,
+                player_sub_ids[0],
+                player_sub_ids[1],
+                self.group_id,
+                error,
+                self.index_to_seed_id[seed_index])
             # Update information in best run dict
             if winner != -1:
                 if winner not in self.best_run_for_client:
@@ -173,9 +180,9 @@ class client_runner:
 
     def run_runner(self, end_path, runner):
         '''
-        runs a script in the runner folder. 
+        runs a script in the runner folder.
         end path is where the runner is located
-        runner is the name of the script (no extension) 
+        runner is the name of the script (no extension)
         '''
         f = open(os.devnull, 'w')
         if platform.system() == 'Linux':
@@ -194,9 +201,9 @@ class client_runner:
 
     def get_version_number(self):
         '''
-        runs a script in the runner folder. 
+        runs a script in the runner folder.
         end path is where the runner is located
-        runner is the name of the script (no extension) 
+        runner is the name of the script (no extension)
         '''
 
         stdout = ""
@@ -222,7 +229,7 @@ class client_runner:
 
     def insert_seed_file(self, seed):
         '''
-        inserts the seed file into the database. 
+        inserts the seed file into the database.
         Returns it's seed_id
         '''
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
@@ -230,7 +237,7 @@ class client_runner:
         self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 
-    def insert_run(self, winner, player_1, player_2,  groupid, error, seed_id):
+    def insert_run(self, winner, player_1, player_2, groupid, error, seed_id):
         '''
         Inserts a run into the DB
         '''
@@ -266,7 +273,7 @@ class client_runner:
 
     def insert_log(self, log, run_id):
         '''
-        inserts the seed file into the database. 
+        inserts the seed file into the database.
         Returns it's seed_id
         '''
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
@@ -306,10 +313,9 @@ class client_runner:
         count = 0
         for game in games:
             if game[0]["submission_id"] == one_id or game[1]["submission_id"] == one_id:
-                count+= 1
+                count += 1
         self.total_number_of_games_for_one_client = count
         breakpoint()
-
 
 
 if __name__ == "__main__":

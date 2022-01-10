@@ -18,15 +18,15 @@ class Client:
         self.utils = ClientUtils()
         self.handle_client(args)
 
-
     # Determines what action the client wants to do
+
     def handle_client(self, args):
         try:
             if args.register:
                 self.register()
             elif args.submit:
                 self.submit()
-            elif args.subparse != None:
+            elif args.subparse is not None:
                 if args.subparse.lower() == 'stats' or args.subparse.lower() == 's':
                     if args.runs_for_group_run != -1:
                         self.utils.get_team_runs_for_group_run(self.vid, args.runs_for_group_run)
