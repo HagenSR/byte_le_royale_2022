@@ -39,7 +39,6 @@ class ActionType(int, Enum):
     reload = 4
     shop = 5
     pickup = 6
-    reload = 7
     use_item = 8
     use = 9
     use_teleporter = 10
