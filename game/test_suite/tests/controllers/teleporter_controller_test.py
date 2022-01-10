@@ -49,7 +49,7 @@ class TestTeleporterController(unittest.TestCase):
         player.action._chosen_action = ActionType.use_teleporter
         tel_controller.handle_actions(player, self.gameboard)
         self.assertNotIn(shooter.hitbox.position,
-                      [teleporter.hitbox.position for teleporter in tel_controller.enabled_teleporters])
+                         [teleporter.hitbox.position for teleporter in tel_controller.enabled_teleporters])
 
     def test_player_spam_teleport(self):
         tel_controller = TeleporterController(self.gameboard)

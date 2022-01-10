@@ -15,7 +15,8 @@ class TeleporterController(Controller):
         if client.action._chosen_action is ActionType.use_teleporter:
             # Get teleporter player is on
             curr_teleporter = game_board.partition.find_object_object(client.shooter)
-            if curr_teleporter is False or isinstance(curr_teleporter, Teleporter) is False or curr_teleporter in self.disabled_teleporters:
+            if curr_teleporter is False or isinstance(curr_teleporter,
+                                                      Teleporter) is False or curr_teleporter in self.disabled_teleporters:
                 self.process_turn()
                 return None
             # Player should not be able to teleport to same location
@@ -47,4 +48,3 @@ class TeleporterController(Controller):
                 self.disabled_teleporters.remove(tel)
                 # reset possible cooldown timer
                 tel.countdown = tel.turn_cooldown
-

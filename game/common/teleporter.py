@@ -7,7 +7,7 @@ class Teleporter(MapObject):
     def __init__(self, hitbox=None, turn_cooldown=5, health=10):
         super().__init__(health=health, hitbox=hitbox, collidable=False)
         self.turn_cooldown = turn_cooldown
-        #regulate the teleporters cooldown
+        # regulate the teleporters cooldown
         self.countdown = turn_cooldown
         self.object_type = ObjectType.teleporter
 

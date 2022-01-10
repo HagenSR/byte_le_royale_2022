@@ -114,7 +114,7 @@ class MasterController(Controller):
             self.teleporter_controller.handle_actions(
                 client, self.current_world_data['game_map'])
             self.interact_controller.handle_actions(
-              client, self.current_world_data["game_map"])
+                client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             print(f"\nGame is ending because player(s) "
