@@ -36,7 +36,7 @@ class ActionType(int, Enum):
     move = 1
     shoot = 2
     interact = 3
-    reload_weapon = 4
+    reload = 4
     shop = 5
     pickup = 6
     reload = 7

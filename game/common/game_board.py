@@ -31,6 +31,8 @@ class GameBoard(GameObject):
         self.ray_list = []
         self.teleporter_list = []
 
+        self.center = (width / 2, height / 2)
+
         # this calculates starting radius to totally encompass the map at start
         # with delay
         self.circle_radius = math.sqrt(

@@ -14,7 +14,7 @@ from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.wall import Wall
 from game.common.teleporter import Teleporter
-from game.utils import collision_detection
+from game.utils import collision_detection, helpers
 
 
 class PartitionGrid:
@@ -52,28 +52,22 @@ class PartitionGrid:
         return math.floor(x / self.partition_height)
 
     def check_overlap(self, hitbox: Hitbox):
-        hitbox_corners = [
-            hitbox.top_left,
-            hitbox.top_right,
-            hitbox.bottom_right,
-            hitbox.bottom_left]
-        partitions = set()
-        for i in range(4):
-            top_left_row = self.find_row(hitbox_corners[i][1])
-            top_left_column = self.find_column(hitbox_corners[i][0])
-            top_right_row = self.find_row(hitbox_corners[(1 + i) % 4][1])
-            top_right_column = self.find_column(hitbox_corners[(1 + i) % 4][0])
-            bottom_right_row = self.find_row(hitbox_corners[(2 + i) % 4][1])
-            bottom_right_column = self.find_column(hitbox_corners[(2 + i) % 4][0])
-            bottom_left_row = self.find_row(hitbox_corners[(3 + i) % 4][1])
-            bottom_left_column = self.find_column(hitbox_corners[(3 + i) % 4][0])
-            partitions.add((top_left_row, top_left_column))
-            if top_left_row != top_right_row and top_left_column != top_right_column:
-                partitions.add((top_right_row, top_right_column))
-            if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
-                partitions.add((bottom_right_row, bottom_right_column))
-            if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
-                partitions.add((bottom_left_row, bottom_left_column))
+        partitions = []
+        top_left_row = self.find_row(hitbox.top_left[1])
+        top_left_column = self.find_column(hitbox.top_left[0])
+        top_right_row = self.find_row(hitbox.top_right[1])
+        top_right_column = self.find_column(hitbox.top_right[0])
+        bottom_right_row = self.find_row(hitbox.bottom_right[1])
+        bottom_right_column = self.find_column(hitbox.bottom_right[0])
+        bottom_left_row = self.find_row(hitbox.bottom_left[1])
+        bottom_left_column = self.find_column(hitbox.bottom_left[0])
+        partitions.append((top_left_row, top_left_column))
+        if top_left_row != top_right_row and top_left_column != top_right_column:
+            partitions.append((top_right_row, top_right_column))
+        if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
+            partitions.append((bottom_right_row, bottom_right_column))
+        if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
+            partitions.append((bottom_left_row, bottom_left_column))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -91,6 +85,9 @@ class PartitionGrid:
     def get_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
+
+    def get_partition_objects_index(self, x, y):
+        return self.__matrix[x][y]
 
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
@@ -120,7 +117,7 @@ class PartitionGrid:
             raise ValueError("Hitbox to check must be of type Hitbox")
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
-                if collision_detection.check_collision(obj.hitbox, hitbox):
+                if collision_detection.check_collision(obj.hitbox, hitbox) and obj.hitbox is not hitbox:
                     return obj
         return False
 
@@ -140,7 +137,10 @@ class PartitionGrid:
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         for partition in self.check_overlap(obj.hitbox):
-            self.__matrix[partition[0]][partition[1]].remove(obj)
+            try:
+                self.__matrix[partition[0]][partition[1]].remove(obj)
+            except ValueError:
+                pass
 
     def get_partitions_wide(self):
         return len(self.__matrix)

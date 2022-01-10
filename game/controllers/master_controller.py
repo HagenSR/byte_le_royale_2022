@@ -2,9 +2,11 @@ from copy import deepcopy
 import random
 
 from game.common.hitbox import Hitbox
+from game.common.items.gun import Gun
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
+from game.controllers.interact_controller import InteractController
 from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
 from game.common.player import Player
@@ -41,6 +43,7 @@ class MasterController(Controller):
         self.teleporter_controller = None
 
         self.use_controller = UseController()
+        self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -49,6 +52,7 @@ class MasterController(Controller):
             ar = GameStats.player_stats["hitbox"][index]
             hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
             client.shooter = Shooter(hitbox=hit)
+            client.shooter.append_inventory(Gun(GunType.handgun, 1, Hitbox(0, 0, (0, 0))))
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -63,9 +67,9 @@ class MasterController(Controller):
             self.turn += 1
             self.current_world_data["game_map"].circle_radius -= GameStats.circle_shrink_distance
             random.seed(self.seed)
+
     # Receives world data from the generated game log and is responsible for
     # interpreting it
-
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
@@ -85,12 +89,15 @@ class MasterController(Controller):
 
         # Obfuscate data in objects that that player should not be able to see
         partition_grid.obfuscate(client)
+        shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid)
+        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
         return args
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        # clear ray list of any rays from previous ticks
+        self.current_world_data["game_map"].ray_list = []
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
         self.loot_generation_controller.handle_actions(
@@ -106,8 +113,15 @@ class MasterController(Controller):
             ReloadController.handle_actions(client)
             self.teleporter_controller.handle_actions(
                 client, self.current_world_data['game_map'])
+            self.interact_controller.handle_actions(
+              client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
+            print(f"\nGame is ending because player(s) "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
+                  f"is out of health, player "
+                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
+                  f"wins")
             self.game_over = True
 
     # Return serialized version of game
@@ -123,7 +137,6 @@ class MasterController(Controller):
     # Gather necessary data together in results file
     def return_final_results(self, clients, turn):
         data = dict()
-
         data['players'] = list()
         # Determine results
         for client in clients:

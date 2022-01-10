@@ -37,7 +37,13 @@ MAX_CLIENTS_CONTINUE = None
 SET_NUMBER_OF_CLIENTS_CONTINUE = 2
 
 ALLOWED_MODULES = ["game.client.user_client",  # modules that clients are specifically allowed to access
-                   "game.common.enums"]
+                   "game.common.enums",
+                   "math",
+                   "game.common.action",
+                   "game.common.moving.shooter",
+                   "game.utils.partition_grid",
+                   "game.utils.collision_detection",
+                   "game.utils.player_utils"]
 
 # Name and extension of results file
 RESULTS_FILE_NAME = "results.json"

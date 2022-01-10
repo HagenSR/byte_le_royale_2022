@@ -12,6 +12,7 @@ from game.common.errors.inventory_full_error import InventoryFullError
 class TestShooterObject(unittest.TestCase):
     def setUp(self) -> None:
         self.shooter = Shooter()
+        self.shooter.hitbox = Hitbox(10, 10, (0, 0), 0)
 
     def test_inventory_guns(self):
         self.assertTrue(self.shooter.has_empty_slot('guns'))
