@@ -20,6 +20,7 @@ from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
 from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 from game.test_suite.tests.controllers.teleporter_controller_test import TestTeleporterController
+from game.test_suite.tests.utils.partition_grid_test import TestPartitionGrid
 
 
 __all__ = [
@@ -39,5 +40,6 @@ __all__ = [
     'TestReloadController',
     'TestMovementController',
     'TestLootGenerationController',
-    'TestItemGenerationUtil'
+    'TestItemGenerationUtil',
+    'TestPartitionGrid'
 ]

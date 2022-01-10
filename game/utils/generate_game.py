@@ -395,11 +395,10 @@ def generate():
                 game_map.partition.add_object(wall_copy)
 
     # place 5 teleporters
-    gen_teleporters = []
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
         dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
-        while game_map.partition.find_object_object(dummy_wall) is not False\
+        while game_map.partition.find_object_object(dummy_wall)\
                 or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
                 or teleporter_x < 0 or teleporter_y < 0\
                 or determine_teleporter_nearby(dummy_wall, game_map):
@@ -429,24 +428,24 @@ def find_teleporter_position():
     plot_size = GameStats.plot_width_height
 
     if x_corridor == 1:
-        x_pos = random.randint(0, GameStats.corridor_width_height)
+        x_pos = random.randint(1, GameStats.corridor_width_height)
     elif x_corridor == 2:
         x_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
     elif x_corridor == 3:
         x_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
     elif x_corridor == 4:
         # teleporters are 10 x 10 so they must spawn 10 left of game board width
-        x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 10)
+        x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 11)
 
     if y_corridor == 1:
-        y_pos = random.randint(0, GameStats.corridor_width_height)
+        y_pos = random.randint(1, GameStats.corridor_width_height)
     elif y_corridor == 2:
         y_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
     elif y_corridor == 3:
         y_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
     elif y_corridor == 4:
         # teleporters are 10 x 10 so they must spawn 10 left of game board height
-        y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 10)
+        y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 11)
 
     return x_pos, y_pos
 
