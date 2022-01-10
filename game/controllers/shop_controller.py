@@ -31,7 +31,3 @@ class ShopController(Controller):
                 client.shooter.append_inventory(bought_item)
             else:
                 raise ValueError("Inventory slots for consumables is full.")
-
-        else:
-            raise ValueError(
-                "Insufficient funds for item.")
