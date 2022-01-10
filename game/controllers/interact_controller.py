@@ -1,6 +1,5 @@
-import math
-
 from game.controllers.controller import Controller
+
 from game.common.stats import GameStats
 from game.common.items.upgrade import Upgrade
 from game.common.door import Door
@@ -17,13 +16,7 @@ class InteractController(Controller):
         super().__init__()
 
     def handle_actions(self, client, world):
-        object_target = False
         if client.action._chosen_action is ActionType.interact:
-
-            # gets list of objects in the same partition as the player
-            object_list = world["game_board"].partition.get_partition_objects(client.shooter.hitbox.position[0],
-                                                                              client.shooter.hitbox.position[1])
-
             # partition grid checks to see if any objects collide with the player's hitbox
             object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
             if isinstance(object_target, Upgrade):

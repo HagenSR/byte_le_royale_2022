@@ -88,6 +88,8 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        # clear ray list of any rays from previous ticks
+        self.current_world_data["game_map"].ray_list = []
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
         self.loot_generation_controller.handle_actions(

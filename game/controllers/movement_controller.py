@@ -1,7 +1,6 @@
 import math
 import copy
 
-from game.common.stats import GameStats
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
 from game.common.enums import *

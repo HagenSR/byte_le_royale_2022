@@ -34,6 +34,8 @@ class ShootController(Controller):
 
     def handle_action(self, client, game_board):
         if client.action._chosen_action is ActionType.shoot:
+            if client.shooter.primary_gun.mag_ammo <= 0:
+                return
             gun = client.shooter.primary_gun
             if not gun:
                 raise AttributeError("Client tried to shoot but doesn't have a primary gun equipped")
