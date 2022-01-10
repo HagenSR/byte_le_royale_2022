@@ -3,9 +3,11 @@ from math import trunc
 import random
 
 from game.common.hitbox import Hitbox
+from game.common.items.gun import Gun
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
+from game.controllers.interact_controller import InteractController
 from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
 from game.common.player import Player
@@ -38,6 +40,7 @@ class MasterController(Controller):
         self.loot_generation_controller = LootGenerationController()
 
         self.use_controller = UseController()
+        self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
     # will control
@@ -46,6 +49,7 @@ class MasterController(Controller):
             ar = GameStats.player_stats["hitbox"][index]
             hit = Hitbox(ar[0], ar[1], (ar[2], ar[3]))
             client.shooter = Shooter(hitbox=hit)
+            client.shooter.append_inventory(Gun(GunType.handgun, 1, Hitbox(0, 0, (0, 0))))
 
     # Generator function. Given a key:value pair where the key is the identifier for the current world and the value is
     # the state of the world, returns the key that will give the appropriate
@@ -86,12 +90,15 @@ class MasterController(Controller):
 
     # Perform the main logic that happens per turn
     def turn_logic(self, clients, turn):
+        # clear ray list of any rays from previous ticks
+        self.current_world_data["game_map"].ray_list = []
         self.boundary_controller.handle_actions(
             clients, self.current_world_data["game_map"].circle_radius)
         self.loot_generation_controller.handle_actions(
             self.current_world_data['game_map'])
 
         for client in clients:
+<<<<<<< HEAD
             try:
                 self.shoot_controller.handle_action(
                     client, self.current_world_data["game_map"])
@@ -105,6 +112,16 @@ class MasterController(Controller):
                 client.shooter.health = 0
                 print(f"Client {client.team_name} Raised an exception and lost")
                 break
+=======
+            self.shoot_controller.handle_action(
+                client, self.current_world_data["game_map"])
+            self.movement_controller.handle_actions(
+                client, self.current_world_data["game_map"])
+            self.use_controller.handle_actions(client)
+            self.shop_controller.handle_actions(client)
+            ReloadController.handle_actions(client)
+            self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
+>>>>>>> 8cb477450f6f4407065490169dc6f3a121f0c537
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True

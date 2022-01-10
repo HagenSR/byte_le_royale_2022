@@ -9,30 +9,13 @@ class Gun(Item):
         self.object_type = ObjectType.gun
 
         self.gun_type = gun_type
-        # Leveling subject to change
         self.level = level
-        self.pattern = stats.GameStats.gun_stats[gun_type]['pattern']
-        self.damage = (
-            round(
-                stats.GameStats.gun_stats[gun_type]['damage'] * (
-                    stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level),
-                1) if self.level > 0 else 0)
-        self.fire_rate = (round(stats.GameStats.gun_stats[gun_type]['fire_rate']
-                                * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                          if self.level > 0 else 0)
-        self.range = (round(stats.GameStats.gun_stats[gun_type]['range']
-                            * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                      if self.level > 0 else 0)
-        self.mag_size = (round(stats.GameStats.gun_stats[gun_type]['mag_size']
-                               * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-                         if self.level > 0 else 0)
+        self.pattern = stats.GameStats.gun_stats[self.level][gun_type]['pattern']
+        self.damage = stats.GameStats.gun_stats[self.level][gun_type]['damage']
+        self.fire_rate = stats.GameStats.gun_stats[self.level][gun_type]['fire_rate']
+        self.range = stats.GameStats.gun_stats[self.level][gun_type]['range']
+        self.mag_size = stats.GameStats.gun_stats[self.level][gun_type]['mag_size']
         self.mag_ammo = self.mag_size
-        if self.level > 0:
-            self.cooldown = stats.GameStats.gun_stats[gun_type]['cooldown']
-            self.cooldown['max'] = round(
-                self.cooldown['max'] * (stats.GameStats.gun_stats[gun_type]['level_mod'] ** self.level))
-        else:
-            self.cooldown = {'max': 0, 'rate': 0}
 
     def reload(self):
         self.mag_ammo = self.mag_size
@@ -46,7 +29,6 @@ class Gun(Item):
         data['fire_rate'] = self.fire_rate
         data['range'] = self.range
         data['mag_size'] = self.mag_size
-        data['cooldown'] = self.cooldown
 
         return data
 
@@ -59,7 +41,6 @@ class Gun(Item):
         self.fire_rate = data['fire_rate']
         self.range = data['range']
         self.mag_size = data['mag_size']
-        self.cooldown = data['cooldown']
         return self
 
     def __str__(self):

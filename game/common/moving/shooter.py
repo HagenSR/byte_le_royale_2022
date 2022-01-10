@@ -1,14 +1,20 @@
 from copy import deepcopy
 
+from game.common.items.gun import Gun
+from game.common.items.upgrade import Upgrade
+from game.common.items.consumable import Consumable
 from game.common.hitbox import Hitbox
 import game.common.items.gun
 import game.common.items.upgrade
 import game.common.items.consumable
+from game.common.items.item import Item
+from game.common.items.money import Money
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
+from game.utils import helpers
 
 
 class Shooter(MovingObject):
@@ -134,8 +140,13 @@ class Shooter(MovingObject):
 
     def to_json(self):
         data = super().to_json()
-
-        data['inventory'] = self.inventory
+        data['inventory'] = {
+            'inventory': {
+                slot_type:
+                    [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
+                for slot_type in self.__inventory
+            }
+        }
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
@@ -144,10 +155,28 @@ class Shooter(MovingObject):
 
     def from_json(self, data):
         super().from_json(data)
-        self.__inventory = data['inventory']  # TODO fix this from_json
+        self.__inventory = {
+            slot_type:
+                self.from_json_helper(data['inventory'][slot_type])
+            for slot_type in data['inventory']
+        }
         self.money = data['money']
         self.armor = data['armor']
-        self.visible = data['visible']
         self.view_distance = data['view_distance']
-        self.moving = data['moving']
         return self
+
+    def from_json_helper(self, data: dict):
+        obj_list = list()
+        for obj in data:
+            if obj['object_type'] == ObjectType.consumable:
+                obj_list.append(Consumable.from_json(Consumable(), obj))
+            if obj['object_type'] == ObjectType.gun:
+                obj_list.append(Gun.from_json(Gun(), obj))
+            if obj['object_type'] == ObjectType.item:
+                obj_list.append(Item.from_json(Item(), obj))
+            if obj['object_type'] == ObjectType.money:
+                obj_list.append(Money.from_json(Money(), obj))
+            if obj['object_type'] == ObjectType.upgrade:
+                obj_list.append(Upgrade.from_json(Upgrade(), obj))
+
+        return obj_list
