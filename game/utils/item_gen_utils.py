@@ -78,7 +78,9 @@ class ItemGenUtils:
             rtnItem = Upgrade(Hitbox(5, 5, (xPos, yPos)), 5, upType)
         elif type is ObjectType.gun:
             self.gun_count += 1
-            gunType = random.choice([gun_type for gun_type in GunType])
+            gun_list = [gun_type for gun_type in GunType]
+            gun_list.remove(GunType.none)
+            gunType = random.choice(gun_list)
             rtnItem = Gun(gunType, loot_wave_num, Hitbox(5, 5, (xPos, yPos)))
         elif type is ObjectType.money:
             self.money_count += 1
