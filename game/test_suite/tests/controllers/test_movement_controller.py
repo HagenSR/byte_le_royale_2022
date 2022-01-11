@@ -54,7 +54,7 @@ class TestMovementController(unittest.TestCase):
                  50),
                 0),
             health=None,
-            consumable_enum=Consumables.speed)
+            consumable_enum=Consumables.speed_boost)
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(an_item)
