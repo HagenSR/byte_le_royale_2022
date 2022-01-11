@@ -25,12 +25,11 @@ class MovementController(Controller):
             speed = client.shooter.speed
             # Angle they want to move in radians
             angle = client.shooter.heading
-            # new location is calculated using utils method
+            # new location is calculated using utils methodcalculate_slope
             target_location = calculate_location(location, speed, angle)
             self.space_free = True
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
-            while location != target_location and self.space_free:
-                location = client.shooter.hitbox.position
+            while (not (math.isclose(location[0], target_location[0], rel_tol=1e-5) and math.isclose(location[1], target_location[1], rel_tol=1e-5))) and self.space_free:
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 try:
