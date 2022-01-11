@@ -87,10 +87,10 @@ class GameStats:
             'cost': 30,
             'quantity': 5
         },
-        Consumables.Radar: {
+        Consumables.radar: {
              'cost': 40
         },
-        Consumables.Grenade: {
+        Consumables.grenade: {
             'cost': 55
         }
     }
