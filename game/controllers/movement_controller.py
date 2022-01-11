@@ -32,13 +32,14 @@ class MovementController(Controller):
 
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
 
-            while (not (math.isclose(location[0], self.target_location[0], rel_tol=1e-06) and math.isclose(location[1], self.target_location[1], rel_tol=1e-06))):
+            while (not (math.isclose(location[0], self.target_location[0], rel_tol=1e-06)
+                        and math.isclose(location[1], self.target_location[1], rel_tol=1e-06))):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 try:
                     dummy_hitbox.position = (new_x, new_y)
                     self.space_free = True
-                except ValueError: 
+                except ValueError:
                     self.space_free = False
                     break
                 obj = game_board.partition.find_object_hitbox(dummy_hitbox)

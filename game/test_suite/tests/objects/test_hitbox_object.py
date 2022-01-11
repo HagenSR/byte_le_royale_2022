@@ -129,7 +129,7 @@ class TestHitboxObject(unittest.TestCase):
 
     def test_middle_good(self):
         self.hitbox.position = (10, 10)
-        self.assertEqual(self.hitbox.middle, (11,11))
+        self.assertEqual(self.hitbox.middle, (11, 11))
 
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)
