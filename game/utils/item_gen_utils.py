@@ -61,20 +61,24 @@ class ItemGenUtils:
                   loot_wave_num):
         type = random.choice([ObjectType.money,
                               ObjectType.money,
+                              ObjectType.money,
                               ObjectType.upgrade,
-                              ObjectType.gun,
-                              ObjectType.money])
+                              ObjectType.gun])
         rtnItem = None
         if self.has_reached_item_cap(
                 type):
             return rtnItem
         if type is ObjectType.consumable:
             self.consumable_count += 1
-            conType = random.choice([type_con for type_con in Consumables])
+            con_list = [type_con for type_con in Consumables]
+            con_list.remove(Consumables.none)
+            conType = random.choice(con_list)
             rtnItem = Consumable(Hitbox(5, 5, (xPos, yPos)), 1, conType)
         elif type is ObjectType.upgrade:
             self.upgrade_count += 1
-            upType = random.choice([up_type for up_type in Upgrades])
+            up_list = [up_type for up_type in Upgrades]
+            up_list.remove(Upgrades.none)
+            upType = random.choice(up_list)
             rtnItem = Upgrade(Hitbox(5, 5, (xPos, yPos)), 5, upType)
         elif type is ObjectType.gun:
             self.gun_count += 1
