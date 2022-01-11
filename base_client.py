@@ -38,6 +38,7 @@ class Client(UserClient):
         """
         game_board = world["game_map"]
         angle = angle_to_point(player, game_board.center)
+        print("{},{}", player.hitbox.position[0], player.hitbox.position[1])
 
         if self.prev_location != player.hitbox.position:
             actions.set_move(int(angle), player.max_speed)
