@@ -21,7 +21,7 @@ class TestShopController(unittest.TestCase):
 
     # Tests to make sure player cannot buy items if inventory is full
     def test_user_inventory_error(self):
-        self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed]["cost"]
+        self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed_boost]["cost"]
         self.myPlayer.action.item_to_purchase = Consumables.speed_boost
         an_item = Consumable(hitbox=None, health=None,
                              consumable_enum=Consumables.speed_boost)
