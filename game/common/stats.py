@@ -75,7 +75,7 @@ class GameStats:
     }
 
     shop_stats = {
-        Consumables.speed: {
+        Consumables.speed_boost: {
             'cost': 20,
             'quantity': 5
         },
@@ -86,6 +86,12 @@ class GameStats:
         Consumables.shield: {
             'cost': 30,
             'quantity': 5
+        },
+        Consumables.Radar: {
+             'cost': 40
+        },
+        Consumables.Grenade: {
+            'cost': 55
         }
     }
 
