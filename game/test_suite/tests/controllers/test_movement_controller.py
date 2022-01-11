@@ -73,7 +73,6 @@ class TestMovementController(unittest.TestCase):
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
         self.myPlayer.action.set_move(0, 50)
-        breakpoint()
         self.movementController.handle_actions(self.myPlayer, self.world_data["game_board"])
         self.assertFalse(self.movementController.space_free)
 

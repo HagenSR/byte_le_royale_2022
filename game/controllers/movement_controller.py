@@ -11,6 +11,7 @@ class MovementController(Controller):
     def __init__(self):
         super().__init__()
         self.target_position = None
+        self.space_free = False
 
     def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
@@ -31,12 +32,14 @@ class MovementController(Controller):
 
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
 
-            while (not (math.isclose(location[0], self.target_location[0], rel_tol=5) and math.isclose(location[1], self.target_location[1], rel_tol=5))):
+            while (not (math.isclose(location[0], self.target_location[0], rel_tol=1e-06) and math.isclose(location[1], self.target_location[1], rel_tol=1e-06))):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 try:
                     dummy_hitbox.position = (new_x, new_y)
+                    self.space_free = True
                 except ValueError: 
+                    self.space_free = False
                     break
                 obj = game_board.partition.find_object_hitbox(dummy_hitbox)
                 if not obj or not obj.collidable:
@@ -47,5 +50,6 @@ class MovementController(Controller):
                     location = client.shooter.hitbox.position
                 else:
                     self.space_free = False
+                    break
             # gameboard is updated with new client location
             game_board.partition.add_object(client.shooter)
