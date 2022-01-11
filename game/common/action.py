@@ -19,17 +19,23 @@ class Action:
     def set_action(self, act: int):
         """Sets a general action. NOTE: For actions that require additional data,
         please use other methods in action object"""
-        if not isinstance(act, int) and act in ActionType.__dict__.values():
+        if not isinstance(act, int) or act not in ActionType.__dict__.values():
             raise ValueError("Values passed to action object methods must be of correct type")
         self._chosen_action = act
 
     def set_move(self, heading: int, speed: int):
         """Sets movement intent and parameters"""
-        if not isinstance(heading, int) and isinstance(speed, int):
+        if not isinstance(heading, int) or not isinstance(speed, int):
             raise ValueError("Values passed to action object methods must be of correct type")
         self._chosen_action = ActionType.move
         self.heading = heading
         self.speed = speed
+
+    def set_shoot(self, heading: int):
+        if not isinstance(heading, int):
+            raise ValueError("Values passed to action object methods must be of correct type")
+        self._chosen_action = ActionType.shoot
+        self.heading = heading
 
     def select_item_to_buy(self, obj):
         """Sets item to buy from shop"""
