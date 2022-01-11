@@ -60,7 +60,7 @@ class InteractController(Controller):
 
                     objects.extend(partition.get_partition_objects_index(x, y))
 
-        filter(lambda obj: isinstance(obj, Door), objects)
+        objects = list(filter(lambda obj: isinstance(obj, Door), objects))
         return min(objects,
                    key=lambda obj:
                    collision_detection.distance(player_coords[0],
