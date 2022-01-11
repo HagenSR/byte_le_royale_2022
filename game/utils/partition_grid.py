@@ -67,9 +67,9 @@ class PartitionGrid:
             partitions.append((bottom_right_row, bottom_right_column))
         if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
             partitions.append((bottom_left_row, bottom_left_column))
-        filter(lambda partition:
-               0 <= partition[0] <= self.get_partitions_wide() and 0 <= partition <= self.get_partitions_tall(),
-               partitions)
+        partitions = list(filter(lambda partition:
+               0 <= partition[0] < self.get_partitions_wide() and 0 <= partition[1] < self.get_partitions_tall(),
+               partitions))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -141,8 +141,10 @@ class PartitionGrid:
         for partition in self.check_overlap(obj.hitbox):
             try:
                 self.__matrix[partition[0]][partition[1]].remove(obj)
-            except ValueError:
+            except ValueError as e:
                 pass
+            except IndexError as e:
+                print(e)
 
     def get_partitions_wide(self):
         return len(self.__matrix)

@@ -98,51 +98,43 @@ class Hitbox(GameObject):
     def position(self, xy_tuple):
         self.__position = xy_tuple
         self.update_corners()
-        self.check_corner_outside()
+        self.check_middle_outside()
 
     # set rotation
     @rotation.setter
     def rotation(self, rotation):
         self.__rotation = rotation
         self.update_corners()
-        # self.check_corner_outside()
+        self.check_middle_outside()
 
     def update_corners(self):
         corners = [
             rotate(self.middle, self.position, self.rotation),
-            rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
-            rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
-            rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
+            rotate(
+                self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
+            rotate(
+                self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
+            rotate(self.middle, (self.position[0] + self.width,
+                   self.position[1] + self.height), self.rotation)
         ]
 
         # this is so each corner is guaranteed to be in its spot
         corners = sorted(corners, key=lambda coord: coord[0] + coord[1])
         self.__top_left = corners[0]
-        self.__top_right = max([corners[1], corners[2]], key=lambda coord: coord[0])
-        self.__bottom_left = max([corners[1], corners[2]], key=lambda coord: coord[1])
+        self.__top_right = max([corners[1], corners[2]],
+                               key=lambda coord: coord[0])
+        self.__bottom_left = max(
+            [corners[1], corners[2]], key=lambda coord: coord[1])
         self.__bottom_right = corners[3]
 
-    def check_corner_outside(self):
+    def check_middle_outside(self):
         '''
-        Returns True if one of the corners of a hitbox is outside the gamemap
+        Returns True if middle of a hitbox is outside the gamemap
         '''
-        if GameStats.game_board_width < self.top_left[0] or self.top_left[
-                0] < 0 or GameStats.game_board_height < self.top_left[1] or self.top_left[1] < 0:
+        if not (0 <= self.middle[0] <= GameStats.game_board_width and 0 <= self.middle[1] <= GameStats.game_board_height):
             raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, top left is out of bounds at {1}".format(
+                "Tried to set an invalid xy position tuple for hitbox: {0}, middle is out of bounds at {1}".format(
                     self.position, self.top_left))
-        elif GameStats.game_board_width < self.top_right[0] or self.top_right[0] < 0 or GameStats.game_board_height < self.top_right[1] or self.top_right[1] < 0:
-            raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, top right is out of bounds at {1}".format(
-                    self.position, self.top_right))
-        elif GameStats.game_board_width < self.bottom_left[0] or self.bottom_left[0] < 0 or GameStats.game_board_height < self.bottom_left[1] or self.bottom_left[1] < 0:
-            raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom left is out of bounds at {1}".format(
-                    self.position, self.bottom_left))
-        elif GameStats.game_board_width < self.bottom_right[0] or self.bottom_right[0] < 0 or GameStats.game_board_height < self.bottom_right[1] or self.bottom_right[1] < 0:
-            raise ValueError(
-                "Tried to set an invalid xy position tuple for hitbox: {0}, bottom right is out of bounds at {1}".format(
-                    self.position, self.bottom_right))
 
     def to_json(self):
         data = super().to_json()

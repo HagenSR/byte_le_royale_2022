@@ -73,6 +73,7 @@ class TestMovementController(unittest.TestCase):
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
         self.myPlayer.action.set_move(0, 50)
+        breakpoint()
         self.movementController.handle_actions(self.myPlayer, self.world_data["game_board"])
         self.assertFalse(self.movementController.space_free)
 
@@ -110,7 +111,7 @@ class TestMovementController(unittest.TestCase):
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
         self.movementController.handle_actions(self.myPlayer, self.world_data["game_board"])
-        self.assertTrue(self.movementController.space_free)
+        self.assertTrue(self.myPlayer.shooter.hitbox.position, )
 
     # player moves straight line past object that is at an angle, they should
     # be stopped from colliding

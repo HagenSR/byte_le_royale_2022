@@ -10,12 +10,13 @@ class MovementController(Controller):
 
     def __init__(self):
         super().__init__()
-        self.space_free = None
+        self.target_position = None
 
     def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
             client.shooter.speed = client.action.speed
+
             client.shooter.heading = client.action.heading
             # shooter object is removed from old location on game board to avoid object duplicates
             game_board.partition.remove_object(client.shooter)
@@ -26,29 +27,23 @@ class MovementController(Controller):
             # Angle they want to move in radians
             angle = client.shooter.heading
             # new location is calculated using utils methodcalculate_slope
-            target_location = calculate_location(location, speed, angle)
-            self.space_free = True
+            self.target_location = calculate_location(location, speed, angle)
+
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
-            while (not (math.isclose(location[0], target_location[0], rel_tol=1e-5) and math.isclose(location[1], target_location[1], rel_tol=1e-5))) and self.space_free:
+
+            while (not (math.isclose(location[0], self.target_location[0], rel_tol=5) and math.isclose(location[1], self.target_location[1], rel_tol=5))):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 try:
                     dummy_hitbox.position = (new_x, new_y)
-                except ValueError:
-                    self.space_free = False
-                obj = game_board.partition.find_object_hitbox(
-                    dummy_hitbox)
+                except ValueError: 
+                    break
+                obj = game_board.partition.find_object_hitbox(dummy_hitbox)
                 if not obj or not obj.collidable:
                     try:
                         client.shooter.hitbox.position = (new_x, new_y)
                     except ValueError:
-                        self.space_free = False
-                    if abs(
-                            new_x -
-                            target_location[0]) < 0.00001 and abs(
-                            new_y -
-                            target_location[1]) < 0.00001:
-                        client.shooter.hitbox.position = target_location
+                        break
                     location = client.shooter.hitbox.position
                 else:
                     self.space_free = False
