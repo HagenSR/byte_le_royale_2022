@@ -153,9 +153,9 @@ class TestInteractController(unittest.TestCase):
     # three doors within range, should detect all doors but only open door 3
     def test_correct_door_opened_2(self):
         self.myPlayer.shooter.hitbox.position = (70, 75)
-        door_object_1 = Door(Hitbox(3, 10, (83, 75)))
+        door_object_1 = Door(Hitbox(3, 10, (83, 75))) # is closest door
         door_object_2 = Door(Hitbox(10, 3, (70, 89)))
-        door_object_3 = Door(Hitbox(10, 3, (70, 70)))  # is closest door
+        door_object_3 = Door(Hitbox(10, 3, (70, 70)))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(
@@ -165,9 +165,9 @@ class TestInteractController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(
             door_object_3)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
-        self.assertFalse(door_object_1.open_state)
+        self.assertTrue(door_object_1.open_state)
         self.assertFalse(door_object_2.open_state)
-        self.assertTrue(door_object_3.open_state)
+        self.assertFalse(door_object_3.open_state)
 
     # two doors within range, should detect both doors but only open door 2
     def test_correct_door_opened_3(self):

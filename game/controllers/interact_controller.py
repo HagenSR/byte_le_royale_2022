@@ -29,8 +29,6 @@ class InteractController(Controller):
                 object_target = self.find_doors(client.shooter.hitbox.middle, world["game_board"].partition)
                 if isinstance(object_target, Door):
                     self.interact_door(object_target)
-                else:
-                    raise ValueError("There is no object to interact with.")
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_upgrade(self, client, world, upgrade):
