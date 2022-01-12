@@ -16,7 +16,7 @@ from game.common.items.money import Money
 class TestInteractController(unittest.TestCase):
     def setUp(self):
         self.myPlayer = Player(
-             shooter=Shooter(
+            shooter=Shooter(
                 0, 0, Hitbox(
                     10, 10, (10, 10), 0)))
         self.myPlayer.action._chosen_action = ActionType.interact
