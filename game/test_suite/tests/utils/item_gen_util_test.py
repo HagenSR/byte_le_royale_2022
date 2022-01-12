@@ -12,7 +12,6 @@ class TestItemGenerationUtil(unittest.TestCase):
     def test_has_reached_item_cap(self):
         item_gen_utils = ItemGenUtils()
         item_gen_utils.upgrade_count = 500
-        breakpoint()
         self.assertTrue(
             item_gen_utils.has_reached_item_cap(ObjectType.upgrade))
 
