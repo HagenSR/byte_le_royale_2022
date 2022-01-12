@@ -21,8 +21,7 @@ class InteractController(Controller):
         if client.action._chosen_action is ActionType.interact:
             # partition grid checks to see if any objects collide with the player's hitbox
             object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
-            if isinstance(object_target, Upgrade) or isinstance(object_target, Consumable)\
-                    or isinstance(object_target, Gun):
+            if isinstance(object_target, Upgrade) or isinstance(object_target, Gun):
                 self.interact_item(client, world, object_target)
             elif isinstance(object_target, Money):
                 self.interact_money(client, world, object_target)
@@ -40,8 +39,6 @@ class InteractController(Controller):
         slot_type = None
         if isinstance(item, Upgrade):
             slot_type = 'upgrades'
-        elif isinstance(item, Consumables):
-            slot_type = 'consumables'
         else:
             slot_type = 'guns'
         if client.shooter.has_empty_slot(slot_type):

@@ -67,29 +67,12 @@ class TestInteractController(unittest.TestCase):
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.myPlayer.shooter.has_empty_slot('upgrades'))
 
-    # interacting with upgrade beneath player
-    def test_pickup_consumable(self):
-        an_item = Consumable(Hitbox(
-            10, 10, (45, 50), 0))
-        for slot in self.myPlayer.shooter.inventory['consumables']:
-            self.myPlayer.shooter.append_inventory(an_item)
-        self.myPlayer.shooter.remove_from_inventory(an_item)
-        self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.world_data["game_board"].partition.add_object(
-            self.myPlayer.shooter)
-        self.world_data["game_board"].partition.add_object(
-            an_item)
-        self.interactController.handle_actions(self.myPlayer, self.world_data)
-        self.assertFalse(self.myPlayer.shooter.has_empty_slot('consumables'))
-
-
+    # interacting with gun beneath player
     def test_pickup_gun(self):
-        a_gun_1 = Gun(Hitbox(
-            10, 10, (45, 50), 0))
-        a_gun_1.gun_type = GunType.handgun
-        a_gun_2 = Gun(Hitbox(
-            10, 10, (45, 50), 0))
-        a_gun_1.gun_type = GunType.sniper
+        a_gun_1 = Gun(hitbox=Hitbox(
+            10, 10, (45, 50), 0), gun_type=GunType.handgun)
+        a_gun_2 = Gun(hitbox=Hitbox(
+            10, 10, (45, 50), 0), gun_type=GunType.sniper)
         self.myPlayer.shooter.append_inventory(a_gun_1)
         self.myPlayer.shooter.hitbox.position = (50, 50)
         self.world_data["game_board"].partition.add_object(
@@ -98,7 +81,7 @@ class TestInteractController(unittest.TestCase):
             a_gun_2)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.myPlayer.shooter.cycle_primary()
-        self.assertEqual(self.myPlayer.shooter.primary_gun)
+        self.assertEqual(self.myPlayer.shooter.primary_gun.gun_type, GunType.sniper)
 
 
     # interacting with money beneath player
