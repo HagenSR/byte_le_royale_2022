@@ -1,3 +1,5 @@
+from game.common.items.consumable import Consumable
+from game.common.items.gun import Gun
 from game.controllers.controller import Controller
 
 from game.common.stats import GameStats
@@ -19,8 +21,9 @@ class InteractController(Controller):
         if client.action._chosen_action is ActionType.interact:
             # partition grid checks to see if any objects collide with the player's hitbox
             object_target = world["game_board"].partition.find_object_hitbox(client.shooter.hitbox)
-            if isinstance(object_target, Upgrade):
-                self.interact_upgrade(client, world, object_target)
+            if isinstance(object_target, Upgrade) or isinstance(object_target, Consumable)\
+                    or isinstance(object_target, Gun):
+                self.interact_item(client, world, object_target)
             elif isinstance(object_target, Money):
                 self.interact_money(client, world, object_target)
             else:
@@ -33,10 +36,17 @@ class InteractController(Controller):
                     raise ValueError("There is no object to interact with.")
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
-    def interact_upgrade(self, client, world, upgrade):
-        if client.shooter.has_empty_slot('upgrades'):
-            client.shooter.append_inventory(upgrade)
-            world["game_board"].partition.remove_object(upgrade)
+    def interact_item(self, client, world, item):
+        slot_type = None
+        if isinstance(item, Upgrade):
+            slot_type = 'upgrades'
+        elif isinstance(item, Consumables):
+            slot_type = 'consumables'
+        else:
+            slot_type = 'guns'
+        if client.shooter.has_empty_slot(slot_type):
+            client.shooter.append_inventory(item)
+            world["game_board"].partition.remove_object(item)
 
     # removes money from beneath the player and adds the money amount to their stats
     def interact_money(self, client, world, money):

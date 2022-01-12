@@ -4,6 +4,8 @@ from game.common.action import Action
 from game.common.door import Door
 from game.common.game_board import GameBoard
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.gun import Gun
 from game.common.items.upgrade import Upgrade
 from game.common.moving.shooter import Shooter
 from game.common.player import Player
@@ -15,13 +17,11 @@ from game.common.items.money import Money
 
 class TestInteractController(unittest.TestCase):
     def setUp(self):
-        act = Action()
-        act.set_action(ActionType.interact)
-        self.myPlayer = Player(
-            action=act, shooter=Shooter(
+        self.myPlayer = Player( shooter=Shooter(
                 0, 0, Hitbox(
                     10, 10, (10, 10), 0)))
         self.interactController = InteractController()
+        self.myPlayer.action._chosen_action = ActionType.interact
         self.world_data = {'game_board': GameBoard()}
 
     # def test_interact_object_valid(self):
@@ -36,7 +36,6 @@ class TestInteractController(unittest.TestCase):
         self.assertRaises(ValueError,
                           self.interactController.handle_actions,
                           self.myPlayer, self.world_data)
-
         self.myPlayer = Player(shooter=Shooter(
             0, 0, Hitbox(
                 10, 10, (10, 10), 0)))
@@ -67,6 +66,40 @@ class TestInteractController(unittest.TestCase):
             an_item)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.myPlayer.shooter.has_empty_slot('upgrades'))
+
+    # interacting with upgrade beneath player
+    def test_pickup_consumable(self):
+        an_item = Consumable(Hitbox(
+            10, 10, (45, 50), 0))
+        for slot in self.myPlayer.shooter.inventory['consumables']:
+            self.myPlayer.shooter.append_inventory(an_item)
+        self.myPlayer.shooter.remove_from_inventory(an_item)
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            an_item)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.assertFalse(self.myPlayer.shooter.has_empty_slot('consumables'))
+
+
+    def test_pickup_gun(self):
+        a_gun_1 = Gun(Hitbox(
+            10, 10, (45, 50), 0))
+        a_gun_1.gun_type = GunType.handgun
+        a_gun_2 = Gun(Hitbox(
+            10, 10, (45, 50), 0))
+        a_gun_1.gun_type = GunType.sniper
+        self.myPlayer.shooter.append_inventory(a_gun_1)
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            a_gun_2)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.myPlayer.shooter.cycle_primary()
+        self.assertEqual(self.myPlayer.shooter.primary_gun)
+
 
     # interacting with money beneath player
     def test_pickup_money(self):
