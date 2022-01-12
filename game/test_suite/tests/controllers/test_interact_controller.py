@@ -4,6 +4,8 @@ from game.common.action import Action
 from game.common.door import Door
 from game.common.game_board import GameBoard
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.gun import Gun
 from game.common.items.upgrade import Upgrade
 from game.common.moving.shooter import Shooter
 from game.common.player import Player
@@ -15,13 +17,12 @@ from game.common.items.money import Money
 
 class TestInteractController(unittest.TestCase):
     def setUp(self):
-        act = Action()
-        act.set_action(ActionType.interact)
-        self.myPlayer = Player(
-            action=act, shooter=Shooter(
-                0, 0, Hitbox(
-                    10, 10, (10, 10), 0)))
+        self.myPlayer = Player(shooter=Shooter(
+            0, 0, Hitbox(
+                10, 10, (10, 10), 0)))
+        self.myPlayer.action._chosen_action = ActionType.interact
         self.interactController = InteractController()
+        self.myPlayer.action._chosen_action = ActionType.interact
         self.world_data = {'game_board': GameBoard()}
 
     # def test_interact_object_valid(self):
@@ -36,7 +37,6 @@ class TestInteractController(unittest.TestCase):
         self.assertRaises(ValueError,
                           self.interactController.handle_actions,
                           self.myPlayer, self.world_data)
-
         self.myPlayer = Player(shooter=Shooter(
             0, 0, Hitbox(
                 10, 10, (10, 10), 0)))
@@ -67,6 +67,22 @@ class TestInteractController(unittest.TestCase):
             an_item)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
         self.assertFalse(self.myPlayer.shooter.has_empty_slot('upgrades'))
+
+    # interacting with gun beneath player
+    def test_pickup_gun(self):
+        a_gun_1 = Gun(hitbox=Hitbox(
+            10, 10, (45, 50), 0), gun_type=GunType.handgun)
+        a_gun_2 = Gun(hitbox=Hitbox(
+            10, 10, (45, 50), 0), gun_type=GunType.sniper)
+        self.myPlayer.shooter.append_inventory(a_gun_1)
+        self.myPlayer.shooter.hitbox.position = (50, 50)
+        self.world_data["game_board"].partition.add_object(
+            self.myPlayer.shooter)
+        self.world_data["game_board"].partition.add_object(
+            a_gun_2)
+        self.interactController.handle_actions(self.myPlayer, self.world_data)
+        self.myPlayer.shooter.cycle_primary()
+        self.assertEqual(self.myPlayer.shooter.primary_gun.gun_type, GunType.sniper)
 
     # interacting with money beneath player
     def test_pickup_money(self):
@@ -154,9 +170,9 @@ class TestInteractController(unittest.TestCase):
     # three doors within range, should detect all doors but only open door 3
     def test_correct_door_opened_2(self):
         self.myPlayer.shooter.hitbox.position = (70, 75)
-        door_object_1 = Door(Hitbox(3, 10, (83, 75)))
+        door_object_1 = Door(Hitbox(3, 10, (83, 75)))  # is closest door
         door_object_2 = Door(Hitbox(10, 3, (70, 89)))
-        door_object_3 = Door(Hitbox(10, 3, (70, 70)))  # is closest door
+        door_object_3 = Door(Hitbox(10, 3, (70, 70)))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(
@@ -166,9 +182,9 @@ class TestInteractController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(
             door_object_3)
         self.interactController.handle_actions(self.myPlayer, self.world_data)
-        self.assertFalse(door_object_1.open_state)
+        self.assertTrue(door_object_1.open_state)
         self.assertFalse(door_object_2.open_state)
-        self.assertTrue(door_object_3.open_state)
+        self.assertFalse(door_object_3.open_state)
 
     # two doors within range, should detect both doors but only open door 2
     def test_correct_door_opened_3(self):
