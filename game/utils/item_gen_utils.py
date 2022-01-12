@@ -13,7 +13,6 @@ from game.common.items.item import Item
 class ItemGenUtils:
 
     def __init__(self):
-        self.consumable_count = 0
         self.upgrade_count = 0
         self.gun_count = 0
         self.money_count = 0
@@ -68,12 +67,6 @@ class ItemGenUtils:
         if self.has_reached_item_cap(
                 type):
             return rtnItem
-        if type is ObjectType.consumable:
-            self.consumable_count += 1
-            con_list = [type_con for type_con in Consumables]
-            con_list.remove(Consumables.none)
-            conType = random.choice(con_list)
-            rtnItem = Consumable(Hitbox(5, 5, (xPos, yPos)), 1, conType)
         elif type is ObjectType.upgrade:
             self.upgrade_count += 1
             up_list = [up_type for up_type in Upgrades]
@@ -93,10 +86,7 @@ class ItemGenUtils:
 
     def has_reached_item_cap(self,
                              item):
-        if item == ObjectType.consumable:
-            if self.consumable_count >= GameStats.consumable_cap:
-                return True
-        elif item == ObjectType.upgrade:
+        if item == ObjectType.upgrade:
             if self.upgrade_count >= GameStats.upgrade_cap:
                 return True
         elif item == ObjectType.gun:
