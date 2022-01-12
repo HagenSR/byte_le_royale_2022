@@ -16,6 +16,26 @@ class Action:
         self.heading = None
         self.speed = None
 
+    @property
+    def heading(self):
+        return self.__heading
+
+    @heading.setter
+    def heading(self, heading):
+        if not isinstance(heading, int):
+            raise ValueError(f"Heading is type {type(heading)} must be of type int")
+        self.__heading = heading
+
+    @property
+    def speed(self):
+        return self.__speed
+
+    @speed.setter
+    def speed(self, speed):
+        if not isinstance(speed, int):
+            raise ValueError(f"Speed is type {type(speed)} must be of type int")
+        self.__speed = speed
+
     def set_action(self, act: int):
         """Sets a general action. NOTE: For actions that require additional data,
         please use other methods in action object"""
