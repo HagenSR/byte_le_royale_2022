@@ -115,7 +115,7 @@ class Hitbox(GameObject):
             rotate(
                 self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
             rotate(self.middle, (self.position[0] + self.width,
-                   self.position[1] + self.height), self.rotation)
+                                 self.position[1] + self.height), self.rotation)
         ]
 
         # this is so each corner is guaranteed to be in its spot
@@ -131,7 +131,8 @@ class Hitbox(GameObject):
         '''
         Returns True if middle of a hitbox is outside the gamemap
         '''
-        if not (0 <= self.middle[0] <= GameStats.game_board_width and 0 <= self.middle[1] <= GameStats.game_board_height):
+        if not (0 <= self.middle[0] <= GameStats.game_board_width and 0 <=
+                self.middle[1] <= GameStats.game_board_height):
             raise ValueError(
                 "Tried to set an invalid xy position tuple for hitbox: {0}, middle is out of bounds at {1}".format(
                     self.position, self.top_left))
