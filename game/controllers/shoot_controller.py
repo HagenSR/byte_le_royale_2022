@@ -34,6 +34,7 @@ class ShootController(Controller):
 
     def handle_action(self, client, game_board):
         if client.action._chosen_action is ActionType.shoot:
+            client.shooter.heading = client.action.heading
             if client.shooter.primary_gun.mag_ammo <= 0:
                 return
             gun = client.shooter.primary_gun

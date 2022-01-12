@@ -30,9 +30,7 @@ class InteractController(Controller):
                 # to interact with.
                 object_target = self.find_doors(client.shooter.hitbox.middle, world["game_board"].partition)
                 if isinstance(object_target, Door):
-                    self.interact_door(object_target)
-                else:
-                    raise ValueError("There is no object to interact with.")
+                    self.interact_door(world["game_board"].partition, object_target)
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_item(self, client, world, item):
@@ -50,11 +48,13 @@ class InteractController(Controller):
         client.shooter.money = client.shooter.money + money.amount
         world["game_board"].partition.remove_object(money)
 
-    # changes door state to open and allows the users to walk through it
-    def interact_door(self, door):
-        if not door.open_state:
-            door.open_state = True
-            door.collidable = False
+    # inverses door state and allows the users to walk through it
+    def interact_door(self, partition, door):
+        in_door_obj = partition.find_object_hitbox(door.hitbox)
+        if not in_door_obj and isinstance(in_door_obj, Shooter):
+            return
+        door.open_state = not door.open_state
+        door.collidable = not door.collidable
 
     def find_doors(self, player_coords, partition):
         objects = []
@@ -65,9 +65,9 @@ class InteractController(Controller):
                         GameStats.max_allowed_dist_from_door,
                         partition.get_partition_hitbox(x, y)):
 
-                    objects.extend(partition.get_partition_objects_index(x, y))
+                    objects.extend(partition.get_partition_objects(x, y))
 
-        filter(lambda obj: isinstance(obj, Door), objects)
+        objects = list(filter(lambda obj: isinstance(obj, Door), objects))
         return min(objects,
                    key=lambda obj:
                    collision_detection.distance(player_coords[0],
