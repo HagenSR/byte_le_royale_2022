@@ -28,7 +28,7 @@ class InteractController(Controller):
                 # to interact with.
                 object_target = self.find_doors(client.shooter.hitbox.middle, world["game_board"].partition)
                 if isinstance(object_target, Door):
-                    self.interact_door(object_target)
+                    self.interact_door(world["game_board"].partition, object_target)
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_upgrade(self, client, world, upgrade):
@@ -42,7 +42,10 @@ class InteractController(Controller):
         world["game_board"].partition.remove_object(money)
 
     # inverses door state and allows the users to walk through it
-    def interact_door(self, door):
+    def interact_door(self, partition, door):
+        in_door_obj = partition.find_object_hitbox(door.hitbox)
+        if not in_door_obj and isinstance(in_door_obj, Shooter):
+            return
         door.open_state = not door.open_state
         door.collidable = not door.collidable
 
