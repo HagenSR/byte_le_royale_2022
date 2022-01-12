@@ -47,6 +47,7 @@ class MovementController(Controller):
                     try:
                         client.shooter.hitbox.position = (new_x, new_y)
                     except ValueError:
+                        self.space_free = False
                         break
                     location = client.shooter.hitbox.position
                 else:

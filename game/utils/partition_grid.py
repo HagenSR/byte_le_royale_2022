@@ -140,10 +140,8 @@ class PartitionGrid:
         for partition in self.check_overlap(obj.hitbox):
             try:
                 self.__matrix[partition[0]][partition[1]].remove(obj)
-            except ValueError as e:
+            except ValueError:
                 pass
-            except IndexError as e:
-                print(e)
 
     def get_partitions_wide(self):
         return len(self.__matrix)
