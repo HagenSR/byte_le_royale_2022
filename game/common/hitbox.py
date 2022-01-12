@@ -105,21 +105,26 @@ class Hitbox(GameObject):
     def rotation(self, rotation):
         self.__rotation = rotation
         self.update_corners()
-        # self.check_corner_outside()
+        self.check_corner_outside()
 
     def update_corners(self):
         corners = [
             rotate(self.middle, self.position, self.rotation),
-            rotate(self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
-            rotate(self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
-            rotate(self.middle, (self.position[0] + self.width, self.position[1] + self.height), self.rotation)
+            rotate(
+                self.middle, (self.position[0] + self.width, self.position[1]), self.rotation),
+            rotate(
+                self.middle, (self.position[0], self.position[1] + self.height), self.rotation),
+            rotate(self.middle, (self.position[0] + self.width,
+                                 self.position[1] + self.height), self.rotation)
         ]
 
         # this is so each corner is guaranteed to be in its spot
         corners = sorted(corners, key=lambda coord: coord[0] + coord[1])
         self.__top_left = corners[0]
-        self.__top_right = max([corners[1], corners[2]], key=lambda coord: coord[0])
-        self.__bottom_left = max([corners[1], corners[2]], key=lambda coord: coord[1])
+        self.__top_right = max([corners[1], corners[2]],
+                               key=lambda coord: coord[0])
+        self.__bottom_left = max(
+            [corners[1], corners[2]], key=lambda coord: coord[1])
         self.__bottom_right = corners[3]
 
     def check_corner_outside(self):
