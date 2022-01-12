@@ -11,9 +11,9 @@ class TestItemGenerationUtil(unittest.TestCase):
 
     def test_has_reached_item_cap(self):
         item_gen_utils = ItemGenUtils()
-        item_gen_utils.consumable_count = 500
+        item_gen_utils.upgrade_count = 500
         self.assertTrue(
-            item_gen_utils.has_reached_item_cap(ObjectType.consumable))
+            item_gen_utils.has_reached_item_cap(ObjectType.upgrade))
 
     def test_pick_item(self):
         item_gen_utils = ItemGenUtils()
