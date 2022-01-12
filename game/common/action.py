@@ -13,8 +13,8 @@ class Action:
         self.item_to_purchase = None
         self.item_to_use = None
 
-        self.heading = None
-        self.speed = None
+        self.heading = 0
+        self.speed = 0
 
     def set_action(self, act: int):
         """Sets a general action. NOTE: For actions that require additional data,
