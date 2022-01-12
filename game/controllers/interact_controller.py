@@ -43,11 +43,10 @@ class InteractController(Controller):
         client.shooter.money = client.shooter.money + money.amount
         world["game_board"].partition.remove_object(money)
 
-    # changes door state to open and allows the users to walk through it
+    # inverses door state and allows the users to walk through it
     def interact_door(self, door):
-        if not door.open_state:
-            door.open_state = True
-            door.collidable = False
+        door.open_state = not door.open_state
+        door.collidable = not door.collidable
 
     def find_doors(self, player_coords, partition):
         objects = []
@@ -58,7 +57,7 @@ class InteractController(Controller):
                         GameStats.max_allowed_dist_from_door,
                         partition.get_partition_hitbox(x, y)):
 
-                    objects.extend(partition.get_partition_objects_index(x, y))
+                    objects.extend(partition.get_partition_objects(x, y))
 
         objects = list(filter(lambda obj: isinstance(obj, Door), objects))
         return min(objects,
