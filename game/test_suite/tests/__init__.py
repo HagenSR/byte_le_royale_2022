@@ -1,7 +1,7 @@
 # When you create a new test file, make sure to add it here.
 # Simply import the class from your file, and then add that class to the
 # '__all__' array.
-
+from game.test_suite.tests.controllers.test_interact_controller import TestInteractController
 from game.test_suite.tests.controllers.test_reload_controller import TestReloadController
 from game.test_suite.tests.controllers.test_kill_boundary_controller import TestKillBoundary
 from game.test_suite.tests.controllers.shoot_controller_test import TestShootController
@@ -41,4 +41,5 @@ __all__ = [
     'TestLootGenerationController',
     'TestItemGenerationUtil',
     'TestPartitionGrid'
-]
+    'TestInteractController'
+
