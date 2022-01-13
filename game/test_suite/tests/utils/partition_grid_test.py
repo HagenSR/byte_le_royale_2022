@@ -50,4 +50,3 @@ class TestPartitionGrid(unittest.TestCase):
         tel = MapObject(Hitbox(10, 10, (490, 486)))
         self.grid.add_object(tel)
         self.assertEqual(self.grid.find_object_coordinates(490, 486), tel)
-
