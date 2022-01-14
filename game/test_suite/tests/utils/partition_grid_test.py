@@ -47,6 +47,6 @@ class TestPartitionGrid(unittest.TestCase):
         self.assertFalse(self.grid.find_object_object(self.ex_obj))
 
     def test_add_corner(self):
-        tel = MapObject(Hitbox(10, 10, (490, 486)))
+        tel = MapObject(hitbox=Hitbox(10, 10, (490, 486)))
         self.grid.add_object(tel)
         self.assertEqual(self.grid.find_object_coordinates(490, 486), tel)
