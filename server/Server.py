@@ -50,6 +50,8 @@ limiter = Limiter(
     default_limits=["1 per second"]
 )
 
+MAX_TEAM_NAME_LENGTH = 15
+
 # Read db config information from file, set up connection
 db_conn = {}
 with open('./conn_info.json') as fl:
@@ -142,6 +144,8 @@ def insert_team():
         teamtype = request.form.get("type")
         name = request.form.get("name")
         uni = request.form.get("uni")
+        if len(name) >= MAX_TEAM_NAME_LENGTH:
+            abort(404, description = "Team name cannot be longer than {0} characters".format(MAX_TEAM_NAME_LENGTH))
         cur = conn.cursor()
         cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
         conn.commit()
