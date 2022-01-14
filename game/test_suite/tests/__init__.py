@@ -40,5 +40,6 @@ __all__ = [
     'TestMovementController',
     'TestLootGenerationController',
     'TestItemGenerationUtil',
-    'TestPartitionGrid'
+    'TestPartitionGrid',
     'TestInteractController'
+    ]

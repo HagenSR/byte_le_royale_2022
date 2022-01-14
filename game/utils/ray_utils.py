@@ -1,4 +1,5 @@
 from game.common.ray import Ray
+from game.common.teleporter import Teleporter
 from game.config import *
 from game.common.enums import *
 
@@ -404,6 +405,8 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 
 
 def get_gun_ray_collision(player, gameboard):
+    exclusions = gameboard.teleporter_list
+    exclusions.append(player.shooter)
     radians = math.radians(player.shooter.heading)
     slope = calculate_slope(radians)
     ray_endpoint = get_ray_limits(radians,
@@ -416,7 +419,7 @@ def get_gun_ray_collision(player, gameboard):
         player.shooter.hitbox.position,
         gameboard,
         ray_endpoint,
-        [player.shooter]
+        exclusions
     )
 
     ray = determine_gun_collision(
