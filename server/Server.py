@@ -146,7 +146,7 @@ def insert_team():
         name = request.form.get("name")
         uni = request.form.get("uni")
         if len(name) >= MAX_TEAM_NAME_LENGTH:
-            abort(404, description = "Team name cannot be longer than {0} characters".format(MAX_TEAM_NAME_LENGTH))
+            abort(404, description="Team name cannot be longer than {0} characters".format(MAX_TEAM_NAME_LENGTH))
         cur = conn.cursor()
         cur.execute("SELECT insert_team(%s, %s, %s)", (teamtype, name, uni))
         conn.commit()
