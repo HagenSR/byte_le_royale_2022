@@ -12,6 +12,7 @@ from game.utils.partition_grid import PartitionGrid
 
 from game.utils.collision_detection import distance_tuples
 
+
 class Client(UserClient):
     # Variables and info you want to save between turns go here
     def __init__(self):

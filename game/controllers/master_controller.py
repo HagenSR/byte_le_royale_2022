@@ -99,13 +99,12 @@ class MasterController(Controller):
 
         for client in clients:
             try:
-                self.shoot_controller.handle_action(
-                    client, self.current_world_data["game_map"])
-                self.movement_controller.handle_actions(
-                    client, self.current_world_data["game_map"])
+                self.shoot_controller.handle_action(client, self.current_world_data["game_map"])
+                self.movement_controller.handle_actions(client, self.current_world_data["game_map"])
                 self.use_controller.handle_actions(client)
                 self.shop_controller.handle_actions(client)
                 ReloadController.handle_actions(client)
+                self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
             except Exception as e:
                 self.game_over = True
                 client.shooter.health = 0

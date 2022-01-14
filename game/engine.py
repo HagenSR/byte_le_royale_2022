@@ -21,7 +21,7 @@ from tqdm import tqdm
 
 
 class Engine:
-    def __init__(self, quiet_mode=False, use_filenames_as_team_names = False):
+    def __init__(self, quiet_mode=False, use_filenames_as_team_names=False):
         self.clients = list()
         self.master_controller = MasterController()
         self.tick_number = 0
@@ -115,8 +115,6 @@ class Engine:
                 player.error = traceback.format_exc()
 
             player.code = obj
-
-
 
             # Retrieve team name
             thr = CommunicationThread(player.code.team_name, list(), str)

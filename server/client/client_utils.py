@@ -151,6 +151,6 @@ class ClientUtils:
                 print(line_seperator)
                 print(row_format.format(*row.values()))
             print(line_seperator)
-        except:
+        except BaseException:
             print(
                 "Something went wrong. Maybe there isn't data for what you're looking for")

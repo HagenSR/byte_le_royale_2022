@@ -10,6 +10,7 @@ import zipfile
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+
 class visualizer_runner:
     def __init__(self):
 
@@ -42,12 +43,11 @@ class visualizer_runner:
         finally:
             self.delete_vis_temp()
 
-
     def get_latest_log_files(self):
         self.delete_vis_temp()
-    
+
         print("getting latest log files")
-        cur = self.conn.cursor(cursor_factory= RealDictCursor)
+        cur = self.conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_logs_for_group_run(%s)).*", (self.group_id,))
         logs = cur.fetchall()
 
@@ -74,7 +74,7 @@ class visualizer_runner:
 
     def get_latest_group(self):
         print("Getting Latest Group Run")
-        cur = self.conn.cursor(cursor_factory= RealDictCursor)
+        cur = self.conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT get_latest_group_id()")
         id = cur.fetchone()['get_latest_group_id']
         return id
@@ -85,7 +85,6 @@ class visualizer_runner:
         else:
             shutil.rmtree(self.logs_path)
             os.mkdir(self.logs_path)
-        
 
     def visualizer_loop(self):
 
