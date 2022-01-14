@@ -80,7 +80,6 @@ class Consumables(int, Enum):
     none = 0
     health_pack = 1
     shield = 2
-    speed = 3
+    speed_boost = 3
     radar = 4
-    air_strike = 5
-    grenade = 6
+    grenade = 5

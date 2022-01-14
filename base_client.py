@@ -41,4 +41,4 @@ class Client(UserClient):
             actions.set_move(int(angle), player.max_speed)
             self.prev_location = player.hitbox.position
         else:
-            actions.set_action(ActionType.shoot)
+            actions.set_shoot(player.heading)

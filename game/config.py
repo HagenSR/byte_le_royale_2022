@@ -43,7 +43,8 @@ ALLOWED_MODULES = ["game.client.user_client",  # modules that clients are specif
                    "game.common.moving.shooter",
                    "game.utils.partition_grid",
                    "game.utils.collision_detection",
-                   "game.utils.player_utils"]
+                   "game.utils.player_utils",
+                   "random"]
 
 # Name and extension of results file
 RESULTS_FILE_NAME = "results.json"
