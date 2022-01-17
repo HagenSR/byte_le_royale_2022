@@ -1,4 +1,5 @@
 from game.common.ray import Ray
+from game.common.teleporter import Teleporter
 from game.config import *
 from game.common.enums import *
 

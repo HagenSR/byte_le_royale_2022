@@ -1,7 +1,5 @@
 from game.common.enums import *
-import game.common.items.gun
-import game.common.items.upgrade
-import game.common.items.consumable
+import math
 
 
 class GameStats:
@@ -19,6 +17,9 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
+    # The size of a plot (square)
+    plot_width_height = 140
+
     default_wall_health = 18
 
     default_door_health = 18
@@ -26,26 +27,29 @@ class GameStats:
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
+        'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
         'view_distance': 100,
-        'move_speed': 10,
+        'max_distance_per_turn': 50
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }
     inventory_stats = {
         'guns': {
-            'slots': 2,
-            'type': game.common.items.gun.Gun
+            'slots': 2
         },
         'upgrades': {
-            'slots': 3,
-            'type': game.common.items.upgrade.Upgrade
+            'slots': 3
         },
         'consumables': {
-            'slots': 4,
-            'type': game.common.items.consumable.Consumable
+            'slots': 4
         },
+    }
+
+    consumable_stats = {
+        "health_pack_heal_amount": 50,
+        "speed_increase_percent": .2,
+        "radar_range_increase_percent": .2,
     }
 
     # stats for money located on the gameboard
@@ -75,83 +79,181 @@ class GameStats:
 
     shop_stats = {
         Consumables.speed_boost: {
-            'cost': 20,
-            'quantity': 5
+            'cost': 20
         },
         Consumables.health_pack: {
-            'cost': 25,
-            'quantity': 5
+            'cost': 25
         },
-        Consumables.armor_pack: {
-            'cost': 30,
-            'quantity': 5
+        Consumables.shield: {
+            'cost': 30
+        },
+        Consumables.radar: {
+            'cost': 40
+        },
+        Consumables.grenade: {
+            'cost': 55
         }
-
     }
 
     # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
-        GunType.none: {
-            'pattern': ShotPattern.none,
-            'damage': 0,
-            'fire_rate': 0,
-            'range': 0,
-            'mag_size': 0,
-            'reload_speed': 0,
-            'cooldown': {
-                'max': 0,
-                'rate': 0},
-            'level_mod': 1},
-        GunType.handgun: {
-            'pattern': ShotPattern.single,
-            'damage': 1,
-            'fire_rate': 2,
-            'range': 30,
-            'mag_size': 13,
-            'reload_speed': 3,
-            'cooldown': {
-                'max': 8,
-                'rate': 2},
-            'level_mod': 1.25},
-        GunType.assault_rifle: {
-            'pattern': ShotPattern.multi,
-            'damage': 1,
-            'fire_rate': 5,
-            'range': 50,
-            'mag_size': 30,
-            'reload_speed': 6,
-            'cooldown': {
-                'max': 15,
-                'rate': 5},
-            'level_mod': 1.25},
-        GunType.shotgun: {
-            'pattern': ShotPattern.spread,
-            'damage': 8,
-            'fire_rate': 1,
-            'range': 10,
-            'mag_size': 2,
-            'reload_speed': 8,
-            'cooldown': {
-                'max': 1,
-                'rate': 1},
-            'level_mod': 1.25},
-        GunType.sniper: {
-            'pattern': ShotPattern.single,
-            'damage': 9,
-            'fire_rate': 1,
-            'range': 100,
-            'mag_size': 1,
-            'reload_speed': 8,
-            'cooldown': {
-                'max': 1,
-                'rate': 1},
-            'level_mod': 1.25}}
+        0: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            }
+        },
+        1: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 25,
+                'fire_rate': 0,
+                'range': 30,
+                'mag_size': 5,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 15,
+                'fire_rate': 3,
+                'range': 50,
+                'mag_size': 12,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 10,
+                'fire_rate': 4,
+                'range': 10,
+                'mag_size': 2,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 50,
+                'fire_rate': 0,
+                'range': 100,
+                'mag_size': 1,
+            }
+        },
+        2: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 40,
+                'fire_rate': 0,
+                'range': 35,
+                'mag_size': 7,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 15,
+                'fire_rate': 5,
+                'range': 60,
+                'mag_size': 20,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 10,
+                'fire_rate': 6,
+                'range': 20,
+                'mag_size': 3,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 80,
+                'fire_rate': 0,
+                'range': 200,
+                'mag_size': 2,
+            }
+        },
+        3: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 60,
+                'fire_rate': 0,
+                'range': 50,
+                'mag_size': 11,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 20,
+                'fire_rate': 5,
+                'range': 60,
+                'mag_size': 25,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 20,
+                'fire_rate': 8,
+                'range': 30,
+                'mag_size': 5
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 100,
+                'fire_rate': 0,
+                'range': 300,
+                'mag_size': 2
+            }
+        }
+    }
 
     grenade_stats = {
         'range': 40,
         'min_fuse_time': 10,
         'max_fuse_time': 50
     }
+
+    shot_pattern_multi_arc = math.pi / 10
 
     door_opening_speed = 1
 
@@ -164,3 +266,6 @@ class GameStats:
     consumable_cap = 30
     upgrade_cap = 20
     money_cap = 50
+
+    # this distance goes from middle of player hitbox to coord within door hitbox
+    max_allowed_dist_from_door = 10

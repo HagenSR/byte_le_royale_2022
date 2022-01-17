@@ -13,7 +13,8 @@ from game.common.moving.moving_object import MovingObject
 from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.wall import Wall
-from game.utils import collision_detection
+from game.common.teleporter import Teleporter
+from game.utils import collision_detection, helpers
 
 
 class PartitionGrid:
@@ -67,6 +68,8 @@ class PartitionGrid:
             partitions.append((bottom_right_row, bottom_right_column))
         if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
             partitions.append((bottom_left_row, bottom_left_column))
+        partitions = list(filter(lambda partition: 0 <= partition[0] < self.get_partitions_wide(
+        ) and 0 <= partition[1] < self.get_partitions_tall(), partitions))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -84,6 +87,9 @@ class PartitionGrid:
     def get_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
+
+    def get_partition_objects_index(self, x, y):
+        return self.__matrix[x][y]
 
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
@@ -113,7 +119,7 @@ class PartitionGrid:
             raise ValueError("Hitbox to check must be of type Hitbox")
         for partition in self.check_overlap(hitbox):
             for obj in self.__matrix[partition[0]][partition[1]]:
-                if collision_detection.check_collision(obj.hitbox, hitbox):
+                if collision_detection.check_collision(obj.hitbox, hitbox) and obj.hitbox is not hitbox:
                     return obj
         return False
 
@@ -133,7 +139,10 @@ class PartitionGrid:
         if not isinstance(obj, MapObject):
             raise ValueError("Object must be of type MapObject")
         for partition in self.check_overlap(obj.hitbox):
-            self.__matrix[partition[0]][partition[1]].remove(obj)
+            try:
+                self.__matrix[partition[0]][partition[1]].remove(obj)
+            except ValueError:
+                pass
 
     def get_partitions_wide(self):
         return len(self.__matrix)
@@ -160,6 +169,7 @@ class PartitionGrid:
 
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
+
         for x in range(0, GameStats.game_board_width, self.partition_width):
             for y in range(
                     0,
@@ -223,5 +233,6 @@ class PartitionGrid:
                 obj_list.append(Door.from_json(Door(), obj))
             if obj['object_type'] == ObjectType.wall:
                 obj_list.append(Wall.from_json(Wall(), obj))
-
+            if obj['object_type'] == ObjectType.teleporter:
+                obj_list.append(Teleporter.from_json(Teleporter(), obj))
         return obj_list

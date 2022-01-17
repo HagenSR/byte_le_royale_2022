@@ -22,7 +22,8 @@ class TestShootController(unittest.TestCase):
                           hitbox=Hitbox(10, 10, (0, 0)))
         self.gun = Gun(GunType.sniper, level=1, hitbox=Hitbox(2, 2, (0, 0)))
         shooter.append_inventory(self.gun)
-        self.player = Player(action=ActionType.shoot, shooter=shooter)
+        self.player = Player(shooter=shooter)
+        self.player.action._chosen_action = ActionType.shoot
         self.game_board.partition.add_object(shooter)
 
     def test_health_removal_wall(self):
@@ -64,8 +65,7 @@ class TestShootController(unittest.TestCase):
         self.assertNotIn(door, object_list)
 
     def test_health_removal_shooter(self):
-        shooter = Shooter(heading=(math.pi / 2), speed=0,
-                          hitbox=Hitbox(30, 30, (20, 0)))
+        shooter = Shooter(heading=0, speed=0, hitbox=Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(shooter)
         self.shoot_controller.handle_action(self.player, self.game_board)
         self.assertEqual(
@@ -75,9 +75,31 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.remove_object(shooter)
 
     def test_shooter_removal(self):
-        shooter = Shooter(heading=(math.pi / 2), speed=0,
-                          hitbox=Hitbox(30, 30, (20, 0)))
+        shooter = Shooter(heading=0, speed=0, hitbox=Hitbox(30, 30, (20, 0)))
         self.game_board.partition.add_object(shooter)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
         self.assertLessEqual(shooter.health, 0)
+
+    def test_shot_pattern_spread(self):
+        self.game_board = GameBoard()
+        shooter = Shooter(heading=0, speed=0,
+                          hitbox=Hitbox(10, 10, (0, 0)))
+        gun = Gun(GunType.shotgun, level=1, hitbox=Hitbox(2, 2, (0, 0)))
+        shooter.append_inventory(gun)
+        self.player = Player(shooter=shooter)
+        self.player.action._chosen_action = ActionType.shoot
+        wall = Wall(Hitbox(30, 30, (2, 0)), destructible=True)
+        self.game_board.partition.add_object(wall)
+        self.shoot_controller.handle_action(self.player, self.game_board)
+        wall = self.game_board.partition.get_partition_objects(2, 0)[0]
+        self.assertAlmostEqual(
+            wall.health,
+            (GameStats.default_wall_health -
+             2 *
+             round(
+                 gun.damage /
+                 gun.fire_rate)),
+            4)
+        self.game_board.partition.remove_object(wall)
+        self.assertEqual(len(self.game_board.ray_list), 4)

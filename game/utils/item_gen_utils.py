@@ -13,7 +13,6 @@ from game.common.items.item import Item
 class ItemGenUtils:
 
     def __init__(self):
-        self.consumable_count = 0
         self.upgrade_count = 0
         self.gun_count = 0
         self.money_count = 0
@@ -61,24 +60,20 @@ class ItemGenUtils:
                   loot_wave_num):
         type = random.choice([ObjectType.money,
                               ObjectType.money,
+                              ObjectType.money,
                               ObjectType.upgrade,
-                              ObjectType.gun,
-                              ObjectType.money])
+                              ObjectType.gun])
         rtnItem = None
         if self.has_reached_item_cap(
                 type):
             return rtnItem
-        if type is ObjectType.consumable:
-            self.consumable_count += 1
-            conType = random.choice([type_con for type_con in Consumables])
-            rtnItem = Consumable(Hitbox(5, 5, (xPos, yPos)), 1, conType)
         elif type is ObjectType.upgrade:
             self.upgrade_count += 1
-            upType = random.choice([up_type for up_type in Upgrades])
+            upType = random.choice([up_type for up_type in Upgrades if up_type is not Upgrades.none])
             rtnItem = Upgrade(Hitbox(5, 5, (xPos, yPos)), 5, upType)
         elif type is ObjectType.gun:
             self.gun_count += 1
-            gunType = random.choice([gun_type for gun_type in GunType])
+            gunType = random.choice([gun_type for gun_type in GunType if gun_type is not GunType.none])
             rtnItem = Gun(gunType, loot_wave_num, Hitbox(5, 5, (xPos, yPos)))
         elif type is ObjectType.money:
             self.money_count += 1
@@ -87,10 +82,7 @@ class ItemGenUtils:
 
     def has_reached_item_cap(self,
                              item):
-        if item == ObjectType.consumable:
-            if self.consumable_count >= GameStats.consumable_cap:
-                return True
-        elif item == ObjectType.upgrade:
+        if item == ObjectType.upgrade:
             if self.upgrade_count >= GameStats.upgrade_cap:
                 return True
         elif item == ObjectType.gun:

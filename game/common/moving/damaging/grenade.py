@@ -1,3 +1,4 @@
+from game.common.hitbox import Hitbox
 from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
 from game.common.enums import *
@@ -12,8 +13,8 @@ class Grenade(DamagingObject):
             heading=None,
             speed=None,
             health=None,
-            hitbox=None,
-            collidable=None):
+            hitbox=Hitbox(5, 5, (250, 250), 0),
+            collidable=False):
         super().__init__(range, damage, heading, speed, health, hitbox, collidable)
         self.fuse_time = fuse_time
         self.object_type = ObjectType.grenade

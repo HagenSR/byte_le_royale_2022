@@ -6,19 +6,6 @@ from game.common.enums import *
 
 
 class ShopController(Controller):
-    # shop_inventory keeps track of how many of each consumables are in the shop throughout the game
-    # Each purchase shrinks the quantity for that consumables object
-    shop_inventory = {
-        Consumables.speed_boost: {
-            'quantity': GameStats.shop_stats[Consumables.speed_boost]['quantity']
-        },
-        Consumables.health_pack: {
-            'quantity': GameStats.shop_stats[Consumables.health_pack]['quantity']
-        },
-        Consumables.armor_pack: {
-            'quantity': GameStats.shop_stats[Consumables.armor_pack]['quantity']
-        }
-    }
 
     def __init__(self):
         super().__init__()
@@ -31,7 +18,7 @@ class ShopController(Controller):
     # item = client.action.item_to_purchase
     def process_purchase(self, client, item):
         if client.shooter.money >= GameStats.shop_stats[item][
-                "cost"] and self.shop_inventory[item]["quantity"] > 0:
+                "cost"]:
             if client.shooter.has_empty_slot('consumables'):
                 client.shooter.money = client.shooter.money - \
                     GameStats.shop_stats[item]["cost"]
@@ -42,10 +29,5 @@ class ShopController(Controller):
                     health=None,
                     consumable_enum=client.action.item_to_purchase)
                 client.shooter.append_inventory(bought_item)
-                self.shop_inventory[item]["quantity"] = self.shop_inventory[item]["quantity"] - 1
             else:
                 raise ValueError("Inventory slots for consumables is full.")
-
-        else:
-            raise ValueError(
-                "Insufficient funds for item or item is out of stock in shop.")

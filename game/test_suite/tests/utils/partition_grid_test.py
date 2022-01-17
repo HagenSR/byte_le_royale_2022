@@ -2,6 +2,7 @@ import unittest
 
 from game.common.hitbox import Hitbox
 from game.common.map_object import MapObject
+from game.common.teleporter import Teleporter
 from game.utils.partition_grid import PartitionGrid
 
 
@@ -44,3 +45,8 @@ class TestPartitionGrid(unittest.TestCase):
     def test_remove_object(self):
         self.grid.remove_object(self.ex_obj)
         self.assertFalse(self.grid.find_object_object(self.ex_obj))
+
+    def test_add_corner(self):
+        tel = MapObject(hitbox=Hitbox(10, 10, (490, 486)))
+        self.grid.add_object(tel)
+        self.assertEqual(self.grid.find_object_coordinates(490, 486), tel)

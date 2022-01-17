@@ -7,6 +7,7 @@ from game.common.moving.shooter import Shooter
 from game.common.wall import Wall
 from game.common.items.item import Item
 from game.common.ray import Ray
+from game.common.teleporter import Teleporter
 from copy import deepcopy
 import math
 
@@ -28,6 +29,9 @@ class GameBoard(GameObject):
         self.partition = PartitionGrid(
             width, height, 25, 25)
         self.ray_list = []
+        self.teleporter_list = []
+
+        self.center = (width / 2, height / 2)
 
         # this calculates starting radius to totally encompass the map at start
         # with delay
@@ -57,6 +61,7 @@ class GameBoard(GameObject):
 
         data['partition'] = self.partition.to_json()
         data['ray_list'] = [ray.to_json() for ray in self.ray_list]
+        data['teleporter_list'] = [teleporter.to_json() for teleporter in self.teleporter_list]
 
         data['circle_radius'] = self.circle_radius
 
@@ -69,8 +74,10 @@ class GameBoard(GameObject):
         self.height = data['height']
 
         self.partition.from_json(data['partition'])
-        r = Ray()
-        self.ray_list = [r.from_json(ray) for ray in data['ray_list']]
+
+        self.ray_list = [Ray().from_json(ray) for ray in data['ray_list']]
+
+        self.teleporter_list = [Teleporter().from_json(teleporter) for teleporter in data['teleporter_list']]
 
         self.circle_radius = data['circle_radius']
 

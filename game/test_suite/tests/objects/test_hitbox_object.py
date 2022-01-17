@@ -57,10 +57,10 @@ class TestHitboxObject(unittest.TestCase):
                           (10, GameStats.game_board_height + 1))
 
     def test_set_get_tuple_x_boundary_low(self):
-        self.assertRaises(ValueError, self.setPosition, ((-1, 10)))
+        self.assertRaises(ValueError, self.setPosition, ((-10, 10)))
 
     def test_set_get_tuple_y_boundary_low(self):
-        self.assertRaises(ValueError, self.setPosition, ((10, -1)))
+        self.assertRaises(ValueError, self.setPosition, ((10, -10)))
 
     def test_top_left_corner(self):
         self.assertEqual(self.hitbox.top_left, (0, 0))
@@ -116,10 +116,20 @@ class TestHitboxObject(unittest.TestCase):
     def test_rotation_90(self):
         self.hitbox.position = (10, 10)
         self.hitbox.rotation = 90
-        self.assertEqual(self.hitbox.top_left, (12, 10))
-        self.assertEqual(self.hitbox.top_right, (12, 12))
-        self.assertEqual(self.hitbox.bottom_left, (10, 10))
-        self.assertEqual(self.hitbox.bottom_right, (10, 12))
+        self.assertEqual(self.hitbox.top_left, (10, 10))
+        self.assertEqual(self.hitbox.top_right, (12, 10))
+        self.assertEqual(self.hitbox.bottom_left, (10, 12))
+        self.assertEqual(self.hitbox.bottom_right, (12, 12))
+
+    def test_middle_didnt_move(self):
+        self.hitbox.position = (10, 10)
+        old_middle = self.hitbox.middle
+        self.hitbox.rotation = 43
+        self.assertEqual(self.hitbox.middle, old_middle)
+
+    def test_middle_good(self):
+        self.hitbox.position = (10, 10)
+        self.assertEqual(self.hitbox.middle, (11, 11))
 
     def test_damaging_obj_parent_params(self):
         self.assertIsNotNone(self.hitbox.id)
