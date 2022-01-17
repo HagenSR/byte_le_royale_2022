@@ -28,6 +28,7 @@ class ObjectType(int, Enum):
     upgrade = 16
     consumable = 17
     money = 18
+    teleporter = 19
 
 
 class ActionType(int, Enum):
@@ -39,6 +40,7 @@ class ActionType(int, Enum):
     shop = 5
     pickup = 6
     use = 7
+    use_teleporter = 8
 
 
 class Upgrades(int, Enum):
