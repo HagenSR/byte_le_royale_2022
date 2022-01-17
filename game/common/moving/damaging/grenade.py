@@ -30,7 +30,7 @@ class Grenade(DamagingObject):
         else:
             raise Exception("fuse time value outside bounds, Not set")
 
-    @range.setter
+    @DamagingObject.range.setter
     def range(self, val):
         if 0 <= val <= 200:
             self.range = val
