@@ -26,3 +26,5 @@ class Teleporter(MapObject):
     def __eq__(self, other):
         if isinstance(other, Teleporter):
             return self.hitbox.position == other.hitbox.position
+
+    __hash__ = MapObject.__hash__

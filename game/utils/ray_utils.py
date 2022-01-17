@@ -15,9 +15,6 @@ def load_collidables_in_ray_range(
         exclusions=None):
     if exclusions is None:
         exclusions = []
-    print("Coords: " + str(coords) + "\n")
-    print("Heading: " + str(heading) + "\n")
-    print("Ray: " + str(ray_endpoint) + "\n")
     # starting partition
     partition_x = gameboard.partition.find_column(coords[0])
     partition_y = gameboard.partition.find_row(coords[1])
@@ -26,8 +23,6 @@ def load_collidables_in_ray_range(
         ray_endpoint[0])
     end_partition_y = gameboard.partition.find_row(
         ray_endpoint[1])
-    print("end x: " + str(end_partition_x))
-    print("end y: " + str(end_partition_y))
     collidables = {}
     # angle quadrants, initialize distances to 0
     if math.pi / 2 >= heading >= 0:
@@ -203,33 +198,21 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
         x_limit = 0
         y_limit = calculate_ray_y(coords, slope, 0)
         limits.append((x_limit, y_limit))
-    #elif ray_x_limit > gameboard.width:
     if ray_x_limit > gameboard.width:
-#        if 0 < calculate_ray_y(
-#                coords,
-#                slope,
-#                gameboard.width) < gameboard.height:
         x_limit = gameboard.width - .001
         y_limit = calculate_ray_y(coords, slope, gameboard.width)
-        print(str(y_limit))
         limits.append((x_limit, y_limit))
     if ray_y_limit < 0:
-#        if 0 < calculate_ray_x(coords, slope, 0) < gameboard.width:
         y_limit = 0
         x_limit = calculate_ray_x(coords, slope, 0)
         limits.append((x_limit, y_limit))
     #elif ray_y_limit > gameboard.height:
     if ray_y_limit > gameboard.height:
-#        if 0 < calculate_ray_x(
-#                coords,
-#                slope,
-#                gameboard.height) < gameboard.width:
         y_limit = gameboard.height - .001
         x_limit = calculate_ray_x(coords, slope, gameboard.height)
         limits.append((x_limit, y_limit))
 
     limits = sort_coords(coords, limits)
-    print(str(limits))
 
     return limits[0][0]
 
@@ -260,7 +243,6 @@ def sort_coords(coords, limits):
         cd[c] = dist
     cd = sorted(cd.items(), key=lambda x: x[1])
 
-    print(str(cd))
     return cd
 
 
