@@ -10,8 +10,9 @@ class MovementController(Controller):
 
     def __init__(self):
         super().__init__()
-        self.target_position = None
+        self.target_location = None
         self.space_free = False
+        self.message = "Stopped movement: {}"
 
     def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
@@ -27,13 +28,13 @@ class MovementController(Controller):
             speed = client.shooter.speed
             # Angle they want to move in radians
             angle = client.shooter.heading
-            # new location is calculated using utils methodcalculate_slope
+            # new location is calculated using utils method calculate_slope
             self.target_location = calculate_location(location, speed, angle)
 
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
 
-            while (not (math.isclose(location[0], self.target_location[0], rel_tol=1e-06)
-                        and math.isclose(location[1], self.target_location[1], rel_tol=1e-06))):
+            while (not (math.isclose(location[0], self.target_location[0], abs_tol=1e-06)
+                        and math.isclose(location[1], self.target_location[1], abs_tol=1e-06))):
                 new_x = location[0] + math.cos(angle)
                 new_y = location[1] + math.sin(angle)
                 try:

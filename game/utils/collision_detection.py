@@ -26,6 +26,10 @@ def point_in_hitbox(x, y, hitbox):
 
 
 def intersect_circle(center, radius, hitbox):
+    # check if the center is entirely inside the circle
+    if point_in_hitbox(center[0], center[1], hitbox):
+        return True
+
     edges = [
         [hitbox.top_left, hitbox.top_right],
         [hitbox.top_right, hitbox.bottom_right],
@@ -44,12 +48,10 @@ def intersect_circle(center, radius, hitbox):
         if x1 == x2:
             xi = x1
             yi = y3
-            dx4 = math.nan
         # check for edge being horizontal
         elif y1 == y2:
             xi = x3
             yi = y1
-            dx4 = 0
         else:
             # calculate x coord of the intercept of the edge and the radius perpendicular to the edge
             # numerator
