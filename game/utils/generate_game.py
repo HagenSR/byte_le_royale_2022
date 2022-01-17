@@ -371,12 +371,10 @@ def generate():
                             wall = Wall(Hitbox(1, 1, (0, 0)))
                             wall.from_json(entry)
                             wallList.append(wall)
-                            print(wall)
                         elif entry['object_type'] == ObjectType.door:
                             door = Door(Hitbox(1, 1, (0, 0)))
                             door.from_json(entry)
                             wallList.append(door)
-                            print(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
         structures_list.append(None)
@@ -406,7 +404,6 @@ def generate():
                 or determine_teleporter_nearby(dummy_wall, game_map):
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
-        print(f'tel_x:{teleporter_x} tel_y:{teleporter_y}')
         new_tel = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
         game_map.partition.add_object(new_tel)
         game_map.teleporter_list.append(new_tel)
