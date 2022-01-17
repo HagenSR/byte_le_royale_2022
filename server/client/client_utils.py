@@ -56,7 +56,7 @@ class ClientUtils:
             print(
                 f"The following is the leaderboard for all contestants for group run {group_info['group_run_id']}.")
         print(
-            f"""This group run ran with the launcher version {group_info['launcher_version']} on {group_info['group_run_time']}. Each client was run {group_info['runs_per_client']} times.""")
+            f"""This group run ran with the launcher version {group_info['launcher_version']} on {group_info['start_run']}. Each client was run {group_info['runs_per_client']} times.""")
         self.to_table(jsn["data"])
 
     def get_team_score_over_time(self, vid):
@@ -123,7 +123,7 @@ class ClientUtils:
         for col in json_atribs:
             for row in json:
                 if len(str(row[col])) > col_longest_length[col]:
-                    col_longest_length[col] = len(row[col])
+                    col_longest_length[col] = len(str(row[col]))
         return col_longest_length
 
     def get_seperator_line(self, col_longest_length, padding):
@@ -149,8 +149,9 @@ class ClientUtils:
             print(row_format.format(*json_atribs))
             for row in json:
                 print(line_seperator)
-                print(row_format.format(*row.values()))
+                print(row_format.format(*[str(x) for x in row.values()]))
             print(line_seperator)
-        except BaseException:
+        except BaseException as e:
+            print(e)
             print(
                 "Something went wrong. Maybe there isn't data for what you're looking for")
