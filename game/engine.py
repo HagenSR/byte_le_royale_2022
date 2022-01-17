@@ -102,7 +102,6 @@ class Engine:
                 player.functional = False
                 player.error = PermissionError(
                     f'Player is using "open" which is forbidden.')
-
             # Import client's code
             im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
 

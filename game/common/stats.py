@@ -17,6 +17,9 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
+    # The size of a plot (square)
+    plot_width_height = 140
+
     default_wall_health = 18
 
     default_door_health = 18

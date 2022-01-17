@@ -124,7 +124,11 @@ def get_leaderboard():
         group_id = request.json["group_id"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_group_run_details(%s)).*", (group_id,))
-        results = cur.fetchall()[0]
+        results = cur.fetchall()
+        if len(results) > 0:
+            results = results[0]
+        else:
+            abort(400, description="No data to return for leaderboard yet")
         cur.execute("SELECT (get_leaderboard(%s, %s)).*", (ell, results["group_run_id"]))
         if cur.rowcount == 0:
             app.logger.error('Error: No data to return for leaderboard')
