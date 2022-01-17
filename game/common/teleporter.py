@@ -24,4 +24,5 @@ class Teleporter(MapObject):
         return self
 
     def __eq__(self, other):
-        return self.hitbox.position == other.hitbox.position
+        if isinstance(other, Teleporter):
+            return self.hitbox.position == other.hitbox.position
