@@ -194,7 +194,7 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
                     ray_range * math.cos(heading % (math.pi / 2))))
     limits = [(ray_x_limit, ray_y_limit)]
     if ray_x_limit < 0:
-#        if 0 < calculate_ray_y(coords, slope, 0) < gameboard.height:
+        #        if 0 < calculate_ray_y(coords, slope, 0) < gameboard.height:
         x_limit = 0
         y_limit = calculate_ray_y(coords, slope, 0)
         limits.append((x_limit, y_limit))
@@ -206,7 +206,7 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
         y_limit = 0
         x_limit = calculate_ray_x(coords, slope, 0)
         limits.append((x_limit, y_limit))
-    #elif ray_y_limit > gameboard.height:
+    # elif ray_y_limit > gameboard.height:
     if ray_y_limit > gameboard.height:
         y_limit = gameboard.height - .001
         x_limit = calculate_ray_x(coords, slope, gameboard.height)
