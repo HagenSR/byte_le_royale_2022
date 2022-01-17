@@ -27,7 +27,7 @@ class MovementController(Controller):
             speed = client.shooter.speed
             # Angle they want to move in radians
             angle = math.radians(client.shooter.heading)
-            # new location is calculated using utils methodcalculate_slope
+            # new location is calculated using utils method calculate_slope
             self.target_location = calculate_location(location, speed, angle)
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
             self.space_free = True
