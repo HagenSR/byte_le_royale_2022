@@ -288,7 +288,7 @@ class client_runner:
             self.delete_group_run_cascade(self.group_id)
         else:
             logging.warning("Not deleting any group runs")
-        self.delete_runner_temp()
+        #self.delete_runner_temp()
 
         os._exit(0)
 
