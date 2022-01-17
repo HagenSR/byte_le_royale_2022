@@ -5,7 +5,7 @@
 -- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
 -- Dumped by pg_dump version 14.1 (Ubuntu 14.1-2.pgdg20.04+1)
 
--- Started on 2022-01-16 23:32:33 CST
+-- Started on 2022-01-17 00:40:09 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -111,17 +111,23 @@ $$;
 ALTER FUNCTION public.get_file_from_submission(teamid uuid, submissionid integer) OWNER TO postgres;
 
 --
--- TOC entry 263 (class 1255 OID 16596)
+-- TOC entry 260 (class 1255 OID 16596)
 -- Name: get_group_run_details(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
 CREATE FUNCTION public.get_group_run_details(groupid integer) RETURNS TABLE(group_run_id integer, start_run timestamp without time zone, runs_per_client integer, launcher_version character varying)
     LANGUAGE plpgsql
     AS $$
+DECLARE grpId int := groupid;
 BEGIN
 -- Created by: Sean Hagen
 -- Written on: 11/1/2021
 -- Select the latest submission_id, group_run_id for a team as well as the runs_per_team for that group run
+
+IF grpId = -1 THEN
+	SELECT group_run.group_run_id INTO grpId FROM group_run ORDER BY group_run.group_run_id DESC LIMIT 1;
+END IF;
+
 RETURN QUERY
 SELECT
 	group_run.group_run_id,
@@ -130,7 +136,7 @@ SELECT
 	group_run.launcher_version
 FROM
     group_run
-WHERE group_run.group_run_id = groupid;
+WHERE group_run.group_run_id = grpId;
 end;
 $$;
 
@@ -138,7 +144,7 @@ $$;
 ALTER FUNCTION public.get_group_run_details(groupid integer) OWNER TO postgres;
 
 --
--- TOC entry 248 (class 1255 OID 16433)
+-- TOC entry 249 (class 1255 OID 16433)
 -- Name: get_group_runs(uuid); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -151,9 +157,9 @@ BEGIN
 -- teamid: uuid to get runs for
 -- Returns the group runs this team has been in
 RETURN QUERY
-SELECT group_run.group_run_id, group_run.start_run, group_run.launcher_version, group_run.runs_per_client FROM group_run 
+SELECT DISTINCT group_run.group_run_id, group_run.start_run, group_run.launcher_version, group_run.runs_per_client FROM group_run 
 JOIN run ON run.group_run_id = group_run.group_run_id 
-JOIN submission ON submission.submission_id = run.submission_id
+JOIN submission ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id 
 WHERE submission.team_id = teamid
 ORDER BY group_run.start_run DESC;
 
@@ -164,7 +170,7 @@ $$;
 ALTER FUNCTION public.get_group_runs(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 249 (class 1255 OID 16434)
+-- TOC entry 248 (class 1255 OID 16434)
 -- Name: get_latest_group_id(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -195,7 +201,7 @@ BEGIN
 -- Written on: 11/1/2021
 -- Select the latest submission_id, group_run_id for a team as well as the runs_per_team for that group run
 RETURN QUERY
-SELECT
+SELECT DISTINCT
     latest_submission.subid,
     latest_submission.group_run_id,
 	group_run.runs_per_client
@@ -207,7 +213,7 @@ FROM
             MAX(run.group_run_id) as group_run_id
         FROM
             run
-            JOIN submission ON run.submission_id = submission.submission_id
+            JOIN submission ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id
         WHERE
             submission.team_id = teamid
 
@@ -219,7 +225,7 @@ $$;
 ALTER FUNCTION public.get_latest_submission(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 264 (class 1255 OID 16687)
+-- TOC entry 261 (class 1255 OID 16687)
 -- Name: get_leaderboard(boolean, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -275,7 +281,7 @@ BEGIN--SELECT * FROM team
 -- Written on: 1/1/2021
 -- returns the logs for a given group run
 RETURN QUERY
-SELECT
+SELECT DISTINCT
     run.run_id,
     run.group_run_id,
     run.submission_id,
@@ -283,7 +289,7 @@ SELECT
 	logs.log_text
 FROM
 	logs JOIN run ON logs.run_id = run.run_id
-    JOIN submission ON run.submission_id = submission.submission_id
+    JOIN submission ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id
     JOIN team ON submission.team_id = team.team_id
 WHERE
     run.group_run_id = grouprun;
@@ -294,11 +300,11 @@ $$;
 ALTER FUNCTION public.get_logs_for_group_run(grouprun integer) OWNER TO postgres;
 
 --
--- TOC entry 252 (class 1255 OID 16438)
+-- TOC entry 263 (class 1255 OID 16698)
 -- Name: get_runs_for_submission(uuid, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.get_runs_for_submission(teamid uuid, submissionid integer) RETURNS TABLE(run_id integer, score integer, group_run_id integer, run_time timestamp without time zone, seed_id integer, launcher_version character varying)
+CREATE FUNCTION public.get_runs_for_submission(teamid uuid, submissionid integer) RETURNS TABLE(run_id integer, group_run_id integer, run_time timestamp without time zone, winner integer, player_1 integer, player_2 integer, seed_id integer, launcher_version character varying)
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -308,8 +314,8 @@ BEGIN
 -- submiddionid: submission id to get runs for
 -- Returns the runs for a given team and submission
 RETURN QUERY
-SELECT run.run_id, run.score, run.group_run_id, run.run_time, run.seed_id, group_run.launcher_version
-FROM submission JOIN run ON submission.submission_id = run.submission_id JOIN group_run on run.group_run_id = group_run.group_run_id
+SELECT DISTINCT run.run_id, run.group_run_id, run.run_time, run.winner, run.player_1, run.player_2, run.seed_id, group_run.launcher_version
+FROM submission JOIN run ON submission.submission_id = run.player_1 OR submission.submission_id = run.player_2 JOIN group_run on run.group_run_id = group_run.group_run_id
 WHERE submission.team_id = teamid AND submission.submission_id = submissionid
 ORDER BY run.run_time DESC;
 --SELECT * FROM team
@@ -320,11 +326,11 @@ $$;
 ALTER FUNCTION public.get_runs_for_submission(teamid uuid, submissionid integer) OWNER TO postgres;
 
 --
--- TOC entry 253 (class 1255 OID 16439)
+-- TOC entry 265 (class 1255 OID 16701)
 -- Name: get_runs_for_submission_and_group(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.get_runs_for_submission_and_group(submissionid integer, groupid integer) RETURNS TABLE(group_run_id integer, run_id integer, run_time timestamp without time zone, score integer)
+CREATE FUNCTION public.get_runs_for_submission_and_group(submissionid integer, groupid integer) RETURNS TABLE(group_run_id integer, run_id integer, run_time timestamp without time zone, winner integer, player_1 integer, player_2 integer)
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -332,8 +338,9 @@ BEGIN
 -- Written on: 12/30/2021
 -- returns the runs for a given submission and group_run
 RETURN QUERY
-SELECT run.group_run_id, run.run_id, run.run_time, run.score FROM run JOIN submission ON run.submission_id = submission.submission_id
-WHERE run.submission_id = submissionid AND run.group_run_id = groupid;
+SELECT DISTINCT run.group_run_id, run.run_id, run.run_time, run.winner, run.player_1, run.player_2 FROM run JOIN submission 
+ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id
+WHERE run.player_1 = submissionid or run.player_2 = submissionid AND run.group_run_id = groupid;
 end;
 $$;
 
@@ -341,7 +348,7 @@ $$;
 ALTER FUNCTION public.get_runs_for_submission_and_group(submissionid integer, groupid integer) OWNER TO postgres;
 
 --
--- TOC entry 254 (class 1255 OID 16440)
+-- TOC entry 253 (class 1255 OID 16440)
 -- Name: get_seed_for_run(uuid, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -358,7 +365,7 @@ RETURN seed
 FROM
     run
     JOIN seed ON run.seed_id = seed.seed_id
-    JOIN submission ON run.submission_id = submission.submission_id
+    JOIN submission ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id
 WHERE
     team_id = teamid
     AND run_id = runid;
@@ -369,7 +376,7 @@ $$;
 ALTER FUNCTION public.get_seed_for_run(teamid uuid, runid integer) OWNER TO postgres;
 
 --
--- TOC entry 255 (class 1255 OID 16441)
+-- TOC entry 252 (class 1255 OID 16441)
 -- Name: get_submissions_for_team(uuid); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -391,11 +398,11 @@ $$;
 ALTER FUNCTION public.get_submissions_for_team(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 256 (class 1255 OID 16442)
+-- TOC entry 264 (class 1255 OID 16700)
 -- Name: get_team_runs_for_group_run(uuid, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION public.get_team_runs_for_group_run(teamid uuid, grouprunid integer) RETURNS TABLE(run_id integer, score integer, submission_run_id integer, run_time timestamp without time zone, seed_id integer, launcher_version character varying)
+CREATE FUNCTION public.get_team_runs_for_group_run(teamid uuid, grouprunid integer) RETURNS TABLE(run_id integer, submission_run_id integer, winner integer, player_1 integer, player_2 integer, run_time timestamp without time zone, seed_id integer, launcher_version character varying)
     LANGUAGE plpgsql
     AS $$
 BEGIN
@@ -403,8 +410,8 @@ BEGIN
 -- Written on: 12/30/2021
 -- gets the runs for a given group run and team
 RETURN QUERY
-SELECT run.run_id, run.score, submission.submission_id, run.run_time, run.seed_id, group_run.launcher_version
-FROM submission JOIN run ON submission.submission_id = run.submission_id JOIN group_run ON group_run.group_run_id = run.group_run_id
+SELECT DISTINCT run.run_id, submission.submission_id, run.winner, run.player_1, run.player_2, run.run_time, run.seed_id, group_run.launcher_version
+FROM submission JOIN run ON submission.submission_id = run.player_1 OR submission.submission_id = run.player_2  JOIN group_run ON group_run.group_run_id = run.group_run_id
 WHERE submission.team_id = teamid AND run.group_run_id = grouprunid
 ORDER BY run.run_time DESC;
 end;
@@ -414,7 +421,7 @@ $$;
 ALTER FUNCTION public.get_team_runs_for_group_run(teamid uuid, grouprunid integer) OWNER TO postgres;
 
 --
--- TOC entry 265 (class 1255 OID 16697)
+-- TOC entry 262 (class 1255 OID 16697)
 -- Name: get_team_score_over_time(uuid); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -451,7 +458,7 @@ $$;
 ALTER FUNCTION public.get_team_score_over_time(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 257 (class 1255 OID 16444)
+-- TOC entry 254 (class 1255 OID 16444)
 -- Name: get_team_types(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -471,7 +478,7 @@ $$;
 ALTER FUNCTION public.get_team_types() OWNER TO postgres;
 
 --
--- TOC entry 258 (class 1255 OID 16445)
+-- TOC entry 255 (class 1255 OID 16445)
 -- Name: get_teams(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -493,7 +500,7 @@ $$;
 ALTER FUNCTION public.get_teams() OWNER TO postgres;
 
 --
--- TOC entry 259 (class 1255 OID 16446)
+-- TOC entry 256 (class 1255 OID 16446)
 -- Name: get_universities(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -511,7 +518,7 @@ $$;
 ALTER FUNCTION public.get_universities() OWNER TO postgres;
 
 --
--- TOC entry 260 (class 1255 OID 16447)
+-- TOC entry 257 (class 1255 OID 16447)
 -- Name: insert_group_run(character varying, integer); Type: FUNCTION; Schema: public; Owner: byte_api
 --
 
@@ -532,7 +539,7 @@ $$;
 ALTER FUNCTION public.insert_group_run(launcherversion character varying, runsperclient integer) OWNER TO byte_api;
 
 --
--- TOC entry 261 (class 1255 OID 16448)
+-- TOC entry 258 (class 1255 OID 16448)
 -- Name: insert_log(character varying, integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -575,7 +582,7 @@ $$;
 ALTER FUNCTION public.insert_run(sub_id integer, score integer, group_run_id integer, err character varying, seedid integer) OWNER TO byte_api;
 
 --
--- TOC entry 262 (class 1255 OID 16663)
+-- TOC entry 259 (class 1255 OID 16663)
 -- Name: insert_run(integer, integer, integer, integer, character varying, integer); Type: FUNCTION; Schema: public; Owner: byte_api
 --
 
@@ -1214,7 +1221,7 @@ ALTER TABLE ONLY public.run
     ADD CONSTRAINT winner_fk FOREIGN KEY (winner) REFERENCES public.submission(submission_id) ON DELETE CASCADE;
 
 
--- Completed on 2022-01-16 23:32:33 CST
+-- Completed on 2022-01-17 00:40:09 CST
 
 --
 -- PostgreSQL database dump complete
