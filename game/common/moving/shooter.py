@@ -100,8 +100,7 @@ class Shooter(MovingObject):
             # this try except block checks to make sure you're only checking
             # the correct slot type
             try:
-                self.__inventory[slot_type][self.__inventory[slot_type].index(
-                    obj)] = None
+                self.__inventory[slot_type][self.__inventory[slot_type].index(obj)] = None
             except ValueError:
                 continue
             # if a gun is removed and it's the primary one, cycle to the next

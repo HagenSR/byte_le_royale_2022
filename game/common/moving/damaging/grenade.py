@@ -30,6 +30,13 @@ class Grenade(DamagingObject):
         else:
             raise Exception("fuse time value outside bounds, Not set")
 
+    @range.setter
+    def range(self, val):
+        if 0 <= val <= 200:
+            self.range = val
+        else:
+            raise Exception("Tried to set a grenade distance greater than the max of 200")
+
     def to_json(self):
         data = super().to_json()
         data['fuse_time'] = self.fuse_time

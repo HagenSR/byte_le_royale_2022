@@ -41,6 +41,7 @@ class ActionType(int, Enum):
     pickup = 6
     use = 7
     use_teleporter = 8
+    throw_grenade = 9
 
 
 class Upgrades(int, Enum):
