@@ -316,5 +316,6 @@ class client_runner:
                 count += 1
         self.total_number_of_games_for_one_client = count
 
+
 if __name__ == "__main__":
     client_runner().external_runner()

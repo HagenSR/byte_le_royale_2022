@@ -87,7 +87,6 @@ class Engine:
             if os.path.isdir(os.path.join(CLIENT_DIRECTORY, filename)):
                 continue
 
-
             # Otherwise, instantiate the player
             # Add players one and two
             player = Player()
