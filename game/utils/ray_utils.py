@@ -8,21 +8,25 @@ import math
 # Get relevant collidables in partitions bounded by furthest x, y and origin
 def load_collidables_in_ray_range(
         heading,
-        x,
-        y,
+        coords,
         gameboard,
         ray_endpoint,
-        exclusions=[]):
-    ray_x_limit = ray_endpoint[0]
-    ray_y_limit = ray_endpoint[1]
+        exclusions=None):
+    if exclusions is None:
+        exclusions = []
+    print("Coords: " + str(coords) + "\n")
+    print("Heading: " + str(heading) + "\n")
+    print("Ray: " + str(ray_endpoint) + "\n")
     # starting partition
-    partition_x = gameboard.partition.find_column(x)
-    partition_y = gameboard.partition.find_row(y)
+    partition_x = gameboard.partition.find_column(coords[0])
+    partition_y = gameboard.partition.find_row(coords[1])
     # ending partition
     end_partition_x = gameboard.partition.find_column(
-        ray_x_limit)
+        ray_endpoint[0])
     end_partition_y = gameboard.partition.find_row(
-        ray_y_limit)
+        ray_endpoint[1])
+    print("end x: " + str(end_partition_x))
+    print("end y: " + str(end_partition_y))
     collidables = {}
     # angle quadrants, initialize distances to 0
     if math.pi / 2 >= heading >= 0:
@@ -58,22 +62,25 @@ def load_collidables_in_ray_range(
 
 
 # get collidables in a cube of partitions bounded by range
-def load_collidables_in_range(gameboard, x, y, max_range, exclusions=[]):
+def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
     collidables = {}
-    if x - max_range >= 0:
-        start_partition_x = gameboard.partition.find_column(x - max_range)
+    if coords[0] - max_range >= 0:
+        start_partition_x = gameboard.partition.find_column(
+            coords[0] - max_range)
     else:
         start_partition_x = gameboard.partition.find_column(0)
-    if y - max_range >= 0:
-        start_partition_y = gameboard.partition.find_row(y - max_range)
+    if coords[1] - max_range >= 0:
+        start_partition_y = gameboard.partition.find_row(coords[1] - max_range)
     else:
         start_partition_y = gameboard.partition.find_row(0)
-    if x + max_range <= gameboard.width:
-        end_partition_x = gameboard.partition.find_column(x + max_range)
+    if coords[0] + max_range <= gameboard.width:
+        end_partition_x = gameboard.partition.find_column(
+            coords[0] + max_range)
     else:
         end_partition_x = gameboard.partition.find_column(gameboard.width)
-    if y + max_range <= gameboard.height:
-        end_partition_y = gameboard.partition.find_column(y + max_range)
+    if coords[1] + max_range <= gameboard.height:
+        end_partition_y = gameboard.partition.find_column(
+            coords[1] + max_range)
     else:
         end_partition_y = gameboard.partition.find_column(gameboard.height)
     for x in range(start_partition_x, end_partition_x + 1):
@@ -86,10 +93,10 @@ def load_collidables_in_range(gameboard, x, y, max_range, exclusions=[]):
 
 
 # Calculate slope from player heading
-def calculate_slope(heading):
-    if (heading != math.pi / 2
-            and heading != ((3 * math.pi) / 2)):
-        slope = math.tan(heading)
+def calculate_slope(heading_in_radians):
+    if (heading_in_radians != math.pi / 2
+            and heading_in_radians != ((3 * math.pi) / 2)):
+        slope = math.tan(heading_in_radians)
     else:
         slope = math.nan
 
@@ -97,9 +104,9 @@ def calculate_slope(heading):
 
 
 # Get y coordinate at x given slope
-def calculate_ray_y(x1, y1, slope, x):
+def calculate_ray_y(coords, slope, x):
     if slope is not math.nan:
-        ray_y = ((slope * (x - x1)) + -y1)
+        ray_y = -((slope * (x - coords[0])) + -coords[1])
     else:
         ray_y = math.nan
 
@@ -107,88 +114,131 @@ def calculate_ray_y(x1, y1, slope, x):
 
 
 # Get x coordinate at y given slope
-def calculate_ray_x(x1, y1, slope, y):
+def calculate_ray_x(coords, slope, y):
     if math.isclose(slope, 0, abs_tol=1e-8):
         ray_x = math.nan
     elif slope is not math.nan:
-        ray_x = ((y - (-y1)) / slope) + x1
+        ray_x = ((y - (-coords[1])) / slope) + coords[0]
     else:
-        ray_x = x1
+        ray_x = coords[0]
 
     return ray_x
 
 
-def get_ray_limits(heading, x1, y1, gameboard, slope, ray_range):
+#TODO: Cleanup
+def get_ray_limits(heading, coords, gameboard, slope, ray_range):
     # Get final x and y coordinates given gun range and heading
-    if (0 <= heading < math.pi / 2
-            or (3 * math.pi) / 2 < heading <= 2 * math.pi):
-        if heading == 0 or heading == 2 * math.pi:
-            ray_x_limit = x1 + ray_range
+    if ((0 <= heading <= math.pi / 2
+            or (3 * math.pi) / 2 <= heading <= 2 * math.pi)
+            or math.isclose((3 * math.pi / 2), heading, abs_tol=1e-8)
+            or math.isclose((2 * math.pi), heading, abs_tol=1e-8)):
+        if math.isclose(heading, 0, abs_tol=1e-8) or math.isclose(heading,
+                                                                  2 * math.pi, abs_tol=1e-8):
+            ray_x_limit = coords[0] + ray_range
         else:
-            ray_x_limit = (
-                x1 +
-                abs(
-                    ray_range *
-                    math.sin(
-                        heading %
-                        (math.pi /
-                         2))))
+            if heading < math.pi / 2:
+                ray_x_limit = (
+                    coords[0] +
+                    abs(
+                        ray_range *
+                        math.sin(
+                            ((math.pi / 2) - heading) %
+                            (math.pi / 2))))
+            else:
+                ray_x_limit = (
+                    coords[0] +
+                    abs(
+                        ray_range *
+                        math.sin(
+                            heading %
+                            (math.pi / 2))))
+
     else:
-        if heading == math.pi:
-            ray_x_limit = x1 - ray_range
+        if heading == math.pi or math.isclose(math.pi, heading, abs_tol=1e-8):
+            ray_x_limit = coords[0] - ray_range
         else:
-            ray_x_limit = (
-                x1 -
-                abs(
-                    ray_range *
-                    math.sin(
-                        heading %
-                        (math.pi /
-                         2))))
-    if (heading == 0 or heading == math.pi
-            or heading == 2 * math.pi):
-        ray_y_limit = y1
+            if (3 * math.pi / 2) > heading > math.pi:
+                ray_x_limit = (
+                    coords[0] -
+                    abs(
+                        ray_range *
+                        math.sin(
+                            ((3 * math.pi / 2) - heading) % (math.pi / 2))))
+            else:
+                ray_x_limit = (
+                    coords[0] -
+                    abs(
+                        ray_range *
+                        math.sin(
+                            heading % (math.pi / 2))))
+    if (math.isclose(heading, 0, abs_tol=1e-8)
+            or math.isclose(heading, 2 * math.pi, abs_tol=1e-8)
+            or math.isclose(math.pi, heading, abs_tol=1e-8)):
+        ray_y_limit = coords[1]
+    elif (heading == math.pi / 2):
+        ray_y_limit = coords[1] - ray_range
+    elif math.isclose(heading, (3 * math.pi / 2), abs_tol=1e-8):
+        ray_y_limit = coords[1] + ray_range
     else:
-        if 0 <= heading <= math.pi:
-            ray_y_limit = -(-y1 + abs(
-                ray_range * math.cos(heading % (math.pi / 2))))
+        if (0 <= heading <= math.pi
+                or math.isclose(heading, 0, abs_tol=1e-8)
+                or math.isclose(heading, math.pi, abs_tol=1e-8)):
+            if heading < math.pi / 2:
+                ray_y_limit = -(-coords[1] + abs(
+                    ray_range * math.cos(((math.pi / 2) - heading) % (math.pi / 2))))
+            else:
+                ray_y_limit = -(-coords[1] + abs(
+                    ray_range * math.cos(heading % (math.pi / 2))))
         else:
-            ray_y_limit = -(-y1 - abs(
-                ray_range * math.cos(heading % (math.pi / 2))))
+            if heading < 3 * math.pi / 2:
+                ray_y_limit = -(-coords[1] - abs(
+                    ray_range * math.cos(((3 * math.pi / 2) - heading) % (math.pi / 2))))
+            else:
+                ray_y_limit = -(-coords[1] - abs(
+                    ray_range * math.cos(heading % (math.pi / 2))))
+    limits = [(ray_x_limit, ray_y_limit)]
     if ray_x_limit < 0:
-        if 0 < calculate_ray_y(x1, y1, slope, 0) < gameboard.height:
-            ray_x_limit = 0
-            ray_y_limit = calculate_ray_y(x1, y1, slope, 0)
-    elif ray_x_limit > gameboard.width:
-        if 0 < calculate_ray_y(
-                x1,
-                y1,
-                slope,
-                gameboard.width) < gameboard.height:
-            ray_x_limit = gameboard.width
-            ray_y_limit = calculate_ray_y(x1, y1, slope, gameboard.width)
+#        if 0 < calculate_ray_y(coords, slope, 0) < gameboard.height:
+        x_limit = 0
+        y_limit = calculate_ray_y(coords, slope, 0)
+        limits.append((x_limit, y_limit))
+    #elif ray_x_limit > gameboard.width:
+    if ray_x_limit > gameboard.width:
+#        if 0 < calculate_ray_y(
+#                coords,
+#                slope,
+#                gameboard.width) < gameboard.height:
+        x_limit = gameboard.width - .001
+        y_limit = calculate_ray_y(coords, slope, gameboard.width)
+        print(str(y_limit))
+        limits.append((x_limit, y_limit))
     if ray_y_limit < 0:
-        if 0 < calculate_ray_x(x1, y1, slope, 0) < gameboard.width:
-            ray_y_limit = 0
-            ray_x_limit = calculate_ray_x(x1, y1, slope, 0)
-    elif ray_y_limit > gameboard.height:
-        if 0 < calculate_ray_x(
-                x1,
-                y1,
-                slope,
-                gameboard.height) < gameboard.width:
-            ray_y_limit = gameboard.height
-            ray_x_limit = calculate_ray_x(x1, y1, slope, gameboard.height)
+#        if 0 < calculate_ray_x(coords, slope, 0) < gameboard.width:
+        y_limit = 0
+        x_limit = calculate_ray_x(coords, slope, 0)
+        limits.append((x_limit, y_limit))
+    #elif ray_y_limit > gameboard.height:
+    if ray_y_limit > gameboard.height:
+#        if 0 < calculate_ray_x(
+#                coords,
+#                slope,
+#                gameboard.height) < gameboard.width:
+        y_limit = gameboard.height - .001
+        x_limit = calculate_ray_x(coords, slope, gameboard.height)
+        limits.append((x_limit, y_limit))
 
-    return (ray_x_limit, ray_y_limit)
+    limits = sort_coords(coords, limits)
+    print(str(limits))
+
+    return limits[0][0]
 
 
-def sort_objects(x1, y1, collidables, max_range):
+def sort_objects(coords, collidables, max_range):
     # assign distances, discard if out of bounds
     for ray in list(collidables.keys()):
         dist = round(math.sqrt(
-            ((ray.endpoint[0] - x1) ** 2) + (
-                (-ray.endpoint[1] - -y1) ** 2)))
+            ((ray.endpoint[0] - coords[0]) ** 2) + (
+                (-ray.endpoint[1] - -coords[1]) ** 2)))
         if max_range is not math.nan:
             if dist > max_range:
                 collidables.pop(ray)
@@ -198,6 +248,19 @@ def sort_objects(x1, y1, collidables, max_range):
     collidables = sorted(collidables.items(), key=lambda x: x[1])
 
     return collidables
+
+
+def sort_coords(coords, limits):
+    cd = {}
+    for c in limits:
+        dist = round(math.sqrt(
+            ((c[0] - coords[0]) ** 2) + (
+                (-c[1] - -coords[1]) ** 2)))
+        cd[c] = dist
+    cd = sorted(cd.items(), key=lambda x: x[1])
+
+    print(str(cd))
+    return cd
 
 
 # Function written by Paul Draper on Stack Exchange
@@ -219,6 +282,65 @@ def line_intersection(line1, line2):
     return x, y
 
 
+def determine_ray_collision(
+        gameboard,
+        collidables,
+        ray_start,
+        slope,
+        ray_endpoint,
+        dist,
+        damage):
+    collisions = {}
+    for collidable in collidables.keys():
+        intersections = []
+        top = line_intersection(
+            (collidable.hitbox.top_left, collidable.hitbox.top_right),
+            (ray_start, ray_endpoint)
+        )
+        if top:
+            intersections.append(top)
+        bottom = line_intersection(
+            (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
+            (ray_start, ray_endpoint)
+        )
+        if bottom:
+            intersections.append(bottom)
+        left = line_intersection(
+            (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
+            (ray_start, ray_endpoint)
+        )
+        if left:
+            intersections.append(left)
+        right = line_intersection(
+            (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
+            (ray_start, ray_endpoint)
+        )
+        if right:
+            intersections.append(right)
+        for intersection in intersections:
+            ray = Ray(
+                ray_start,
+                intersection,
+                collidable,
+                damage
+            )
+            collisions[ray] = 0
+
+    rays = sort_objects(ray_start,
+                        collisions,
+                        dist)
+    if len(rays) > 0:
+        return rays[0][0]
+    else:
+        ray = Ray(
+            ray_start,
+            ray_endpoint,
+            None,
+            damage
+        )
+        return ray
+
+
 # Determine which object ray collides with first
 def determine_gun_collision(
         player,
@@ -235,25 +357,25 @@ def determine_gun_collision(
             (collidable.hitbox.top_left, collidable.hitbox.top_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if top is not None:
+        if top:
             intersections.append(top)
         bottom = line_intersection(
             (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if bottom is not None:
+        if bottom:
             intersections.append(bottom)
         left = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if left is not None:
+        if left:
             intersections.append(left)
         right = line_intersection(
             (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
             (player.shooter.hitbox.position, ray_endpoint)
         )
-        if right is not None:
+        if right:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
@@ -264,8 +386,7 @@ def determine_gun_collision(
             )
             collisions[ray] = 0
 
-    rays = sort_objects(player.shooter.hitbox.position[0],
-                        player.shooter.hitbox.position[1],
+    rays = sort_objects(player.shooter.hitbox.position,
                         collisions,
                         player.shooter.primary_gun.range)
     if len(rays) > 0:
@@ -280,19 +401,46 @@ def determine_gun_collision(
         return ray
 
 
-# Method to be called by controller
-def get_ray_collision(player, gameboard):
-    slope = calculate_slope(player.shooter.heading)
-    ray_endpoint = get_ray_limits(player.shooter.heading,
-                                  player.shooter.hitbox.position[0],
-                                  player.shooter.hitbox.position[1],
+def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
+    radians = math.radians(heading)
+    slope = calculate_slope(radians)
+    ray_endpoint = get_ray_limits(radians,
+                                  ray_start,
+                                  gameboard,
+                                  slope,
+                                  dist)
+    collidables = load_collidables_in_ray_range(
+        radians,
+        ray_start,
+        gameboard,
+        ray_endpoint,
+        exclusions
+    )
+
+    ray = determine_ray_collision(
+        gameboard,
+        collidables,
+        ray_start,
+        slope,
+        ray_endpoint,
+        dist,
+        damage
+    )
+
+    return ray
+
+
+def get_gun_ray_collision(player, gameboard):
+    radians = math.radians(player.shooter.heading)
+    slope = calculate_slope(radians)
+    ray_endpoint = get_ray_limits(radians,
+                                  player.shooter.hitbox.position,
                                   gameboard,
                                   slope,
                                   player.shooter.primary_gun.range)
     collidables = load_collidables_in_ray_range(
-        player.shooter.heading,
-        player.shooter.hitbox.position[0],
-        player.shooter.hitbox.position[1],
+        radians,
+        player.shooter.hitbox.position,
         gameboard,
         ray_endpoint,
         [player.shooter]
@@ -308,3 +456,38 @@ def get_ray_collision(player, gameboard):
     )
 
     return ray
+
+
+# This sucks. Used to test rays, will replace later
+def get_grenade_collisions(gameboard, start_coords, grenade_range, damage,
+                           exclusions):
+    collisions = []
+    for i in range(360000):
+        heading = math.radians(i / 1000)
+        slope = calculate_slope(heading)
+        ray_endpoint = get_ray_limits(
+            heading,
+            start_coords,
+            gameboard,
+            slope,
+            grenade_range
+        )
+        collidables = load_collidables_in_ray_range(
+            heading,
+            start_coords,
+            gameboard,
+            ray_endpoint,
+            exclusions
+        )
+        ray = determine_ray_collision(
+            gameboard,
+            collidables,
+            start_coords,
+            slope,
+            ray_endpoint,
+            grenade_range,
+            damage
+        )
+        collisions.append(ray)
+
+    return collisions
