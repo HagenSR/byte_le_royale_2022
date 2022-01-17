@@ -50,7 +50,6 @@ class Engine:
                 sys.stdout = f
             self.boot()
             self.load()
-
             for self.current_world_key in tqdm(
                     self.master_controller.game_loop_logic(),
                     bar_format=TQDM_BAR_FORMAT,
@@ -103,16 +102,17 @@ class Engine:
                 player.functional = False
                 player.error = PermissionError(
                     f'Player is using "open" which is forbidden.')
-            # Import client's code
-            im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
 
             # Attempt creation of the client object
             obj = None
             try:
+                # Import client's code
+                im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
                 obj = im.Client()
             except Exception:
                 player.functional = False
                 player.error = traceback.format_exc()
+                
 
             player.code = obj
 
