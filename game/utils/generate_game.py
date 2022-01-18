@@ -367,11 +367,11 @@ def generate():
                     wallList = []
                     for entry in filejsn:
                         # Load in every wall in the structure
-                        if isinstance(entry, Wall):
+                        if entry['object_type'] == ObjectType.wall:
                             wall = Wall(Hitbox(1, 1, (0, 0)))
                             wall.from_json(entry)
                             wallList.append(wall)
-                        elif isinstance(entry, Door):
+                        elif entry['object_type'] == ObjectType.door:
                             door = Door(Hitbox(1, 1, (0, 0)))
                             door.from_json(entry)
                             wallList.append(door)
