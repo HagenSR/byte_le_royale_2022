@@ -96,7 +96,7 @@ class TestShootController(unittest.TestCase):
         self.assertAlmostEqual(
             wall.health,
             (GameStats.default_wall_health -
-             2 *
+             1 *
              round(
                  gun.damage /
                  gun.fire_rate)),

@@ -15,8 +15,6 @@ def load_collidables_in_ray_range(
         exclusions=None):
     if exclusions is None:
         exclusions = []
-    ray_x_limit = ray_endpoint[0]
-    ray_y_limit = ray_endpoint[1]
     # starting partition
     partition_x = gameboard.partition.find_column(coords[0])
     partition_y = gameboard.partition.find_row(coords[1])
@@ -104,7 +102,7 @@ def calculate_slope(heading_in_radians):
 # Get y coordinate at x given slope
 def calculate_ray_y(coords, slope, x):
     if slope is not math.nan:
-        ray_y = ((slope * (x - coords[0])) + -coords[1])
+        ray_y = -((slope * (x - coords[0])) + -coords[1])
     else:
         ray_y = math.nan
 
@@ -194,30 +192,27 @@ def get_ray_limits(heading, coords, gameboard, slope, ray_range):
             else:
                 ray_y_limit = -(-coords[1] - abs(
                     ray_range * math.cos(heading % (math.pi / 2))))
+    limits = [(ray_x_limit, ray_y_limit)]
     if ray_x_limit < 0:
-        if 0 < calculate_ray_y(coords, slope, 0) < gameboard.height:
-            ray_x_limit = 0
-            ray_y_limit = calculate_ray_y(coords, slope, 0)
-    elif ray_x_limit > gameboard.width:
-        if 0 < calculate_ray_y(
-                coords,
-                slope,
-                gameboard.width) < gameboard.height:
-            ray_x_limit = gameboard.width
-            ray_y_limit = calculate_ray_y(coords, slope, gameboard.width)
+        x_limit = 0
+        y_limit = calculate_ray_y(coords, slope, 0)
+        limits.append((x_limit, y_limit))
+    if ray_x_limit > gameboard.width:
+        x_limit = gameboard.width - .001
+        y_limit = calculate_ray_y(coords, slope, gameboard.width)
+        limits.append((x_limit, y_limit))
     if ray_y_limit < 0:
-        if 0 < calculate_ray_x(coords, slope, 0) < gameboard.width:
-            ray_y_limit = 0
-            ray_x_limit = calculate_ray_x(coords, slope, 0)
-    elif ray_y_limit > gameboard.height:
-        if 0 < calculate_ray_x(
-                coords,
-                slope,
-                gameboard.height) < gameboard.width:
-            ray_y_limit = gameboard.height
-            ray_x_limit = calculate_ray_x(coords, slope, gameboard.height)
+        y_limit = 0
+        x_limit = calculate_ray_x(coords, slope, 0)
+        limits.append((x_limit, y_limit))
+    if ray_y_limit > gameboard.height:
+        y_limit = gameboard.height - .001
+        x_limit = calculate_ray_x(coords, slope, gameboard.height)
+        limits.append((x_limit, y_limit))
 
-    return (ray_x_limit, ray_y_limit)
+    limits = sort_coords(coords, limits)
+
+    return limits[0][0]
 
 
 def sort_objects(coords, collidables, max_range):
@@ -235,6 +230,18 @@ def sort_objects(coords, collidables, max_range):
     collidables = sorted(collidables.items(), key=lambda x: x[1])
 
     return collidables
+
+
+def sort_coords(coords, limits):
+    cd = {}
+    for c in limits:
+        dist = round(math.sqrt(
+            ((c[0] - coords[0]) ** 2) + (
+                (-c[1] - -coords[1]) ** 2)))
+        cd[c] = dist
+    cd = sorted(cd.items(), key=lambda x: x[1])
+
+    return cd
 
 
 # Function written by Paul Draper on Stack Exchange
@@ -405,8 +412,6 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 
 
 def get_gun_ray_collision(player, gameboard):
-    exclusions = gameboard.teleporter_list
-    exclusions.append(player.shooter)
     radians = math.radians(player.shooter.heading)
     slope = calculate_slope(radians)
     ray_endpoint = get_ray_limits(radians,
@@ -419,7 +424,7 @@ def get_gun_ray_collision(player, gameboard):
         player.shooter.hitbox.position,
         gameboard,
         ray_endpoint,
-        exclusions
+        [player.shooter]
     )
 
     ray = determine_gun_collision(
