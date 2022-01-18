@@ -149,11 +149,6 @@ class client_runner:
             if len(results['players_alive']) == 1:
                 # Submission ID of player who won, otherwise it was a tie
                 winner = results['players_alive'][0].split("_")[-1]
-
-            # for result in results['players']:
-            #     if 'error' in result and result['error'] is not None:
-            #         logging.warning("Run had error")
-            #         error[client] = result['error']
         finally:
             player_sub_ids = [x["team_name"].split("_")[-1] for x in results["players"]]
             run_id = self.insert_run(

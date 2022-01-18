@@ -75,67 +75,74 @@ class Engine:
 
         # Find and load clients in
         for filename in os.listdir(CLIENT_DIRECTORY):
-            filename = filename.replace('.py', '')
-
-            # Filter out files that do not contain CLIENT_KEYWORD in their
-            # filename (located in config)
-            if CLIENT_KEYWORD.upper() not in filename.upper():
-                continue
-
-            # Filter out folders
-            if os.path.isdir(os.path.join(CLIENT_DIRECTORY, filename)):
-                continue
-
-
-            # Otherwise, instantiate the player
-            # Add players one and two
-            player = Player()
-            self.clients.append(player)
-
-            # Verify client isn't using invalid imports or opening anything
-            imports, opening = verify_code(filename + '.py')
-            if len(imports) != 0:
-                player.functional = False
-                player.error = f'Player has attempted illegal imports: {imports}'
-
-            if opening:
-                player.functional = False
-                player.error = PermissionError(
-                    f'Player is using "open" which is forbidden.')
-
-            # Attempt creation of the client object
-            obj = None
             try:
-                # Import client's code
-                im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
-                obj = im.Client()
+                filename = filename.replace('.py', '')
+
+                # Filter out files that do not contain CLIENT_KEYWORD in their
+                # filename (located in config)
+                if CLIENT_KEYWORD.upper() not in filename.upper():
+                    continue
+
+                # Filter out folders
+                if os.path.isdir(os.path.join(CLIENT_DIRECTORY, filename)):
+                    continue
+
+
+                # Otherwise, instantiate the player
+                # Add players one and two
+                player = Player()
+                self.clients.append(player)
+
+                # Verify client isn't using invalid imports or opening anything
+                imports, opening = verify_code(filename + '.py')
+                if len(imports) != 0:
+                    player.functional = False
+                    player.error = f'Player has attempted illegal imports: {imports}'
+
+                if opening:
+                    player.functional = False
+                    player.error = PermissionError(
+                        f'Player is using "open" which is forbidden.')
+
+                # Attempt creation of the client object
+                obj = None
+                try:
+                    # Import client's code
+                    im = importlib.import_module(f'{filename}', CLIENT_DIRECTORY)
+                    obj = im.Client()
+                except Exception:
+                    player.functional = False
+                    player.error = str(traceback.format_exc())
+                
+                player.code = obj
+                thr = None
+                try:
+                    # Retrieve team name
+                    thr = CommunicationThread(player.code.team_name, list(), str)
+                    thr.start()
+                    thr.join(0.01)  # Shouldn't take long to get a string
+
+                    if thr.is_alive():
+                        player.functional = False
+                        player.error = TimeoutError(
+                            'Client failed to provide a team name in time.')
+
+                    if thr.error is not None:
+                        player.functional = False
+                        player.error = thr.error
+                finally:
+                    # Note: I keep the above thread for both naming conventions to check for client errors
+                    try:
+                        if self.use_filenames:
+                            player.team_name = filename
+                            thr.retrieve_value()
+                        else:
+                            player.team_name = thr.retrieve_value()
+                    except Exception as e:
+                        player.functional = False
+                        player.error = str(e)
             except Exception:
-                player.functional = False
-                player.error = traceback.format_exc()
-            
-            player.code = obj
-            thr = None
-            try:
-                # Retrieve team name
-                thr = CommunicationThread(player.code.team_name, list(), str)
-                thr.start()
-                thr.join(0.01)  # Shouldn't take long to get a string
-
-                if thr.is_alive():
-                    player.functional = False
-                    player.error = TimeoutError(
-                        'Client failed to provide a team name in time.')
-
-                if thr.error is not None:
-                    player.functional = False
-                    player.error = thr.error
-            finally:
-                # Note: I keep the above thread for both naming conventions to check for client errors
-                if self.use_filenames:
-                    player.team_name = filename
-                    thr.retrieve_value()
-                else:
-                    player.team_name = thr.retrieve_value()
+                print(f"Bad client for {filename}")
 
         self.clients.sort(key=lambda x: x.team_name, reverse=True)
         # Verify correct number of clients have connected to start

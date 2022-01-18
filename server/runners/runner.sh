@@ -1,1 +1,1 @@
-python3 launcher.pyz run -q -fn
+python3 launcher.pyz run -fn
