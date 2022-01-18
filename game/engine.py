@@ -87,7 +87,6 @@ class Engine:
                 if os.path.isdir(os.path.join(CLIENT_DIRECTORY, filename)):
                     continue
 
-
                 # Otherwise, instantiate the player
                 # Add players one and two
                 player = Player()
@@ -113,7 +112,7 @@ class Engine:
                 except Exception:
                     player.functional = False
                     player.error = str(traceback.format_exc())
-                
+
                 player.code = obj
                 thr = None
                 try:
