@@ -112,30 +112,30 @@ class Engine:
             except Exception:
                 player.functional = False
                 player.error = traceback.format_exc()
-                
-
+            
             player.code = obj
+            thr = None
+            try:
+                # Retrieve team name
+                thr = CommunicationThread(player.code.team_name, list(), str)
+                thr.start()
+                thr.join(0.01)  # Shouldn't take long to get a string
 
-            # Retrieve team name
-            thr = CommunicationThread(player.code.team_name, list(), str)
-            thr.start()
-            thr.join(0.01)  # Shouldn't take long to get a string
+                if thr.is_alive():
+                    player.functional = False
+                    player.error = TimeoutError(
+                        'Client failed to provide a team name in time.')
 
-            if thr.is_alive():
-                player.functional = False
-                player.error = TimeoutError(
-                    'Client failed to provide a team name in time.')
-
-            if thr.error is not None:
-                player.functional = False
-                player.error = thr.error
-
-            # Note: I keep the above thread for both naming conventions to check for client errors
-            if self.use_filenames:
-                player.team_name = filename
-                thr.retrieve_value()
-            else:
-                player.team_name = thr.retrieve_value()
+                if thr.error is not None:
+                    player.functional = False
+                    player.error = thr.error
+            finally:
+                # Note: I keep the above thread for both naming conventions to check for client errors
+                if self.use_filenames:
+                    player.team_name = filename
+                    thr.retrieve_value()
+                else:
+                    player.team_name = thr.retrieve_value()
 
         self.clients.sort(key=lambda x: x.team_name, reverse=True)
         # Verify correct number of clients have connected to start
