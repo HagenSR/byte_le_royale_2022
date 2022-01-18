@@ -21,6 +21,7 @@ from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.teleporter_controller import TeleporterController
 from game.controllers.movement_controller import MovementController
+from game.controllers.grenade_controller import GrenadeController
 
 
 class MasterController(Controller):
@@ -38,6 +39,7 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
         self.loot_generation_controller = LootGenerationController()
+        self.grenade_controller = GrenadeController()
 
         self.instantiated_teleporter_controller = False
         self.teleporter_controller = None
@@ -114,6 +116,8 @@ class MasterController(Controller):
             self.teleporter_controller.handle_actions(
                 client, self.current_world_data['game_map'])
             self.interact_controller.handle_actions(
+                client, self.current_world_data["game_map"])
+            self.grenade_controller.handle_actions(
                 client, self.current_world_data["game_map"])
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:

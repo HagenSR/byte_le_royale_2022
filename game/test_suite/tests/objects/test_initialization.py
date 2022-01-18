@@ -54,7 +54,7 @@ class TestInit(
             damage=5,
             heading=1,
             speed=1)
-        self.grnObj = Grenade(heading=1, speed=1, range=10, damage=10)
+        self.grnObj = Grenade(hitbox=Hitbox(10,10,(10,10)),health=10,fuse_time=10, damage=10)
         self.consumable = Consumable(hitbox=Hitbox(
             10, 10, (10, 10)), health=10)
         self.upgrade = Upgrade(
