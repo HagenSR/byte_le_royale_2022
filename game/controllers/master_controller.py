@@ -148,19 +148,19 @@ class MasterController(Controller):
                 lambda p: p.error is None and p.shooter.health > 0, clients)]
             if len(data["players_alive"]) > 0:
                 print(f"\nGame is ending because player "
-                    f"{data['players_dead']} "
-                    f"is out of health or raised an error, player "
-                    f"{data['players_alive']} "
-                    f"wins")
+                      f"{data['players_dead']} "
+                      f"is out of health or raised an error, player "
+                      f"{data['players_alive']} "
+                      f"wins")
             else:
                 print(f"\nGame is ending both players are out of health, the game is a tie.")
         else:
             if len(data["errors"]) == 1:
                 print(f"\nGame is ending because player "
-                    f"{data['errors'][0][0]} "
-                    f"is raised an error, player "
-                    f"{data['no_errors'][0]} "
-                    f"wins")
+                      f"{data['errors'][0][0]} "
+                      f"is raised an error, player "
+                      f"{data['no_errors'][0]} "
+                      f"wins")
             else:
                 print(f"\nGame is ending both players errored")
             data["players_alive"] += data["no_errors"]
