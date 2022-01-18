@@ -141,7 +141,7 @@ class MasterController(Controller):
         data['no_errors'] = [player.team_name for player in clients if player.error is None]
         data['players_dead'] = []
         data['players_alive'] = []
-        if len(data['errors']) == 0: 
+        if len(data['errors']) == 0:
             data["players_dead"] = [player.team_name for player in filter(
                 lambda p: p.error is not None or p.shooter.health <= 0, clients)]
             data["players_alive"] = [player.team_name for player in filter(
