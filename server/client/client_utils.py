@@ -105,7 +105,7 @@ class ClientUtils:
         resp = requests.post(
             self.IP + "get_seed_from_run", json={"vid": vid, "runid": runid}, verify=self.path_to_public)
         resp.raise_for_status()
-        if resp.content is None:
+        if resp.content is None or resp.content.decode("utf-8") == "":
             print("Bad Vid and RunID combination (probably)")
         else:
             content = resp.content.decode("utf-8")
@@ -115,6 +115,20 @@ class ClientUtils:
                 fl.write(content)
             print(
                 f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
+
+    
+    def get_code_from_submission(self, vid, subid):
+        resp = requests.post(
+            self.IP + "get_code_from_submission", json={"vid": vid, "subid": subid}, verify=self.path_to_public)
+        resp.raise_for_status()
+        if resp.content is None or resp.content.decode("utf-8") == "":
+            print("Bad Vid and subid combination (probably)")
+        else:
+            content = resp.content.decode("utf-8")
+            with open(f"./code_for_submission_{subid}.py", "w") as fl:
+                fl.write(content)
+            print(
+                f"Code for submission {subid} has been written {os.path.realpath(fl.name)}")
 
     def get_longest_cell_in_cols(self, json, json_atribs):
         col_longest_length = {}

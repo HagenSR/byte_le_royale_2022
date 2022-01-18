@@ -309,6 +309,7 @@ class client_runner:
         for game in games:
             if game[0]["submission_id"] == one_id or game[1]["submission_id"] == one_id:
                 count += 1
+        breakpoint()
         self.total_number_of_games_for_one_client = count
 
 

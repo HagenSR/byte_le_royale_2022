@@ -383,10 +383,35 @@ def get_seed_from_run():
             return abort(404, description="No data to return for get_seed_from_run")
         else:
             res = cur.fetchone()["get_seed_for_run"]
-            return res
+            return res if res != None else ""
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
         app.logger.error("Exception in get_seed_from_run: %s", str(e))
         conn.reset()
         abort(500, description=str(e))
+
+@app.route("/api/get_code_from_submission", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_code_from_submission():
+    try:
+        vid = request.json["vid"]
+        subid = request.json["subid"]
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT get_file_from_submission(%s, %s)", (vid, subid))
+        app.logger.info('Returning code for subid %s for team %s at IP %s',
+                        subid, vid, request.remote_addr)
+        if cur.rowcount == 0:
+            app.logger.error(
+                'Error: No data to return for get_seed_from_run for %s', vid)
+            return abort(404, description="No data to return for get_seed_from_run")
+        else:
+            res = cur.fetchone()["get_file_from_submission"]
+            return res if res != None else ""
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_seed_from_run: %s", str(e))
+        conn.reset()
+        abort(500, description=str(e))
+

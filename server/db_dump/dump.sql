@@ -340,7 +340,7 @@ BEGIN
 RETURN QUERY
 SELECT DISTINCT run.group_run_id, run.run_id, run.run_time, run.winner, run.player_1, run.player_2 FROM run JOIN submission 
 ON run.player_1 = submission.submission_id OR run.player_2 = submission.submission_id
-WHERE run.player_1 = submissionid or run.player_2 = submissionid AND run.group_run_id = groupid;
+WHERE (run.player_1 = submissionid or run.player_2 = submissionid) AND run.group_run_id = groupid;
 end;
 $$;
 
