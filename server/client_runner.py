@@ -103,7 +103,7 @@ class client_runner:
             self.index_to_seed_id[index] = self.insert_seed_file(fldict)
 
         # then run them in paralell using their index as a unique identifier
-        res = Parallel(n_jobs=1, backend="threading")(
+        res = Parallel(n_jobs=6, backend="threading")(
             map(delayed(self.internal_runner), games, [i for i in range(self.total_number_of_games)]))
 
     def internal_runner(self, row_tuple, index):

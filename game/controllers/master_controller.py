@@ -139,8 +139,8 @@ class MasterController(Controller):
         data['players'] = list()
         data['errors'] = [(player.team_name, str(player.error)) for player in clients if player.error is not None]
         data['no_errors'] = [player.team_name for player in clients if player.error is None]
-        data['players_dead'] = [(player.team_name, str(player.error)) for player in clients if player.error is not None]
-        data['players_alive'] = [player.team_name for player in clients if player.error is None]
+        data['players_dead'] = []
+        data['players_alive'] = []
         if len(data['errors']) == 0: 
             data["players_dead"] = [player.team_name for player in filter(
                 lambda p: p.error is not None or p.shooter.health <= 0, clients)]
@@ -163,8 +163,8 @@ class MasterController(Controller):
                     f"wins")
             else:
                 print(f"\nGame is ending both players errored")
-        data["players_alive"] += data["no_errors"]
-        data["players_dead"] += [player[0][0] for player in data["errors"]]
+            data["players_alive"] += data["no_errors"]
+            data["players_dead"] += [player[0] for player in data["errors"]]
         # Determine results
         for client in clients:
             data['players'].append(client.to_json())
