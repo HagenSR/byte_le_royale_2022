@@ -14,7 +14,7 @@ from game.common.hitbox import Hitbox
 from game.config import *
 from game.controllers.master_controller import MasterController
 from game.utils.helpers import write_json_file
-from game.utils.threadBytel import Thread, CommunicationThread
+from game.utils.engine_thread import Thread, CommunicationThread
 from game.utils.validation import verify_code, verify_num_clients
 
 from tqdm import tqdm
