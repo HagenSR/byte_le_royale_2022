@@ -116,7 +116,6 @@ class ClientUtils:
             print(
                 f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
 
-    
     def get_code_from_submission(self, vid, subid):
         resp = requests.post(
             self.IP + "get_code_from_submission", json={"vid": vid, "subid": subid}, verify=self.path_to_public)
