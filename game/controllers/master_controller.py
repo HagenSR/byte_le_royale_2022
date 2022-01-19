@@ -19,6 +19,7 @@ from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
 from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
+from game.controllers.teleporter_controller import TeleporterController
 from game.controllers.movement_controller import MovementController
 
 from game.utils.collision_detection import distance_tuples
@@ -39,6 +40,9 @@ class MasterController(Controller):
         self.turn = 1
         self.shoot_controller = ShootController()
         self.loot_generation_controller = LootGenerationController()
+
+        self.instantiated_teleporter_controller = False
+        self.teleporter_controller = None
 
         self.use_controller = UseController()
         self.interact_controller = InteractController()
@@ -71,6 +75,10 @@ class MasterController(Controller):
     def interpret_current_turn_data(self, clients, world, turn):
         self.current_world_data = world
         self.seed = world["seed"][(turn % len(world['seed']))]
+
+        if not self.instantiated_teleporter_controller:
+            self.teleporter_controller = TeleporterController(self.current_world_data['game_map'])
+            self.instantiated_teleporter_controller = True
 
     # Receive a specific client and send them what they get per turn. Also
     # obfuscates necessary objects.
@@ -105,7 +113,10 @@ class MasterController(Controller):
             self.use_controller.handle_actions(client)
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
-            self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
+            self.teleporter_controller.handle_actions(
+                client, self.current_world_data['game_map'])
+            self.interact_controller.handle_actions(
+                client, self.current_world_data["game_map"])
 
         # if distance_tuples(clients[0].shooter.hitbox.position, clients[1].shooter.hitbox.position) < 50:
         #     raise ValueError("distance less than 50")
