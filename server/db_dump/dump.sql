@@ -5,7 +5,7 @@
 -- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
 -- Dumped by pg_dump version 14.1 (Ubuntu 14.1-2.pgdg20.04+1)
 
--- Started on 2022-01-17 19:56:24 CST
+-- Started on 2022-01-18 19:16:01 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1231,7 +1231,7 @@ ALTER TABLE ONLY public.run
     ADD CONSTRAINT winner_fk FOREIGN KEY (winner) REFERENCES public.submission(submission_id) ON DELETE CASCADE;
 
 
--- Completed on 2022-01-17 19:56:24 CST
+-- Completed on 2022-01-18 19:16:01 CST
 
 --
 -- PostgreSQL database dump complete
