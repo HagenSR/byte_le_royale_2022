@@ -14,12 +14,6 @@ class TestGrenade(unittest.TestCase):
         self.grnObj.fuse_time = 20
         self.assertEqual(self.grnObj.fuse_time, 20)
 
-    def test_set_get_fuse_time_invalid_low(self):
-        self.assertRaises(Exception, self.setFuse, (0))
-
-    def test_set_get_fuse_time_invalid_high(self):
-        self.assertRaises(Exception, self.setFuse, (100))
-
     def test_set_get_fuse_time_boundary_low(self):
         self.grnObj.fuse_time = GameStats.grenade_stats['min_fuse_time']
         self.assertEqual(

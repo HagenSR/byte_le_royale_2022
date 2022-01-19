@@ -101,7 +101,7 @@ class Shooter(MovingObject):
     def remove_grenade(self):
         for obj in self.__inventory['consumables']:
             if isinstance(obj, Grenade):
-                self.__inventory['consumables'][obj] = None
+                self.__inventory['consumables'][self.__inventory['consumables'].index(obj)] = None
                 return obj
         return None
 

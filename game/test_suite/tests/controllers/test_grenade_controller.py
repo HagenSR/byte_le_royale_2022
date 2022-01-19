@@ -15,14 +15,15 @@ class TestGrenadeController(unittest.TestCase):
         wall = Wall(Hitbox(100, 100, (400, 400)), 1000)
         player = Player(shooter = Shooter(0, 0, Hitbox(10, 10, (380, 450))))
         player.action.set_action(ActionType.throw_grenade)
-        grenade = Grenade(hitbox=player.shooter.hitbox.position, health=10, fuse_time=10, damage=50)
+        grenade = Grenade(hitbox=Hitbox(5,5,(player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])), health=10, fuse_time=10, damage=50)
         player.shooter.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(wall)
         game_board.partition.add_object(player.shooter)
         wall_start_health = wall.health
-        for _ in range(20):
+        for i in range(20):
+            #breakpoint()
             self.gCont.handle_actions(player, game_board)
         self.assertTrue(wall.health == wall_start_health - grenade.damage)
 
