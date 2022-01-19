@@ -17,6 +17,9 @@ class GameStats:
     # can always navigate between buildings
     corridor_width_height = 20
 
+    # The size of a plot (square)
+    plot_width_height = 140
+
     default_wall_health = 18
 
     default_door_health = 18
@@ -24,7 +27,7 @@ class GameStats:
     player_stats = {
         'starting_health': 10,
         'starting_money': 10,
-        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
+        'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
         'view_distance': 100,
         'max_distance_per_turn': 50
