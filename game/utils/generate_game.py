@@ -362,7 +362,6 @@ def generate():
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
                    # print(requests.get(fl.read().decode('utf-8')).content)
-                    print(filename)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:
