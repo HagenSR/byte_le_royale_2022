@@ -7,11 +7,11 @@ class GameStats:
     game_board_height = 500
 
     # The radius that the kill circle will shrink every tick
-    circle_shrink_distance = 1
+    circle_shrink_distance = 5
     # Damage circle does each tick
-    circle_damage = 1
+    circle_damage = 20
     # Number of turns before circle encroaches on game map
-    circle_delay = 100 * circle_shrink_distance
+    circle_delay = 25 * circle_shrink_distance
 
     # The "margin" inbetween every building plot in game map. Used so players
     # can always navigate between buildings
@@ -26,8 +26,8 @@ class GameStats:
         'starting_money': 10,
         'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
         'field_of_view': 90,
-        'view_distance': 100,
-        'max_distance_per_turn': 50
+        'view_distance': 500,
+        'max_distance_per_turn': 25
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }

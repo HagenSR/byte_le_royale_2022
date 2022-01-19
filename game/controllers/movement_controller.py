@@ -12,14 +12,15 @@ class MovementController(Controller):
         super().__init__()
         self.target_location = None
         self.space_free = False
-        self.message = "Stopped movement: {}"
 
     def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
             client.shooter.speed = client.action.speed
-
-            client.shooter.heading = client.action.heading
+            try:
+                client.shooter.heading = client.action.heading
+            except ValueError:
+                return
             # shooter object is removed from old location on game board to avoid object duplicates
             game_board.partition.remove_object(client.shooter)
             # variable for client's location prior to movement

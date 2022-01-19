@@ -21,6 +21,8 @@ from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.movement_controller import MovementController
 
+from game.utils.collision_detection import distance_tuples
+
 
 class MasterController(Controller):
     def __init__(self):
@@ -104,6 +106,9 @@ class MasterController(Controller):
             self.shop_controller.handle_actions(client)
             ReloadController.handle_actions(client)
             self.interact_controller.handle_actions(client, self.current_world_data["game_map"])
+
+        # if distance_tuples(clients[0].shooter.hitbox.position, clients[1].shooter.hitbox.position) < 50:
+        #     raise ValueError("distance less than 50")
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             print(f"\nGame is ending because player(s) "
