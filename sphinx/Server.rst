@@ -31,6 +31,7 @@ Other cool features
 3. Seed downloading!
 4. Client Downloading!
 5. SQL!
+6. ASCII table and CSV output!
 
 
 The Important commands that you need to know!
@@ -111,6 +112,12 @@ Some of the tables from the commands can be quite large. You can write these lar
 .. code-block:: python
 
     python launcher.pyz client stats -runs_for_group_run <group_id> > output.txt
+
+You can also specify csv output if desired by passing the -csv flag to the server parser. EX:
+
+.. code-block:: python
+
+    python launcher.pyz client -csv leaderboard > output.csv
 
 
 runs for group run

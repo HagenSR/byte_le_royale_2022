@@ -15,7 +15,7 @@ class Client:
             with open('vID') as f:
                 self.vid = f.read()
 
-        self.utils = ClientUtils()
+        self.utils = ClientUtils(args.csv)
         self.handle_client(args)
 
     # Determines what action the client wants to do

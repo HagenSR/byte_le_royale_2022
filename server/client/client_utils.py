@@ -5,11 +5,12 @@ import os
 
 
 class ClientUtils:
-    def __init__(self):
+    def __init__(self, csv_bool):
         urllib3.disable_warnings()
         self.IP = 'https://134.129.91.223:8000/api/'
         self.PORT = 8000
         self.path_to_public = "server/certs/cert.pem"
+        self.use_csv = csv_bool
 
     def get_team_types(self):
         resp = requests.get(self.IP + "get_team_types",
@@ -146,6 +147,37 @@ class ClientUtils:
         return rtn + "+"
 
     def to_table(self, json):
+        if self.use_csv:
+            self.to_csv_table(json)
+        else:
+            self.to_ascii_table(json)
+
+    def to_csv_table(self, json):
+        try:
+            padding = 4
+            json_atribs = json[0].keys()
+            output = ""
+            for index, key in enumerate(json_atribs):
+                output += key
+                if index != len(json_atribs) - 1:
+                    output += ","
+            output += "\n"
+            for row in json:
+                for index, col in enumerate(row):
+                    if isinstance(row[col], int):
+                        output += str(row[col])
+                    else:
+                        output += "'"+str(row[col])+"'"
+                    if index != len(row) - 1:
+                        output += ","
+                output += "\n"
+            print(output)
+        except BaseException as e:
+            print(e)
+            print(
+                "Something went wrong. Maybe there isn't data for what you're looking for")
+
+    def to_ascii_table(self, json):
         try:
             padding = 4
             json_atribs = json[0].keys()
