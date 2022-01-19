@@ -118,6 +118,7 @@ def get_teams():
 
 
 @app.route("/api/get_leaderboard", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
 def get_leaderboard():
     try:
         ell = request.json["include_inelligible"]
@@ -144,6 +145,7 @@ def get_leaderboard():
 
 
 @app.route("/api/register", methods=['POST'])
+@limiter.limit("10/hour", override_defaults=True)
 def insert_team():
     try:
         teamtype = request.form.get("type")
@@ -299,15 +301,14 @@ def get_group_runs():
         abort(500, description=str(e))
 
 
-@app.route("/api/get_team_runs_for_group_run", methods=['post'])
+@app.route("/api/get_runs_for_group_run", methods=['post'])
 @limiter.limit("5/minute", override_defaults=True)
 def get_team_runs_for_group_run():
     try:
-        vid = request.json["vid"]
         groupid = request.json["groupid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_team_runs_for_group_run(%s, %s)).*", (vid, groupid))
+        cur.execute("SELECT (get_runs_for_group(%s)).*", (groupid,))
         if cur.rowcount == 0:
             return abort(404, description="No group runs were found")
         else:
@@ -344,7 +345,7 @@ def get_runs_for_submission():
 
 
 @app.route("/api/get_file_from_submission", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@limiter.limit("1/minute", override_defaults=True)
 def get_file_from_submission():
     try:
         vid = request.json["vid"]
@@ -368,7 +369,7 @@ def get_file_from_submission():
 
 
 @app.route("/api/get_seed_from_run", methods=['post'])
-@limiter.limit("5/minute", override_defaults=True)
+@limiter.limit("1/minute", override_defaults=True)
 def get_seed_from_run():
     try:
         vid = request.json["vid"]

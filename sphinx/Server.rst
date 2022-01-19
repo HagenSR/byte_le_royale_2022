@@ -27,6 +27,7 @@ Other cool features
 
 1. HTTPS!
 2. Rate Limiting!
+    1. Note that the default rate limit is 1 / second
 3. Seed downloading!
 4. Client Downloading!
 5. SQL!
@@ -37,6 +38,8 @@ The Important commands that you need to know!
 
 Registering
 ------------
+
+**Rate Limit: 10 / hour**
 
 Registering is required to recieve your VID ( Don't share with anyone!) which in turn allows you to submit clients and view 
 team specific information. If your teamates wish to upload to the server, you'll have to send them the vID.
@@ -51,6 +54,8 @@ you will then be prompted to enter information
 submiting clients
 --------------------
 
+**Rate Limit: 1/minute**
+
 .. code-block:: python
 
     python launcher.pyz client -submit
@@ -61,6 +66,8 @@ then run against other clients to determine placing. Feel free to submit as many
 
 leaderboard
 --------------
+
+**Rate Limit: 5/minute**
 
 .. code-block:: python
 
@@ -82,6 +89,8 @@ Also note you can retrieve the leaderboard for previous group runs using
 view stats
 ------------
 
+**Rate Limit: 5/minute**
+
 .. code-block:: python
 
     python launcher.pyz client stats
@@ -93,8 +102,21 @@ runs are completed.
 Other Fun Commands!
 =====================
 
+
+Note on output
+-----------------
+
+Some of the tables from the commands can be quite large. You can write these large results to a file using the > opperator. EX:
+
+.. code-block:: python
+
+    python launcher.pyz client stats -runs_for_group_run <group_id> > output.txt
+
+
 runs for group run
 -------------------
+
+**Rate Limit: 5/minute**
 
 .. code-block:: python
 
@@ -105,6 +127,8 @@ Returns all of a team's runs for a given group run
 runs for submission
 ---------------------
 
+**Rate Limit: 5/minute**
+
 .. code-block:: python
 
     python launcher.pyz client stats -runs_for_submission <submission_id>
@@ -113,6 +137,8 @@ Returns all of the runs for a given submission
 
 get submissions
 -----------------
+
+**Rate Limit: 5/minute**
 
 .. code-block:: python
 
@@ -124,6 +150,8 @@ Returns your team's placing and total wins for each group run
 get group runs
 -----------------
 
+**Rate Limit: 5/minute**
+
 .. code-block:: python
 
     python launcher.pyz client stats -get_group_runs
@@ -132,6 +160,8 @@ Returns all of the group runs a team participated in
 
 get code for submission
 -------------------------
+
+**Rate Limit: 1/minute**
 
 .. code-block:: python
 
@@ -142,6 +172,8 @@ Returns all of the group runs a team participated in
 View score over time
 -------------------------
 
+**Rate Limit: 5/minute**
+
 .. code-block:: python
 
     python launcher.pyz client leaderboard -over_time
@@ -150,6 +182,8 @@ Returns your team's placing and total wins for each group run
 
 Get a seed
 -------------------------
+
+**Rate Limit: 1/minute**
 
 .. code-block:: python
 

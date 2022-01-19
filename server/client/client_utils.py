@@ -82,7 +82,7 @@ class ClientUtils:
 
     def get_team_runs_for_group_run(self, vid, groupid):
         resp = requests.post(
-            self.IP + "get_team_runs_for_group_run", json={"vid": vid, "groupid": groupid}, verify=self.path_to_public)
+            self.IP + "get_runs_for_group_run", json={"groupid": groupid}, verify=self.path_to_public)
         resp.raise_for_status()
         jsn = json.loads(resp.content)
         self.to_table(jsn)

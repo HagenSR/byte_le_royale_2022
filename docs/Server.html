@@ -56,6 +56,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#other-fun-commands">Other Fun Commands!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#note-on-output">Note on output</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runs-for-group-run">runs for group run</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#runs-for-submission">runs for submission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-submissions">get submissions</a></li>
@@ -115,7 +116,14 @@ before your next client is run.</p>
 <h3>Other cool features<a class="headerlink" href="#other-cool-features" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic simple">
 <li>HTTPS!</li>
-<li>Rate Limiting!</li>
+<li><dl class="first docutils">
+<dt>Rate Limiting!</dt>
+<dd><ol class="first last arabic">
+<li>Note that the default rate limit is 1 / second</li>
+</ol>
+</dd>
+</dl>
+</li>
 <li>Seed downloading!</li>
 <li>Client Downloading!</li>
 <li>SQL!</li>
@@ -126,6 +134,7 @@ before your next client is run.</p>
 <h2>The Important commands that you need to know!<a class="headerlink" href="#the-important-commands-that-you-need-to-know" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="registering">
 <h3>Registering<a class="headerlink" href="#registering" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 10 / hour</strong></p>
 <p>Registering is required to recieve your VID ( Don’t share with anyone!) which in turn allows you to submit clients and view
 team specific information. If your teamates wish to upload to the server, you’ll have to send them the vID.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="o">-</span><span class="n">register</span>
@@ -135,6 +144,7 @@ team specific information. If your teamates wish to upload to the server, you’
 </div>
 <div class="section" id="submiting-clients">
 <h3>submiting clients<a class="headerlink" href="#submiting-clients" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="o">-</span><span class="n">submit</span>
 </pre></div>
 </div>
@@ -144,6 +154,7 @@ then run against other clients to determine placing. Feel free to submit as many
 </div>
 <div class="section" id="leaderboard">
 <h3>leaderboard<a class="headerlink" href="#leaderboard" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">leaderboard</span>
 </pre></div>
 </div>
@@ -158,6 +169,7 @@ then run against other clients to determine placing. Feel free to submit as many
 </div>
 <div class="section" id="view-stats">
 <h3>view stats<a class="headerlink" href="#view-stats" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span>
 </pre></div>
 </div>
@@ -167,8 +179,16 @@ runs are completed.</p>
 </div>
 <div class="section" id="other-fun-commands">
 <h2>Other Fun Commands!<a class="headerlink" href="#other-fun-commands" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="note-on-output">
+<h3>Note on output<a class="headerlink" href="#note-on-output" title="Permalink to this headline">¶</a></h3>
+<p>Some of the tables from the commands can be quite large. You can write these large results to a file using the &gt; opperator. EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_group_run</span> <span class="o">&lt;</span><span class="n">group_id</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="runs-for-group-run">
 <h3>runs for group run<a class="headerlink" href="#runs-for-group-run" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_group_run</span> <span class="o">&lt;</span><span class="n">group_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -176,6 +196,7 @@ runs are completed.</p>
 </div>
 <div class="section" id="runs-for-submission">
 <h3>runs for submission<a class="headerlink" href="#runs-for-submission" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -183,6 +204,7 @@ runs are completed.</p>
 </div>
 <div class="section" id="get-submissions">
 <h3>get submissions<a class="headerlink" href="#get-submissions" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_submissions</span>
 </pre></div>
 </div>
@@ -191,6 +213,7 @@ Returns your team’s placing and total wins for each group run</p>
 </div>
 <div class="section" id="get-group-runs">
 <h3>get group runs<a class="headerlink" href="#get-group-runs" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_group_runs</span>
 </pre></div>
 </div>
@@ -198,6 +221,7 @@ Returns your team’s placing and total wins for each group run</p>
 </div>
 <div class="section" id="get-code-for-submission">
 <h3>get code for submission<a class="headerlink" href="#get-code-for-submission" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_code_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
@@ -205,6 +229,7 @@ Returns your team’s placing and total wins for each group run</p>
 </div>
 <div class="section" id="view-score-over-time">
 <h3>View score over time<a class="headerlink" href="#view-score-over-time" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">leaderboard</span> <span class="o">-</span><span class="n">over_time</span>
 </pre></div>
 </div>
@@ -212,6 +237,7 @@ Returns your team’s placing and total wins for each group run</p>
 </div>
 <div class="section" id="get-a-seed">
 <h3>Get a seed<a class="headerlink" href="#get-a-seed" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">get_seed</span> <span class="o">-</span><span class="n">run_id</span> <span class="o">&lt;</span><span class="n">run_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
