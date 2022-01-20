@@ -201,6 +201,51 @@ possibilities in a PvE competition!
 
 
 
+Client Runner
+===============
+
+After your client has been uploaded to the server, it will be periodically ran against other clients to determine who has the best client.
+This is done by the Client Runner, Which has the following flow:
+
+1. If there are more than two clients, the program runs
+2. Four seeds are generated 
+3. Each seed is uploaded to the server
+4. Every team plays every other team on each seed twice, with one client going first each time
+5. If the games are interupted by an error, all results will be deleted.
+    1. Note that if a client throws an error, that client loses and the results are still valid
+    2. It is also possible for clients to tie by dieing on the same turn
+6. The logs for the first winning game for each team are saved, and then played on the visualizer\
+7. Process ends, waits a bit, and then repeats
+
+The deterministic behavior of the game has been confirmed. IE if every team uploads the same client, they all tie with the same number of wins.
+
+Visualizer
+===========
+
+To allow participants to have an idea of what stratagies teams are persuing, Logs from the client runner will be played on the twitch stream.
+It follows the following flow:
+
+1. Visualizer checks if there are new game logs to played
+2. If so, the latest logs are played
+3. The visualizer waits a bit
+4. Process repeats.
+
+This does mean that some logs may never be played if playing all of the logs takes too long for the visualizer. It may also be prudent for the Dev team to 
+restart the program so the most recent logs are played.
+
+
+Database Schema
+=================
+
+If you're confused about the schema of the database, the below ERD diagram is provided. Note that all foriegn keys have cascading deletes.
+(It's a bit ugly, but this is what the auto format likes and I can't do it better)
+
+.. image:: _static/imgs/ERD.png
+  :width: 400
+  :alt: ERD
+
+
+
 
 
 

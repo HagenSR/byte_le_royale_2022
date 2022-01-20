@@ -66,6 +66,9 @@
 <li class="toctree-l3"><a class="reference internal" href="#get-a-seed">Get a seed</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#client-runner">Client Runner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualizer">Visualizer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database-schema">Database Schema</a></li>
 </ul>
 </li>
 </ul>
@@ -127,6 +130,7 @@ before your next client is run.</p>
 <li>Seed downloading!</li>
 <li>Client Downloading!</li>
 <li>SQL!</li>
+<li>ASCII table and CSV output!</li>
 </ol>
 </div>
 </div>
@@ -183,6 +187,10 @@ runs are completed.</p>
 <h3>Note on output<a class="headerlink" href="#note-on-output" title="Permalink to this headline">¶</a></h3>
 <p>Some of the tables from the commands can be quite large. You can write these large results to a file using the &gt; opperator. EX:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_group_run</span> <span class="o">&lt;</span><span class="n">group_id</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>You can also specify csv output if desired by passing the -csv flag to the server parser. EX:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="o">-</span><span class="n">csv</span> <span class="n">leaderboard</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">csv</span>
 </pre></div>
 </div>
 </div>
@@ -244,6 +252,48 @@ Returns your team’s placing and total wins for each group run</p>
 <p>Downloads a given seed for a run. Not very helpful for this year’s PvP competition, but you can imagine the
 possibilities in a PvE competition!</p>
 </div>
+</div>
+<div class="section" id="client-runner">
+<h2>Client Runner<a class="headerlink" href="#client-runner" title="Permalink to this headline">¶</a></h2>
+<p>After your client has been uploaded to the server, it will be periodically ran against other clients to determine who has the best client.
+This is done by the Client Runner, Which has the following flow:</p>
+<ol class="arabic simple">
+<li>If there are more than two clients, the program runs</li>
+<li>Four seeds are generated</li>
+<li>Each seed is uploaded to the server</li>
+<li>Every team plays every other team on each seed twice, with one client going first each time</li>
+<li><dl class="first docutils">
+<dt>If the games are interupted by an error, all results will be deleted.</dt>
+<dd><ol class="first last arabic">
+<li>Note that if a client throws an error, that client loses and the results are still valid</li>
+<li>It is also possible for clients to tie by dieing on the same turn</li>
+</ol>
+</dd>
+</dl>
+</li>
+<li>The logs for the first winning game for each team are saved, and then played on the visualizer</li>
+<li>Process ends, waits a bit, and then repeats</li>
+</ol>
+<p>The deterministic behavior of the game has been confirmed. IE if every team uploads the same client, they all tie with the same number of wins.</p>
+</div>
+<div class="section" id="visualizer">
+<h2>Visualizer<a class="headerlink" href="#visualizer" title="Permalink to this headline">¶</a></h2>
+<p>To allow participants to have an idea of what stratagies teams are persuing, Logs from the client runner will be played on the twitch stream.
+It follows the following flow:</p>
+<ol class="arabic simple">
+<li>Visualizer checks if there are new game logs to played</li>
+<li>If so, the latest logs are played</li>
+<li>The visualizer waits a bit</li>
+<li>Process repeats.</li>
+</ol>
+<p>This does mean that some logs may never be played if playing all of the logs takes too long for the visualizer. It may also be prudent for the Dev team to
+restart the program so the most recent logs are played.</p>
+</div>
+<div class="section" id="database-schema">
+<h2>Database Schema<a class="headerlink" href="#database-schema" title="Permalink to this headline">¶</a></h2>
+<p>If you’re confused about the schema of the database, the below ERD diagram is provided. Note that all foriegn keys have cascading deletes.
+(It’s a bit ugly, but this is what the auto format likes and I can’t do it better)</p>
+<a class="reference internal image-reference" href="_images/ERD.png"><img alt="ERD" src="_images/ERD.png" style="width: 400px;" /></a>
 </div>
 </div>
 

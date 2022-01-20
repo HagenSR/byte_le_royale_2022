@@ -37,7 +37,7 @@ class visualizer_runner:
                     self.group_id = group_id
                     self.get_latest_log_files()
                 self.visualizer_loop()
-                time.sleep(15)
+                time.sleep(30)
         except (KeyboardInterrupt, Exception) as e:
             print("Ending visualizer due to {0}".format(e))
         finally:
