@@ -48,10 +48,10 @@ if __name__ == '__main__':
     # Client parser
     client_parser = spar.add_parser("client", aliases=['s', 'c'], help='run the client for the byte-le royale server')
 
-    client_parser.add_argument( "-csv",
-        help='Use csv output instead of the ascii table output (if applicable)',
-        default=False,
-        action='store_true')
+    client_parser.add_argument("-csv",
+                               help='Use csv output instead of the ascii table output (if applicable)',
+                               default=False,
+                               action='store_true')
 
     # subparser group
     client_sub_group = client_parser.add_subparsers(title="client_subparsers", dest='subparse')

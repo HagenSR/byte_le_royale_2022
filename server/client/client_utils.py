@@ -167,7 +167,7 @@ class ClientUtils:
                     if isinstance(row[col], int):
                         output += str(row[col])
                     else:
-                        output += "'"+str(row[col])+"'"
+                        output += "'" + str(row[col]) + "'"
                     if index != len(row) - 1:
                         output += ","
                 output += "\n"
