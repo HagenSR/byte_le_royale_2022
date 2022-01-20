@@ -44,27 +44,15 @@ def intersect_circle(center, radius, hitbox):
         y1 = edge[0][1]
         y2 = edge[1][1]
 
-        # check for edge being vertical
-        if x1 == x2:
-            xi = x1
-            yi = y3
-        # check for edge being horizontal
-        elif y1 == y2:
-            xi = x3
-            yi = y1
-        else:
-            # calculate x coord of the intercept of the edge and the radius perpendicular to the edge
-            # numerator
-            xin = (y3 * (x2 - x1) - ((x2 - x1) ** 2 / y1 - y2)
-                   * x3 - (x1 * y2 - x2 * y1))
-            # denominator
-            xid = ((y1 - y2) - ((x2 - x1) ** 2 / (y1 - y2)))
-            xi = xin / xid
+        b = distance(x1, y1, x3, y3)
+        d = distance(x3, y3, x2, y2)
+        ac = distance(x1, y1, x2, y2)
+        a = (b**2 - d**2) / (2 * ac) + ac / 2
 
-            # calculate y coord of the intercept of the edge and the radius
-            # perpendicular to the edge
-            yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                y3 - ((x2 - x1) / (y1 - y2)) * xi
+        angle = math.acos((b**2 + ac**2 - d**2) / (2 * b * ac))
+
+        xi = x1 + math.cos(angle) * a
+        yi = y1 + math.sin(angle) * a
 
         # calculate length of perpendicular line segment from radius to the
         # edge
@@ -76,7 +64,7 @@ def intersect_circle(center, radius, hitbox):
         # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
         # lines of the arc
         if (seg_len < radius and ((distance(x1, y1, x3, y3) < radius or distance(
-                x2, y2, x3, y3) < radius) or x1 <= xi <= x2 and y1 <= yi <= y2)):
+                x2, y2, x3, y3) < radius) or (x1 <= xi <= x2 and y1 <= yi <= y2))):
             return True
 
     return False

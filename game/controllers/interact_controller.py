@@ -34,7 +34,6 @@ class InteractController(Controller):
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_item(self, client, world, item):
-        slot_type = None
         if isinstance(item, Upgrade):
             slot_type = 'upgrades'
         else:
