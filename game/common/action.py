@@ -16,8 +16,6 @@ class Action:
         self.heading = 0
         self.speed = 0
 
-        self.message = ""
-
     @property
     def heading(self):
         return self.__heading
