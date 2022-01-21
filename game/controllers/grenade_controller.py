@@ -44,10 +44,10 @@ class GrenadeController(Controller):
             self.decrement_fuse(game_board)
 
     def grenade_boom_boom(self, game_board, grenade):
-        #breakpoint()
+        breakpoint()
         grenade_boom_box = Hitbox(self.blast_radius, self.blast_radius,
                                   (grenade.hitbox.position[0] - (self.blast_radius // 2),
-                                   grenade.hitbox.position[1] - (self.blast_radius//2)))
+                                   grenade.hitbox.position[1] - (self.blast_radius // 2)))
         if grenade_boom_box.position[0] < 0:
             grenade_boom_box.position = (0, grenade_boom_box.position[1])
         if grenade_boom_box.position[1] < 0:
@@ -57,12 +57,12 @@ class GrenadeController(Controller):
         if grenade_boom_box.position[1] > GameStats.game_board_height:
             grenade_boom_box.position = (game_board.partition[0], 500)
         #breakpoint()
-        collisions = []
-        while game_board.partition.find_object_hitbox(grenade_boom_box) is not False:
-            collisions.append(game_board.partition.find_object_hitbox(grenade_boom_box, collisions))
+        collisions = game_board.partition.find_all_object_collisions(grenade_boom_box)
+        #breakpoint()
+        if collisions is False:
+            return None
         for object in collisions:
-            if check_collision(object.hitbox, grenade.hitbox):
-                object.health -= grenade.damage
+            object.health -= grenade.damage
 
     def decrement_fuse(self, game_board):
         for grenade in self.grenades_on_fuse:

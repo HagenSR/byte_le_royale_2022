@@ -123,6 +123,22 @@ class PartitionGrid:
                     return obj
         return False
 
+    def find_all_object_collisions(self, hitbox : Hitbox) -> bool:
+        """Returns all objects if there is a collision with the given hitbox, or false otherwise"""
+        if not isinstance(hitbox, Hitbox):
+            raise ValueError("Hitbox to check must be of type Hitbox")
+        collision_list = []
+        for partition in self.check_overlap(hitbox):
+            breakpoint()
+            for obj in self.__matrix[partition[0]][partition[1]]:
+                #breakpoint()
+                if collision_detection.check_collision(obj.hitbox, hitbox):
+                    collision_list.append(obj)
+        #breakpoint()
+        if len(collision_list) == 0:
+            return False
+        return collision_list
+
     def find_object_object(self, given_obj: MapObject) -> bool:
         """Returns object if there is an object that collides with the given object, false otherwise"""
         if not isinstance(given_obj, MapObject):
