@@ -37,6 +37,7 @@ class MapObject(GameObject):
 
     def __str__(self):
         return f"""
+             ObjectType: {type(self)}
              Health: {self.health}
              Hitbox: {self.hitbox.__str__()}
              Collidable: {self.collidable}

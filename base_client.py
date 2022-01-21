@@ -24,23 +24,36 @@ class Client(UserClient):
         Allows the team to set a team name.
         :return: Your team name
         """
-        return 'Awesome Example Client'
+        return 'Roomba Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, player: Shooter) -> None:
+    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, shooter: Shooter) -> None:
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
         :param turn:        The current turn of the game.
         :param actions:     This is the actions object that you use to declare your intended actions.
         :param world:       Generic world information
-        :param player:      This is your in-game character object
+        :param shooter:      This is your in-game character object
         """
+        print()
         game_board = world["game_map"]
-        angle = angle_to_point(player, game_board.center)
+        angle = angle_to_point(shooter, game_board.center)
+        mappy = partition_grid.get_all_objects()
+        shooter_position = (shooter.hitbox.position[0] + math.cos(math.radians(shooter.heading)),
+                            shooter.hitbox.position[1] + math.sin(math.radians(shooter.heading)))
+        object_in_front = partition_grid.find_object_coordinates(shooter_position[0], shooter_position[1])
+        if self.prev_location != shooter.hitbox.middle:
+            actions.set_move(int(angle), shooter.max_speed)
+            self.prev_location = shooter.hitbox.middle
+        elif object_in_front or 0 <= shooter_position[0] <= 500 or 0 <= shooter_position[1] <= 500 \
+                and self.prev_location[0] != game_board.center:
+            actions.set_move((shooter.heading + 90) % 360, shooter.max_speed)
+        # if their is another player, shoot at it
+        shooters = list(filter(lambda obj: obj.object_type == ObjectType.shooter, mappy))
+        print(shooters)
+        if len(shooters) > 0:
+            actions.set_shoot(round(angle_to_point(shooter, shooters[0].hitbox.middle)))
+            print('shot')
 
-        if self.prev_location != player.hitbox.position:
-            actions.set_move(int(angle), player.max_speed)
-            self.prev_location = player.hitbox.position
-        else:
-            actions.set_shoot(player.heading)
+        print(shooter.hitbox.position)

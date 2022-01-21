@@ -1,4 +1,5 @@
 import math
+from copy import deepcopy
 
 from game.common.door import Door
 from game.common.enums import ObjectType
@@ -84,12 +85,20 @@ class PartitionGrid:
         for obj in object_list:
             self.add_object(obj)
 
+    def get_all_objects(self):
+        """get all objects in the map"""
+        objs = {}
+        matrix = deepcopy(self.__matrix)
+        for row in matrix:
+            for column in row:
+                for item in column:
+                    objs[item.id] = item
+
+        return objs.values()
+
     def get_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
-
-    def get_partition_objects_index(self, x, y):
-        return self.__matrix[x][y]
 
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
@@ -189,7 +198,8 @@ class PartitionGrid:
                         if not collision_detection.intersect_circle(
                                 client_shooter_xy,
                                 client_view_distance,
-                                obj.hitbox):
+                                obj.hitbox)\
+                                and (isinstance(obj, MovingObject) or isinstance(obj, Item)):
                             self.remove_object(obj)
 
     def to_json(self):
