@@ -24,3 +24,15 @@ class TestIntersectCircle(unittest.TestCase):
     def test_on_corner(self):
         hitbox = Hitbox(2, 2, (12, 7))
         self.assertTrue(intersect_circle(self.center, self.radius, hitbox))
+
+    def test_outside_circle_corner(self):
+        hitbox = Hitbox(2, 2, (6, 5))
+        self.assertFalse(intersect_circle(self.center, self.radius, hitbox))
+
+    def test_outside_circle_lower_corner(self):
+        hitbox = Hitbox(2, 2, (5, 6))
+        self.assertFalse(intersect_circle(self.center, self.radius, hitbox))
+
+    def test_edge_slightly_up(self):
+        hitbox = Hitbox(2, 2, (5, 8))
+        self.assertFalse(intersect_circle(self.center, self.radius, hitbox))
