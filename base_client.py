@@ -62,5 +62,3 @@ class Client(UserClient):
         if len(shooters) > 0:
             actions.set_shoot(round(angle_to_point(shooter, shooters[0].hitbox.middle)))
             print('shot')
-
-        print(shooter.hitbox.middle)
