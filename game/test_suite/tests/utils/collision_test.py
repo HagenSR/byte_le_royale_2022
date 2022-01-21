@@ -78,5 +78,6 @@ class TestCollision(unittest.TestCase):
         self.hitTwo.width = 20
         self.assertFalse(check_collision(self.hitOne, self.hitTwo))
 
+
 if __name__ == '__main__':
     unittest.main
