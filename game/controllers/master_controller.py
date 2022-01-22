@@ -13,7 +13,7 @@ from game.common.player import Player
 import game.config as config
 from game.controllers.shop_controller import ShopController
 from game.controllers.use_controller import UseController
-from game.utils.threadBytel import CommunicationThread
+from game.utils.engine_thread import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController

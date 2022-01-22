@@ -32,6 +32,7 @@ __all__ = [
     'TestInit',
     'TestHitboxObject',
     'TestCollision',
+    'TestIntersectCircle',
     'TestShootController',
     'TestShopController',
     'TestKillBoundary',
@@ -44,3 +45,5 @@ __all__ = [
     'TestInteractController',
     'TestGrenadeController'
 ]
+
+from game.test_suite.tests.utils.test_intersect_circle import TestIntersectCircle

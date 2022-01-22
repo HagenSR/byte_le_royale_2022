@@ -1,4 +1,5 @@
 import math
+from copy import deepcopy
 
 from game.common.door import Door
 from game.common.enums import ObjectType
@@ -53,23 +54,23 @@ class PartitionGrid:
 
     def check_overlap(self, hitbox: Hitbox):
         partitions = []
-        top_left_row = self.find_row(hitbox.top_left[1])
-        top_left_column = self.find_column(hitbox.top_left[0])
-        top_right_row = self.find_row(hitbox.top_right[1])
-        top_right_column = self.find_column(hitbox.top_right[0])
-        bottom_right_row = self.find_row(hitbox.bottom_right[1])
-        bottom_right_column = self.find_column(hitbox.bottom_right[0])
-        bottom_left_row = self.find_row(hitbox.bottom_left[1])
-        bottom_left_column = self.find_column(hitbox.bottom_left[0])
-        partitions.append((top_left_row, top_left_column))
-        if top_left_row != top_right_row and top_left_column != top_right_column:
-            partitions.append((top_right_row, top_right_column))
-        if top_right_row != bottom_right_row and top_right_column != bottom_right_column:
-            partitions.append((bottom_right_row, bottom_right_column))
-        if top_left_row != bottom_left_row and top_left_column != bottom_left_column:
-            partitions.append((bottom_left_row, bottom_left_column))
-        partitions = list(filter(lambda partition: 0 <= partition[0] < self.get_partitions_wide(
-        ) and 0 <= partition[1] < self.get_partitions_tall(), partitions))
+        # from the minimum x value to the maximum x value of the partition,
+        # check if their is a new partition
+        for x in range(min([int(hitbox.top_left[0]), int(hitbox.bottom_left[0])]),
+                       max([int(hitbox.top_right[0]), int(hitbox.bottom_right[0])]),
+                       min(self.partition_width, hitbox.width)):
+            # do the same for the y
+            # 3rd argument in range ensures the end is checked if the hitbox is less wide than the width of a partition
+            for y in range(min([int(hitbox.top_left[1]), int(hitbox.top_right[1])]),
+                           max([int(hitbox.bottom_left[1]), int(hitbox.bottom_right[1])]),
+                           min(self.partition_height, hitbox.height)):
+                partition = (self.find_row(y), self.find_column(x))
+                # make sure the partition isn't already included in the list
+                if partition not in partitions:
+                    partitions.append(partition)
+
+        partitions = list(filter(lambda part: 0 <= part[0] < self.get_partitions_wide(
+        ) and 0 <= part[1] < self.get_partitions_tall(), partitions))
         return partitions
 
     def add_object(self, obj: MapObject):
@@ -84,12 +85,20 @@ class PartitionGrid:
         for obj in object_list:
             self.add_object(obj)
 
+    def get_all_objects(self):
+        """get all objects in the map"""
+        objs = {}
+        matrix = deepcopy(self.__matrix)
+        for row in matrix:
+            for column in row:
+                for item in column:
+                    objs[item.id] = item
+
+        return objs.values()
+
     def get_partition_objects(self, x: float, y: float):
         """Returns objects that are in the same partition as the x, y coordinates"""
         return self.__matrix[self.find_row(y)][self.find_column(x)]
-
-    def get_partition_objects_index(self, x, y):
-        return self.__matrix[x][y]
 
     def get_partition_hitbox(self, x: float, y: float):
         """Returns hitbox of a partition at the x, y coordinates"""
@@ -173,19 +182,8 @@ class PartitionGrid:
                 self.remove_object(obj)
 
     def obfuscate(self, client):
-        # get center of client hitbox for origin of view arc
-        client_shooter_xy = (
-            client.shooter.hitbox.top_left[0] +
-            client.shooter.hitbox.top_right[0] /
-            2,
-            client.shooter.hitbox.top_left[1] +
-            client.shooter.hitbox.bottom_left[1] /
-            2)
-        client_view_distance = client.shooter.view_distance
-
         # Check all partitions, if a partition isn't in view, obfuscate it
         # if it is in view, remove only objects that aren't visible
-
         for x in range(0, GameStats.game_board_width, self.partition_width):
             for y in range(
                     0,
@@ -194,8 +192,8 @@ class PartitionGrid:
                 partition = self.get_partition_hitbox(x, y)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
-                        client_shooter_xy,
-                        client_view_distance,
+                        client.shooter.hitbox.middle,
+                        client.shooter.view_distance,
                         partition):
                     self.obfuscate_partition(x, y)
                 else:
@@ -203,9 +201,10 @@ class PartitionGrid:
                     # see if it's in view, remove it if it isn't
                     for obj in self.get_partition_objects(x, y):
                         if not collision_detection.intersect_circle(
-                                client_shooter_xy,
-                                client_view_distance,
-                                obj.hitbox):
+                                client.shooter.hitbox.middle,
+                                client.shooter.view_distance,
+                                obj.hitbox)\
+                                and (isinstance(obj, MovingObject) or isinstance(obj, Item)):
                             self.remove_object(obj)
 
     def to_json(self):
@@ -223,7 +222,6 @@ class PartitionGrid:
         self.__matrix = [
             [
                 self.from_json_helper(column)
-                # [obj.from_json() if "from_json" in dir(obj) else obj for obj in column]
                 for column in row
             ]
             for row in data['partition_grid']
