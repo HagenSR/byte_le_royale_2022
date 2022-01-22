@@ -85,7 +85,7 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        partition_grid = self.current_world_data["game_map"].partition
+        partition_grid = deepcopy(self.current_world_data["game_map"].partition)
 
         # Obfuscate data in objects that that player should not be able to see
         partition_grid.obfuscate(client)
