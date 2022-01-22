@@ -14,9 +14,17 @@ class TestGrenadeController(unittest.TestCase):
 
     def test_grenade_damages_object(self):
         wall = Wall(Hitbox(100, 100, (399, 399)), 1000)
-        player = Player(shooter = Shooter(0, 0, Hitbox(10, 10, (380, 450))))
+        player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
         player.action.set_action(ActionType.throw_grenade)
-        grenade = Grenade(hitbox=Hitbox(5,5,(player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])), health=10, fuse_time=10, damage=50)
+        grenade = Grenade(
+            hitbox=Hitbox(
+                5,
+                5,
+                (player.shooter.hitbox.position[0],
+                 player.shooter.hitbox.position[1])),
+            health=10,
+            fuse_time=10,
+            damage=50)
         player.shooter.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
@@ -44,7 +52,7 @@ class TestGrenadeController(unittest.TestCase):
         self.assertEqual(wall.health, wall_start_health)
 
     def test_no_health_object(self):
-        money = Money(Hitbox(100, 100, (399, 399)), health = None)
+        money = Money(Hitbox(100, 100, (399, 399)), health=None)
         player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
@@ -74,7 +82,7 @@ class TestGrenadeController(unittest.TestCase):
         self.assertEqual(player.shooter.health, start_health)
 
     def test_throw_beyond_map(self):
-        player = Player(shooter=Shooter(0,0, Hitbox(10,10, (490, 490))))
+        player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (490, 490))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
                           health=10, fuse_time=10, damage=5)
@@ -86,6 +94,7 @@ class TestGrenadeController(unittest.TestCase):
         for i in range(20):
             self.gCont.handle_actions(player, game_board)
         self.assertEqual(player.shooter.health, start_health - grenade.damage)
+
 
 if __name__ == '__main__':
     unittest.main()

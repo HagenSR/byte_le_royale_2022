@@ -116,7 +116,6 @@ class Shooter(MovingObject):
         else:
             raise Exception("Tried to set a grenade distance greater than the max of 200 or below 0")
 
-
     def remove_from_inventory(self, obj):
         """Remove object from inventory"""
         for slot_type in self.__inventory:
