@@ -3,6 +3,7 @@ from game.common.enums import *
 from game.common.moving.damaging.grenade import Grenade
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
+from game.common.moving.shooter import Shooter
 import math
 
 
@@ -71,6 +72,8 @@ class GrenadeController(Controller):
             if object.health is None:
                 continue
             object.health -= grenade.damage
+            if object.health <= 0 and not isinstance(object, Shooter):
+                game_board.partition.remove_object(object)
 
     def decrement_fuse(self, game_board):
         for grenade in self.grenades_on_fuse:

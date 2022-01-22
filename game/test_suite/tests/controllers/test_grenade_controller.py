@@ -95,6 +95,28 @@ class TestGrenadeController(unittest.TestCase):
             self.gCont.handle_actions(player, game_board)
         self.assertEqual(player.shooter.health, start_health - grenade.damage)
 
+    def test_destroy_wall(self):
+        wall = Wall(Hitbox(100, 100, (399, 399)), 10)
+        player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
+        player.action.set_action(ActionType.throw_grenade)
+        grenade = Grenade(
+            hitbox=Hitbox(
+                5,
+                5,
+                (player.shooter.hitbox.position[0],
+                 player.shooter.hitbox.position[1])),
+            health=10,
+            fuse_time=10,
+            damage=50)
+        player.shooter.grenade_distance = 50
+        player.shooter.append_inventory(grenade)
+        game_board = GameBoard()
+        game_board.partition.add_object(wall)
+        game_board.partition.add_object(player.shooter)
+        for i in range(20):
+            self.gCont.handle_actions(player, game_board)
+        self.assertNotIn(wall, game_board.partition.get_all_objects())
+
 
 if __name__ == '__main__':
     unittest.main()
