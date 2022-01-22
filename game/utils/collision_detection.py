@@ -1,4 +1,4 @@
-import math
+import numpy as np
 
 
 def check_collision(hitbox_one, hitbox_two):
@@ -6,18 +6,6 @@ def check_collision(hitbox_one, hitbox_two):
             hitbox_one.top_right[0] > hitbox_two.top_left[0] and
             hitbox_one.top_left[1] < hitbox_two.bottom_left[1] and
             hitbox_one.bottom_right[1] > hitbox_two.top_right[1])
-
-
-def arc_intersect_rect(center, radius, arc_len_degree, hitbox, heading):
-    return point_in_hitbox(
-        center[0],
-        center[1],
-        hitbox) or intersect_arc(
-        center,
-        radius,
-        hitbox,
-        heading,
-        arc_len_degree)
 
 
 def point_in_hitbox(x, y, hitbox):
@@ -44,39 +32,35 @@ def intersect_circle(center, radius, hitbox):
         y1 = edge[0][1]
         y2 = edge[1][1]
 
-        # check for edge being vertical
-        if x1 == x2:
-            xi = x1
-            yi = y3
-        # check for edge being horizontal
-        elif y1 == y2:
-            xi = x3
-            yi = y1
+        # setup vectors for a, b on line L
+        a = np.array([x1, y1])
+        b = np.array([x2, y2])
+        # direction vector m
+        m = b - a
+        # independent point p
+        p = np.array([x3, y3])
+
+        # running parameter t at the orthogonal intersection t0
+        t0 = m.dot(p - a) / m.dot(m)
+
+        # intersection point
+        intersect_pnt = a + t0 * m
+
+        # find distance d accounting for line segment
+        if t0 <= 0:
+            d = p - a
+        elif 0 < t0 < 1:
+            d = p - (a + t0 * m)
         else:
-            # calculate x coord of the intercept of the edge and the radius perpendicular to the edge
-            # numerator
-            xin = (y3 * (x2 - x1) - ((x2 - x1) ** 2 / y1 - y2)
-                   * x3 - (x1 * y2 - x2 * y1))
-            # denominator
-            xid = ((y1 - y2) - ((x2 - x1) ** 2 / (y1 - y2)))
-            xi = xin / xid
-
-            # calculate y coord of the intercept of the edge and the radius
-            # perpendicular to the edge
-            yi = ((x2 - x1) / (y1 - y2)) * x3 - \
-                y3 - ((x2 - x1) / (y1 - y2)) * xi
-
-        # calculate length of perpendicular line segment from radius to the
-        # edge
-        seg_len = distance(xi, yi, x3, y3)
+            d = p - b
+        seg_len = np.linalg.norm(d)
 
         # if the line segment from the radius perpendicular to the edge is less than the total length of the radius,
         # the rectangle intercepts with the rectangle
         # need to also check that the intersect point is actually between the two endpoints of the edge
         # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
         # lines of the arc
-        if (seg_len < radius and ((distance(x1, y1, x3, y3) < radius or distance(
-                x2, y2, x3, y3) < radius) or x1 <= xi <= x2 and y1 <= yi <= y2)):
+        if seg_len < radius:
             return True
 
     return False
@@ -88,88 +72,6 @@ def distance(x1, y1, x2, y2):
 
 def distance_tuples(coord_tuple1, coord_tuple2):
     return distance(coord_tuple1[0], coord_tuple1[1], coord_tuple2[0], coord_tuple2[1])
-
-
-def intersect_arc(center, radius, arc_len_deg, hitbox, heading):
-    # This method checks intersection with an arc
-    # However, for simplification it cuts the chord off and assumes it's a
-    # triangle instead.
-
-    # define left most point of arc
-    a1 = (
-        radius *
-        math.cos(
-            math.radians(
-                heading -
-                arc_len_deg /
-                2)) +
-        center[0],
-        radius *
-        math.sin(
-            math.radians(
-                heading -
-                arc_len_deg /
-                2)) +
-        center[1])
-    # define right most point of arc
-    a2 = (
-        radius *
-        math.cos(
-            math.radians(
-                heading +
-                arc_len_deg /
-                2)) +
-        center[0],
-        radius *
-        math.sin(
-            math.radians(
-                heading +
-                arc_len_deg /
-                2)) +
-        center[1])
-    # define left half of arc
-    arc1 = [
-        center,
-        (radius * math.cos(math.radians(heading)) + center[0],
-         radius * math.sin(math.radians(heading)) + center[1]),
-        a1
-    ]
-    # define right half of arc
-    arc2 = [
-        center,
-        (radius * math.cos(math.radians(heading)) + center[0],
-         radius * math.sin(math.radians(heading)) + center[1]),
-        a2
-    ]
-    arcs = [arc1, arc2]
-
-    for arc in arcs:
-        dilation = set()
-        r = hitbox.bottom_right
-        rect = [
-            hitbox.top_left,
-            hitbox.top_right,
-            hitbox.bottom_left,
-            hitbox.bottom_right]
-        for pa in arc:
-            for pr in rect:
-                dilation.add((pa[0] + pr[0], pa[1] + pr[1]))
-        r_polar = (
-            distance(r[0], r[1], center[0], center[1]),
-            math.degrees(math.atan(
-                math.fabs(center[1] - r[0]) / math.fabs(center[0] - r[0])
-            ))
-        )
-        # print('START')
-        # print(is_point_in_path(r[0], r[1], list(dilation)))
-        # print(r_polar[0] < radius)
-        # print(heading -
-        #       arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2)
-        if is_point_in_path(r[0], r[1], list(dilation)) and r_polar[0] < radius and heading - \
-                arc_len_deg / 2 < r_polar[1] < heading + arc_len_deg / 2:
-            # to do something is screwy with this polar coord checking
-            return True
-    return False
 
 
 def is_point_in_path(x: int, y: int, poly) -> bool:

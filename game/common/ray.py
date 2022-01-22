@@ -26,6 +26,8 @@ class Ray(GameObject):
         ) if self.collision is not None else None
         data['damage'] = self.damage
 
+        return data
+
     def from_json(self, data):
         super().from_json(data)
         self.origin = data['origin']
