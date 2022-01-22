@@ -13,7 +13,6 @@ class Grenade(Consumable):
         self.damage = damage
         self.object_type = ObjectType.grenade
 
-
     @property
     def fuse_time(self):
         return self._fuse_time

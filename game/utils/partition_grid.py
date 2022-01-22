@@ -132,7 +132,7 @@ class PartitionGrid:
                     return obj
         return False
 
-    def find_all_object_collisions(self, hitbox : Hitbox) -> bool:
+    def find_all_object_collisions(self, hitbox: Hitbox) -> bool:
         """Returns all objects if there is a collision with the given hitbox, or false otherwise"""
         if not isinstance(hitbox, Hitbox):
             raise ValueError("Hitbox to check must be of type Hitbox")

@@ -25,8 +25,10 @@ class GrenadeController(Controller):
                 return None
             self.decrement_fuse(game_board)
             # use polar coordinate to rectangular coordinate formula to get new (x,y) for grenade
-            gren_x = client.shooter.grenade_distance * math.cos(client.shooter.heading) + client.shooter.hitbox.position[0]
-            gren_y = client.shooter.grenade_distance * math.sin(client.shooter.heading) + client.shooter.hitbox.position[1]
+            gren_x = client.shooter.grenade_distance * \
+                math.cos(client.shooter.heading) + client.shooter.hitbox.position[0]
+            gren_y = client.shooter.grenade_distance * \
+                math.sin(client.shooter.heading) + client.shooter.hitbox.position[1]
             if gren_x < 0:
                 gren_x = 0
             if gren_y < 0:
@@ -76,8 +78,3 @@ class GrenadeController(Controller):
             if grenade.fuse_time == 0:
                 self.grenade_boom_boom(game_board, grenade)
                 self.grenades_on_fuse.remove(grenade)
-
-
-
-
-

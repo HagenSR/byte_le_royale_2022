@@ -27,9 +27,9 @@ class TestGrenade(unittest.TestCase):
             GameStats.grenade_stats['max_fuse_time'])
 
     def test_grenade_obj_parent_params(self):
-        testGrn = Grenade(hitbox=Hitbox(10,10,(10,10)), health=10, fuse_time=10, damage=10)
+        testGrn = Grenade(hitbox=Hitbox(10, 10, (10, 10)), health=10, fuse_time=10, damage=10)
 
-        #only two parent parameters
+        # only two parent parameters
         self.assertIsNotNone(testGrn.hitbox)
         self.assertIsNotNone(testGrn.health)
 
