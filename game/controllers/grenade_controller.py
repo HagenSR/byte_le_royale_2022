@@ -44,7 +44,7 @@ class GrenadeController(Controller):
             self.decrement_fuse(game_board)
 
     def grenade_boom_boom(self, game_board, grenade):
-        breakpoint()
+        #breakpoint()
         grenade_boom_box = Hitbox(self.blast_radius, self.blast_radius,
                                   (grenade.hitbox.position[0] - (self.blast_radius // 2),
                                    grenade.hitbox.position[1] - (self.blast_radius // 2)))
