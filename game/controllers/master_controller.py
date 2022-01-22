@@ -7,13 +7,9 @@ from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
 from game.controllers.interact_controller import InteractController
-from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
-from game.common.player import Player
-import game.config as config
 from game.controllers.shop_controller import ShopController
 from game.controllers.use_controller import UseController
-from game.utils.engine_thread import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
@@ -85,7 +81,7 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        partition_grid = self.current_world_data["game_map"].partition
+        partition_grid = deepcopy(self.current_world_data["game_map"].partition)
 
         # Obfuscate data in objects that that player should not be able to see
         partition_grid.obfuscate(client)
