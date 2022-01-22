@@ -81,13 +81,14 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        partition_grid = deepcopy(self.current_world_data["game_map"].partition)
+        game_board = deepcopy(self.current_world_data["game_map"])
 
         # Obfuscate data in objects that that player should not be able to see
-        partition_grid.obfuscate(client)
+        game_board.obfuscate()
+        game_board.partition.obfuscate(client)
         shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
+        args = (self.turn, actions, game_board, game_board.partition, shooter)
         return args
 
     # Perform the main logic that happens per turn

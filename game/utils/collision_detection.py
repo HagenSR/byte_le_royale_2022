@@ -60,7 +60,7 @@ def intersect_circle(center, radius, hitbox):
         # need to also check that the intersect point is actually between the two endpoints of the edge
         # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
         # lines of the arc
-        if (seg_len < radius):
+        if seg_len < radius:
             return True
 
     return False
