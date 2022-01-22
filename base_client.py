@@ -53,7 +53,7 @@ class Client(UserClient):
             actions.set_move(int(angle), shooter.max_speed)
             self.prev_location = shooter.hitbox.middle
         elif object_in_front or 0 <= forward_position[0] <= 500 or 0 <= forward_position[1] <= 500 \
-                and self.prev_location[0] != game_board.center:
+                and self.prev_location != game_board.center:
             # if there is something in front of the player, but the player isn't already in the center,
             # turn 90 degrees and try to move again
             actions.set_move((shooter.heading + 90) % 360, shooter.max_speed)
