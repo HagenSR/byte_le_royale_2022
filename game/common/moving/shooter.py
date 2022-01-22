@@ -67,7 +67,7 @@ class Shooter(MovingObject):
         self.__primary = self.__inventory['guns'][self.__primary_pointer]
 
         # how far shooter can throw grenade
-        self.__grenade_distance = 50
+        self.grenade_distance = 50
 
     @property
     def inventory(self):
@@ -112,7 +112,7 @@ class Shooter(MovingObject):
     @grenade_distance.setter
     def grenade_distance(self, val):
         if 0 <= val <= 200:
-            self.range = val
+            self.__grenade_distance = val
         else:
             raise Exception("Tried to set a grenade distance greater than the max of 200 or below 0")
 
