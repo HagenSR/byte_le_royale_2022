@@ -27,7 +27,7 @@ class Client(UserClient):
         return 'Roomba Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, shooter: Shooter) -> None:
+    def take_turn(self, turn, actions: Action, game_board, partition_grid: PartitionGrid, shooter: Shooter) -> None:
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
@@ -36,8 +36,6 @@ class Client(UserClient):
         :param world:       Generic world information
         :param shooter:      This is your in-game character object
         """
-        print()
-        game_board = world["game_map"]
         angle = angle_to_point(shooter, game_board.center)
         mappy = partition_grid.get_all_objects()
         shooter_position = (shooter.hitbox.position[0] + math.cos(math.radians(shooter.heading)),
@@ -51,9 +49,6 @@ class Client(UserClient):
             actions.set_move((shooter.heading + 90) % 360, shooter.max_speed)
         # if their is another player, shoot at it
         shooters = list(filter(lambda obj: obj.object_type == ObjectType.shooter, mappy))
-        print(shooters)
         if len(shooters) > 0:
             actions.set_shoot(round(angle_to_point(shooter, shooters[0].hitbox.middle)))
             print('shot')
-
-        print(shooter.hitbox.position)
