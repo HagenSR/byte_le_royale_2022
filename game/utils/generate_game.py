@@ -71,8 +71,6 @@ def create_structures_file(file_path):
         # Door Additions
         Wall(Hitbox(5, 5, (15, 55)), destructible=True),
         Door(Hitbox(10, 3, (20, 55))),
-        Wall(Hitbox(5, 5, (140, 55)), destructible=True),
-        Door(Hitbox(3, 10, (130, 55)))
     ]
     Structures.append(smile)
     funnel = [
