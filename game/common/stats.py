@@ -49,7 +49,15 @@ class GameStats:
     consumable_stats = {
         "health_pack_heal_amount": 50,
         "speed_increase_percent": .2,
+        "speed_cooldown_turns": 10,
         "radar_range_increase_percent": .2,
+        "radar_cooldown_turns": 10
+    }
+
+    upgrade_stats = {
+        "armor_damage_reduction": .8,
+        "movement_boost": 1.0,
+        "backpack_slot_increase": 3,
     }
 
     # stats for money located on the gameboard

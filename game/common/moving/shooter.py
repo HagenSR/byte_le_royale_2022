@@ -34,13 +34,15 @@ class Shooter(MovingObject):
         )
         self.object_type = ObjectType.shooter
 
-        self.field_of_view = GameStats.player_stats['field_of_view']
         self.view_distance = GameStats.player_stats['view_distance']
         self.max_speed = GameStats.player_stats['max_distance_per_turn']
 
         self.money = GameStats.player_stats['starting_money']
-        self.armor = None
+        self.armor = 0
         self.shield = False
+
+        self.speed_boost_cooldown = 0
+        self.radar_cooldown = 0
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
         # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
@@ -75,6 +77,9 @@ class Shooter(MovingObject):
             if not slot:
                 return True
         return False
+
+    def add_new_slot(self, slot_type):
+        self.__inventory[slot_type].append(None)
 
     def append_inventory(self, value):
         """Add object to inventory. Not allowed for client use! Will be disqualified if called in contestant's code"""
@@ -149,7 +154,11 @@ class Shooter(MovingObject):
         }
         data['money'] = self.money
         data['armor'] = self.armor
+        data['shield'] = self.shield
         data['view_distance'] = self.view_distance
+        data['max_speed'] = self.max_speed
+        data['speed_boost_cooldown'] = self.speed_boost_cooldown
+        data['radar_cooldown'] = self.radar_cooldown
 
         return data
 
@@ -162,7 +171,12 @@ class Shooter(MovingObject):
         }
         self.money = data['money']
         self.armor = data['armor']
+        self.shield = data['shield']
         self.view_distance = data['view_distance']
+        self.max_speed = data['max_speed']
+        self.speed_boost_cooldown = data['speed_boost_cooldown']
+        self.radar_cooldown = data['radar_cooldown']
+
         return self
 
     def from_json_helper(self, data: dict):

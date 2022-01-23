@@ -9,6 +9,7 @@ from game.common.action import Action
 from game.controllers.interact_controller import InteractController
 from game.common.enums import *
 from game.controllers.shop_controller import ShopController
+from game.controllers.upgrade_controller import UpgradeController
 from game.controllers.use_controller import UseController
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
@@ -39,6 +40,7 @@ class MasterController(Controller):
         self.teleporter_controller = None
 
         self.use_controller = UseController()
+        self.upgrade_controller = UpgradeController()
         self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
@@ -101,6 +103,7 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
+            # client actions
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.movement_controller.handle_actions(
@@ -112,6 +115,9 @@ class MasterController(Controller):
                 client, self.current_world_data['game_map'])
             self.interact_controller.handle_actions(
                 client, self.current_world_data["game_map"])
+
+            # apply client upgrades
+            self.upgrade_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             print(f"\nGame is ending because player(s) "
