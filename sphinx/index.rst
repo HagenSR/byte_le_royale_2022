@@ -3,8 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Placeholder's documentation!
+Welcome to FarTech's documentation!
 =======================================
+
+In this game you write the solider AI for a warmongering robot nation state. Your goal is to win as many 1v1 matches against 
+other AI's, lest your robot employers find you to be incompetent at your job. Move, shoot, teleport, buy and throw grenades to
+secure victory for Amazon ( no relation to the forrest ).
 
 .. toctree::
    :maxdepth: 2
