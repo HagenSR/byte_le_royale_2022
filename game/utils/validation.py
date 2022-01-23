@@ -3,10 +3,14 @@ import re
 from game.config import ALLOWED_MODULES
 
 
-def verify_code(filename):
+def verify_code(filename, already_string = False):
     contents = None
-    with open(filename, 'r') as f:
-        contents = f.read()
+
+    if already_string:
+        contents = filename
+    else:
+        with open(filename, 'r') as f:
+            contents = f.read()
 
     contents = contents.split('\n')
 

@@ -5,7 +5,7 @@
 -- Dumped from database version 12.9 (Ubuntu 12.9-2.pgdg20.04+1)
 -- Dumped by pg_dump version 14.1 (Ubuntu 14.1-2.pgdg20.04+1)
 
--- Started on 2022-01-18 20:13:12 CST
+-- Started on 2022-01-22 17:57:54 CST
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -225,7 +225,7 @@ $$;
 ALTER FUNCTION public.get_latest_submission(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 261 (class 1255 OID 16687)
+-- TOC entry 266 (class 1255 OID 16687)
 -- Name: get_leaderboard(boolean, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -246,15 +246,21 @@ FROM (
         SELECT team.team_name,
             university.uni_name,
             COALESCE(cnts.total_wins, 0) as total_wins
-        FROM submission
+        FROM (
+                SELECT MAX(submission_id) as submission_id, team_id
+                FROM submission
+                GROUP BY team_id
+                ORDER BY submission_id, team_id
+            ) as sub_ids
             LEFT JOIN (
                 SELECT winner,
                     COUNT(winner) as total_wins
                 FROM run
                 WHERE run.group_run_id = grouprun
+                    and winner is not null
                 group by winner
-            ) as cnts ON cnts.winner = submission.submission_id
-            JOIN team on submission.team_id = team.team_id
+            ) as cnts ON cnts.winner = sub_ids.submission_id
+            JOIN team on sub_ids.team_id = team.team_id
             JOIN team_type on team.team_type_id = team_type.team_type_id
             JOIN university on team.uni_id = university.uni_id
         WHERE (
@@ -300,7 +306,7 @@ $$;
 ALTER FUNCTION public.get_logs_for_group_run(grouprun integer) OWNER TO postgres;
 
 --
--- TOC entry 266 (class 1255 OID 16839)
+-- TOC entry 265 (class 1255 OID 16839)
 -- Name: get_runs_for_group(integer); Type: FUNCTION; Schema: public; Owner: byte_admin
 --
 
@@ -333,7 +339,7 @@ $$;
 ALTER FUNCTION public.get_runs_for_group(groupid integer) OWNER TO byte_admin;
 
 --
--- TOC entry 264 (class 1255 OID 16838)
+-- TOC entry 263 (class 1255 OID 16838)
 -- Name: get_runs_for_submission(uuid, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -368,7 +374,7 @@ $$;
 ALTER FUNCTION public.get_runs_for_submission(teamid uuid, submissionid integer) OWNER TO postgres;
 
 --
--- TOC entry 263 (class 1255 OID 16836)
+-- TOC entry 262 (class 1255 OID 16836)
 -- Name: get_runs_for_submission_and_group(integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -450,7 +456,7 @@ $$;
 ALTER FUNCTION public.get_submissions_for_team(teamid uuid) OWNER TO postgres;
 
 --
--- TOC entry 265 (class 1255 OID 16837)
+-- TOC entry 264 (class 1255 OID 16837)
 -- Name: get_team_runs_for_group_run(uuid, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -484,7 +490,7 @@ $$;
 ALTER FUNCTION public.get_team_runs_for_group_run(teamid uuid, grouprunid integer) OWNER TO postgres;
 
 --
--- TOC entry 262 (class 1255 OID 16697)
+-- TOC entry 261 (class 1255 OID 16697)
 -- Name: get_team_score_over_time(uuid); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1294,7 +1300,7 @@ ALTER TABLE ONLY public.run
     ADD CONSTRAINT winner_fk FOREIGN KEY (winner) REFERENCES public.submission(submission_id) ON DELETE CASCADE;
 
 
--- Completed on 2022-01-18 20:13:12 CST
+-- Completed on 2022-01-22 17:57:54 CST
 
 --
 -- PostgreSQL database dump complete

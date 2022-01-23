@@ -164,10 +164,10 @@ class ClientUtils:
             output += "\n"
             for row in json:
                 for index, col in enumerate(row):
-                    if isinstance(row[col], int):
+                    if isinstance(row[col], int) or isinstance(row[col], float):
                         output += str(row[col])
                     else:
-                        output += "'" + str(row[col]) + "'"
+                        output += '"' + str(row[col]) + '"'
                     if index != len(row) - 1:
                         output += ","
                 output += "\n"

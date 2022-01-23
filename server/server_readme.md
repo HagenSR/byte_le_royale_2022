@@ -162,7 +162,7 @@ openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 5
 
 Then to run the server on Gunicorn, run the command
 
-gunicorn --certfile certs/cert.pem --keyfile certs/key.pem -b 134.129.91.223:8000 Server:app -w 1 --threads 12
+gunicorn --certfile server/certs/cert.pem --keyfile server/certs/key.pem -b 134.129.91.223:8000 server.Server:app -w 1 --threads 12
 
 ### Endpoints
 

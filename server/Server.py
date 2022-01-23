@@ -11,7 +11,7 @@ from flask.logging import logging
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from werkzeug.exceptions import BadRequest, HTTPException
-import math
+from game.utils.validation import verify_code
 
 # Config for loggers
 dictConfig({
@@ -26,7 +26,7 @@ dictConfig({
     },
         "file": {
             "class": "logging.handlers.RotatingFileHandler",
-            "filename": "logs/log_file.txt",
+            "filename": "server/logs/log_file.txt",
             "maxBytes": 10000,
             "backupCount": 10,
             "delay": "True",
@@ -54,7 +54,7 @@ MAX_TEAM_NAME_LENGTH = 15
 
 # Read db config information from file, set up connection
 db_conn = {}
-with open('./conn_info.json') as fl:
+with open('./server/conn_info.json') as fl:
     db_conn = json.load(fl)
 
 try:
@@ -175,15 +175,17 @@ def submit_file():
     try:
         file = request.json["file"]
         vid = request.json["vid"]
-        bad_words = check_illegal_keywords(file)
+        bad_words, opens = verify_code(file, already_string=True)
         if len(file) > MAX_FILE_CHARACTER_COUNT:
             abort(
                 404,
                 description="Files can be a maximum of {} characters and this file is {} characters long".format(
                     MAX_FILE_CHARACTER_COUNT,
                     len(file)))
-        if bad_words:
+        if len(bad_words):
             abort(404, description="Contained illegal keywords {0}".format(bad_words))
+        if opens:
+            abort(404, description="Client contains keyword open. Remove 'open' from your client!")
         cur = conn.cursor()
         cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
         conn.commit()
@@ -195,15 +197,6 @@ def submit_file():
         app.logger.error("Exception in submit: %s", e)
         conn.reset()
         abort(500, description=str(e))
-
-
-def check_illegal_keywords(file):
-    '''This should be expanded on, made better'''
-    bad_words_list = ['open', 'os', 'import']
-    rtn_bad_words = []
-    for bad_word in rtn_bad_words:
-        if bad_word in file:
-            rtn_bad_words.append(bad_word)
 
 
 @app.route("/api/get_submission_stats", methods=['post'])
