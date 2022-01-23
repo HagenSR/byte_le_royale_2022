@@ -19,6 +19,8 @@ from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.teleporter_controller import TeleporterController
 from game.controllers.movement_controller import MovementController
 
+from game.utils.collision_detection import distance_tuples
+
 
 class MasterController(Controller):
     def __init__(self):
