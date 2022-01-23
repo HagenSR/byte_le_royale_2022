@@ -3,7 +3,7 @@ import re
 from game.config import ALLOWED_MODULES
 
 
-def verify_code(filename, already_string = False):
+def verify_code(filename, already_string=False):
     contents = None
 
     if already_string:
