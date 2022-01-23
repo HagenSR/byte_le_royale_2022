@@ -30,28 +30,28 @@ def load_collidables_in_ray_range(
             for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects_by_index(
                         x, y):
-                    if z not in exclusions:
+                    if z not in exclusions and z.collidable:
                         collidables[z] = 0
     elif math.pi >= heading > math.pi / 2:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y - 1, -1):
                 for z in gameboard.partition.get_partition_objects_by_index(
                         x, y):
-                    if z not in exclusions:
+                    if z not in exclusions and z.collidable:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 >= heading > math.pi:
         for x in range(partition_x, end_partition_x - 1, -1):
             for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects_by_index(
                         x, y):
-                    if z not in exclusions:
+                    if z not in exclusions and z.collidable:
                         collidables[z] = 0
     elif (3 * math.pi) / 2 < heading <= 2 * math.pi:
         for x in range(partition_x, end_partition_x + 1):
             for y in range(partition_y, end_partition_y + 1):
                 for z in gameboard.partition.get_partition_objects_by_index(
                         x, y):
-                    if z not in exclusions:
+                    if z not in exclusions and z.collidable:
                         collidables[z] = 0
 
     return collidables

@@ -7,13 +7,10 @@ from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
 from game.controllers.interact_controller import InteractController
-from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
-from game.common.player import Player
-import game.config as config
 from game.controllers.shop_controller import ShopController
+from game.controllers.upgrade_controller import UpgradeController
 from game.controllers.use_controller import UseController
-from game.utils.engine_thread import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
@@ -45,6 +42,7 @@ class MasterController(Controller):
         self.teleporter_controller = None
 
         self.use_controller = UseController()
+        self.upgrade_controller = UpgradeController()
         self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
@@ -87,13 +85,14 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        partition_grid = self.current_world_data["game_map"].partition
+        game_board = deepcopy(self.current_world_data["game_map"])
 
         # Obfuscate data in objects that that player should not be able to see
-        partition_grid.obfuscate(client)
+        game_board.obfuscate()
+        game_board.partition.obfuscate(client)
         shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
+        args = (self.turn, actions, game_board, game_board.partition, shooter)
         return args
 
     # Perform the main logic that happens per turn
@@ -106,6 +105,7 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
+            # client actions
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.movement_controller.handle_actions(
@@ -117,9 +117,9 @@ class MasterController(Controller):
                 client, self.current_world_data['game_map'])
             self.interact_controller.handle_actions(
                 client, self.current_world_data["game_map"])
-
-        # if distance_tuples(clients[0].shooter.hitbox.position, clients[1].shooter.hitbox.position) < 50:
-        #     raise ValueError("distance less than 50")
+            
+            # apply client upgrades
+            self.upgrade_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             print(f"\nGame is ending because player(s) "

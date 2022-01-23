@@ -18,6 +18,10 @@ class Ray(GameObject):
         self.collision = collision
         self.damage = damage
 
+    def obfuscate(self):
+        super().obfuscate()
+        del self.origin
+
     def to_json(self):
         data = super().to_json()
         data['origin'] = self.origin
@@ -25,6 +29,8 @@ class Ray(GameObject):
         data['collision'] = self.collision.to_json(
         ) if self.collision is not None else None
         data['damage'] = self.damage
+
+        return data
 
     def from_json(self, data):
         super().from_json(data)
