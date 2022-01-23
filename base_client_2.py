@@ -34,6 +34,7 @@ class Client(UserClient):
         :param world:       Generic world information
         :param player:      This is your in-game character object
         """
+        x = 10 /0
         game_board = world["game_map"]
         angle = angle_to_point(player, game_board.center)
 

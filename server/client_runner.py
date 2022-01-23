@@ -1,3 +1,4 @@
+from cProfile import run
 from collections import deque
 import itertools
 import os
@@ -108,7 +109,7 @@ class client_runner:
 
     def internal_runner(self, row_tuple, index):
         winner = -1
-        error = ""
+        errors = {}
         results = dict()
         try:
             # Run game
@@ -149,6 +150,9 @@ class client_runner:
             if len(results['players_alive']) == 1:
                 # Submission ID of player who won, otherwise it was a tie
                 winner = results['players_alive'][0].split("_")[-1]
+            for player in results["players"]:
+                if player["error"]:
+                    errors[player["team_name"].split("_")[-1]] = player["error"]
         finally:
             player_sub_ids = [x["team_name"].split("_")[-1] for x in results["players"]]
             run_id = self.insert_run(
@@ -156,8 +160,10 @@ class client_runner:
                 player_sub_ids[0],
                 player_sub_ids[1],
                 self.group_id,
-                error,
                 self.index_to_seed_id[seed_index])
+
+            for sub_id in errors:
+                self.insert_error(sub_id, run_id, errors[sub_id])
             # Update information in best run dict
             if winner != -1:
                 if winner not in self.best_run_for_client:
@@ -232,13 +238,23 @@ class client_runner:
         self.conn.commit()
         return cur.fetchall()[0]["insert_seed"]
 
-    def insert_run(self, winner, player_1, player_2, groupid, error, seed_id):
+    def insert_run(self, winner, player_1, player_2, groupid, seed_id):
         '''
         Inserts a run into the DB
         '''
         cur = self.conn.cursor()
-        cur.execute("SELECT insert_run(%s, %s, %s, %s, %s, %s)",
-                    (winner, player_1, player_2, groupid, error, seed_id))
+        cur.execute("SELECT insert_run(%s, %s, %s, %s, %s)",
+                    (winner, player_1, player_2, groupid, seed_id))
+        run_id = cur.fetchone()[0]
+        self.conn.commit()
+        return run_id
+
+    def insert_error(self, player_id, run_id, error):
+        '''
+        Inserts a run into the DB
+        '''
+        cur = self.conn.cursor()
+        cur.execute("SELECT insert_error(%s, %s, %s)", (player_id, run_id, error))
         run_id = cur.fetchone()[0]
         self.conn.commit()
         return run_id

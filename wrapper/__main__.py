@@ -101,6 +101,11 @@ if __name__ == '__main__':
         help='get the code file for a given submission',
         type=int,
         default=-1)
+    stats.add_argument(
+        "-get_errors_for_submission",
+        help='get the errors for a given submission',
+        type=int,
+        default=-1)
 
     #stats.add_argument("-latest_group_submissions",  help='returns the latest group submissions for your client', default=False,  action='store_true')
     #stats.add_argument('-download_submission_codefile', type=int)

@@ -38,6 +38,8 @@ class Client:
                         self.utils.get_group_runs(self.vid)
                     elif args.get_code_for_submission != -1:
                         self.utils.get_code_from_submission(self.vid, args.get_code_for_submission)
+                    elif args.get_errors_for_submission != -1:
+                        self.utils.get_errors_for_submission(self.vid, args.get_errors_for_submission)
                     else:
                         self.get_submission_stats()
                 elif args.subparse.lower() == 'get_seed' or args.subparse.lower() == 'gs':

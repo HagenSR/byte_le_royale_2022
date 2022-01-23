@@ -174,7 +174,18 @@ get code for submission
 
     python launcher.pyz client stats -get_code_for_submission <submission_id>
 
-Returns all of the group runs a team participated in
+Returns code for a given submission
+
+get errors for submission
+-------------------------
+
+**Rate Limit: 1/minute**
+
+.. code-block:: python
+
+    python launcher.pyz client stats -get_errors_for_submission <submission_id>
+
+Returns errors for a given submission
 
 View score over time
 -------------------------

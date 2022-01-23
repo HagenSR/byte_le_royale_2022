@@ -143,7 +143,7 @@ class Engine:
             except Exception:
                 print(f"Bad client for {filename}")
 
-        self.clients.sort(key=lambda x: x.team_name, reverse=True)
+        self.clients.sort(key=lambda clnt: clnt.team_name, reverse=True)
         # Verify correct number of clients have connected to start
         func_clients = [client for client in self.clients if client.functional]
         client_num_correct = verify_num_clients(func_clients,

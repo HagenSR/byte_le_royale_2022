@@ -62,6 +62,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#get-submissions">get submissions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-group-runs">get group runs</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-code-for-submission">get code for submission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-errors-for-submission">get errors for submission</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#view-score-over-time">View score over time</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#get-a-seed">Get a seed</a></li>
 </ul>
@@ -233,7 +234,15 @@ Returns your team’s placing and total wins for each group run</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_code_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<p>Returns all of the group runs a team participated in</p>
+<p>Returns code for a given submission</p>
+</div>
+<div class="section" id="get-errors-for-submission">
+<h3>get errors for submission<a class="headerlink" href="#get-errors-for-submission" title="Permalink to this headline">¶</a></h3>
+<p><strong>Rate Limit: 1/minute</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_errors_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Returns errors for a given submission</p>
 </div>
 <div class="section" id="view-score-over-time">
 <h3>View score over time<a class="headerlink" href="#view-score-over-time" title="Permalink to this headline">¶</a></h3>

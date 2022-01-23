@@ -35,7 +35,7 @@ Which will be covered in the following sections.
 The Postgres SQL database has creation scripts to facilitate the simple creation of a new database. 
 
 1. Create a new database using PGAdmin, (If needed, install using https://stackoverflow.com/questions/53267642/create-new-local-server-in-pgadmin directions)
-    1. Log into PG Admin on ACM left Ubuntu. Password is available in the ACM credentials file on the google drive 
+    1. Log into PG Admin on ACM Right Ubuntu. Password is available in the ACM credentials file on the google drive 
     2. create a database under the byte-le-royale group.
     3. be sure to select set tablespace = fourtb. fourtb is the 4 terrabyte partition. If this isn't available, see https://stackoverflow.com/questions/9876132/postgresql-creating-database-in-a-specified-location/9876229
     4. If you've really screwed up, you can reformat the 4tb disk, set it to auto-mount in the disks application, and then recreate the DB space
@@ -52,7 +52,7 @@ The Postgres SQL database has creation scripts to facilitate the simple creation
 
 ### Overview of tables
 
-Please note that Postgres has a ERD diagram tool. Right click the database -> Generate ERD. This will be helpful!
+Please note that PGAdmin has a ERD diagram tool. Right click the database -> Generate ERD. This will be helpful!
 
 #### University
 ##### uni_id int, uni_name

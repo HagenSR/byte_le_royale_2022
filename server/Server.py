@@ -313,6 +313,28 @@ def get_group_runs():
         conn.reset()
         abort(500, description=str(e))
 
+@app.route("/api/get_errors_for_submission", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def get_errors_for_submission():
+    try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
+        vid = request.json["vid"]
+        subid = request.json["subid"]
+        cur = conn.cursor()
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        cur.execute("SELECT (get_errors_for_submission(%s,%s)).*", (subid, vid))
+        if cur.rowcount == 0:
+            return abort(404, description="No errors for submission were found")
+        else:
+            return jsonify(cur.fetchall())
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_group_runs: %s", e)
+        conn.reset()
+        abort(500, description=str(e))
+
 
 @app.route("/api/get_runs_for_group_run", methods=['post'])
 @limiter.limit("5/minute", override_defaults=True)
