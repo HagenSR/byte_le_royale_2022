@@ -1,4 +1,3 @@
-from pickle import TRUE
 from flask import Flask, abort, jsonify
 from flask.wrappers import Request
 import psycopg2

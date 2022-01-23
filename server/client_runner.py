@@ -1,5 +1,6 @@
 from cProfile import run
 from collections import deque
+import datetime
 import itertools
 import os
 import shutil
@@ -63,8 +64,9 @@ class client_runner:
 
         # self.loop.run_in_executor(None, self.await_input)
         # self.loop.call_later(5, self.external_runner())
+        today930pm = datetime.datetime.now().replace(hour=21, minute=30, second=0, microsecond=0)
         try:
-            while True:
+            while datetime.datetime.now() < today930pm:
                 self.best_run_for_client = {}
                 self.external_runner()
                 self.read_best_logs_and_insert()
