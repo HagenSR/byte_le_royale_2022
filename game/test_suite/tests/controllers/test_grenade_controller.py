@@ -81,7 +81,7 @@ class TestGrenadeController(unittest.TestCase):
             self.gCont.handle_actions(player, game_board)
         self.assertEqual(player.shooter.health, start_health)
 
-    def test_throw_beyond_map(self):
+    def test_throw_right_map(self):
         player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (490, 490))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
@@ -116,6 +116,48 @@ class TestGrenadeController(unittest.TestCase):
         for i in range(20):
             self.gCont.handle_actions(player, game_board)
         self.assertNotIn(wall, game_board.partition.get_all_objects())
+
+    def test_throw_left_map(self):
+        player = Player(shooter=Shooter(180, 0, Hitbox(10, 10, (1, 1))))
+        player.action.set_action(ActionType.throw_grenade)
+        grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
+                          health=10, fuse_time=10, damage=5)
+        player.shooter.grenade_distance = 50
+        player.shooter.append_inventory(grenade)
+        game_board = GameBoard()
+        game_board.partition.add_object(player.shooter)
+        start_health = player.shooter.health
+        for i in range(20):
+            self.gCont.handle_actions(player, game_board)
+        self.assertEqual(player.shooter.health, start_health - grenade.damage)
+
+    def test_throw_above_map(self):
+        player = Player(shooter=Shooter(270, 0, Hitbox(10, 10, (250, 1))))
+        player.action.set_action(ActionType.throw_grenade)
+        grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
+                          health=10, fuse_time=10, damage=5)
+        player.shooter.grenade_distance = 50
+        player.shooter.append_inventory(grenade)
+        game_board = GameBoard()
+        game_board.partition.add_object(player.shooter)
+        start_health = player.shooter.health
+        for i in range(20):
+            self.gCont.handle_actions(player, game_board)
+        self.assertEqual(player.shooter.health, start_health - grenade.damage)
+
+    def test_throw_below_map(self):
+        player = Player(shooter=Shooter(90, 0, Hitbox(10, 10, (250, 489))))
+        player.action.set_action(ActionType.throw_grenade)
+        grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
+                          health=10, fuse_time=10, damage=5)
+        player.shooter.grenade_distance = 50
+        player.shooter.append_inventory(grenade)
+        game_board = GameBoard()
+        game_board.partition.add_object(player.shooter)
+        start_health = player.shooter.health
+        for i in range(20):
+            self.gCont.handle_actions(player, game_board)
+        self.assertEqual(player.shooter.health, start_health - grenade.damage)
 
 
 if __name__ == '__main__':

@@ -9,17 +9,17 @@ class Grenade(Consumable):
     def __init__(
             self, hitbox, health, fuse_time, damage):
         super().__init__(hitbox, health, consumable_enum=Consumables.grenade)
-        self._fuse_time = fuse_time
+        self.fuse_time = fuse_time
         self.damage = damage
         self.object_type = ObjectType.grenade
 
     @property
     def fuse_time(self):
-        return self._fuse_time
+        return self.__fuse_time
 
     @fuse_time.setter
     def fuse_time(self, val):
-        self._fuse_time = val
+        self.__fuse_time = val
 
     def to_json(self):
         data = super().to_json()

@@ -269,3 +269,7 @@ class GameStats:
 
     # this distance goes from middle of player hitbox to coord within door hitbox
     max_allowed_dist_from_door = 10
+
+    # set explosion radius of grenade
+    x_blast_radius = 40
+    y_blast_radius = 40
