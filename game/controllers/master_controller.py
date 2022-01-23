@@ -117,7 +117,7 @@ class MasterController(Controller):
                 client, self.current_world_data['game_map'])
             self.interact_controller.handle_actions(
                 client, self.current_world_data["game_map"])
-            
+
             # apply client upgrades
             self.upgrade_controller.handle_actions(client)
 
