@@ -25,7 +25,7 @@ class GameStats:
     default_door_health = 18
 
     player_stats = {
-        'starting_health': 10,
+        'starting_health': 100,
         'starting_money': 10,
         'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
