@@ -17,6 +17,7 @@ class Upgrade(Item):
         self.upgrade_enum = upgrade_enum
         self.movement_enum = movement_enum
         self.sight_enum = sight_enum
+        self.applied = False
 
     def to_json(self):
         data = super().to_json()
