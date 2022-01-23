@@ -1,9 +1,13 @@
 import unittest
 
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.item import Item
+from game.common.items.upgrade import Upgrade
 from game.common.map_object import MapObject
-from game.common.teleporter import Teleporter
+from game.common.moving.shooter import Shooter
 from game.utils.partition_grid import PartitionGrid
+from game.common.enums import *
 
 
 class TestPartitionGrid(unittest.TestCase):

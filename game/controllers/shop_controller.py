@@ -1,4 +1,6 @@
 import random
+
+from game.common.hitbox import Hitbox
 from game.controllers.controller import Controller
 from game.common.stats import GameStats
 from game.common.items.consumable import Consumable
@@ -25,7 +27,7 @@ class ShopController(Controller):
                 # Create consumable object to be appended to inventory.
                 # "consumable_enum" will store the the client's selected item.
                 bought_item = Consumable(
-                    hitbox=None,
+                    hitbox=Hitbox(1, 1, (1, 1), 0),
                     health=None,
                     consumable_enum=client.action.item_to_purchase)
                 client.shooter.append_inventory(bought_item)
