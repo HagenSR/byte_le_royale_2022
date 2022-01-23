@@ -1,3 +1,4 @@
+#!/bin/sh
 set echo off
 rm -f *.pyz
 cp -r ./game ./wrapper/game
