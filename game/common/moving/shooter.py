@@ -38,7 +38,7 @@ class Shooter(MovingObject):
         self.max_speed = GameStats.player_stats['max_distance_per_turn']
 
         self.money = GameStats.player_stats['starting_money']
-        self.armor = 0
+        self.armor = 1.0
         self.shield = False
 
         self.speed_boost_cooldown = 0
