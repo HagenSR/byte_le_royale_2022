@@ -1,3 +1,4 @@
+from pickle import TRUE
 from flask import Flask, abort, jsonify
 from flask.wrappers import Request
 import psycopg2
@@ -37,7 +38,6 @@ dictConfig({
     }
 })
 
-
 MAX_FILE_CHARACTER_COUNT = 14000
 
 app = Flask(__name__)
@@ -51,6 +51,8 @@ limiter = Limiter(
 )
 
 MAX_TEAM_NAME_LENGTH = 15
+
+leaderboard_on = {"state" : True}
 
 # Read db config information from file, set up connection
 db_conn = {}
@@ -78,6 +80,8 @@ def handle_exception(e):
 @app.route("/api/get_unis", methods=['get'])
 def get_unis():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_universities()).*")
         if cur.rowcount == 0:
@@ -96,6 +100,8 @@ def get_unis():
 @app.route("/api/get_team_types", methods=['get'])
 def get_team_types():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_team_types()).*")
         return jsonify(cur.fetchall())
@@ -108,6 +114,8 @@ def get_team_types():
 @app.route("/api/get_teams", methods=['get'])
 def get_teams():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_teams()).*")
         return jsonify(cur.fetchall())
@@ -121,6 +129,8 @@ def get_teams():
 @limiter.limit("5/minute", override_defaults=True)
 def get_leaderboard():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         ell = request.json["include_inelligible"]
         group_id = request.json["group_id"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -148,6 +158,8 @@ def get_leaderboard():
 @limiter.limit("10/hour", override_defaults=True)
 def insert_team():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         teamtype = request.form.get("type")
         name = request.form.get("name")
         uni = request.form.get("uni")
@@ -203,6 +215,8 @@ def submit_file():
 @limiter.limit("5/minute", override_defaults=True)
 def get_stats():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
@@ -232,6 +246,8 @@ def get_stats():
 @limiter.limit("5/minute", override_defaults=True)
 def get_team_score_over_time():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -256,6 +272,8 @@ def get_team_score_over_time():
 @limiter.limit("5/minute", override_defaults=True)
 def get_submissions_for_team():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -278,6 +296,8 @@ def get_submissions_for_team():
 @limiter.limit("5/minute", override_defaults=True)
 def get_group_runs():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -298,6 +318,8 @@ def get_group_runs():
 @limiter.limit("5/minute", override_defaults=True)
 def get_team_runs_for_group_run():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         groupid = request.json["groupid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -318,6 +340,8 @@ def get_team_runs_for_group_run():
 @limiter.limit("5/minute", override_defaults=True)
 def get_runs_for_submission():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["submissionid"]
         cur = conn.cursor()
@@ -341,6 +365,8 @@ def get_runs_for_submission():
 @limiter.limit("1/minute", override_defaults=True)
 def get_file_from_submission():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["submissionid"]
         cur = conn.cursor()
@@ -365,6 +391,8 @@ def get_file_from_submission():
 @limiter.limit("1/minute", override_defaults=True)
 def get_seed_from_run():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         runid = request.json["runid"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -390,6 +418,8 @@ def get_seed_from_run():
 @limiter.limit("5/minute", override_defaults=True)
 def get_code_from_submission():
     try:
+        if not leaderboard_on["state"]:
+            return abort(500, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["subid"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -403,6 +433,27 @@ def get_code_from_submission():
         else:
             res = cur.fetchone()["get_file_from_submission"]
             return res if res is not None else ""
+    except Exception as e:
+        if isinstance(e, HTTPException):
+            raise e
+        app.logger.error("Exception in get_seed_from_run: %s", str(e))
+        conn.reset()
+        abort(500, description=str(e))
+
+
+@app.route("/api/toggle_endpoint_state", methods=['post'])
+@limiter.limit("5/minute", override_defaults=True)
+def toggle_endpoint_state():
+    try:
+        password = request.json["password"]
+        cur = conn.cursor(cursor_factory=RealDictCursor)
+        app.logger.info('%s is attempting to toggle leaderboard allowance to %s with password %s',request.remote_addr, not leaderboard_on["state"],password)
+        if password != "!!Poggies!!Byte!!Le":
+            app.logger.error('Error: Wrong password')
+            return abort(404, description="wrong password")
+        else:
+            leaderboard_on["state"] = not leaderboard_on["state"] 
+            return "True"
     except Exception as e:
         if isinstance(e, HTTPException):
             raise e
