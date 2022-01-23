@@ -80,7 +80,7 @@ def handle_exception(e):
 def get_unis():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_universities()).*")
         if cur.rowcount == 0:
@@ -100,7 +100,7 @@ def get_unis():
 def get_team_types():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_team_types()).*")
         return jsonify(cur.fetchall())
@@ -114,7 +114,7 @@ def get_team_types():
 def get_teams():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         cur = conn.cursor(cursor_factory=RealDictCursor)
         cur.execute("SELECT (get_teams()).*")
         return jsonify(cur.fetchall())
@@ -129,7 +129,7 @@ def get_teams():
 def get_leaderboard():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         ell = request.json["include_inelligible"]
         group_id = request.json["group_id"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -158,7 +158,7 @@ def get_leaderboard():
 def insert_team():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         teamtype = request.form.get("type")
         name = request.form.get("name")
         uni = request.form.get("uni")
@@ -215,7 +215,7 @@ def submit_file():
 def get_stats():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur.execute("SELECT (get_latest_submission(%s)).*", (vid,))
@@ -246,7 +246,7 @@ def get_stats():
 def get_team_score_over_time():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -272,7 +272,7 @@ def get_team_score_over_time():
 def get_submissions_for_team():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -296,7 +296,7 @@ def get_submissions_for_team():
 def get_group_runs():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -317,7 +317,7 @@ def get_group_runs():
 def get_errors_for_submission():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["subid"]
         cur = conn.cursor()
@@ -340,7 +340,7 @@ def get_errors_for_submission():
 def get_team_runs_for_group_run():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         groupid = request.json["groupid"]
         cur = conn.cursor()
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -362,7 +362,7 @@ def get_team_runs_for_group_run():
 def get_runs_for_submission():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["submissionid"]
         cur = conn.cursor()
@@ -387,7 +387,7 @@ def get_runs_for_submission():
 def get_file_from_submission():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["submissionid"]
         cur = conn.cursor()
@@ -413,7 +413,7 @@ def get_file_from_submission():
 def get_seed_from_run():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         runid = request.json["runid"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
@@ -440,7 +440,7 @@ def get_seed_from_run():
 def get_code_from_submission():
     try:
         if not leaderboard_on["state"]:
-            return abort(500, description="The server has been turned off. You can submit code still though")
+            return abort(400, description="The server has been turned off. You can submit code still though")
         vid = request.json["vid"]
         subid = request.json["subid"]
         cur = conn.cursor(cursor_factory=RealDictCursor)

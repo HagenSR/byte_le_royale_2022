@@ -113,6 +113,10 @@ If the client runner is interupted, the results will be removed from the databas
 
 Note that a run will be inserted for failed runs with a score of zero.
 
+### NOTE
+
+You probably want to change the toggle_leaderboard endpoint and password every year.
+
 ### SET UP
 
 set up for the client runner is pretty simple

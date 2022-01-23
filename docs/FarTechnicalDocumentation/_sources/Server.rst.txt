@@ -224,7 +224,7 @@ This is done by the Client Runner, Which has the following flow:
 4. Every team plays every other team on each seed twice, with one client going first each time
 5. If the games are interupted by an error, all results will be deleted.
     1. Note that if a client throws an error, that client loses and the results are still valid
-    2. It is also possible for clients to tie by dieing on the same turn
+    2. It is also possible for clients to tie by dying on the same turn
 6. The logs for the first winning game for each team are saved, and then played on the visualizer\
 7. Process ends, waits a bit, and then repeats
 
