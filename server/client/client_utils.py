@@ -117,7 +117,6 @@ class ClientUtils:
             print(
                 f"Seed for run {runid} has been written to game_map.json. A copy has also been made at {os.path.realpath(fl.name)}")
 
-    
     def get_errors_for_submission(self, vid, subid):
         resp = requests.post(
             self.IP + "get_errors_for_submission", json={"vid": vid, "subid": subid}, verify=self.path_to_public)
@@ -128,7 +127,6 @@ class ClientUtils:
             print(f"The following are errors for submission {subid}")
             jsn = json.loads(resp.content)
             self.to_table(jsn)
-
 
     def get_code_from_submission(self, vid, subid):
         resp = requests.post(

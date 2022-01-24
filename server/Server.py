@@ -51,7 +51,7 @@ limiter = Limiter(
 
 MAX_TEAM_NAME_LENGTH = 15
 
-leaderboard_on = {"state" : True}
+leaderboard_on = {"state": True}
 
 # Read db config information from file, set up connection
 db_conn = {}
@@ -312,6 +312,7 @@ def get_group_runs():
         conn.reset()
         abort(500, description=str(e))
 
+
 @app.route("/api/get_errors_for_submission", methods=['post'])
 @limiter.limit("5/minute", override_defaults=True)
 def get_errors_for_submission():
@@ -468,12 +469,13 @@ def toggle_endpoint_state():
     try:
         password = request.json["password"]
         cur = conn.cursor(cursor_factory=RealDictCursor)
-        app.logger.info('%s is attempting to toggle leaderboard allowance to %s with password %s',request.remote_addr, not leaderboard_on["state"],password)
+        app.logger.info('%s is attempting to toggle leaderboard allowance to %s with password %s',
+                        request.remote_addr, not leaderboard_on["state"], password)
         if password != "!!Poggies!!Byte!!Le":
             app.logger.error('Error: Wrong password')
             return abort(404, description="wrong password")
         else:
-            leaderboard_on["state"] = not leaderboard_on["state"] 
+            leaderboard_on["state"] = not leaderboard_on["state"]
             return "True"
     except Exception as e:
         if isinstance(e, HTTPException):
