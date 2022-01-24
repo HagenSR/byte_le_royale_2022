@@ -165,7 +165,7 @@ class MasterController(Controller):
             if len(data["errors"]) == 1:
                 print(f"\nGame is ending because player "
                       f"{data['errors'][0][0]} "
-                      f"is raised an error, player "
+                      f"raised an error, player "
                       f"{data['no_errors'][0]} "
                       f"wins")
             else:
