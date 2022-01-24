@@ -14,18 +14,6 @@ class TestGrenade(unittest.TestCase):
         self.grnObj.fuse_time = 20
         self.assertEqual(self.grnObj.fuse_time, 20)
 
-    def test_set_get_fuse_time_boundary_low(self):
-        self.grnObj.fuse_time = GameStats.grenade_stats['min_fuse_time']
-        self.assertEqual(
-            self.grnObj.fuse_time,
-            GameStats.grenade_stats['min_fuse_time'])
-
-    def test_set_get_fuse_time_boundary_high(self):
-        self.grnObj.fuse_time = GameStats.grenade_stats['max_fuse_time']
-        self.assertEqual(
-            self.grnObj.fuse_time,
-            GameStats.grenade_stats['max_fuse_time'])
-
     def test_grenade_obj_parent_params(self):
         testGrn = Grenade(hitbox=Hitbox(10, 10, (10, 10)), health=10, fuse_time=10, damage=10)
 

@@ -1,5 +1,6 @@
 from game.common.enums import *
 from game.common.items.consumable import Consumable
+from game.common.stats import GameStats
 
 
 class Action:
@@ -79,7 +80,7 @@ class Action:
             raise ValueError("Values passed to action object methods must be of correct type")
         if not isinstance(distance_to_throw, int):
             raise ValueError("Values passed to action object methods must be of correct type")
-        if 0 <= distance_to_throw <= 200:
+        if 0 <= distance_to_throw <= GameStats.grenade_max_distance:
             self.grenade_distance = distance_to_throw
         else:
             raise Exception("Tried to set a grenade distance greater than the max of 200 or below 0")
