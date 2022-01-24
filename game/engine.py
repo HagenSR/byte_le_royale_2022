@@ -255,14 +255,14 @@ class Engine:
             # preventing it from receiving future turns
             if thr.is_alive():
                 client.functional = False
-                client.error = TimeoutError(
-                    f'{client.id} failed to reply in time and has been dropped.')
+                client.error = str(TimeoutError(
+                    f'{client.id} failed to reply in time and has been dropped.'))
                 print(client.error)
 
             # Also check to see if the client had created an error and save it
             if thr.error is not None:
                 client.functional = False
-                client.error = thr.error
+                client.error = str(thr.error)
                 print(thr.error)
 
         # Verify there are enough clients to continue the game
