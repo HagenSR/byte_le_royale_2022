@@ -46,9 +46,9 @@ class ActionType(int, Enum):
 
 class Upgrades(int, Enum):
     none = 0
-    gun_upgrades = 1
-    movement_upgrades = 2
-    sight_upgrades = 3
+    armor = 1
+    movement_boots = 2
+    backpack = 3
 
 
 class DamagingType(int, Enum):

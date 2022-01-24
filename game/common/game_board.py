@@ -52,6 +52,7 @@ class GameBoard(GameObject):
 
     def obfuscate(self):
         super().obfuscate()
+        self.ray_list = [ray.obfuscate() for ray in self.ray_list]
 
     def to_json(self):
         data = super().to_json()
