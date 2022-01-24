@@ -271,5 +271,4 @@ class GameStats:
     max_allowed_dist_from_door = 10
 
     # set explosion radius of grenade
-    x_blast_radius = 40
-    y_blast_radius = 40
+    blast_radius = 40

@@ -4,6 +4,7 @@ from game.common.moving.damaging.grenade import Grenade
 from game.common.hitbox import Hitbox
 from game.common.stats import GameStats
 from game.common.moving.shooter import Shooter
+from game.utils import collision_detection
 import math
 
 
@@ -11,8 +12,7 @@ class GrenadeController(Controller):
 
     def __init__(self):
         super().__init__()
-        self.x_blast_radius = GameStats.x_blast_radius
-        self.y_blast_radius = GameStats.y_blast_radius
+        self.blast_radius = GameStats.blast_radius
         self.grenades_on_fuse = []
 
     def handle_actions(self, client, game_board):
@@ -26,10 +26,9 @@ class GrenadeController(Controller):
                 return None
             self.decrement_fuse(game_board)
             # use polar coordinate to rectangular coordinate formula to get new (x,y) for grenade
-            #breakpoint()
-            gren_x = client.shooter.grenade_distance * \
+            gren_x = client.action.grenade_distance * \
                 math.cos(math.radians(client.shooter.heading)) + client.shooter.hitbox.position[0]
-            gren_y = client.shooter.grenade_distance * \
+            gren_y = client.action.grenade_distance * \
                 math.sin(math.radians(client.shooter.heading)) + client.shooter.hitbox.position[1]
             if gren_x < 0:
                 gren_x = 0
@@ -45,30 +44,23 @@ class GrenadeController(Controller):
             self.decrement_fuse(game_board)
 
     def grenade_boom_boom(self, game_board, grenade):
-        x_pos = grenade.hitbox.position[0] - (self.x_blast_radius // 2)
-        y_pos = grenade.hitbox.position[1] - (self.y_blast_radius // 2)
-        # If damage hitbox is outside game map, make it be to the edges of the map
-        if x_pos < 0:
-            x_pos = 0
-        if y_pos < 0:
-            y_pos = 0
-        if x_pos + self.x_blast_radius > GameStats.game_board_width:
-            x_pos = GameStats.game_board_width - self.x_blast_radius
-        if y_pos + self.y_blast_radius > GameStats.game_board_height:
-            y_pos = GameStats.game_board_height - self.y_blast_radius
+        # Check all partitions, if a partition isn't in view, dont include it
+        already_damaged = []
+        for x in range(0, GameStats.game_board_width, game_board.partition.partition_width):
+            for y in range(
+                    0,
+                    GameStats.game_board_height,
+                    game_board.partition.partition_height):
+                for obj in game_board.partition.get_partition_objects(x, y):
+                    if collision_detection.intersect_circle((grenade.hitbox.position[0] + grenade.hitbox.width // 2, grenade.hitbox.position[1] + grenade.hitbox.height // 2), self.blast_radius,
+                            obj.hitbox):
+                        if obj.health is None or obj in already_damaged:
+                            continue
+                        obj.health -= grenade.damage
+                        already_damaged.append(obj)
+                        if obj.health <= 0 and not isinstance(obj, Shooter):
+                            game_board.partition.remove_object(obj)
 
-        grenade_boom_box = Hitbox(self.x_blast_radius, self.y_blast_radius, (x_pos, y_pos))
-        collisions = game_board.partition.find_all_object_collisions(grenade_boom_box)
-        # Nothing to hit in radius
-        if collisions is False:
-            return None
-        # Deal damage
-        for object in collisions:
-            if object.health is None:
-                continue
-            object.health -= grenade.damage
-            if object.health <= 0 and not isinstance(object, Shooter):
-                game_board.partition.remove_object(object)
 
     def decrement_fuse(self, game_board):
         for grenade in self.grenades_on_fuse:

@@ -24,8 +24,8 @@ class TestGrenadeController(unittest.TestCase):
                  player.shooter.hitbox.position[1])),
             health=10,
             fuse_time=10,
-            damage=50)
-        player.shooter.grenade_distance = 50
+            damage=5)
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(wall)
@@ -40,8 +40,8 @@ class TestGrenadeController(unittest.TestCase):
         player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
-                          health=10, fuse_time=10, damage=50)
-        player.shooter.grenade_distance = 50
+                          health=10, fuse_time=10, damage=5)
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(wall)
@@ -56,8 +56,8 @@ class TestGrenadeController(unittest.TestCase):
         player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
-                          health=10, fuse_time=10, damage=50)
-        player.shooter.grenade_distance = 50
+                          health=10, fuse_time=10, damage=5)
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(money)
@@ -68,11 +68,11 @@ class TestGrenadeController(unittest.TestCase):
         self.assertEqual(money.health, money_start_health)
 
     def test_no_collisions(self):
-        player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (380, 450))))
+        player = Player(shooter=Shooter(0, 0, Hitbox(10, 10, (200, 450))))
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
-                          health=10, fuse_time=10, damage=50)
-        player.shooter.grenade_distance = 50
+                          health=10, fuse_time=10, damage=5)
+        player.action.grenade_distance = 100
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(player.shooter)
@@ -86,7 +86,7 @@ class TestGrenadeController(unittest.TestCase):
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
                           health=10, fuse_time=10, damage=5)
-        player.shooter.grenade_distance = 50
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(player.shooter)
@@ -108,7 +108,7 @@ class TestGrenadeController(unittest.TestCase):
             health=10,
             fuse_time=10,
             damage=50)
-        player.shooter.grenade_distance = 50
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(wall)
@@ -122,7 +122,7 @@ class TestGrenadeController(unittest.TestCase):
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
                           health=10, fuse_time=10, damage=5)
-        player.shooter.grenade_distance = 50
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(player.shooter)
@@ -136,7 +136,7 @@ class TestGrenadeController(unittest.TestCase):
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
                           health=10, fuse_time=10, damage=5)
-        player.shooter.grenade_distance = 50
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(player.shooter)
@@ -150,7 +150,7 @@ class TestGrenadeController(unittest.TestCase):
         player.action.set_action(ActionType.throw_grenade)
         grenade = Grenade(hitbox=Hitbox(5, 5, (player.shooter.hitbox.position[0], player.shooter.hitbox.position[1])),
                           health=10, fuse_time=10, damage=5)
-        player.shooter.grenade_distance = 50
+        player.action.grenade_distance = 50
         player.shooter.append_inventory(grenade)
         game_board = GameBoard()
         game_board.partition.add_object(player.shooter)

@@ -66,9 +66,6 @@ class Shooter(MovingObject):
         self.__primary_pointer = 0
         self.__primary = self.__inventory['guns'][self.__primary_pointer]
 
-        # how far shooter can throw grenade
-        self.grenade_distance = 50
-
     @property
     def inventory(self):
         return deepcopy(self.__inventory)
@@ -104,17 +101,6 @@ class Shooter(MovingObject):
                 self.__inventory['consumables'][self.__inventory['consumables'].index(obj)] = None
                 return obj
         return None
-
-    @property
-    def grenade_distance(self):
-        return self.__grenade_distance
-
-    @grenade_distance.setter
-    def grenade_distance(self, val):
-        if 0 <= val <= 200:
-            self.__grenade_distance = val
-        else:
-            raise Exception("Tried to set a grenade distance greater than the max of 200 or below 0")
 
     def remove_from_inventory(self, obj):
         """Remove object from inventory"""
@@ -171,7 +157,6 @@ class Shooter(MovingObject):
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
-        data['grenade_distance'] = self.grenade_distance
 
         return data
 
@@ -185,7 +170,6 @@ class Shooter(MovingObject):
         self.money = data['money']
         self.armor = data['armor']
         self.view_distance = data['view_distance']
-        self.grenade_distance = data['grenade_distance']
         return self
 
     def from_json_helper(self, data: dict):
