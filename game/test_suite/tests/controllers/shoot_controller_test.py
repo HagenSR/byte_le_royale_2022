@@ -79,7 +79,7 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.add_object(shooter)
         for i in range(20):
             self.shoot_controller.handle_action(self.player, self.game_board)
-        self.assertLessEqual(shooter.health, 0)
+        self.assertLessEqual(shooter.health, 50)
 
     def test_shot_pattern_spread(self):
         self.game_board = GameBoard()
@@ -96,7 +96,7 @@ class TestShootController(unittest.TestCase):
         self.assertAlmostEqual(
             wall.health,
             (GameStats.default_wall_health -
-             2 *
+             1 *
              round(
                  gun.damage /
                  gun.fire_rate)),

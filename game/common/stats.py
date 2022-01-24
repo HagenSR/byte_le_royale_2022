@@ -7,11 +7,11 @@ class GameStats:
     game_board_height = 500
 
     # The radius that the kill circle will shrink every tick
-    circle_shrink_distance = 1
+    circle_shrink_distance = 5
     # Damage circle does each tick
-    circle_damage = 1
+    circle_damage = 20
     # Number of turns before circle encroaches on game map
-    circle_delay = 100 * circle_shrink_distance
+    circle_delay = 25 * circle_shrink_distance
 
     # The "margin" inbetween every building plot in game map. Used so players
     # can always navigate between buildings
@@ -25,12 +25,12 @@ class GameStats:
     default_door_health = 18
 
     player_stats = {
-        'starting_health': 10,
+        'starting_health': 100,
         'starting_money': 10,
-        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
+        'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
-        'view_distance': 100,
-        'max_distance_per_turn': 50
+        'view_distance': 500,
+        'max_distance_per_turn': 25
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }
@@ -49,7 +49,15 @@ class GameStats:
     consumable_stats = {
         "health_pack_heal_amount": 50,
         "speed_increase_percent": .2,
+        "speed_cooldown_turns": 10,
         "radar_range_increase_percent": .2,
+        "radar_cooldown_turns": 10
+    }
+
+    upgrade_stats = {
+        "armor_damage_reduction": .8,
+        "movement_boost": 1.0,
+        "backpack_slot_increase": 3,
     }
 
     # stats for money located on the gameboard

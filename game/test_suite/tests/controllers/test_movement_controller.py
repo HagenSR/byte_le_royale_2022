@@ -58,7 +58,7 @@ class TestMovementController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(an_item)
-        self.myPlayer.action.set_move(0, 50)
+        self.myPlayer.action.set_move(0, 25)
         location = self.myPlayer.shooter.hitbox.position
         speed = self.myPlayer.shooter.speed
         angle = self.myPlayer.shooter.heading
@@ -72,7 +72,7 @@ class TestMovementController(unittest.TestCase):
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
-        self.myPlayer.action.set_move(0, 50)
+        self.myPlayer.action.set_move(0, 25)
         self.movementController.handle_actions(self.myPlayer, self.world_data["game_board"])
         self.assertFalse(self.movementController.space_free)
 
@@ -80,7 +80,7 @@ class TestMovementController(unittest.TestCase):
     # collision should occur
     def test_passing_object_no_angle_pass(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.myPlayer.action.set_move(90, 50)
+        self.myPlayer.action.set_move(90, 25)
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (70, 70), 0))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
@@ -93,7 +93,7 @@ class TestMovementController(unittest.TestCase):
     def test_passing_object_no_angle_fail(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (50, 70), 0))
-        self.myPlayer.action.set_move(90, 50)
+        self.myPlayer.action.set_move(90, 25)
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
         self.world_data["game_board"].partition.add_object(wall_object)
@@ -104,7 +104,7 @@ class TestMovementController(unittest.TestCase):
     # not collide.
     def test_passing_object_angle_pass(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.myPlayer.action.set_move(90, 50)
+        self.myPlayer.action.set_move(90, 25)
         wall_object = Wall(health=21, hitbox=Hitbox(5, 5, (65, 70), 290))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)
@@ -116,7 +116,7 @@ class TestMovementController(unittest.TestCase):
     # be stopped from colliding
     def test_passing_object_angle_fail(self):
         self.myPlayer.shooter.hitbox.position = (50, 50)
-        self.myPlayer.action.set_move(0, 50)
+        self.myPlayer.action.set_move(0, 25)
         wall_object = Wall(health=21, hitbox=Hitbox(10, 10, (60, 50), 70))
         self.world_data["game_board"].partition.add_object(
             self.myPlayer.shooter)

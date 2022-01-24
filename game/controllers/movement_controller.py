@@ -10,15 +10,17 @@ class MovementController(Controller):
 
     def __init__(self):
         super().__init__()
-        self.target_position = None
+        self.target_location = None
         self.space_free = False
 
     def handle_actions(self, client, game_board):
         # If statement for if client chooses move action
         if client.action._chosen_action is ActionType.move:
             client.shooter.speed = client.action.speed
-
-            client.shooter.heading = client.action.heading
+            try:
+                client.shooter.heading = client.action.heading
+            except ValueError:
+                return
             # shooter object is removed from old location on game board to avoid object duplicates
             game_board.partition.remove_object(client.shooter)
             # variable for client's location prior to movement
@@ -42,7 +44,7 @@ class MovementController(Controller):
                     self.space_free = False
                     break
                 obj = game_board.partition.find_object_hitbox(dummy_hitbox)
-                if obj is False or not obj.collidable:
+                if not obj or not obj.collidable:
                     try:
                         client.shooter.hitbox.position = (new_x, new_y)
                     except ValueError:

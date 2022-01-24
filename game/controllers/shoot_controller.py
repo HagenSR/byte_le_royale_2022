@@ -12,8 +12,11 @@ def apply_damage(collision_object, ray, gun, game_board, pellet_count):
         # no collision
         return
     elif isinstance(ray.collision, Shooter):
-        collision_object.health -= round(
-            gun.damage / pellet_count)
+        if ray.collision.shield:
+            ray.collision.shield = False
+        else:
+            collision_object.health -= ray.collision.armor * round(
+                gun.damage / pellet_count)
     elif isinstance(ray.collision, Wall):
         collision_object.health -= round(
             gun.damage / pellet_count)

@@ -1,4 +1,5 @@
 from copy import deepcopy
+from math import trunc
 import random
 
 from game.common.hitbox import Hitbox
@@ -7,13 +8,10 @@ from game.common.moving.shooter import Shooter
 from game.common.stats import GameStats
 from game.common.action import Action
 from game.controllers.interact_controller import InteractController
-from game.controllers.shoot_controller import ShootController
 from game.common.enums import *
-from game.common.player import Player
-import game.config as config
 from game.controllers.shop_controller import ShopController
+from game.controllers.upgrade_controller import UpgradeController
 from game.controllers.use_controller import UseController
-from game.utils.threadBytel import CommunicationThread
 from game.controllers.shoot_controller import ShootController
 from game.controllers.controller import Controller
 from game.controllers.kill_boundary_controller import KillBoundaryController
@@ -21,6 +19,8 @@ from game.controllers.reload_controller import ReloadController
 from game.controllers.loot_generation_controller import LootGenerationController
 from game.controllers.teleporter_controller import TeleporterController
 from game.controllers.movement_controller import MovementController
+
+from game.utils.collision_detection import distance_tuples
 
 
 class MasterController(Controller):
@@ -43,6 +43,7 @@ class MasterController(Controller):
         self.teleporter_controller = None
 
         self.use_controller = UseController()
+        self.upgrade_controller = UpgradeController()
         self.interact_controller = InteractController()
 
     # Receives all clients for the purpose of giving them the objects they
@@ -85,13 +86,14 @@ class MasterController(Controller):
         client.action = actions
 
         # Create deep copies of all objects sent to the player
-        partition_grid = self.current_world_data["game_map"].partition
+        game_board = deepcopy(self.current_world_data["game_map"])
 
         # Obfuscate data in objects that that player should not be able to see
-        partition_grid.obfuscate(client)
+        game_board.obfuscate()
+        game_board.partition.obfuscate(client)
         shooter = deepcopy(client.shooter)
 
-        args = (self.turn, actions, self.current_world_data, partition_grid, shooter)
+        args = (self.turn, actions, game_board, game_board.partition, shooter)
         return args
 
     # Perform the main logic that happens per turn
@@ -104,6 +106,7 @@ class MasterController(Controller):
             self.current_world_data['game_map'])
 
         for client in clients:
+            # client actions
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
             self.movement_controller.handle_actions(
@@ -116,12 +119,10 @@ class MasterController(Controller):
             self.interact_controller.handle_actions(
                 client, self.current_world_data["game_map"])
 
+            # apply client upgrades
+            self.upgrade_controller.handle_actions(client)
+
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
-            print(f"\nGame is ending because player(s) "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
-                  f"is out of health, player "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
-                  f"wins")
             self.game_over = True
 
     # Return serialized version of game
@@ -137,7 +138,36 @@ class MasterController(Controller):
     # Gather necessary data together in results file
     def return_final_results(self, clients, turn):
         data = dict()
+        # Most of this is for the client runner, and ensuring a broken client results in that client losing
         data['players'] = list()
+        data['errors'] = [(player.team_name, str(player.error)) for player in clients if player.error is not None]
+        data['no_errors'] = [player.team_name for player in clients if player.error is None]
+        data['players_dead'] = []
+        data['players_alive'] = []
+        if len(data['errors']) == 0:
+            data["players_dead"] = [player.team_name for player in filter(
+                lambda p: p.error is not None or p.shooter.health <= 0, clients)]
+            data["players_alive"] = [player.team_name for player in filter(
+                lambda p: p.error is None and p.shooter.health > 0, clients)]
+            if len(data["players_alive"]) > 0:
+                print(f"\nGame is ending because player "
+                      f"{data['players_dead']} "
+                      f"is out of health or raised an error, player "
+                      f"{data['players_alive']} "
+                      f"wins")
+            else:
+                print(f"\nGame is ending both players are out of health, the game is a tie.")
+        else:
+            if len(data["errors"]) == 1:
+                print(f"\nGame is ending because player "
+                      f"{data['errors'][0][0]} "
+                      f"is raised an error, player "
+                      f"{data['no_errors'][0]} "
+                      f"wins")
+            else:
+                print(f"\nGame is ending both players errored")
+            data["players_alive"] += data["no_errors"]
+            data["players_dead"] += [player[0] for player in data["errors"]]
         # Determine results
         for client in clients:
             data['players'].append(client.to_json())
