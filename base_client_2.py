@@ -1,3 +1,5 @@
+import math
+
 from game.client.user_client import UserClient
 from game.common.enums import *
 
@@ -22,23 +24,23 @@ class Client(UserClient):
         Allows the team to set a team name.
         :return: Your team name
         """
-        return 'Awesome Example Client'
+        return 'Bad Awful Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, player: Shooter) -> None:
+    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, shooter: Shooter) -> None:
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
         :param turn:        The current turn of the game.
         :param actions:     This is the actions object that you use to declare your intended actions.
         :param world:       Generic world information
-        :param player:      This is your in-game character object
+        :param shooter:      This is your in-game character object
         """
         game_board = world["game_map"]
-        angle = angle_to_point(player, game_board.center)
+        angle = angle_to_point(shooter, game_board.center)
 
-        if self.prev_location != player.hitbox.position:
-            actions.set_move(int(angle), player.max_speed)
-            self.prev_location = player.hitbox.position
+        if self.prev_location != shooter.hitbox.position:
+            actions.set_move(int(angle), shooter.max_speed)
+            self.prev_location = shooter.hitbox.position
         else:
-            actions.set_shoot(player.heading)
+            actions.set_shoot(shooter.heading)
