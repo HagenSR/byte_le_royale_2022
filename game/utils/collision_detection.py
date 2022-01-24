@@ -56,11 +56,8 @@ def intersect_circle(center, radius, hitbox):
         seg_len = np.linalg.norm(d)
 
         # if the line segment from the radius perpendicular to the edge is less than the total length of the radius,
-        # the rectangle intercepts with the rectangle
-        # need to also check that the intersect point is actually between the two endpoints of the edge
-        # and to adjust for the arc, need to check the slope of the perp. line is between the two slopes of the bounding
-        # lines of the arc
-        if (seg_len < radius):
+        # the rectangle intersects the circle
+        if seg_len < radius:
             return True
 
     return False
