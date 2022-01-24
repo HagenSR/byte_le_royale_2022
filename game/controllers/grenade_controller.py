@@ -26,7 +26,7 @@ class GrenadeController(Controller):
                 return None
             self.decrement_fuse(game_board)
             # use polar coordinate to rectangular coordinate formula to get new (x,y) for grenade
-            #breakpoint()
+            # breakpoint()
             gren_x = client.shooter.grenade_distance * \
                 math.cos(math.radians(client.shooter.heading)) + client.shooter.hitbox.position[0]
             gren_y = client.shooter.grenade_distance * \
