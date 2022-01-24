@@ -1,5 +1,3 @@
-import math
-
 from game.client.user_client import UserClient
 from game.common.enums import *
 

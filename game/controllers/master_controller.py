@@ -1,4 +1,5 @@
 from copy import deepcopy
+from math import trunc
 import random
 
 from game.common.hitbox import Hitbox
@@ -122,11 +123,6 @@ class MasterController(Controller):
             self.upgrade_controller.handle_actions(client)
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
-            print(f"\nGame is ending because player(s) "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health <= 0, clients)]} "
-                  f"is out of health, player "
-                  f"{[player.team_name for player in filter(lambda p: p.shooter.health > 0, clients)]} "
-                  f"wins")
             self.game_over = True
 
     # Return serialized version of game
@@ -142,7 +138,36 @@ class MasterController(Controller):
     # Gather necessary data together in results file
     def return_final_results(self, clients, turn):
         data = dict()
+        # Most of this is for the client runner, and ensuring a broken client results in that client losing
         data['players'] = list()
+        data['errors'] = [(player.team_name, str(player.error)) for player in clients if player.error is not None]
+        data['no_errors'] = [player.team_name for player in clients if player.error is None]
+        data['players_dead'] = []
+        data['players_alive'] = []
+        if len(data['errors']) == 0:
+            data["players_dead"] = [player.team_name for player in filter(
+                lambda p: p.error is not None or p.shooter.health <= 0, clients)]
+            data["players_alive"] = [player.team_name for player in filter(
+                lambda p: p.error is None and p.shooter.health > 0, clients)]
+            if len(data["players_alive"]) > 0:
+                print(f"\nGame is ending because player "
+                      f"{data['players_dead']} "
+                      f"is out of health or raised an error, player "
+                      f"{data['players_alive']} "
+                      f"wins")
+            else:
+                print(f"\nGame is ending both players are out of health, the game is a tie.")
+        else:
+            if len(data["errors"]) == 1:
+                print(f"\nGame is ending because player "
+                      f"{data['errors'][0][0]} "
+                      f"is raised an error, player "
+                      f"{data['no_errors'][0]} "
+                      f"wins")
+            else:
+                print(f"\nGame is ending both players errored")
+            data["players_alive"] += data["no_errors"]
+            data["players_dead"] += [player[0] for player in data["errors"]]
         # Determine results
         for client in clients:
             data['players'].append(client.to_json())

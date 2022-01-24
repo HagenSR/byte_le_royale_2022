@@ -36,4 +36,11 @@ class Client(UserClient):
         :param world:       Generic world information
         :param shooter:      This is your in-game character object
         """
-        pass
+        game_board = world["game_map"]
+        angle = angle_to_point(shooter, game_board.center)
+
+        if self.prev_location != shooter.hitbox.position:
+            actions.set_move(int(angle), shooter.max_speed)
+            self.prev_location = shooter.hitbox.position
+        else:
+            actions.set_shoot(shooter.heading)
