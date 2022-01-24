@@ -34,8 +34,6 @@ class Client(UserClient):
         :param world:       Generic world information
         :param shooter:      This is your in-game character object
         """
-        # This is the object that represents the game board
-        game_board = world["game_map"]
         # This is the list that contains all the objects on the map your player can see
         map_objects = partition_grid.get_all_objects()
         # This is a tuple that represents the position 1 unit in front of where the player

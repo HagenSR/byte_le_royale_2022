@@ -27,7 +27,7 @@ class Client(UserClient):
         return 'Bad Awful Client'
 
     # This is where your AI will decide what to do
-    def take_turn(self, turn, actions: Action, world, partition_grid: PartitionGrid, shooter: Shooter) -> None:
+    def take_turn(self, turn, actions: Action, game_board, partition_grid: PartitionGrid, shooter: Shooter) -> None:
         """
         This is where your AI will decide what to do.
         :param partition_grid: This is the representation of the game map divided into partitions
@@ -36,7 +36,6 @@ class Client(UserClient):
         :param world:       Generic world information
         :param shooter:      This is your in-game character object
         """
-        game_board = world["game_map"]
         angle = angle_to_point(shooter, game_board.center)
 
         if self.prev_location != shooter.hitbox.position:
