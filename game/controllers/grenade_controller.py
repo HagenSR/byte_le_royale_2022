@@ -52,7 +52,14 @@ class GrenadeController(Controller):
                     GameStats.game_board_height,
                     game_board.partition.partition_height):
                 for obj in game_board.partition.get_partition_objects(x, y):
-                    if collision_detection.intersect_circle((grenade.hitbox.position[0] + grenade.hitbox.width // 2, grenade.hitbox.position[1] + grenade.hitbox.height // 2), self.blast_radius,
+                    if collision_detection.intersect_circle(
+                        (grenade.hitbox.position[0] +
+                         grenade.hitbox.width //
+                         2,
+                         grenade.hitbox.position[1] +
+                         grenade.hitbox.height //
+                         2),
+                        self.blast_radius,
                             obj.hitbox):
                         if obj.health is None or obj in already_damaged:
                             continue
@@ -60,7 +67,6 @@ class GrenadeController(Controller):
                         already_damaged.append(obj)
                         if obj.health <= 0 and not isinstance(obj, Shooter):
                             game_board.partition.remove_object(obj)
-
 
     def decrement_fuse(self, game_board):
         for grenade in self.grenades_on_fuse:
