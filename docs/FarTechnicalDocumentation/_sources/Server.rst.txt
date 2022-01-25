@@ -152,7 +152,6 @@ get submissions
     python launcher.pyz client stats -get_submissions
 
 Returns all of the submissions for a team
-Returns your team's placing and total wins for each group run
 
 get group runs
 -----------------
