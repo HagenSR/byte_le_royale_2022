@@ -174,6 +174,8 @@ class PartitionGrid:
                     GameStats.game_board_height,
                     self.partition_height):
                 partition = self.get_partition_hitbox(x, y)
+                # remove client's own shooter
+                self.remove_object(client.shooter)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
                         client.shooter.hitbox.middle,
