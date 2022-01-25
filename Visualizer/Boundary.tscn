@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Boundary.gd" type="Script" id=1]
+
+[node name="Boundary" type="Node2D"]
+script = ExtResource( 1 )
