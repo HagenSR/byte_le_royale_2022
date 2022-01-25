@@ -38,7 +38,7 @@ class MovementController(Controller):
             self.space_free = True
             distance_to = 999
             prev_distance_to = 1000
-            while ( distance_to < prev_distance_to and self.space_free):
+            while (distance_to < prev_distance_to and self.space_free):
                 prev_distance_to = distance_to
                 distance_to = distance_tuples(client.shooter.hitbox.position, self.target_location)
                 new_x = round(location[0] + math.cos(angle) * .01, 2)
