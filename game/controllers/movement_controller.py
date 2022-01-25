@@ -1,12 +1,10 @@
-import imp
 import math
 import copy
-import sys
-
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
 from game.utils.player_utils import distance_tuples
 from game.common.enums import *
+from game.common.stats import GameStats
 
 
 class MovementController(Controller):
@@ -36,8 +34,8 @@ class MovementController(Controller):
             self.target_location = calculate_location(location, speed, angle)
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
             self.space_free = True
-            distance_to = 999
-            prev_distance_to = 1000
+            distance_to = GameStats.game_board_width
+            prev_distance_to = GameStats.game_board_width + 1
             while ( distance_to < prev_distance_to and self.space_free):
                 prev_distance_to = distance_to
                 distance_to = distance_tuples(client.shooter.hitbox.position, self.target_location)
