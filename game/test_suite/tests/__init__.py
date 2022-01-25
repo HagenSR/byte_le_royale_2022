@@ -20,7 +20,7 @@ from game.test_suite.tests.objects.test_hitbox_object import TestHitboxObject
 from game.test_suite.tests.controllers.test_loot_generation_controller import TestLootGenerationController
 from game.test_suite.tests.utils.item_gen_util_test import TestItemGenerationUtil
 from game.test_suite.tests.utils.partition_grid_test import TestPartitionGrid
-
+from game.test_suite.tests.controllers.test_grenade_controller import TestGrenadeController
 
 __all__ = [
     'TestGameBoard',
@@ -42,7 +42,8 @@ __all__ = [
     'TestLootGenerationController',
     'TestItemGenerationUtil',
     'TestPartitionGrid',
-    'TestInteractController'
+    'TestInteractController',
+    'TestGrenadeController'
 ]
 
 from game.test_suite.tests.utils.test_intersect_circle import TestIntersectCircle

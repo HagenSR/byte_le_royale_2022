@@ -255,12 +255,6 @@ class GameStats:
         }
     }
 
-    grenade_stats = {
-        'range': 40,
-        'min_fuse_time': 10,
-        'max_fuse_time': 50
-    }
-
     shot_pattern_multi_arc = math.pi / 10
 
     door_opening_speed = 1
@@ -277,3 +271,8 @@ class GameStats:
 
     # this distance goes from middle of player hitbox to coord within door hitbox
     max_allowed_dist_from_door = 10
+
+    # set explosion radius of grenade
+    blast_radius = 40
+
+    grenade_max_distance = 75
