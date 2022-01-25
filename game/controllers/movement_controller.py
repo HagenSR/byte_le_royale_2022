@@ -1,8 +1,11 @@
+import imp
 import math
 import copy
+import sys
 
 from game.controllers.controller import Controller
 from game.utils.calculate_new_location import calculate_location
+from game.utils.player_utils import distance_tuples
 from game.common.enums import *
 
 
@@ -33,9 +36,11 @@ class MovementController(Controller):
             self.target_location = calculate_location(location, speed, angle)
             dummy_hitbox = copy.deepcopy(client.shooter.hitbox)
             self.space_free = True
-            while (not math.isclose(location[0], self.target_location[0], abs_tol=1e-01)
-                    or not math.isclose(location[1], self.target_location[1], abs_tol=1e-01)
-                   and self.space_free):
+            distance_to = 999
+            prev_distance_to = 1000
+            while ( distance_to < prev_distance_to and self.space_free):
+                prev_distance_to = distance_to
+                distance_to = distance_tuples(client.shooter.hitbox.position, self.target_location)
                 new_x = round(location[0] + math.cos(angle) * .01, 2)
                 new_y = round(location[1] + math.sin(angle) * .01, 2)
                 try:
