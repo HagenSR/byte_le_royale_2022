@@ -14,6 +14,7 @@ onready var tile = preload("res://Tile.tscn")
 onready var boundary = preload("res://Boundary.tscn")
 onready var gui = preload("res://GUI.tscn")
 onready var gui2 = preload("res://GUI2.tscn")
+onready var grenade = preload("res://Grenade.tscn")
 
 onready var files = load_json(log_path)
 
@@ -133,6 +134,18 @@ func instantiate(object):
 			
 			ids.append(new_teleporter.id)
 			out = new_teleporter
+	elif object["object_type"] == 7:
+		if not object["id"] in map_objects.keys():
+			var new_grenade = grenade.instance()
+			new_grenade.fuse_time = object["fuse_time"]
+			new_grenade.width = object["hitbox"]["width"]
+			new_grenade.height = object["hitbox"]["height"]
+			var pos = object["hitbox"]["position"]
+			new_grenade.game_position = [(pos[0]), (pos[1])]
+			new_grenade.update()
+			self.add_child(new_grenade)
+			ids.append(new_grenade.id)
+			out = new_grenade
 	#for id in map_objects.keys():
 		#if not id in ids:
 			#map_objects.erase(id)

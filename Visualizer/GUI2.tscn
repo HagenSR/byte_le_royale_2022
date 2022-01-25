@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/hp2.jpeg" type="Texture" id=1]
 [ext_resource path="res://GUI2.gd" type="Script" id=2]
+[ext_resource path="res://Assets/shield.jpg" type="Texture" id=3]
 
 [node name="MarginContainer" type="MarginContainer"]
 margin_left = 900.0
@@ -15,11 +16,11 @@ __meta__ = {
 
 [node name="Bars" type="HBoxContainer" parent="."]
 margin_right = 100.0
-margin_bottom = 100.0
+margin_bottom = 204.0
 
 [node name="Bar" type="VBoxContainer" parent="Bars"]
 margin_right = 100.0
-margin_bottom = 100.0
+margin_bottom = 204.0
 
 [node name="Count" type="MarginContainer" parent="Bars/Bar"]
 margin_right = 100.0
@@ -46,3 +47,32 @@ margin_top = 51.0
 margin_right = 100.0
 margin_bottom = 81.0
 align = 2
+
+[node name="Count2" type="MarginContainer" parent="Bars/Bar"]
+margin_left = -100.0
+margin_bottom = 100.0
+
+[node name="Background2" type="NinePatchRect" parent="Bars/Bar/Count2"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+texture = ExtResource( 3 )
+
+[node name="Title" type="TextureRect" parent="Bars/Bar/Count2/Background2"]
+margin_right = 100.0
+margin_bottom = 100.0
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Number" type="Label" parent="Bars/Bar/Count2/Background2"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_top = 51.0
+margin_right = 100.0
+margin_bottom = 100.0
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
