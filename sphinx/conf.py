@@ -48,8 +48,8 @@ source_suffix = ['.rst', '.md']
 master_doc = 'index'
 
 # General information about the project.
-project = 'Byte-le-Royale 20XX'
-copyright = '20XX-20XX, NDSU ACM'
+project = 'Byte-le-Royale 2022'
+copyright = '1970-2100, NDSU ACM'
 author = 'NDSU ACM'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -189,5 +189,5 @@ def setup(app):
     }, True)
     app.add_transform(AutoStructify)
 
-    app.add_stylesheet('accordion.css')
-    app.add_javascript('accordion.js')
+    app.add_css_file('accordion.css')
+    app.add_js_file('accordion.js')

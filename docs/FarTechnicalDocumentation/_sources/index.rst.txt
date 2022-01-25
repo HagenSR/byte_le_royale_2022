@@ -19,6 +19,8 @@ secure victory for Amazon ( no relation to the forrest ).
 
    test
    RunningTheGame
+   Server
+   Map
 
 
 

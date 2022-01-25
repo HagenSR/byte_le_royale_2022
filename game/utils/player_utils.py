@@ -13,10 +13,14 @@ def distance(x1: float, y1: float, x2: float, y2: float) -> float:
     return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** (1 / 2)
 
 
-def distance_tuples(coord_tuple1: "tuple[float, float]", coord_tuple2: "tuple[float, float]") -> float:
+def distance_tuples(coord_tuple1: tuple, coord_tuple2: tuple) -> float:
     return distance(coord_tuple1[0], coord_tuple1[1], coord_tuple2[0], coord_tuple2[1])
 
 
-def angle_to_point(player, coord_tuple: "tuple[float, float]") -> float:
-    return int(math.degrees(math.acos(abs(player.hitbox.position[1] - coord_tuple[1]) /
-                                      distance_tuples(player.hitbox.position, coord_tuple))))
+def angle_to_point(player, coord_tuple: tuple) -> float:\
+        # Yoinked from
+    # https://stackoverflow.com/questions/2676719/calculating-the-angle-between-a-line-and-the-x-axis/27481611#27481611
+    deltaY = coord_tuple[1] - player.hitbox.position[1]
+    deltaX = coord_tuple[0] - player.hitbox.position[0]
+    result = math.degrees(math.atan2(deltaY, deltaX))
+    return result + 360 if result < 0 else result

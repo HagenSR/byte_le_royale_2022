@@ -8,6 +8,7 @@ import game.common.items.gun
 import game.common.items.upgrade
 import game.common.items.consumable
 from game.common.items.item import Item
+from game.common.moving.damaging.grenade import Grenade
 from game.common.items.money import Money
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
@@ -39,7 +40,9 @@ class Shooter(MovingObject):
         self.max_speed = GameStats.player_stats['max_distance_per_turn']
 
         self.money = GameStats.player_stats['starting_money']
-        self.armor = None
+        self.speed_boost_cooldown = 0
+        self.radar_cooldown = 0
+        self.armor = 1.0
         self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
@@ -94,14 +97,20 @@ class Shooter(MovingObject):
                 return None
         raise InventoryFullError(f"Inventory full for type {type(value)}")
 
+    def remove_grenade(self):
+        for obj in self.__inventory['consumables']:
+            if isinstance(obj, Grenade):
+                self.__inventory['consumables'][self.__inventory['consumables'].index(obj)] = None
+                return obj
+        return None
+
     def remove_from_inventory(self, obj):
         """Remove object from inventory"""
         for slot_type in self.__inventory:
             # this try except block checks to make sure you're only checking
             # the correct slot type
             try:
-                self.__inventory[slot_type][self.__inventory[slot_type].index(
-                    obj)] = None
+                self.__inventory[slot_type][self.__inventory[slot_type].index(obj)] = None
             except ValueError:
                 continue
             # if a gun is removed and it's the primary one, cycle to the next
@@ -150,6 +159,8 @@ class Shooter(MovingObject):
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
+        data['speed_boost_cooldown'] = self.speed_boost_cooldown
+        data['radar_cooldown'] = self.radar_cooldown
 
         return data
 
@@ -163,6 +174,8 @@ class Shooter(MovingObject):
         self.money = data['money']
         self.armor = data['armor']
         self.view_distance = data['view_distance']
+        self.speed_boost_cooldown = data['speed_boost_cooldown']
+        self.radar_cooldown = data['radar_cooldown']
         return self
 
     def from_json_helper(self, data: dict):
