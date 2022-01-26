@@ -40,7 +40,10 @@ func load_json(path):
 			if file == "game_map.json":
 				f.insert(0, file)
 			elif file == "results.json":
-				f.insert(1, file)
+				if f.size() > 0:
+					f.insert(1, file)
+				else:
+					f.insert(0, file)
 			else:
 				f.append(file)
 	dir.list_dir_end()
