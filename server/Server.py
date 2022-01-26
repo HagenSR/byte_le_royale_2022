@@ -187,7 +187,6 @@ def submit_file():
         file = request.json["file"]
         vid = request.json["vid"]
         bad_words, opens, prints = verify_code(file, already_string=True)
-        breakpoint()
         if len(file) > MAX_FILE_CHARACTER_COUNT:
             abort(
                 404,
