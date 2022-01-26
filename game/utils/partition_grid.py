@@ -35,6 +35,9 @@ class PartitionGrid:
         # define the length and width of each square partition
         self.partition_width = width // partitions_wide
         self.partition_height = height // partitions_tall
+        
+        self.partitions_wide = partitions_wide
+        self.partitions_tall = partitions_tall
 
         # create a 3d list. The first 2 dimensions handle the partitions
         # and the 3rd dimension holds the objects in those partitions
