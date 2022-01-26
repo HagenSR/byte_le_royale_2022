@@ -454,7 +454,7 @@ def determine_teleporter_nearby(teleporter, game_board):
                                                                            GameStats.min_teleporter_distance,
                                                                            GameStats.game_board_width))):
         for y in range(int(max(0, teleporter.hitbox.middle[0] -
-                                  GameStats.min_teleporter_distance)), int(min(teleporter.hitbox.middlegit [1] +
+                                  GameStats.min_teleporter_distance)), int(min(teleporter.hitbox.middle[1] +
                                                                                GameStats.min_teleporter_distance,
                                                                                GameStats.game_board_width))):
             if game_board.partition.find_object_coordinates(x, y) is not False:
