@@ -16,31 +16,34 @@ def verify_code(filename, already_string=False):
 
     illegal_imports = list()
     uses_open = False
+    uses_print = False
 
     for line in contents:
         line = re.split('[ ;]', line)
+        for token in line:
+            if '#' in token:
+                break
 
-        while 'from' in line or 'import' in line or 'open' in line:
             # Check for illegal keywords
-            if 'from' in line:
+            if 'from' in token:
                 module = line[line.index('from') + 1]
                 if module not in ALLOWED_MODULES:
                     illegal_imports.append(module)
-
-                line.remove('from')
-                line.remove('import')
-            elif 'import' in line:
+                else:
+                    break
+            elif 'import' in token:
                 module = line[line.index('import') + 1]
                 if module not in ALLOWED_MODULES:
                     illegal_imports.append(module)
-
-                line.remove('import')
-            if 'open' in line:
+                else:
+                    break
+            if 'open' in token:
                 uses_open = True
 
-                line.remove('open')
+            if 'print' in token:
+                uses_print = True
 
-    return illegal_imports, uses_open
+    return (illegal_imports, uses_open, uses_print)
 
 
 def verify_num_clients(clients, set_clients, min_clients, max_clients):
