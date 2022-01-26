@@ -92,3 +92,10 @@ class ItemGenUtils:
             if self.money_count >= GameStats.money_cap:
                 return True
         return False
+
+    def remove_items_from_map(self, partition_grid):
+        for y in range(partition_grid.partitions_tall):
+            for x in range(partition_grid.partitions_wide):
+                for obj in partition_grid.get_partition_objects(x, y):
+                    if isinstance(obj, Item):
+                        partition_grid.remove_obj(obj)
