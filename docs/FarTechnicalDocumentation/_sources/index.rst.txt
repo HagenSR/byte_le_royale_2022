@@ -13,6 +13,7 @@ Welcome to FarTechs's documentation!
    test
    Server
    Map
+   Partition Grid
 
 
 
