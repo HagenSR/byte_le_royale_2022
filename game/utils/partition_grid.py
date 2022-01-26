@@ -36,6 +36,9 @@ class PartitionGrid:
         self.partition_width = width // partitions_wide
         self.partition_height = height // partitions_tall
 
+        self.partitions_wide = partitions_wide
+        self.partitions_tall = partitions_tall
+
         # create a 3d list. The first 2 dimensions handle the partitions
         # and the 3rd dimension holds the objects in those partitions
         # each list in the 3rd dimension can be considered to be a partition
@@ -187,6 +190,8 @@ class PartitionGrid:
                     GameStats.game_board_height,
                     self.partition_height):
                 partition = self.get_partition_hitbox(x, y)
+                # remove client's own shooter
+                self.remove_object(client.shooter)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
                         client.shooter.hitbox.middle,
