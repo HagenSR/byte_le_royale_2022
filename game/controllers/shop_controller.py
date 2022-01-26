@@ -33,7 +33,8 @@ class ShopController(Controller):
                         health=None,
                         consumable_enum=client.action.item_to_purchase)
                 else:
-                    bought_item = Grenade(Hitbox = (1,1, (1, 1)), health=5, fuse_time=GameStats.grenade_fuse_time, damage=40)
+                    bought_item = Grenade(Hitbox=(1, 1, (1, 1)), health=5,
+                                          fuse_time=GameStats.grenade_fuse_time, damage=40)
                 client.shooter.append_inventory(bought_item)
             else:
                 raise ValueError("Inventory slots for consumables is full.")
