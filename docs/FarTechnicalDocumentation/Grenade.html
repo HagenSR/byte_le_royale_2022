@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Title &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Grenade &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Server Documentation" href="Server.html" />
-    <link rel="prev" title="Welcome to FarTechs’s documentation!" href="index.html" /> 
+    <link rel="next" title="Grenade Controller" href="grenade_controller.html" />
+    <link rel="prev" title="The Game Map" href="Map.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,11 +42,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Map.html">The Game Map</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Grenade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
 </ul>
 
@@ -64,9 +67,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>My Title</li>
+      <li>Grenade</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/test.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Grenade.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -74,17 +77,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="my-title">
-<h1>My Title<a class="headerlink" href="#my-title" title="Permalink to this headline">¶</a></h1>
-<p>This is a test of Sphinx.</p>
+  <div class="section" id="grenade">
+<h1>Grenade<a class="headerlink" href="#grenade" title="Permalink to this headline">¶</a></h1>
+<p>The Greanade is capable of damaging all walls, doors, and players in a circle of radius 40 units. The maximum distance to throw the grenade is 75 units and deals 40 damage to objects it hits.</p>
+<div class="section" id="instance-variables">
+<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
+<p>Instance variables for grenade object</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="26%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>hitbox</td>
+<td>hitbox</td>
+<td>Hitbox of where the grenade is on the game map</td>
+</tr>
+<tr class="row-odd"><td>health</td>
+<td>int</td>
+<td>How much health the grenade has (grenade cannot be damaged)</td>
+</tr>
+<tr class="row-even"><td>fuse_time</td>
+<td>int</td>
+<td>The amount of turns it will take for the grenade to explode</td>
+</tr>
+<tr class="row-odd"><td>damage</td>
+<td>int</td>
+<td>How much health will be deducted from damaged objects</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to FarTechs’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Server.html" class="btn btn-neutral float-right" title="Server Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Map.html" class="btn btn-neutral float-left" title="The Game Map" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="grenade_controller.html" class="btn btn-neutral float-right" title="Grenade Controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

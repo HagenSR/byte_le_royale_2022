@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Title &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Grenade Controller &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Server Documentation" href="Server.html" />
-    <link rel="prev" title="Welcome to FarTechs’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Grenade" href="Grenade.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,12 +41,16 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Map.html">The Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
-<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Grenade Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -64,9 +67,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>My Title</li>
+      <li>Grenade Controller</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/test.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/grenade_controller.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -74,17 +77,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="my-title">
-<h1>My Title<a class="headerlink" href="#my-title" title="Permalink to this headline">¶</a></h1>
-<p>This is a test of Sphinx.</p>
+  <div class="section" id="grenade-controller">
+<h1>Grenade Controller<a class="headerlink" href="#grenade-controller" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="important-notes">
+<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
+<p>The grenade controller will allow a player to throw a grenade in a specified direction a specified distance. There is nothing that can impede a grenade throw (i.e. you can throw over walls, doors, players, etc…).</p>
+<p>The grenade explodes with a fixed radius of 40 units, and the maximum distance thrown is 75 units.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_throw_grenade</span><span class="p">(</span><span class="n">heading</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">90</span><span class="p">),</span> <span class="n">distance_to_throw</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Will throw a grenade straight below the player, a distance of 60 units.</p>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to FarTechs’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Server.html" class="btn btn-neutral float-right" title="Server Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Grenade.html" class="btn btn-neutral float-left" title="Grenade" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
