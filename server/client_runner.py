@@ -83,6 +83,9 @@ class client_runner:
     def external_runner(self):
         clients = self.fetch_clients()
 
+        if len(clients) < 2:
+            return
+
         # get the games as a list of client tuples
         #submission_id_list = list(map(lambda x: x["submission_id"], clients))
         games = self.return_team_parings(clients)
