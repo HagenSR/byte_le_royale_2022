@@ -36,6 +36,9 @@ class PartitionGrid:
         self.partition_width = width // partitions_wide
         self.partition_height = height // partitions_tall
 
+        self.partitions_wide = partitions_wide
+        self.partitions_tall = partitions_tall
+
         # create a 3d list. The first 2 dimensions handle the partitions
         # and the 3rd dimension holds the objects in those partitions
         # each list in the 3rd dimension can be considered to be a partition
@@ -132,6 +135,19 @@ class PartitionGrid:
                     return obj
         return False
 
+    def find_all_object_collisions(self, hitbox: Hitbox) -> bool:
+        """Returns all objects if there is a collision with the given hitbox, or false otherwise"""
+        if not isinstance(hitbox, Hitbox):
+            raise ValueError("Hitbox to check must be of type Hitbox")
+        collision_list = []
+        for partition in self.check_overlap(hitbox):
+            for obj in self.__matrix[partition[0]][partition[1]]:
+                if collision_detection.check_collision(obj.hitbox, hitbox) and obj not in collision_list:
+                    collision_list.append(obj)
+        if len(collision_list) == 0:
+            return False
+        return collision_list
+
     def find_object_object(self, given_obj: MapObject) -> bool:
         """Returns object if there is an object that collides with the given object, false otherwise"""
         if not isinstance(given_obj, MapObject):
@@ -174,6 +190,8 @@ class PartitionGrid:
                     GameStats.game_board_height,
                     self.partition_height):
                 partition = self.get_partition_hitbox(x, y)
+                # remove client's own shooter
+                self.remove_object(client.shooter)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
                         client.shooter.hitbox.middle,
