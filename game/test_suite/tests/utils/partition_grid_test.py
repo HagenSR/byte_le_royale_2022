@@ -1,8 +1,13 @@
 import unittest
 
 from game.common.hitbox import Hitbox
+from game.common.items.consumable import Consumable
+from game.common.items.item import Item
+from game.common.items.upgrade import Upgrade
 from game.common.map_object import MapObject
+from game.common.moving.shooter import Shooter
 from game.utils.partition_grid import PartitionGrid
+from game.common.enums import *
 
 
 class TestPartitionGrid(unittest.TestCase):
@@ -44,3 +49,8 @@ class TestPartitionGrid(unittest.TestCase):
     def test_remove_object(self):
         self.grid.remove_object(self.ex_obj)
         self.assertFalse(self.grid.find_object_object(self.ex_obj))
+
+    def test_add_corner(self):
+        tel = MapObject(hitbox=Hitbox(10, 10, (490, 486)))
+        self.grid.add_object(tel)
+        self.assertEqual(self.grid.find_object_coordinates(490, 486), tel)

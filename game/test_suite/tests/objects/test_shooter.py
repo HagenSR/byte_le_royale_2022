@@ -12,6 +12,7 @@ from game.common.errors.inventory_full_error import InventoryFullError
 class TestShooterObject(unittest.TestCase):
     def setUp(self) -> None:
         self.shooter = Shooter()
+        self.shooter.hitbox = Hitbox(10, 10, (0, 0), 0)
 
     def test_inventory_guns(self):
         self.assertTrue(self.shooter.has_empty_slot('guns'))
@@ -40,8 +41,8 @@ class TestShooterObject(unittest.TestCase):
     def test_inventory_consumables(self):
         self.assertTrue(self.shooter.has_empty_slot('consumables'))
 
-        test_consumable = Consumable(
-            Hitbox(10, 10, (10, 10)), 20, 1, None, None, None)
+        test_consumable = Consumable(hitbox=None, health=None,
+                                     consumable_enum=None)
 
         for slot in self.shooter.inventory['consumables']:
             self.shooter.append_inventory(test_consumable)

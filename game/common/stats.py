@@ -1,7 +1,5 @@
 from game.common.enums import *
-import game.common.items.gun
-import game.common.items.upgrade
-import game.common.items.consumable
+import math
 
 
 class GameStats:
@@ -9,41 +7,62 @@ class GameStats:
     game_board_height = 500
 
     # The radius that the kill circle will shrink every tick
-    circle_shrink_distance = 1
+    circle_shrink_distance = 5
     # Damage circle does each tick
-    circle_damage = 1
+    circle_damage = 20
     # Number of turns before circle encroaches on game map
-    circle_delay = 100 * circle_shrink_distance
+    circle_delay = 25 * circle_shrink_distance
 
     # The "margin" inbetween every building plot in game map. Used so players
     # can always navigate between buildings
     corridor_width_height = 20
 
-    default_wall_health = 50
+    # The size of a plot (square)
+    plot_width_height = 140
+
+    default_wall_health = 18
+
+    default_door_health = 18
 
     player_stats = {
-        'starting_health': 10,
+        'starting_health': 100,
         'starting_money': 10,
-        'hitbox': [[10, 10, 45, 45], [10, 10, 445, 445]],
-        'view_radius': 10,
-        'move_speed': 10,
+        'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
+        'field_of_view': 90,
+        'view_distance': 500,
+        'max_distance_per_turn': 25
     }
 
     # format: 'slot_type': { num_of_slots, slot_obj_type }
     inventory_stats = {
         'guns': {
-            'slots': 2,
-            'type': game.common.items.gun.Gun
+            'slots': 2
         },
         'upgrades': {
-            'slots': 3,
-            'type': game.common.items.upgrade.Upgrade
+            'slots': 3
         },
         'consumables': {
-            'slots': 4,
-            'type': game.common.items.consumable.Consumable
+            'slots': 4
         },
     }
+
+    consumable_stats = {
+        "health_pack_heal_amount": 50,
+        "speed_increase_percent": .2,
+        "speed_cooldown_turns": 10,
+        "radar_range_increase_percent": .2,
+        "radar_cooldown_turns": 10
+    }
+
+    upgrade_stats = {
+        "armor_damage_reduction": .8,
+        "movement_boost": 1.0,
+        "backpack_slot_increase": 3,
+    }
+
+    # stats for money located on the gameboard
+    min_money_amount = 25
+    max_money_amount = 500
 
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be
@@ -66,71 +85,194 @@ class GameStats:
         'height': 100,
     }
 
+    shop_stats = {
+        Consumables.speed_boost: {
+            'cost': 20
+        },
+        Consumables.health_pack: {
+            'cost': 25
+        },
+        Consumables.shield: {
+            'cost': 30
+        },
+        Consumables.radar: {
+            'cost': 40
+        },
+        Consumables.grenade: {
+            'cost': 55
+        }
+    }
+
     # Placeholder stats, stats may be created for all gun levels
     gun_stats = {
-        GunType.none: {
-            'pattern': ShotPattern.none,
-            'damage': 0,
-            'fire_rate': 0,
-            'range': 0,
-            'mag_size': 0,
-            'reload_speed': 0,
-            'cooldown': {
-                'max': 0,
-                'rate': 0},
-            'level_mod': 1},
-        GunType.handgun: {
-            'pattern': ShotPattern.single,
-            'damage': 1,
-            'fire_rate': 2,
-            'range': 30,
-            'mag_size': 13,
-            'reload_speed': 3,
-            'cooldown': {
-                'max': 8,
-                'rate': 2},
-            'level_mod': 1.25},
-        GunType.assault_rifle: {
-            'pattern': ShotPattern.multi,
-            'damage': 1,
-            'fire_rate': 5,
-            'range': 50,
-            'mag_size': 30,
-            'reload_speed': 6,
-            'cooldown': {
-                'max': 15,
-                'rate': 5},
-            'level_mod': 1.25},
-        GunType.shotgun: {
-            'pattern': ShotPattern.spread,
-            'damage': 8,
-            'fire_rate': 1,
-            'range': 10,
-            'mag_size': 2,
-            'reload_speed': 8,
-            'cooldown': {
-                'max': 1,
-                'rate': 1},
-            'level_mod': 1.25},
-        GunType.sniper: {
-            'pattern': ShotPattern.single,
-            'damage': 9,
-            'fire_rate': 1,
-            'range': 100,
-            'mag_size': 1,
-            'reload_speed': 8,
-            'cooldown': {
-                'max': 1,
-                'rate': 1},
-            'level_mod': 1.25}}
-
-    grenade_stats = {
-        'min_fuse_time': 10,
-        'max_fuse_time': 50
+        0: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            }
+        },
+        1: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 25,
+                'fire_rate': 0,
+                'range': 30,
+                'mag_size': 5,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 15,
+                'fire_rate': 3,
+                'range': 50,
+                'mag_size': 12,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 10,
+                'fire_rate': 4,
+                'range': 10,
+                'mag_size': 2,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 50,
+                'fire_rate': 0,
+                'range': 100,
+                'mag_size': 1,
+            }
+        },
+        2: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 40,
+                'fire_rate': 0,
+                'range': 35,
+                'mag_size': 7,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 15,
+                'fire_rate': 5,
+                'range': 60,
+                'mag_size': 20,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 10,
+                'fire_rate': 6,
+                'range': 20,
+                'mag_size': 3,
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 80,
+                'fire_rate': 0,
+                'range': 200,
+                'mag_size': 2,
+            }
+        },
+        3: {
+            GunType.none: {
+                'pattern': ShotPattern.none,
+                'damage': 0,
+                'fire_rate': 0,
+                'range': 0,
+                'mag_size': 0,
+            },
+            GunType.handgun: {
+                'pattern': ShotPattern.single,
+                'damage': 60,
+                'fire_rate': 0,
+                'range': 50,
+                'mag_size': 11,
+            },
+            GunType.assault_rifle: {
+                'pattern': ShotPattern.multi,
+                'damage': 20,
+                'fire_rate': 5,
+                'range': 60,
+                'mag_size': 25,
+            },
+            GunType.shotgun: {
+                'pattern': ShotPattern.spread,
+                'damage': 20,
+                'fire_rate': 8,
+                'range': 30,
+                'mag_size': 5
+            },
+            GunType.sniper: {
+                'pattern': ShotPattern.single,
+                'damage': 100,
+                'fire_rate': 0,
+                'range': 300,
+                'mag_size': 2
+            }
+        }
     }
+
+    shot_pattern_multi_arc = math.pi / 10
 
     door_opening_speed = 1
 
-    Upgrades.gun_upgrades = 20  # Could potentially incease bullet speed?
-    Upgrades.movement_upgrades = 20  # May be used to make the player go faster?
-    Upgrades.sight_upgrades = 20  # Increase how far player can see?
+    num_loot_waves = 4
+    # self.ticks_between_waves and self.tick (var in loot gen controller) must
+    # be equal to each other
+    ticks_between_waves = 25
+
+    gun_cap = 50
+    consumable_cap = 30
+    upgrade_cap = 20
+    money_cap = 50
+
+    # this distance goes from middle of player hitbox to coord within door hitbox
+    max_allowed_dist_from_door = 10
+
+    # set explosion radius of grenade
+    blast_radius = 40
+
+    grenade_max_distance = 75

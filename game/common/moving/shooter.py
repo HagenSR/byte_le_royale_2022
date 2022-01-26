@@ -1,10 +1,21 @@
 from copy import deepcopy
 
+from game.common.items.gun import Gun
+from game.common.items.upgrade import Upgrade
+from game.common.items.consumable import Consumable
+from game.common.hitbox import Hitbox
+import game.common.items.gun
+import game.common.items.upgrade
+import game.common.items.consumable
+from game.common.items.item import Item
+from game.common.moving.damaging.grenade import Grenade
+from game.common.items.money import Money
 from game.common.moving.moving_object import MovingObject
 from game.common.items.gun import Gun
 from game.common.errors.inventory_full_error import InventoryFullError
 from game.common.stats import GameStats
 from game.common.enums import *
+from game.utils import helpers
 
 
 class Shooter(MovingObject):
@@ -14,7 +25,7 @@ class Shooter(MovingObject):
             self,
             heading=0,
             speed=0,
-            hitbox=None):
+            hitbox=Hitbox(10, 10, (250, 250), 0)):
         super().__init__(
             heading,
             speed,
@@ -23,11 +34,16 @@ class Shooter(MovingObject):
             collidable=True
         )
         self.object_type = ObjectType.shooter
+
+        self.field_of_view = GameStats.player_stats['field_of_view']
+        self.view_distance = GameStats.player_stats['view_distance']
+        self.max_speed = GameStats.player_stats['max_distance_per_turn']
+
         self.money = GameStats.player_stats['starting_money']
-        self.armor = None
-        self.visible = []
-        self.view_radius = GameStats.player_stats['view_radius']
-        self.moving = False
+        self.speed_boost_cooldown = 0
+        self.radar_cooldown = 0
+        self.armor = 1.0
+        self.shield = False
 
         # use list comprehension to dynamically generate the correct types and number of slots required in the inventory
         # To add new slots, add them to stats, they will be dynamically added to the shooter object on instantiation
@@ -36,9 +52,10 @@ class Shooter(MovingObject):
         # this statement grabs the slot_type as a string, the object type as a
         # Type, and puts it into a list of tuples
         self.slot_obj_types = [
-            (slot_type,
-             slot_stats['type']) for slot_type,
-            slot_stats in GameStats.inventory_stats.items()]
+            ('guns', game.common.items.gun.Gun),
+            ('upgrades', game.common.items.upgrade.Upgrade),
+            ('consumables', game.common.items.consumable.Consumable)]
+
         # this generates an empty inventory, with number of slots for each slot
         # type taken from game stats
         self.__inventory = {
@@ -63,7 +80,7 @@ class Shooter(MovingObject):
         return False
 
     def append_inventory(self, value):
-        """Add object to inventory"""
+        """Add object to inventory. Not allowed for client use! Will be disqualified if called in contestant's code"""
         if not isinstance(
             value, tuple(
                 slot_type[1] for slot_type in self.slot_obj_types)):
@@ -80,14 +97,20 @@ class Shooter(MovingObject):
                 return None
         raise InventoryFullError(f"Inventory full for type {type(value)}")
 
+    def remove_grenade(self):
+        for obj in self.__inventory['consumables']:
+            if isinstance(obj, Grenade):
+                self.__inventory['consumables'][self.__inventory['consumables'].index(obj)] = None
+                return obj
+        return None
+
     def remove_from_inventory(self, obj):
         """Remove object from inventory"""
         for slot_type in self.__inventory:
             # this try except block checks to make sure you're only checking
             # the correct slot type
             try:
-                self.__inventory[slot_type][self.__inventory[slot_type].index(
-                    obj)] = None
+                self.__inventory[slot_type][self.__inventory[slot_type].index(obj)] = None
             except ValueError:
                 continue
             # if a gun is removed and it's the primary one, cycle to the next
@@ -124,41 +147,49 @@ class Shooter(MovingObject):
                     break
         return self.primary_gun
 
-    # set the heading and direction in a controlled way, might need to add
-    # distance attribute later
-    def move(self, heading, speed):
-        """Set heading and speed to handle moving"""
-        super().heading = heading
-        if speed < GameStats.player_stats['move_speed']:
-            super().speed = speed
-            self.moving = True
-        raise ValueError(
-            "Speed must be less than max move speed for the player")
-
-    def stop(self):
-        """Define stop movement"""
-        super().speed = 0
-        self.moving = False
-
     def to_json(self):
         data = super().to_json()
-
-        data['inventory'] = self.inventory
-        data['visible'] = [obj.to_json() for obj in self.visible]
-
+        data['inventory'] = {
+            'inventory': {
+                slot_type:
+                    [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
+                for slot_type in self.__inventory
+            }
+        }
         data['money'] = self.money
         data['armor'] = self.armor
-        data['view_radius'] = self.view_radius
-        data['moving'] = self.moving
+        data['view_distance'] = self.view_distance
+        data['speed_boost_cooldown'] = self.speed_boost_cooldown
+        data['radar_cooldown'] = self.radar_cooldown
 
         return data
 
     def from_json(self, data):
         super().from_json(data)
-        self.inventory = data['inventory']
+        self.__inventory = {
+            slot_type:
+                self.from_json_helper(data['inventory'][slot_type])
+            for slot_type in data['inventory']
+        }
         self.money = data['money']
         self.armor = data['armor']
-        self.visible = data['visible']
-        self.view_radius = data['view_radius']
-        self.moving = data['moving']
+        self.view_distance = data['view_distance']
+        self.speed_boost_cooldown = data['speed_boost_cooldown']
+        self.radar_cooldown = data['radar_cooldown']
         return self
+
+    def from_json_helper(self, data: dict):
+        obj_list = list()
+        for obj in data:
+            if obj['object_type'] == ObjectType.consumable:
+                obj_list.append(Consumable.from_json(Consumable(), obj))
+            if obj['object_type'] == ObjectType.gun:
+                obj_list.append(Gun.from_json(Gun(), obj))
+            if obj['object_type'] == ObjectType.item:
+                obj_list.append(Item.from_json(Item(), obj))
+            if obj['object_type'] == ObjectType.money:
+                obj_list.append(Money.from_json(Money(), obj))
+            if obj['object_type'] == ObjectType.upgrade:
+                obj_list.append(Upgrade.from_json(Upgrade(), obj))
+
+        return obj_list

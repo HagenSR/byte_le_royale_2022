@@ -30,14 +30,23 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.position, (10, 0))
 
     def test_set_get_tuple_y_boundary_high(self):
-        self.hitbox.position = (10, GameStats.game_board_height)
-        self.assertEqual(self.hitbox.position,
-                         (10, GameStats.game_board_height))
+        self.hitbox.position = (
+            10,
+            GameStats.game_board_height -
+            self.hitbox.height)
+        self.assertEqual(
+            self.hitbox.position,
+            (10,
+             GameStats.game_board_height -
+             self.hitbox.height))
 
     def test_set_get_tuple_x_boundary_high(self):
-        self.hitbox.position = (GameStats.game_board_width, 10)
+        self.hitbox.position = (
+            GameStats.game_board_width -
+            self.hitbox.width,
+            10)
         self.assertEqual(self.hitbox.position,
-                         (GameStats.game_board_width, 10))
+                         (GameStats.game_board_width - self.hitbox.width, 10))
 
     def test_set_get_tuple_x_invalid_high(self):
         self.assertRaises(ValueError, self.setPosition,
@@ -48,43 +57,77 @@ class TestHitboxObject(unittest.TestCase):
                           (10, GameStats.game_board_height + 1))
 
     def test_set_get_tuple_x_boundary_low(self):
-        self.assertRaises(ValueError, self.setPosition, ((-1, 10)))
+        self.assertRaises(ValueError, self.setPosition, ((-10, 10)))
 
     def test_set_get_tuple_y_boundary_low(self):
-        self.assertRaises(ValueError, self.setPosition, ((10, -1)))
+        self.assertRaises(ValueError, self.setPosition, ((10, -10)))
 
-    def test_topLeft_corner(self):
-        self.assertEqual(self.hitbox.topLeft, (0, 0))
+    def test_top_left_corner(self):
+        self.assertEqual(self.hitbox.top_left, (0, 0))
 
-    def test_topRight_corner(self):
-        self.assertEqual(self.hitbox.topRight, (2, 0))
+    def test_top_right_corner(self):
+        self.assertEqual(self.hitbox.top_right, (2, 0))
 
-    def test_bottomLeft_corner(self):
-        self.assertEqual(self.hitbox.bottomLeft, (0, 2))
+    def test_bottom_left_corner(self):
+        self.assertEqual(self.hitbox.bottom_left, (0, 2))
 
-    def test_bottomRight_corner(self):
-        self.assertEqual(self.hitbox.bottomRight, (2, 2))
+    def test_bottom_right_corner(self):
+        self.assertEqual(self.hitbox.bottom_right, (2, 2))
 
     def test_middle(self):
         self.assertEqual(self.hitbox.middle, (1, 1))
 
-    def test_topLeft_corner_alt(self):
+    def test_top_left_corner_alt(self):
         self.hitbox.position = (10, 10)
-        self.assertEqual(self.hitbox.topLeft, (10, 10))
+        self.assertEqual(self.hitbox.top_left, (10, 10))
 
-    def test_topRight_corner_alt(self):
+    def test_top_right_corner_alt(self):
         self.hitbox.position = (10, 10)
-        self.assertEqual(self.hitbox.topRight, (12, 10))
+        self.assertEqual(self.hitbox.top_right, (12, 10))
 
-    def test_bottomLeft_corner_alt(self):
+    def test_bottom_left_corner_alt(self):
         self.hitbox.position = (10, 10)
-        self.assertEqual(self.hitbox.bottomLeft, (10, 12))
+        self.assertEqual(self.hitbox.bottom_left, (10, 12))
 
-    def test_bottomRight_corner_alt(self):
+    def test_bottom_right_corner_alt(self):
         self.hitbox.position = (10, 10)
-        self.assertEqual(self.hitbox.bottomRight, (12, 12))
+        self.assertEqual(self.hitbox.bottom_right, (12, 12))
 
     def test_middle_alt(self):
+        self.hitbox.position = (10, 10)
+        self.assertEqual(self.hitbox.middle, (11, 11))
+
+    def test_rotation_0(self):
+        self.hitbox.position = (10, 10)
+        self.hitbox.rotation = 0
+        self.assertEqual(self.hitbox.top_left, (10, 10))
+        self.assertEqual(self.hitbox.top_right, (12, 10))
+        self.assertEqual(self.hitbox.bottom_left, (10, 12))
+        self.assertEqual(self.hitbox.bottom_right, (12, 12))
+
+    def test_rotation_45(self):
+        self.hitbox.position = (10, 10)
+        self.hitbox.rotation = 45
+        self.assertEqual(self.hitbox.top_left, (11.0, 9.585786437626904))
+        self.assertEqual(self.hitbox.top_right, (12.414213562373096, 11.0))
+        self.assertEqual(self.hitbox.bottom_left, (9.585786437626904, 11.0))
+        self.assertEqual(self.hitbox.bottom_right, (11.0, 12.414213562373096))
+
+    def test_rotation_90(self):
+        self.hitbox.position = (10, 10)
+        self.hitbox.rotation = 90
+        self.assertEqual(self.hitbox.top_left, (10, 10))
+        self.assertEqual(self.hitbox.top_right, (12, 10))
+        self.assertEqual(self.hitbox.bottom_left, (10, 12))
+        self.assertEqual(self.hitbox.bottom_right, (12, 12))
+
+    def test_middle_didnt_move(self):
+        self.hitbox.position = (10, 10)
+        old_middle = self.hitbox.middle
+        self.hitbox.rotation = 43
+        self.assertEqual(self.hitbox.middle, old_middle)
+
+    def test_middle_good(self):
         self.hitbox.position = (10, 10)
         self.assertEqual(self.hitbox.middle, (11, 11))
 

@@ -1,3 +1,4 @@
+from game.common.hitbox import Hitbox
 from game.common.moving.damaging.damaging_object import DamagingObject
 from game.common.stats import GameStats
 from game.common.enums import *
@@ -6,7 +7,7 @@ from game.common.enums import *
 class Bullet(DamagingObject):
     def __init__(self, termination=None, object_hit=None, range=None,
                  damage=None, heading=None, speed=None, health=None,
-                 hitbox=None, collidable=None):
+                 hitbox=Hitbox(1, 1, (250, 250), 0), collidable=None):
         super().__init__(range, damage, heading, speed, health, hitbox, collidable)
         # termination will be an xy tuple
         self.termination = termination

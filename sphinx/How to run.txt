@@ -1,7 +1,3 @@
 Open up a powershell in the Sphinx folder and type:
 
-sphinx-build -b html . ../docs
-
-To build for github pages run
-
-make github
+sphinx-build -ab html . ../docs/FarTechnicalDocumentation

@@ -10,7 +10,7 @@ TQDM_BAR_FORMAT = "Game running at {rate_fmt} "  # how TQDM displays the bar
 TQDM_UNITS = " ticks"  # units TQDM takes in the bar
 
 # max number of basic operations clients have for their turns
-MAX_SECONDS_PER_TURN = 0.1
+MAX_SECONDS_PER_TURN = 1.0
 
 # minimum number of clients required to start running the game; should be
 # None when SET_NUMBER_OF_CLIENTS is used
@@ -37,7 +37,14 @@ MAX_CLIENTS_CONTINUE = None
 SET_NUMBER_OF_CLIENTS_CONTINUE = 2
 
 ALLOWED_MODULES = ["game.client.user_client",  # modules that clients are specifically allowed to access
-                   "game.common.enums"]
+                   "game.common.enums",
+                   "math",
+                   "game.common.action",
+                   "game.common.moving.shooter",
+                   "game.utils.partition_grid",
+                   "game.utils.collision_detection",
+                   "game.utils.player_utils",
+                   "random"]
 
 # Name and extension of results file
 RESULTS_FILE_NAME = "results.json"
