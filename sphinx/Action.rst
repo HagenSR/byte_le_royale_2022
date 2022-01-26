@@ -102,3 +102,13 @@ This will set your intent to use a teleporter. You must be standing on a telepor
 you will then be teleported to a random different teleporter. Both of these teleporters will be disabled for
 a short delay, then re-enabled.
 
+Cycle Primary Gun
+==================
+
+.. code-block:: python
+
+    actions.cycle_primary()
+
+This will cycle your selected gun in your shooter's inventory to the next one in the inventory.
+Note: this does not use up your action for the turn!
+
