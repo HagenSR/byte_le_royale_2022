@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Placeholder's documentation!
+Welcome to FarTechs's documentation!
 =======================================
 
 .. toctree::
@@ -11,6 +11,13 @@ Welcome to Placeholder's documentation!
    :caption: Contents:
 
    test
+   Server
+   Action
+   Movement_Controller
+   Map
+   Partition Grid
+   Grenade
+   grenade_controller
 
 
 

@@ -1,0 +1,2 @@
+[{"id": "31284115-d775-4b53-a5dc-9d3831921534", "object_type": 13, "health": 18, "hitbox": {"id": "24de932c-d5dd-4191-b4fd-27681bd42d8f", "object_type": 14, "width": 10, "height": 140, "position": [0, 0]}, "collidable": true, "destructible": true},
+{"id": "b5e2b830-892b-47d5-a7ff-411c5fb21ce6", "object_type": 13, "health": 18, "hitbox": {"id": "e0e554de-5d8c-49b2-8901-b98cd34a750a", "object_type": 14, "width": 130, "height": 10, "position": [10, 130]}, "collidable": true, "destructible": true}]

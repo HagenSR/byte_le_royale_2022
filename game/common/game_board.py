@@ -6,8 +6,12 @@ from game.common.stats import GameStats
 from game.common.moving.shooter import Shooter
 from game.common.wall import Wall
 from game.common.items.item import Item
+from game.common.ray import Ray
+from game.common.teleporter import Teleporter
 from copy import deepcopy
 import math
+
+from game.utils.partition_grid import PartitionGrid
 
 
 class GameBoard(GameObject):
@@ -22,19 +26,17 @@ class GameBoard(GameObject):
         self.width = width
         self.height = height
 
-        # instantiate lists with an empty list
-        self.player_list = []
-        self.wall_list = []
-        self.items_list = []
-        self.upgrades_list = []
-        self.lethal_list = []
+        self.partition = PartitionGrid(
+            width, height, 25, 25)
+        self.ray_list = []
+        self.teleporter_list = []
+
+        self.center = (width / 2, height / 2)
 
         # this calculates starting radius to totally encompass the map at start
+        # with delay
         self.circle_radius = math.sqrt(
-            (self.width / 2) ** 2 + (self.height / 2) ** 2)
-
-        # set turn counter to 0, not sure the use for this yet
-        self.turn = 0
+            (self.width / 2) ** 2 + (self.height / 2) ** 2) + GameStats.circle_delay
 
     @property
     def circle_radius(self):
@@ -50,8 +52,7 @@ class GameBoard(GameObject):
 
     def obfuscate(self):
         super().obfuscate()
-
-        self.player_list = None
+        self.ray_list = [ray.obfuscate() for ray in self.ray_list]
 
     def to_json(self):
         data = super().to_json()
@@ -59,16 +60,11 @@ class GameBoard(GameObject):
         data['width'] = self.width
         data['height'] = self.height
 
-        data['player_list'] = [player.to_json() for player in self.player_list]
-        data['wall_list'] = [wall.to_json() for wall in self.wall_list]
-        data['items_list'] = [item.to_json() for item in self.items_list]
-        data['upgrades_list'] = [upgrade.to_json()
-                                 for upgrade in self.upgrades_list]
-        data['lethal_list'] = [lethal.to_json() for lethal in self.lethal_list]
+        data['partition'] = self.partition.to_json()
+        data['ray_list'] = [ray.to_json() for ray in self.ray_list]
+        data['teleporter_list'] = [teleporter.to_json() for teleporter in self.teleporter_list]
 
         data['circle_radius'] = self.circle_radius
-
-        data['turn'] = self.turn
 
         return data
 
@@ -78,27 +74,12 @@ class GameBoard(GameObject):
         self.width = data['width']
         self.height = data['height']
 
-        player = Shooter()
-        self.player_list = [deepcopy(player.from_json(row))
-                            for row in data['player_list']]
+        self.partition.from_json(data['partition'])
 
-        wall = Wall(Hitbox(10, 10, (10, 10)))
-        self.wall_list = [deepcopy(wall.from_json(row))
-                          for row in data['wall_list']]
+        self.ray_list = [Ray().from_json(ray) for ray in data['ray_list']]
 
-        # I hope that auto conversion works?
-        item = Item(Hitbox(10, 10, (10, 10)))
-        self.items_list = [deepcopy(item.from_json(row))
-                           for row in data['items_list']]
-
-        upgrade = Upgrade(Hitbox(10, 10, (10, 10)), 1, 1)
-        self.upgrades_list = [deepcopy(upgrade.from_json(row))
-                              for row in data['upgrades_list']]
-
-        # TODO Implement this for projectiles
-        self.lethal_list = data['lethal_list']
+        self.teleporter_list = [Teleporter().from_json(teleporter) for teleporter in data['teleporter_list']]
 
         self.circle_radius = data['circle_radius']
 
-        self.turn = data['turn']
         return self

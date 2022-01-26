@@ -1,0 +1,3 @@
+[{"id": "375abc5b-a509-4900-91d3-9ec60a5a9315", "object_type": 13, "health": 18, "hitbox": {"id": "551c917f-c7e3-4f57-be2b-5d7a89b987ec", "object_type": 14, "width": 50, "height": 40, "position": [0, 50]}, "collidable": true, "destructible": true},
+{"id": "6dcf1d93-3f28-45c1-a14a-dc43d516ed10", "object_type": 13, "health": 18, "hitbox": {"id": "42ef9097-f9c2-41c9-bf7c-13ffa045fd4c", "object_type": 14, "width": 40, "height": 140, "position": [40, 0]}, "collidable": true, "destructible": true},
+{"id": "17070a52-eff4-4700-b86b-bce3b85412bd", "object_type": 13, "health": 18, "hitbox": {"id": "5d7a8cd1-dee2-41e6-a856-486b525a0044", "object_type": 14, "width": 50, "height": 40, "position": [100, 50]}, "collidable": true, "destructible": true}]
