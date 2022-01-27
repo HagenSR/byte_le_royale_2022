@@ -1,10 +1,12 @@
 ===============
 Consumables
 ===============
+
 Consumables are items which can be bought in the shop. They are single use items, costing various amounts of money.
 
 Types of Consumables
 ----------------------
+
 ================ ===== ============
  Name            Cost  Description
 ================ ===== ============
