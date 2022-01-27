@@ -32,6 +32,7 @@ Other cool features
 4. Client Downloading!
 5. SQL!
 6. ASCII table and CSV output!
+7. Client Validation
 
 
 The Important commands that you need to know!
@@ -253,6 +254,34 @@ If you're confused about the schema of the database, the below ERD diagram is pr
 .. image:: _static/imgs/ERD.png
   :width: 400
   :alt: ERD
+
+
+Validation
+===========
+
+There are some forbidden actions your client can't take. These are
+
+1. Importing imports not in the whitelist
+2. using the keyword 'open'
+3. using an uncommented 'print' keyword
+
+Import Whitelist
+--------------------
+
+The current import white list is 
+
+"game.client.user_client", 
+"game.common.enums",
+"math",
+"game.common.action",
+"game.common.moving.shooter",
+"game.utils.partition_grid",
+"game.utils.collision_detection",
+"game.utils.player_utils",
+"random"
+
+
+
 
 
 
