@@ -24,8 +24,8 @@ Instance Variables
 ================  =========================== ===================
  Name              Type                        Description
 ================  =========================== ===================
-Hitbox             Hitbox                      the wall's hitbox
-Health             int                         the wall's health
-Collidable         Boolean                     determines if objects can collide with it
-Destructable       Boolean                     determines if it can be hurt by bullets and grenades
+Hitbox             Hitbox                      the wall's hitbox.
+Health             int                         the wall's health.
+Collidable         Boolean                     determines if objects can collide with it.
+Destructable       Boolean                     determines if it can be hurt by bullets and grenades.
 ================  =========================== ===================
