@@ -123,8 +123,10 @@ class MasterController(Controller):
             self.grenade_controller.handle_actions(
                 client, self.current_world_data["game_map"])
 
-            # apply client upgrades
+            # extra client applications of logic
             self.upgrade_controller.handle_actions(client)
+            if client.action.cycle_primary_gun:
+                client.shooter.cycle_primary()
 
         if clients[0].shooter.health <= 0 or clients[1].shooter.health <= 0:
             self.game_over = True
