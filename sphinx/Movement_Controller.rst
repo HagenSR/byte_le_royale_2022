@@ -14,7 +14,9 @@ below image.
   :width: 400
   :alt: Degrees
 
-Also the shooter max speed is 25 units.
+The shooter max speed is 25 units. 
+
+The movement controller will often place you beyond your desired location. This is not a bug, but instead a realistic modeling of inertia.
 
 Example
 ------------
