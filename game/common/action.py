@@ -20,6 +20,12 @@ class Action:
 
         self.message = ""
 
+        self.__cycle_primary_gun = False
+
+    @property
+    def cycle_primary_gun(self):
+        return self.__cycle_primary_gun
+
     @property
     def heading(self):
         return self.__heading
@@ -87,6 +93,9 @@ class Action:
         self._chosen_action = ActionType.throw_grenade
         self.heading = heading
         self.grenade_distance = distance_to_throw
+
+    def cycle_primary(self):
+        self.__cycle_primary_gun = True
 
     def to_json(self):
         data = dict()

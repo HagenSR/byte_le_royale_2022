@@ -1,6 +1,7 @@
 ==========
 Grenade
 ==========
+
 The Greanade is capable of damaging all walls, doors, and players in a circle of radius 40 units. The maximum distance to throw the grenade is 75 units and deals 40 damage to objects it hits.
 
 Instance Variables
