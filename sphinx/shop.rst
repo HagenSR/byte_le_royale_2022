@@ -14,12 +14,13 @@ can airdrop your items Hunger Games style!
 Basic Info
 ----------------------
 
-The shop is where you can use money that you have picked up to purchasege-use items.
+The shop is where you can use money that you have picked up to purchase one-use items.
 Once the items are purchased, they will be placed in one of your shooter object's consumables inventory slot.
     **NOTE: Items cannot be purchased if the shooter's inventory for consumables is full.**
 
 Shop Contents
 ------------------
+
 (Description for each consumable is located in the consumables doc)
 
 ============   ============
@@ -34,6 +35,7 @@ Shop Contents
 
 Example Code
 ----
+
  **NOTE: Make sure you select what item you want to buy prior to buying from the shop**
 
 .. code-block:: python
