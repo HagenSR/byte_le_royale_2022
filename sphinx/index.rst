@@ -20,6 +20,7 @@ secure victory for Amazon ( no relation to the forest ).
    RunningTheGame
    Server
    Action
+   GameBoard
    Movement_Controller
    Kill_boundary_controller
    Loot_Generation_Controller
@@ -35,7 +36,6 @@ secure victory for Amazon ( no relation to the forest ).
    Grenade
    Shooter 
    player_utils
-   Map
    Wall
    Door
    Hitbox
