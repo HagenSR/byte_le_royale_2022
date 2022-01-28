@@ -186,7 +186,7 @@ def submit_file():
     try:
         file = request.json["file"]
         vid = request.json["vid"]
-        bad_words, opens = verify_code(file, already_string=True)
+        bad_words, opens, prints = verify_code(file, already_string=True)
         if len(file) > MAX_FILE_CHARACTER_COUNT:
             abort(
                 404,
@@ -197,6 +197,8 @@ def submit_file():
             abort(404, description="Contained illegal keywords {0}".format(bad_words))
         if opens:
             abort(404, description="Client contains keyword open. Remove 'open' from your client!")
+        if prints:
+            abort(404, description="Client contains keyword print. Remove or comment out 'print' from your client!")
         cur = conn.cursor()
         cur.execute("CALL submit_code_file(%s, %s)", (file, vid))
         conn.commit()

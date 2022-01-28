@@ -262,7 +262,7 @@ class GameStats:
     num_loot_waves = 4
     # self.ticks_between_waves and self.tick (var in loot gen controller) must
     # be equal to each other
-    ticks_between_waves = 200
+    ticks_between_waves = 25
 
     gun_cap = 50
     consumable_cap = 30
@@ -276,3 +276,5 @@ class GameStats:
     blast_radius = 40
 
     grenade_max_distance = 75
+
+    grenade_fuse_time = 5
