@@ -2,6 +2,16 @@
 Consumables
 ===============
 
+Lore
+------
+
+Robots picked up their habit of consumption from the humans they replaced. This consumption is purely performative, as robot's are not actually affected by the items
+they consume. All of these buffs latently exist within the robots capabilities, but they choose not to use them without consuming. This finicky behavior is a side effect
+of creating AI based off of humans.
+
+Important information
+----------------------
+
 Consumables are items which can be bought in the shop. They are single use items, costing various amounts of money.
 
 Types of Consumables
