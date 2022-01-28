@@ -2,6 +2,7 @@
 Shoot Controller
 ====================
 
+
 Lore
 -----
 
@@ -29,6 +30,7 @@ Code
 
 .. code-block:: python
     actions.set_shoot(heading = int(90))
+
 
 
 
