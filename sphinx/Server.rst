@@ -278,7 +278,8 @@ The current import white list is
 "game.utils.partition_grid",
 "game.utils.collision_detection",
 "game.utils.player_utils",
-"random"
+"random",
+"numpy"
 
 
 
