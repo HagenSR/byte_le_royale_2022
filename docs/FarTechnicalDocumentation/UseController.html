@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrades &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Using Items &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using Items" href="UseController.html" />
-    <link rel="prev" title="Upgrade Controller" href="Upgrade_Controller.html" /> 
+    <link rel="next" title="Consumables" href="consumable.html" />
+    <link rel="prev" title="Upgrades" href="Upgrades.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,12 +53,8 @@
 <li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrades</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lore">Lore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#types-of-upgrades">Types of Upgrades</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="UseController.html">Using Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Items</a></li>
 <li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
@@ -88,9 +84,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Upgrades</li>
+      <li>Using Items</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/Upgrades.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/UseController.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -98,50 +94,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="upgrades">
-<h1>Upgrades<a class="headerlink" href="#upgrades" title="Permalink to this headline">¶</a></h1>
-<p>Upgrades are items which can be found as loot on the game map.
-They provide permanent perks to the shooter object as long as they remain within their
-inventory.</p>
-<div class="section" id="lore">
-<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline">¶</a></h2>
-<p>While fighting in this futuristic waste-land, you notice some gear left from those who have fallen before you.
-Might be handy to take these with you…</p>
-<p><em>(it’s not stealing if they’re already dead, right?)</em></p>
-</div>
-<div class="section" id="types-of-upgrades">
-<h2>Types of Upgrades<a class="headerlink" href="#types-of-upgrades" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<colgroup>
-<col width="28%" />
-<col width="72%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Bonuses</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Armor</td>
-<td>Gives shooter 20% damage reduction.</td>
-</tr>
-<tr class="row-odd"><td>Movement Boots</td>
-<td>Max speed is doubled.</td>
-</tr>
-<tr class="row-even"><td>Backpack</td>
-<td>Consumables slot-type is increased by one.</td>
-</tr>
-</tbody>
-</table>
-</div>
+  <div class="section" id="using-items">
+<h1>Using Items<a class="headerlink" href="#using-items" title="Permalink to this headline">¶</a></h1>
+<p>The use controller controls using consumable items.</p>
+<p>By calling the action ‘actions.select_item_to_use(obj)’ you can select what item you want to use.
+Make sure that obj is the consumable object from your inventory.</p>
+<p>Speed boost and radar will last for 10 turns each and cannot be applied again until after those 10 turns.</p>
+<p>Shield is set as a boolean in the shooter object, and will go away after one shot hits you.</p>
+<p>Health pack will increase your shooter health.</p>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Upgrade_Controller.html" class="btn btn-neutral float-left" title="Upgrade Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="UseController.html" class="btn btn-neutral float-right" title="Using Items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Upgrades.html" class="btn btn-neutral float-left" title="Upgrades" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="consumable.html" class="btn btn-neutral float-right" title="Consumables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
