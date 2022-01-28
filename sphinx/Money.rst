@@ -4,11 +4,13 @@ Money
 
 Basic Info
 ------------------
+
 Throughout the game, money will spawn on the map for
 the shooter to pick up.
 
 Instance Variables
 ------------------
+
 Instance variables for Money object:
 
 ================  =========================== ====================================================================
@@ -22,6 +24,7 @@ Instance variables for Money object:
 
 Picking up Money
 ------------------
+
 In order to pick up money, your shooter object must be standing on top of it. You can then
 use this command to let the game know you would like to interact with this object.
 
@@ -35,6 +38,7 @@ use this command to let the game know you would like to interact with this objec
 
 Checking how much Money you Have
 ----------------------------------
+
 During the game, you'll probably want to keep track of
 how much money you've been saving. To do so, you may enter the
 following command:
