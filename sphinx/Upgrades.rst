@@ -19,7 +19,7 @@ Types of Upgrades
 ================  ============
  Name             Bonuses
 ================  ============
- Armor            Description
+ Armor            Gives shooter 20% damage reduction.
  Movement Boots   Max speed is doubled.
- Backpack         Each inventory slot-type is increased by one.
+ Backpack         Consumables slot-type is increased by one.
 ================  ============
