@@ -17,8 +17,8 @@ secure victory for Amazon ( no relation to the forest ).
    :maxdepth: 2
    :caption: Contents:
 
-   test
    RunningTheGame
+   Server
    Action
    Movement_Controller
    Kill_boundary_controller
@@ -42,9 +42,6 @@ secure victory for Amazon ( no relation to the forest ).
    Item_Gen_Utils
    Partition Grid
    calculate_new_location
-
-
-   Server
    
 
 
