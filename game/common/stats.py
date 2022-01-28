@@ -259,12 +259,6 @@ class GameStats:
         }
     }
 
-    grenade_stats = {
-        'range': 40,
-        'min_fuse_time': 10,
-        'max_fuse_time': 50
-    }
-
     shot_pattern_multi_arc = math.pi / 10
 
     door_opening_speed = 1
@@ -272,7 +266,7 @@ class GameStats:
     num_loot_waves = 4
     # self.ticks_between_waves and self.tick (var in loot gen controller) must
     # be equal to each other
-    ticks_between_waves = 200
+    ticks_between_waves = 25
 
     gun_cap = 50
     consumable_cap = 30
@@ -281,3 +275,10 @@ class GameStats:
 
     # this distance goes from middle of player hitbox to coord within door hitbox
     max_allowed_dist_from_door = 10
+
+    # set explosion radius of grenade
+    blast_radius = 40
+
+    grenade_max_distance = 75
+
+    grenade_fuse_time = 5

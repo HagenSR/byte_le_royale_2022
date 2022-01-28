@@ -189,5 +189,5 @@ def setup(app):
     }, True)
     app.add_transform(AutoStructify)
 
-    app.add_stylesheet('accordion.css')
-    app.add_javascript('accordion.js')
+    app.add_css_file('accordion.css')
+    app.add_js_file('accordion.js')

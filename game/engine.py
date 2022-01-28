@@ -93,7 +93,7 @@ class Engine:
                 self.clients.append(player)
 
                 # Verify client isn't using invalid imports or opening anything
-                imports, opening = verify_code(filename + '.py')
+                imports, opening, printing = verify_code(filename + '.py')
                 if len(imports) != 0:
                     player.functional = False
                     player.error = f'Player has attempted illegal imports: {imports}'
