@@ -7,14 +7,15 @@ Once the items are purchased, they will be placed in one of your shooter object'
 
 Shop Contents
 ------------------
+(Description for each consumable is located in the consumables doc)
 
-============   ============  ============================
- Item            Cost          Description
-============   ============  ============================
+============   ============
+ Item            Cost
+============   ============
  speed boost   20
  health pack   25
  shield        30
  radar         40
  grenade       55
-============   ============  ============================
+============   ============
 
