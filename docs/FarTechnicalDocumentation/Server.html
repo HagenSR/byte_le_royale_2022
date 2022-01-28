@@ -18,8 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Movement Controller" href="Movement_Controller.html" />
-    <link rel="prev" title="My Title" href="test.html" /> 
+    <link rel="next" title="Taking Action" href="Action.html" />
+    <link rel="prev" title="Running the game" href="RunningTheGame.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,6 +43,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Server Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#important-info">Important Info!</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#group-runs">Group runs</a></li>
@@ -71,8 +72,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#client-runner">Client Runner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visualizer">Visualizer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#database-schema">Database Schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#validation">Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#import-whitelist">Import Whitelist</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Map.html">The Game Map</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
@@ -138,6 +144,7 @@ before your next client is run.</p>
 <li>Client Downloading!</li>
 <li>SQL!</li>
 <li>ASCII table and CSV output!</li>
+<li>Client Validation</li>
 </ol>
 </div>
 </div>
@@ -309,14 +316,37 @@ restart the program so the most recent logs are played.</p>
 (It’s a bit ugly, but this is what the auto format likes and I can’t do it better)</p>
 <a class="reference internal image-reference" href="_images/ERD.png"><img alt="ERD" src="_images/ERD.png" style="width: 400px;" /></a>
 </div>
+<div class="section" id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>There are some forbidden actions your client can’t take. These are</p>
+<ol class="arabic simple">
+<li>Importing imports not in the whitelist</li>
+<li>using the keyword ‘open’</li>
+<li>using an uncommented ‘print’ keyword</li>
+</ol>
+<div class="section" id="import-whitelist">
+<h3>Import Whitelist<a class="headerlink" href="#import-whitelist" title="Permalink to this headline">¶</a></h3>
+<p>The current import white list is</p>
+<p>“game.client.user_client”,
+“game.common.enums”,
+“math”,
+“game.common.action”,
+“game.common.moving.shooter”,
+“game.utils.partition_grid”,
+“game.utils.collision_detection”,
+“game.utils.player_utils”,
+“random”,
+“numpy”</p>
+</div>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="test.html" class="btn btn-neutral float-left" title="My Title" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="Movement_Controller.html" class="btn btn-neutral float-right" title="Movement Controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="RunningTheGame.html" class="btn btn-neutral float-left" title="Running the game" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Action.html" class="btn btn-neutral float-right" title="Taking Action" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
