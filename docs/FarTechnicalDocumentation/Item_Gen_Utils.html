@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upgrades &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Item Generation Utils Methods &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,8 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using Items" href="UseController.html" />
-    <link rel="prev" title="Upgrade Controller" href="Upgrade_Controller.html" /> 
+    <link rel="next" title="Partition Grid" href="Partition Grid.html" />
+    <link rel="prev" title="Hitbox" href="Hitbox.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -53,11 +53,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrades</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#lore">Lore</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#types-of-upgrades">Types of Upgrades</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a></li>
 <li class="toctree-l1"><a class="reference internal" href="UseController.html">Using Items</a></li>
 <li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
@@ -68,7 +64,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Item Generation Utils Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#remove-items-from-map">remove_items_from_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#has-reached-item-cap">has_reached_item_cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pick-item">pick_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#place-item">place_item</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -88,9 +90,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Upgrades</li>
+      <li>Item Generation Utils Methods</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/Upgrades.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Item_Gen_Utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -98,41 +100,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="upgrades">
-<h1>Upgrades<a class="headerlink" href="#upgrades" title="Permalink to this headline">¶</a></h1>
-<p>Upgrades are items which can be found as loot on the game map.
-They provide permanent perks to the shooter object as long as they remain within their
-inventory.</p>
-<div class="section" id="lore">
-<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline">¶</a></h2>
-<p>While fighting in this futuristic waste-land, you notice some gear left from those who have fallen before you.
-Might be handy to take these with you…</p>
-<p><em>(it’s not stealing if they’re already dead, right?)</em></p>
+  <div class="section" id="item-generation-utils-methods">
+<h1>Item Generation Utils Methods<a class="headerlink" href="#item-generation-utils-methods" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="remove-items-from-map">
+<h2>remove_items_from_map<a class="headerlink" href="#remove-items-from-map" title="Permalink to this headline">¶</a></h2>
+<p>Removes all items from the map. Is called before spawning a new wave of loot.</p>
 </div>
-<div class="section" id="types-of-upgrades">
-<h2>Types of Upgrades<a class="headerlink" href="#types-of-upgrades" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<colgroup>
-<col width="28%" />
-<col width="72%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Bonuses</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>Armor</td>
-<td>Gives shooter 20% damage reduction.</td>
-</tr>
-<tr class="row-odd"><td>Movement Boots</td>
-<td>Max speed is doubled.</td>
-</tr>
-<tr class="row-even"><td>Backpack</td>
-<td>Consumables slot-type is increased by one.</td>
-</tr>
-</tbody>
-</table>
+<div class="section" id="has-reached-item-cap">
+<h2>has_reached_item_cap<a class="headerlink" href="#has-reached-item-cap" title="Permalink to this headline">¶</a></h2>
+<p>Determines if too many of a type of item (gun, upgrade, money) spawns on the map and prevents another from spawning if there are too many.</p>
+</div>
+<div class="section" id="pick-item">
+<h2>pick_item<a class="headerlink" href="#pick-item" title="Permalink to this headline">¶</a></h2>
+<p>Picks what item to spawn. 60% chance of money, 20% chance of a gun, and 20% chance of an upgrade.</p>
+</div>
+<div class="section" id="place-item">
+<h2>place_item<a class="headerlink" href="#place-item" title="Permalink to this headline">¶</a></h2>
+<p>Places an item randomly on the map, will not spawn an item on top of another item. Items are placed on a standard distribution with the highest chance of spawning at the center of the map.</p>
 </div>
 </div>
 
@@ -140,8 +124,8 @@ Might be handy to take these with you…</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Upgrade_Controller.html" class="btn btn-neutral float-left" title="Upgrade Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="UseController.html" class="btn btn-neutral float-right" title="Using Items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Hitbox.html" class="btn btn-neutral float-left" title="Hitbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Partition Grid.html" class="btn btn-neutral float-right" title="Partition Grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -29,7 +29,10 @@ Code
 ----
 
 .. code-block:: python
+
     actions.set_shoot(heading = int(90))
+
+Will shoot southwards
 
 
 
