@@ -1,26 +1,25 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Game Map &mdash; Byte-le-Royale 2022 9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>The Game Map &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/accordion.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Server Documentation" href="Server.html" /> 
+    <link rel="next" title="Partition Grid" href="Partition Grid.html" />
+    <link rel="prev" title="Movement Controller" href="Movement_Controller.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,15 +40,21 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">The Game Map</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general-layout">General Layout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#item-loot-generation">Item loot generation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
 </ul>
 
         </div>
@@ -76,48 +81,49 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="the-game-map">
-<h1>The Game Map<a class="headerlink" href="#the-game-map" title="Permalink to this headline"></a></h1>
-<section id="general-layout">
-<h2>General Layout<a class="headerlink" href="#general-layout" title="Permalink to this headline"></a></h2>
+  <div class="section" id="the-game-map">
+<h1>The Game Map<a class="headerlink" href="#the-game-map" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-layout">
+<h2>General Layout<a class="headerlink" href="#general-layout" title="Permalink to this headline">¶</a></h2>
 <p>The map is a continuous cartesian grid with nine subplots separated by a small open margin. In each subplot except the middle
 a randomly chosen predefined structure of walls and doors will spawn. Navigating these structures is a task left to the player.</p>
-</section>
-<section id="item-loot-generation">
-<h2>Item loot generation<a class="headerlink" href="#item-loot-generation" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="item-loot-generation">
+<h2>Item loot generation<a class="headerlink" href="#item-loot-generation" title="Permalink to this headline">¶</a></h2>
 <p>Loot will be spawned at the start of the game and in three waves after the game starts. This loot spawns with the following probabilities.</p>
-<table class="docutils align-default">
+<table border="1" class="docutils">
 <colgroup>
-<col style="width: 43%" />
-<col style="width: 58%" />
+<col width="43%" />
+<col width="58%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Object</p></th>
-<th class="head"><p>Spawn Chance</p></th>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Object</th>
+<th class="head">Spawn Chance</th>
 </tr>
 </thead>
-<tbody>
-<tr class="row-even"><td><p>Money</p></td>
-<td><p>60%</p></td>
+<tbody valign="top">
+<tr class="row-even"><td>Money</td>
+<td>60%</td>
 </tr>
-<tr class="row-odd"><td><p>Upgrade</p></td>
-<td><p>20%</p></td>
+<tr class="row-odd"><td>Upgrade</td>
+<td>20%</td>
 </tr>
-<tr class="row-even"><td><p>Gun</p></td>
-<td><p>20%</p></td>
+<tr class="row-even"><td>Gun</td>
+<td>20%</td>
 </tr>
 </tbody>
 </table>
 <p>This loot will spawn randomly into unoccupied locations within the death circle.</p>
 <p>The Partition Grid is a data structure built to help players efficiently find objects within the game map near the player.</p>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Server.html" class="btn btn-neutral float-left" title="Server Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Movement_Controller.html" class="btn btn-neutral float-left" title="Movement Controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Partition Grid.html" class="btn btn-neutral float-right" title="Partition Grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

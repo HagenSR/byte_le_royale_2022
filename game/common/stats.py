@@ -276,3 +276,5 @@ class GameStats:
     blast_radius = 40
 
     grenade_max_distance = 75
+
+    grenade_fuse_time = 5

@@ -10,7 +10,7 @@ TQDM_BAR_FORMAT = "Game running at {rate_fmt} "  # how TQDM displays the bar
 TQDM_UNITS = " ticks"  # units TQDM takes in the bar
 
 # max number of basic operations clients have for their turns
-MAX_SECONDS_PER_TURN = 0.1
+MAX_SECONDS_PER_TURN = 1.0
 
 # minimum number of clients required to start running the game; should be
 # None when SET_NUMBER_OF_CLIENTS is used
