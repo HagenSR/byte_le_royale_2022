@@ -6,9 +6,9 @@
 Welcome to FarTech's documentation!
 =======================================
 
-In this game you write the solider AI for a warmongering robot nation state. Your goal is to win as many 1v1 matches against 
+In this game you write the soldier AI for a warmongering robot nation state. Your goal is to win as many 1v1 matches against 
 other AI's, lest your robot employers find you to be incompetent at your job. Move, shoot, teleport, buy and throw grenades to
-secure victory for Amazon ( no relation to the forrest ).
+secure victory for Amazon ( no relation to the forest ).
 
 .. image:: ./_static/imgs/terrorists_byte_le.png
    :width: 800
@@ -26,7 +26,7 @@ secure victory for Amazon ( no relation to the forrest ).
    Partition Grid
    Grenade
    grenade_controller
-
+https://blackboard.ndus.edu/ultra/course
 
 
 Indices and tables
