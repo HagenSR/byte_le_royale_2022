@@ -61,7 +61,7 @@ class Engine:
                 if self.tick_number >= MAX_TICKS:
                     break
         except Exception as e:
-            print(str(e))
+            print("Exception raised during runtime: " + str(e))
         finally:
             self.shutdown()
 
