@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Server Documentation &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Server Documentation &mdash; Byte-le-Royale 2022 9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/accordion.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Server Documentation</a><ul>
@@ -99,7 +101,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition%20Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
@@ -130,48 +132,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="server-documentation">
-<h1>Server Documentation<a class="headerlink" href="#server-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="important-info">
-<h2>Important Info!<a class="headerlink" href="#important-info" title="Permalink to this headline">¶</a></h2>
+  <section id="server-documentation">
+<h1>Server Documentation<a class="headerlink" href="#server-documentation" title="Permalink to this headline"></a></h1>
+<section id="important-info">
+<h2>Important Info!<a class="headerlink" href="#important-info" title="Permalink to this headline"></a></h2>
 <p>There is a new server this year and it improves on the previous server in two major ways</p>
 <ol class="arabic simple">
-<li>More information is stored and kept in the database</li>
-<li>You can access this information through the client</li>
+<li><p>More information is stored and kept in the database</p></li>
+<li><p>You can access this information through the client</p></li>
 </ol>
 <p>This functionality is optional, and the below section highlights the commands you need to know</p>
-<div class="section" id="group-runs">
-<h3>Group runs<a class="headerlink" href="#group-runs" title="Permalink to this headline">¶</a></h3>
+<section id="group-runs">
+<h3>Group runs<a class="headerlink" href="#group-runs" title="Permalink to this headline"></a></h3>
 <p>Unlike previous years, clients will be run together at a distinct point in time, known as a group run. The
 benefit to group runs is that you can fetch information relating to each group run (such as launcher version!)
 and view your progress (or regression) over time!</p>
 <p>The downside is that there is no “queue” like previous years, and you have to wait for the group run to complete
 before your next client is run.</p>
-</div>
-<div class="section" id="other-cool-features">
-<h3>Other cool features<a class="headerlink" href="#other-cool-features" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="other-cool-features">
+<h3>Other cool features<a class="headerlink" href="#other-cool-features" title="Permalink to this headline"></a></h3>
 <ol class="arabic simple">
-<li>HTTPS!</li>
-<li><dl class="first docutils">
-<dt>Rate Limiting!</dt>
-<dd><ol class="first last arabic">
-<li>Note that the default rate limit is 1 / second</li>
+<li><p>HTTPS!</p></li>
+<li><dl class="simple">
+<dt>Rate Limiting!</dt><dd><ol class="arabic simple">
+<li><p>Note that the default rate limit is 1 / second</p></li>
 </ol>
 </dd>
 </dl>
 </li>
-<li>Seed downloading!</li>
-<li>Client Downloading!</li>
-<li>SQL!</li>
-<li>ASCII table and CSV output!</li>
-<li>Client Validation</li>
+<li><p>Seed downloading!</p></li>
+<li><p>Client Downloading!</p></li>
+<li><p>SQL!</p></li>
+<li><p>ASCII table and CSV output!</p></li>
+<li><p>Client Validation</p></li>
 </ol>
-</div>
-</div>
-<div class="section" id="the-important-commands-that-you-need-to-know">
-<h2>The Important commands that you need to know!<a class="headerlink" href="#the-important-commands-that-you-need-to-know" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="registering">
-<h3>Registering<a class="headerlink" href="#registering" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="the-important-commands-that-you-need-to-know">
+<h2>The Important commands that you need to know!<a class="headerlink" href="#the-important-commands-that-you-need-to-know" title="Permalink to this headline"></a></h2>
+<section id="registering">
+<h3>Registering<a class="headerlink" href="#registering" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 10 / hour</strong></p>
 <p>Registering is required to recieve your VID ( Don’t share with anyone!) which in turn allows you to submit clients and view
 team specific information. If your teamates wish to upload to the server, you’ll have to send them the vID.</p>
@@ -179,9 +180,9 @@ team specific information. If your teamates wish to upload to the server, you’
 </pre></div>
 </div>
 <p>you will then be prompted to enter information</p>
-</div>
-<div class="section" id="submiting-clients">
-<h3>submiting clients<a class="headerlink" href="#submiting-clients" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="submiting-clients">
+<h3>submiting clients<a class="headerlink" href="#submiting-clients" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="o">-</span><span class="n">submit</span>
 </pre></div>
@@ -189,9 +190,9 @@ team specific information. If your teamates wish to upload to the server, you’
 <p>Once you’ve registered, you can submit your client. At least one client must be submitted by 10pm to be elligible to win. The server will automatically look for files in the
 root directory that contain the word ‘client’. Otherwise, you can manually select the file. Once you’ve confirmed the file, it will be uploaded to the server and
 then run against other clients to determine placing. Feel free to submit as many times as you like, but please refrain from excessive uploads.</p>
-</div>
-<div class="section" id="leaderboard">
-<h3>leaderboard<a class="headerlink" href="#leaderboard" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="leaderboard">
+<h3>leaderboard<a class="headerlink" href="#leaderboard" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">leaderboard</span>
 </pre></div>
@@ -204,21 +205,21 @@ then run against other clients to determine placing. Feel free to submit as many
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">leaderboard</span> <span class="o">-</span><span class="n">group_id</span> <span class="o">&lt;</span><span class="n">group_run_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="view-stats">
-<h3>view stats<a class="headerlink" href="#view-stats" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="view-stats">
+<h3>view stats<a class="headerlink" href="#view-stats" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span>
 </pre></div>
 </div>
 <p>Returns stats relating to your submissions(s). All stats relate to your most recent submission. Please note that the stats will continue to change until all
 runs are completed.</p>
-</div>
-</div>
-<div class="section" id="other-fun-commands">
-<h2>Other Fun Commands!<a class="headerlink" href="#other-fun-commands" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="note-on-output">
-<h3>Note on output<a class="headerlink" href="#note-on-output" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="other-fun-commands">
+<h2>Other Fun Commands!<a class="headerlink" href="#other-fun-commands" title="Permalink to this headline"></a></h2>
+<section id="note-on-output">
+<h3>Note on output<a class="headerlink" href="#note-on-output" title="Permalink to this headline"></a></h3>
 <p>Some of the tables from the commands can be quite large. You can write these large results to a file using the &gt; opperator. EX:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_group_run</span> <span class="o">&lt;</span><span class="n">group_id</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
@@ -227,125 +228,124 @@ runs are completed.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="o">-</span><span class="n">csv</span> <span class="n">leaderboard</span> <span class="o">&gt;</span> <span class="n">output</span><span class="o">.</span><span class="n">csv</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="runs-for-group-run">
-<h3>runs for group run<a class="headerlink" href="#runs-for-group-run" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="runs-for-group-run">
+<h3>runs for group run<a class="headerlink" href="#runs-for-group-run" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_group_run</span> <span class="o">&lt;</span><span class="n">group_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Returns all of a team’s runs for a given group run</p>
-</div>
-<div class="section" id="runs-for-submission">
-<h3>runs for submission<a class="headerlink" href="#runs-for-submission" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="runs-for-submission">
+<h3>runs for submission<a class="headerlink" href="#runs-for-submission" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">runs_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Returns all of the runs for a given submission</p>
-</div>
-<div class="section" id="get-submissions">
-<h3>get submissions<a class="headerlink" href="#get-submissions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="get-submissions">
+<h3>get submissions<a class="headerlink" href="#get-submissions" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_submissions</span>
 </pre></div>
 </div>
 <p>Returns all of the submissions for a team</p>
-</div>
-<div class="section" id="get-group-runs">
-<h3>get group runs<a class="headerlink" href="#get-group-runs" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="get-group-runs">
+<h3>get group runs<a class="headerlink" href="#get-group-runs" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_group_runs</span>
 </pre></div>
 </div>
 <p>Returns all of the group runs a team participated in</p>
-</div>
-<div class="section" id="get-code-for-submission">
-<h3>get code for submission<a class="headerlink" href="#get-code-for-submission" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="get-code-for-submission">
+<h3>get code for submission<a class="headerlink" href="#get-code-for-submission" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_code_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Returns code for a given submission</p>
-</div>
-<div class="section" id="get-errors-for-submission">
-<h3>get errors for submission<a class="headerlink" href="#get-errors-for-submission" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="get-errors-for-submission">
+<h3>get errors for submission<a class="headerlink" href="#get-errors-for-submission" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">stats</span> <span class="o">-</span><span class="n">get_errors_for_submission</span> <span class="o">&lt;</span><span class="n">submission_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Returns errors for a given submission</p>
-</div>
-<div class="section" id="view-score-over-time">
-<h3>View score over time<a class="headerlink" href="#view-score-over-time" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="view-score-over-time">
+<h3>View score over time<a class="headerlink" href="#view-score-over-time" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 5/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">leaderboard</span> <span class="o">-</span><span class="n">over_time</span>
 </pre></div>
 </div>
 <p>Returns your team’s placing and total wins for each group run</p>
-</div>
-<div class="section" id="get-a-seed">
-<h3>Get a seed<a class="headerlink" href="#get-a-seed" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="get-a-seed">
+<h3>Get a seed<a class="headerlink" href="#get-a-seed" title="Permalink to this headline"></a></h3>
 <p><strong>Rate Limit: 1/minute</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">launcher</span><span class="o">.</span><span class="n">pyz</span> <span class="n">client</span> <span class="n">get_seed</span> <span class="o">-</span><span class="n">run_id</span> <span class="o">&lt;</span><span class="n">run_id</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Downloads a given seed for a run. Not very helpful for this year’s PvP competition, but you can imagine the
 possibilities in a PvE competition!</p>
-</div>
-</div>
-<div class="section" id="client-runner">
-<h2>Client Runner<a class="headerlink" href="#client-runner" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="client-runner">
+<h2>Client Runner<a class="headerlink" href="#client-runner" title="Permalink to this headline"></a></h2>
 <p>After your client has been uploaded to the server, it will be periodically ran against other clients to determine who has the best client.
 This is done by the Client Runner, Which has the following flow:</p>
 <ol class="arabic simple">
-<li>If there are more than two clients, the program runs</li>
-<li>Four seeds are generated</li>
-<li>Each seed is uploaded to the server</li>
-<li>Every team plays every other team on each seed twice, with one client going first each time</li>
-<li><dl class="first docutils">
-<dt>If the games are interupted by an error, all results will be deleted.</dt>
-<dd><ol class="first last arabic">
-<li>Note that if a client throws an error, that client loses and the results are still valid</li>
-<li>It is also possible for clients to tie by dying on the same turn</li>
+<li><p>If there are more than two clients, the program runs</p></li>
+<li><p>Four seeds are generated</p></li>
+<li><p>Each seed is uploaded to the server</p></li>
+<li><p>Every team plays every other team on each seed twice, with one client going first each time</p></li>
+<li><dl class="simple">
+<dt>If the games are interupted by an error, all results will be deleted.</dt><dd><ol class="arabic simple">
+<li><p>Note that if a client throws an error, that client loses and the results are still valid</p></li>
+<li><p>It is also possible for clients to tie by dying on the same turn</p></li>
 </ol>
 </dd>
 </dl>
 </li>
-<li>The logs for the first winning game for each team are saved, and then played on the visualizer</li>
-<li>Process ends, waits a bit, and then repeats</li>
+<li><p>The logs for the first winning game for each team are saved, and then played on the visualizer</p></li>
+<li><p>Process ends, waits a bit, and then repeats</p></li>
 </ol>
 <p>The deterministic behavior of the game has been confirmed. IE if every team uploads the same client, they all tie with the same number of wins.</p>
-</div>
-<div class="section" id="visualizer">
-<h2>Visualizer<a class="headerlink" href="#visualizer" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="visualizer">
+<h2>Visualizer<a class="headerlink" href="#visualizer" title="Permalink to this headline"></a></h2>
 <p>To allow participants to have an idea of what stratagies teams are persuing, Logs from the client runner will be played on the twitch stream.
 It follows the following flow:</p>
 <ol class="arabic simple">
-<li>Visualizer checks if there are new game logs to played</li>
-<li>If so, the latest logs are played</li>
-<li>The visualizer waits a bit</li>
-<li>Process repeats.</li>
+<li><p>Visualizer checks if there are new game logs to played</p></li>
+<li><p>If so, the latest logs are played</p></li>
+<li><p>The visualizer waits a bit</p></li>
+<li><p>Process repeats.</p></li>
 </ol>
 <p>This does mean that some logs may never be played if playing all of the logs takes too long for the visualizer. It may also be prudent for the Dev team to
 restart the program so the most recent logs are played.</p>
-</div>
-<div class="section" id="database-schema">
-<h2>Database Schema<a class="headerlink" href="#database-schema" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="database-schema">
+<h2>Database Schema<a class="headerlink" href="#database-schema" title="Permalink to this headline"></a></h2>
 <p>If you’re confused about the schema of the database, the below ERD diagram is provided. Note that all foriegn keys have cascading deletes.
 (It’s a bit ugly, but this is what the auto format likes and I can’t do it better)</p>
 <a class="reference internal image-reference" href="_images/ERD.png"><img alt="ERD" src="_images/ERD.png" style="width: 400px;" /></a>
-</div>
-<div class="section" id="validation">
-<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline"></a></h2>
 <p>There are some forbidden actions your client can’t take. These are</p>
 <ol class="arabic simple">
-<li>Importing imports not in the whitelist</li>
-<li>using the keyword ‘open’</li>
-<li>using an uncommented ‘print’ keyword</li>
+<li><p>Importing imports not in the whitelist</p></li>
+<li><p>using the keyword ‘open’</p></li>
+<li><p>using an uncommented ‘print’ keyword</p></li>
 </ol>
-<div class="section" id="import-whitelist">
-<h3>Import Whitelist<a class="headerlink" href="#import-whitelist" title="Permalink to this headline">¶</a></h3>
+<section id="import-whitelist">
+<h3>Import Whitelist<a class="headerlink" href="#import-whitelist" title="Permalink to this headline"></a></h3>
 <p>The current import white list is</p>
 <p>“game.client.user_client”,
 “game.common.enums”,
@@ -357,9 +357,9 @@ restart the program so the most recent logs are played.</p>
 “game.utils.player_utils”,
 “random”,
 “numpy”</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
