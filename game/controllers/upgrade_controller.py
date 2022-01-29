@@ -15,7 +15,7 @@ class UpgradeController(Controller):
                 if obj.upgrade_enum == Upgrades.armor:
                     client.shooter.armor = 1.0
                 if obj.upgrade_enum == Upgrades.movement_boots:
-                    client.shooter.max_speed = GameStats.player_stats['max_distance_per_turn']
+                    client.shooter.max_speed /= 1 + GameStats.upgrade_stats['movement_boost']
                 if obj.upgrade_enum == Upgrades.backpack:
                     client.shooter.remove_consumable_slots(GameStats.upgrade_stats["backpack_slot_increase"])
 
