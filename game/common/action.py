@@ -22,8 +22,8 @@ class Action:
 
         self.__cycle_primary_gun = False
 
-        self.item_to_drop = None
-        self.item_sub_type_to_drop = None
+        self.item_to_drop = 0
+        self.item_sub_type_to_drop = 0
 
     @property
     def item_to_drop(self):

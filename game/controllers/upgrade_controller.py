@@ -9,7 +9,7 @@ class UpgradeController(Controller):
 
     def handle_actions(self, client):
         # if the client wants to drop an item, try to do it
-        if client.action.item_to_drop:
+        if client.action.item_to_drop != 0 and client.action.item_sub_type_to_drop != 0:
             obj = client.shooter.remove_from_inventory_enum(client.action.item_to_drop)
             if obj and obj.object_type == ObjectType.upgrade:
                 if obj.upgrade_enum == Upgrades.armor:
