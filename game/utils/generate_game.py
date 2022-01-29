@@ -464,4 +464,4 @@ def determine_teleporter_nearby(teleporter, game_board):
 
 
 if __name__ == '__main__':
-    create_structures_file("./structures/structureDescriptiveName.json")
+    create_structures_file("./structures.json")
