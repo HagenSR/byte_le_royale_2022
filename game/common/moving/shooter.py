@@ -126,13 +126,15 @@ class Shooter(MovingObject):
                 if item.object_type == enum:
                     if isinstance(item, Gun) and item.gun_type == sub_enum:
                         self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                        if item == self.primary_gun:
+                            self.cycle_primary()
+                        return item
                     if isinstance(item, Upgrade) and item.upgrade_enum == sub_enum:
                         self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                        return item
                     if isinstance(item, Consumable) and item.consumable_type == sub_enum:
                         self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
-                if isinstance(item, Gun) and item == self.primary_gun:
-                    self.cycle_primary()
-                return item
+                        return item
             return None
 
     def remove_consumable_slots(self, num_slots):
