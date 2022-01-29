@@ -44,10 +44,13 @@ angle_to_point
 
 .. code-block:: python
 
-   player_utils.angle_to_point(player, coord_tuple: tuple) -> float
+   player_utils.angle_to_point(player, coord_tuple: tuple) -> int
 
 Returns the angle you need to travel in to go from one point to another
 (Not considering any obstacle)
+
+**NOTE: if the angle measurement is a fraction, it will be truncated and returned
+as an int. This should still point you close to the desired direction.**
 
 
 code
