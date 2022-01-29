@@ -23,6 +23,7 @@ class Action:
         self.__cycle_primary_gun = False
 
         self.item_to_drop = None
+        self.item_sub_type_to_drop = None
 
     @property
     def item_to_drop(self):
@@ -33,6 +34,16 @@ class Action:
         if not isinstance(value, int):
             TypeError("enum must be of type int!")
         self.__item_to_drop = value
+
+    @property
+    def item_sub_type_to_drop(self):
+        return self.__item_sub_type_to_drop
+
+    @item_sub_type_to_drop.setter
+    def item_sub_type_to_drop(self, value):
+        if not isinstance(value, int):
+            raise TypeError("enum must be of type int!")
+        self.__item_sub_type_to_drop = value
 
     @property
     def cycle_primary_gun(self):
@@ -109,8 +120,9 @@ class Action:
     def cycle_primary(self):
         self.__cycle_primary_gun = True
 
-    def drop_item(self, enum: int):
+    def drop_item(self, enum: int, sub_enum: int):
         self.item_to_drop = enum
+        self.item_sub_type_to_drop = sub_enum
 
     def to_json(self):
         data = dict()

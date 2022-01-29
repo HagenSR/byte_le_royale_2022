@@ -119,14 +119,21 @@ Drop Item
 
 .. code-block:: python
 
-    actions.drop_item(enum: Enum)
+    actions.drop_item(enum: Enum, sub_enum: Enum)
 
 This will drop an item of a specific enum. Pass it one of the ObjectType enums or
 it might drop the wrong thing. It will search for the first match in your inventory of that
 type and remove it.
 
+sub_enum should be the corresponding type of the object you want to drop.
+For example, gun should be enum GunType, upgrade should be enum Upgrades, consumable should
+be enum Consumables
+
 Due to the Amazon return policy, the item does not go on the map but
 gets sent back to Amazon returns with no refund.
 
-Note: this does not use up your action for the turn!
+If you drop a backpack upgrade, this will also remove slots in your inventory.
+It removes the last slots in your inventory first, so make sure you don't have any items there
+or you will lose them!
 
+Note: this does not use up your action for the turn!

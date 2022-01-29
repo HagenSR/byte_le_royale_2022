@@ -20,10 +20,6 @@ class UseController(Controller):
         else:
             client.shooter.radar_cooldown -= 1
 
-        # if the client wants to drop an item, try to do it
-        if client.action.item_to_drop:
-            client.shooter.remove_from_inventory_enum(client.action.item_to_drop)
-
         # player action
         if client.action._chosen_action is ActionType.use:
             obj = client.shooter.remove_from_inventory(client.action.item_to_use)
