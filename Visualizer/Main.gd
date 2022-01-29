@@ -184,10 +184,7 @@ func run_tick(json_log):
 		players[client["id"]].game_position = client["shooter"]["hitbox"]["position"]
 
 		players[client["id"]].inventory = client["shooter"]["inventory"]
-<<<<<<< HEAD
-=======
 		players[client["id"]].gun_primary = client["shooter"]["primary_gun_pointer"]
->>>>>>> d25c1d4abe321047342b7c8714bdd8afcaac01f2
 	
 	for nray in json_log["game_map"]["ray_list"]:
 		var r = ray.instance()
