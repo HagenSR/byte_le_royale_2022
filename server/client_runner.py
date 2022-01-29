@@ -50,7 +50,7 @@ class client_runner:
         # IE how many combinations of clients can you make
         self.number_of_unique_games = -1
 
-        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
+        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 450
 
         # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
@@ -74,7 +74,7 @@ class client_runner:
                 logging.warning(
                     f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 self.group_id = -1
-                time.sleep(150)
+                time.sleep(self.SLEEP_TIME_SECONDS_BETWEEN_RUNS)
         except (KeyboardInterrupt, Exception) as e:
             logging.warning("Ending runner due to {0}".format(e))
         finally:
