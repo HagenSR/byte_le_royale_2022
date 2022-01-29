@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculate New Location &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Loot Generation Controller &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Partition Grid" href="Partition Grid.html" /> 
+    <link rel="next" title="Reload Controller" href="Reload_controller.html" />
+    <link rel="prev" title="The Kill Boundary" href="Kill_boundary_controller.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,7 +47,11 @@
 <li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Kill_boundary_controller.html">The Kill Boundary</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Loot_Generation_Controller.html">Loot Generation Controller</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Loot Generation Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-it-works">How it works</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Reload_controller.html">Reload Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Shoot_Controller.html">Shoot Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
@@ -65,11 +70,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Calculate New Location</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#important-notes">Important Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#code">Code</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 </ul>
 
         </div>
@@ -86,9 +87,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Calculate New Location</li>
+      <li>Loot Generation Controller</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/calculate_new_location.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Loot_Generation_Controller.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -96,21 +97,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="calculate-new-location">
-<h1>Calculate New Location<a class="headerlink" href="#calculate-new-location" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="important-notes">
-<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
-<p>The calculate_new_location util is a method used in the movement controller. Given a starting location, speed and angle it calculates the next position.</p>
+  <div class="section" id="loot-generation-controller">
+<h1>Loot Generation Controller<a class="headerlink" href="#loot-generation-controller" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lore">
+<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline">¶</a></h2>
+<p>There he stood, standing there, menacingly. The black sky smelled of mildew,
+out of your left ear you hear a crow shrieking. It’s been years since you stood in
+front of another person, you think to yourself, “is that even a person?”
+Suddenly the figure reaches down and sprints,
+you find a gun to your head and the now apparent
+animatronic asking you if you have heard about your cars extended warranty.
+You didn’t know, last time you drove 4 months ago was without insurance and
+well, you needed insurance to have a car and if you didn’t have insurance
+the warranty surely must have expired right? Replying to the animatronic you
+exclaim “uh, I don’t know there was uh I.. I..” The animatronic had no time
+for your senseless quarrel, you thought you were a goner.
+UNTIL FROM THE SKIES CAME JOOOHHHNNN CEEEEEENNNNAAAA with his iconic
+theme song playing
+” ba ba da ba bah da ba bah.”
+All of a sudden John Cena appears everywhere around you simultaneously.
+There it is! A healthpack, you can now heal yourself and get out of here!</p>
 </div>
-<div class="section" id="code">
-<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_location</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span>
-    <span class="n">new_x</span> <span class="o">=</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
-    <span class="n">new_y</span> <span class="o">=</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span>
-</pre></div>
-</div>
+<div class="section" id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+<p>The loot generation controller handles the spawning of loot around the
+game map. Money has a 60% chance to spawn, guns 20% and upgrades 20%.
+Loot is distributed according to a standard distribution,
+centered at the middle of the game map. Before the spawning of a new loot wave,
+all of the loot will be removed.
+Allowing for higher-tier loot to appear as the game progresses.</p>
 </div>
 </div>
 
@@ -118,7 +133,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Partition Grid.html" class="btn btn-neutral float-left" title="Partition Grid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Kill_boundary_controller.html" class="btn btn-neutral float-left" title="The Kill Boundary" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Reload_controller.html" class="btn btn-neutral float-right" title="Reload Controller" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

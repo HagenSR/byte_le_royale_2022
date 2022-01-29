@@ -60,9 +60,13 @@ class GameStats:
         "backpack_slot_increase": 3,
     }
 
+    # stats for making sure teleporters don't spawn next to each other. Distance is measured by middle
+    # of hitbox.
+    min_teleporter_distance = 80
+
     # stats for money located on the gameboard
     min_money_amount = 25
-    max_money_amount = 500
+    max_money_amount = 50
 
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be

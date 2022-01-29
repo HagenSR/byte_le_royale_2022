@@ -17,16 +17,32 @@ secure victory for Amazon ( no relation to the forest ).
    :maxdepth: 2
    :caption: Contents:
 
-   test
    RunningTheGame
    Server
    Action
    Movement_Controller
-   Map
-   Partition Grid
-   Grenade
+   Kill_boundary_controller
+   Loot_Generation_Controller
+   Reload_controller
+   Shoot_Controller
+   Teleporter_Controller
+   Teleporter 
+   Upgrade_Controller
+   Upgrades
+   UseController
+   consumable
    grenade_controller
-https://blackboard.ndus.edu/ultra/course
+   Grenade
+   Shooter 
+   player_utils
+   Map
+   Wall
+   Door
+   Hitbox
+   Item_Gen_Utils
+   Partition Grid
+   calculate_new_location
+   
 
 
 Indices and tables

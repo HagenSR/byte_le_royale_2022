@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculate New Location &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Item Generation Utils Methods &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Partition Grid" href="Partition Grid.html" /> 
+    <link rel="next" title="Partition Grid" href="Partition Grid.html" />
+    <link rel="prev" title="Hitbox" href="Hitbox.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -63,13 +64,15 @@
 <li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Calculate New Location</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#important-notes">Important Notes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#code">Code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Item Generation Utils Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#remove-items-from-map">remove_items_from_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#has-reached-item-cap">has_reached_item_cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pick-item">pick_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#place-item">place_item</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 </ul>
 
         </div>
@@ -86,9 +89,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Calculate New Location</li>
+      <li>Item Generation Utils Methods</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/calculate_new_location.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/Item_Gen_Utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -96,21 +99,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="calculate-new-location">
-<h1>Calculate New Location<a class="headerlink" href="#calculate-new-location" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="important-notes">
-<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
-<p>The calculate_new_location util is a method used in the movement controller. Given a starting location, speed and angle it calculates the next position.</p>
+  <div class="section" id="item-generation-utils-methods">
+<h1>Item Generation Utils Methods<a class="headerlink" href="#item-generation-utils-methods" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="remove-items-from-map">
+<h2>remove_items_from_map<a class="headerlink" href="#remove-items-from-map" title="Permalink to this headline">¶</a></h2>
+<p>Removes all items from the map. Is called before spawning a new wave of loot.</p>
 </div>
-<div class="section" id="code">
-<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_location</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span>
-    <span class="n">new_x</span> <span class="o">=</span> <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
-    <span class="n">new_y</span> <span class="o">=</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">speed</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">new_x</span><span class="p">,</span> <span class="n">new_y</span>
-</pre></div>
+<div class="section" id="has-reached-item-cap">
+<h2>has_reached_item_cap<a class="headerlink" href="#has-reached-item-cap" title="Permalink to this headline">¶</a></h2>
+<p>Determines if too many of a type of item (gun, upgrade, money) spawns on the map and prevents another from spawning if there are too many.</p>
 </div>
+<div class="section" id="pick-item">
+<h2>pick_item<a class="headerlink" href="#pick-item" title="Permalink to this headline">¶</a></h2>
+<p>Picks what item to spawn. 60% chance of money, 20% chance of a gun, and 20% chance of an upgrade.</p>
+</div>
+<div class="section" id="place-item">
+<h2>place_item<a class="headerlink" href="#place-item" title="Permalink to this headline">¶</a></h2>
+<p>Places an item randomly on the map, will not spawn an item on top of another item. Items are placed on a standard distribution with the highest chance of spawning at the center of the map.</p>
 </div>
 </div>
 
@@ -118,7 +123,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Partition Grid.html" class="btn btn-neutral float-left" title="Partition Grid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Hitbox.html" class="btn btn-neutral float-left" title="Hitbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Partition Grid.html" class="btn btn-neutral float-right" title="Partition Grid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

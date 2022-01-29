@@ -11,6 +11,7 @@ from game.common.wall import Wall
 from game.common.items.gun import Gun
 from game.common.items.item import Item
 from game.config import *
+from game.utils import collision_detection
 from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
@@ -18,7 +19,7 @@ from game.common.door import Door
 from game.common.teleporter import Teleporter
 import zipfile
 import json
-
+from game.utils.collision_detection import distance
 import requests
 
 
@@ -359,7 +360,7 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
-                   # print(requests.get(fl.read().decode('utf-8')).content)
+                    # print(requests.get(fl.read().decode('utf-8')).content)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:
@@ -395,9 +396,9 @@ def generate():
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
         dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
-        while game_map.partition.find_object_object(dummy_wall)\
-                or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
-                or teleporter_x < 0 or teleporter_y < 0\
+        while game_map.partition.find_object_object(dummy_wall) \
+                or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height \
+                or teleporter_x < 0 or teleporter_y < 0 \
                 or determine_teleporter_nearby(dummy_wall, game_map):
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
@@ -447,15 +448,13 @@ def find_teleporter_position():
 
 
 def determine_teleporter_nearby(teleporter, game_board):
-    # min & max make sure bounds are within the game board
-    for x in range(int(max(0, teleporter.hitbox.position[0] -
-                           11)), int(min(teleporter.hitbox.position[1] +
-                                         11, GameStats.game_board_width))):
-        for y in range(int(max(0, teleporter.hitbox.position[0] -
-                               11)), int(min(teleporter.hitbox.position[1] +
-                                             11, GameStats.game_board_width))):
-            if game_board.partition.find_object_coordinates(x, y) is not False:
-                return True
+    for obj in game_board.teleporter_list:
+        if len(game_board.teleporter_list) < 1:
+            return False
+        if distance(teleporter.hitbox.middle[0], teleporter.hitbox.middle[1], obj.hitbox.middle[0],
+                    obj.hitbox.middle[1]) < GameStats.min_teleporter_distance:
+            return True
+
     return False
 
 
