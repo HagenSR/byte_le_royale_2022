@@ -1,26 +1,24 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to FarTechs’s documentation! &mdash; Byte-le-Royale 2022 9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Welcome to FarTech’s documentation! &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/accordion.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="My Title" href="test.html" /> 
+    <link rel="next" title="Running the game" href="RunningTheGame.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -41,11 +39,33 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kill_boundary_controller.html">The Kill Boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loot_Generation_Controller.html">Loot Generation Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reload_controller.html">Reload Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shoot_Controller.html">Shoot Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UseController.html">Using Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shooter.html">Shooter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_utils.html">Player Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Map.html">The Game Map</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 </ul>
 
         </div>
@@ -62,7 +82,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to FarTechs’s documentation!</li>
+      <li>Welcome to FarTech’s documentation!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,12 +92,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-fartechs-s-documentation">
-<h1>Welcome to FarTechs’s documentation!<a class="headerlink" href="#welcome-to-fartechs-s-documentation" title="Permalink to this headline"></a></h1>
+  <div class="section" id="welcome-to-fartech-s-documentation">
+<h1>Welcome to FarTech’s documentation!<a class="headerlink" href="#welcome-to-fartech-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>In this game you write the soldier AI for a warmongering robot nation state. Your goal is to win as many 1v1 matches against
+other AI’s, lest your robot employers find you to be incompetent at your job. Move, shoot, teleport, buy and throw grenades to
+secure victory for Amazon ( no relation to the forest ).</p>
+<a class="reference internal image-reference" href="_images/terrorists_byte_le.png"><img alt="_images/terrorists_byte_le.png" src="_images/terrorists_byte_le.png" style="width: 800px;" /></a>
 <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="test.html">My Title</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="RunningTheGame.html#installing">Installing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RunningTheGame.html#id1">Running the game</a></li>
+<li class="toctree-l2"><a class="reference internal" href="RunningTheGame.html#scrimmage">Scrimmage!</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Server.html#important-info">Important Info!</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Server.html#the-important-commands-that-you-need-to-know">The Important commands that you need to know!</a></li>
@@ -85,6 +114,85 @@
 <li class="toctree-l2"><a class="reference internal" href="Server.html#client-runner">Client Runner</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Server.html#visualizer">Visualizer</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Server.html#database-schema">Database Schema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Server.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Action.html#the-action-object">The Action Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Action.html#available-actions">Available Actions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Movement_Controller.html#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Movement_Controller.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Kill_boundary_controller.html">The Kill Boundary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Kill_boundary_controller.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Kill_boundary_controller.html#notes-on-the-kill-boundary">Notes on the Kill boundary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Loot_Generation_Controller.html">Loot Generation Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Loot_Generation_Controller.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Loot_Generation_Controller.html#how-it-works">How it works</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Reload_controller.html">Reload Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Reload_controller.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reload_controller.html#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Reload_controller.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Shoot_Controller.html">Shoot Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Shoot_Controller.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shoot_Controller.html#basic-info">Basic Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shoot_Controller.html#code">Code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Teleporter_Controller.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Teleporter.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Teleporter.html#important-information">Important information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Teleporter.html#instance-variables">Instance Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Upgrade_Controller.html#important-notes">Important Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Upgrades.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Upgrades.html#types-of-upgrades">Types of Upgrades</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="UseController.html">Using Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="consumable.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="consumable.html#important-information">Important information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="consumable.html#types-of-consumables">Types of Consumables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="grenade_controller.html#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grenade_controller.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Grenade.html#instance-variables">Instance Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Shooter.html">Shooter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Shooter.html#inventory">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shooter.html#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="player_utils.html">Player Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="player_utils.html#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="player_utils.html#function-list">Function List</a></li>
+<li class="toctree-l2"><a class="reference internal" href="player_utils.html#code">code</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Map.html">The Game Map</a><ul>
@@ -92,23 +200,57 @@
 <li class="toctree-l2"><a class="reference internal" href="Map.html#item-loot-generation">Item loot generation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Wall.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Wall.html#basic-info">Basic Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Wall.html#instance-variables">Instance Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Door.html#lore">Lore</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Door.html#important-information">Important information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Door.html#instance-variables">Instance Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Hitbox.html#properties">Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Item_Gen_Utils.html#remove-items-from-map">remove_items_from_map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Item_Gen_Utils.html#has-reached-item-cap">has_reached_item_cap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Item_Gen_Utils.html#pick-item">pick_item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Item_Gen_Utils.html#place-item">place_item</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Partition Grid.html#what-is-it">What is it?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Partition Grid.html#obfuscation">Obfuscation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Partition Grid.html#how-to-use-it">How to use it</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="calculate_new_location.html#important-notes">Important Notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calculate_new_location.html#code">Code</a></li>
+</ul>
+</li>
 </ul>
 </div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline"></a></h1>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
 </ul>
-</section>
+</div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="test.html" class="btn btn-neutral float-right" title="My Title" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="RunningTheGame.html" class="btn btn-neutral float-right" title="Running the game" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
