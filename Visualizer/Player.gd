@@ -38,7 +38,6 @@ func set_gun():
 		var level = inventory["guns"][gun_primary]["level"]
 		self.get_node("Sprite/Sprite").texture = textures[gun-1][level-1]
 		if gun == 0:
-			self.get_node("Sprite/Sprite")
 			self.get_node("Sprite/Sprite").offset = Vector2(15.0, 0.0)
 		if gun == 1:
 			self.get_node("Sprite/Sprite").offset = Vector2(20.0, 0.0)
