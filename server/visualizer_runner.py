@@ -56,23 +56,26 @@ class visualizer_runner:
         for log in logs:
             # Take logs and copy into directory
             team_dir = f'{self.logs_path}/{log["team_name"]}'
-            os.mkdir(team_dir)
-            logs_dir = team_dir + "/logs"
+            if not os.path.isdir(team_dir):
+                os.mkdir(team_dir)
+            id_dir = f'{team_dir}/{log["run_id"]}'
+            os.mkdir(id_dir)
+            logs_dir = id_dir + "/logs"
             os.mkdir(logs_dir)
             files = json.loads(log['log_text'])
             for index, key in enumerate(files):
                 with open(f"{logs_dir}/{key}", "w") as fl:
                     fl.write(files[key])
 
-            shutil.copy('launcher.pyz', team_dir)
+            shutil.copy('launcher.pyz', id_dir)
 
-            shutil.copy('visualizer.x86_64', team_dir)
+            shutil.copy('visualizer.x86_64', id_dir)
 
-            shutil.copy('visualizer.pck', team_dir)
+            shutil.copy('visualizer.pck', id_dir)
 
-            shutil.copytree('visualizer/assets', team_dir + "/visualizer")
+            shutil.copytree('Visualizer/Assets', id_dir + "/visualizer")
 
-            shutil.copy('server/runners/vis_runner.sh', team_dir)
+            shutil.copy('server/runners/vis_runner.sh', id_dir)
 
     def get_latest_group(self):
         print("Getting Latest Group Run")
@@ -95,8 +98,10 @@ class visualizer_runner:
             try:
                 f = open(os.devnull, 'w')
                 path = f"{self.logs_path}/{team_dir}"
-                p = subprocess.Popen('bash vis_runner.sh', stdout=f, cwd=path, shell=True)
-                stdout, stderr = p.communicate()
+                for id in os.listdir(path):
+                    idpath = f"{path}/{id}"
+                    p = subprocess.Popen('bash vis_runner.sh', stdout=f, cwd=idpath, shell=True)
+                    stdout, stderr = p.communicate()
 
             except PermissionError:
                 print("Whoops")
