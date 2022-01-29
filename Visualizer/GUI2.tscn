@@ -82,10 +82,11 @@ __meta__ = {
 [node name="Number" type="Label" parent="Inventory/Bars/Count2/Background2"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 51.0
+margin_top = 25.0
 margin_right = 100.0
-margin_bottom = 100.0
-align = 2
+margin_bottom = 74.0
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -134,24 +135,48 @@ margin_right = 158.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
+[node name="Upgrade4" type="TextureRect" parent="Inventory/Upgrades"]
+margin_left = 162.0
+margin_right = 212.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
 [node name="Consumables" type="HBoxContainer" parent="Inventory"]
 margin_top = 212.0
 margin_right = 216.0
 margin_bottom = 262.0
 
 [node name="Consumable1" type="TextureRect" parent="Inventory/Consumables"]
-margin_right = 50.0
+margin_right = 25.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 25, 25 )
 
 [node name="Consumable2" type="TextureRect" parent="Inventory/Consumables"]
-margin_left = 54.0
-margin_right = 104.0
+margin_left = 29.0
+margin_right = 54.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 25, 50 )
 
 [node name="Consumable3" type="TextureRect" parent="Inventory/Consumables"]
-margin_left = 108.0
-margin_right = 158.0
+margin_left = 58.0
+margin_right = 83.0
 margin_bottom = 50.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 25, 25 )
+
+[node name="Consumable4" type="TextureRect" parent="Inventory/Consumables"]
+margin_left = 87.0
+margin_right = 112.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 25 )
+
+[node name="Consumable5" type="TextureRect" parent="Inventory/Consumables"]
+margin_left = 116.0
+margin_right = 141.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 25 )
+
+[node name="Consumable6" type="TextureRect" parent="Inventory/Consumables"]
+margin_left = 145.0
+margin_right = 170.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 25, 25 )

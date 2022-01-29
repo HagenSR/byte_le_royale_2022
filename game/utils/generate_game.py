@@ -21,6 +21,7 @@ import zipfile
 import json
 from game.utils.collision_detection import distance
 import requests
+import uuid
 
 
 def create_structures_file(file_path):
@@ -368,10 +369,12 @@ def generate():
                         if entry['object_type'] == ObjectType.wall:
                             wall = Wall(Hitbox(1, 1, (0, 0)))
                             wall.from_json(entry)
+                            wall.id = str(uuid.uuid4())
                             wallList.append(wall)
                         elif entry['object_type'] == ObjectType.door:
                             door = Door(Hitbox(1, 1, (0, 0)))
                             door.from_json(entry)
+                            door.id = str(uuid.uuid4())
                             wallList.append(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
@@ -390,6 +393,7 @@ def generate():
                 x_offset = plot.position[0] + wall_copy.hitbox.position[0]
                 y_offset = plot.position[1] + wall_copy.hitbox.position[1]
                 wall_copy.hitbox.position = (x_offset, y_offset)
+                wall_copy.id = str(uuid.uuid4())
                 game_map.partition.add_object(wall_copy)
 
     # place 5 teleporters
@@ -403,6 +407,7 @@ def generate():
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
         new_tel = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
+        new_tel.id = str(uuid.uuid4())
         game_map.partition.add_object(new_tel)
         game_map.teleporter_list.append(new_tel)
 

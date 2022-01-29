@@ -15,8 +15,12 @@ _global_script_class_icons={
 [application]
 
 config/name="TestVisualizer"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://StartScreen.tscn"
 config/icon="res://Assets/BYTEART/SHIELD.png"
+
+[autoload]
+
+Global="*res://Global.tscn"
 
 [display]
 
@@ -27,6 +31,21 @@ window/icon="res://Assets/base_wall.png"
 [global]
 
 path=false
+
+[input]
+
+scroll={
+"deadzone": 0.5,
+"events": [  ]
+}
+"Wheel Up"={
+"deadzone": 0.5,
+"events": [  ]
+}
+"Wheel Down"={
+"deadzone": 0.5,
+"events": [  ]
+}
 
 [physics]
 

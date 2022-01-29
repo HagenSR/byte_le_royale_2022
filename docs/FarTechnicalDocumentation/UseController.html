@@ -100,8 +100,11 @@
   <div class="section" id="using-items">
 <h1>Using Items<a class="headerlink" href="#using-items" title="Permalink to this headline">¶</a></h1>
 <p>The use controller controls using consumable items.</p>
-<p>By calling the action ‘actions.select_item_to_use(obj)’ you can select what item you want to use.
-Make sure that obj is the consumable object from your inventory.</p>
+<p>By calling the action</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">select_item_to_use</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>you can select what item you want to use. Make sure that obj is the consumable object from your inventory.</p>
 <p>Speed boost and radar will last for 10 turns each and cannot be applied again until after those 10 turns.</p>
 <p>Shield is set as a boolean in the shooter object, and will go away after one shot hits you.</p>
 <p>Health pack will increase your shooter health.</p>
