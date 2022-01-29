@@ -38,7 +38,7 @@ func _ready():
 	
 func update():
 	if level-1 > 0:
-		self.get_node("Sprite").texture = textures[gun_type][level-1]
+		self.get_node("Sprite").texture = textures[gun_type-1][level-1]
 	self.get_node("Sprite").scale.x = width/16
 	self.get_node("Sprite").scale.y = height/8
 	self.position = (Vector2(float(2*game_position[0]), float(2*game_position[1])))

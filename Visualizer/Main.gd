@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "../logs"
+onready var log_path = "/home/nyx/Downloads/byte_le_royale_2022/logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
@@ -40,10 +40,7 @@ func load_json(path):
 			if file == "game_map.json":
 				f.insert(0, file)
 			elif file == "results.json":
-				if f.size() > 0:
-					f.insert(1, file)
-				else:
-					f.insert(0, file)
+				f.insert(1, file)
 			else:
 				f.append(file)
 	dir.list_dir_end()
@@ -213,6 +210,7 @@ func move_boundary(tick):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var game_boundary = boundary.instance()
+	self.add_child(game_boundary)
 	tiling()
 	var ui1 = gui.instance()
 	self.add_child(ui1)
@@ -239,22 +237,23 @@ func _ready():
 		for r in rays:
 			self.remove_child(r)
 		rays.clear()
-		game_boundary.update()
 		file = File.new()
 		file.open(log_path + "/" + files[i], File.READ)
 		file_text = file.get_as_text()
 		var json_log = parse_json(file_text)
-		
+
 		run_tick(json_log)
 
-		for p in players.values():
-			p.update()
 		ui1.health = players.values()[0].health
 		ui2.health = players.values()[1].health
 		ui1.update()
 		ui2.update()
+
 		for object in map_objects.values():
 			object.update()
+		for p in players.values():
+			p.update()
+		game_boundary.update()
 		var t = Timer.new()
 		t.set_wait_time(.5)
 		t.set_one_shot(true)

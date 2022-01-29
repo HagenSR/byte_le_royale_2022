@@ -16,13 +16,13 @@ _global_script_class_icons={
 
 config/name="TestVisualizer"
 run/main_scene="res://Main.tscn"
-config/icon="res://Assets/base_wall.png"
+config/icon="res://Assets/BYTEART/SHIELD.png"
 
 [display]
 
-window/size/width=1000
-window/size/height=1050
-window/size/resizable=false
+window/size/width=1200
+window/size/height=1000
+window/icon="res://Assets/base_wall.png"
 
 [global]
 

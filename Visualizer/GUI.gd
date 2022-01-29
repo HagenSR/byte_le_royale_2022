@@ -15,9 +15,9 @@ func _ready():
 func update():
 	self.get_node("Bars/Bar/Count/Background/Number").text = str(health)
 	if shield:
-		self.get_node("Bars/Bar/Count/Background2").show()
-	#else:
-		#self.get_node("Bars/bar/Count/Background2").hide()
+		self.get_node("Bars/Bar/Count2/Background2").show()
+	else:
+		self.get_node("Bars/Bar/Count2/Background2").show()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
