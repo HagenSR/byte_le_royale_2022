@@ -96,12 +96,12 @@ class Action:
             raise ValueError("Values passed to action object methods must be of correct type")
         self.item_to_purchase = obj
 
-    def select_item_to_use(self, obj):
+    def select_item_to_use(self, enum, sub_enum):
         """Sets item to use and action to use. Must be same object reference as is in player inventory"""
-        if not isinstance(obj, Consumable):
+        if not isinstance(enum, int) or not isinstance(sub_enum, int):
             raise ValueError("Values passed to action object methods must be of correct type")
         self._chosen_action = ActionType.use
-        self.item_to_use = obj
+        self.item_to_use = (enum, sub_enum)
 
     def set_throw_grenade(self, heading: int, distance_to_throw: int):
         """Sets the player to throw a grenade for the current turn"""

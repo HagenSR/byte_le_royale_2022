@@ -22,9 +22,9 @@ class UseController(Controller):
 
         # player action
         if client.action._chosen_action is ActionType.use:
-            obj = client.shooter.remove_from_inventory(client.action.item_to_use)
+            obj = client.shooter.remove_from_inventory_enum(client.action.item_to_use[0], client.action.item_to_use[1])
             if not obj:
-                raise ValueError("Object to use not in inventory")
+                return
             if obj.consumable_type == Consumables.health_pack:
                 if client.shooter.health + GameStats.consumable_stats['health_pack_heal_amount'] > 100:
                     client.shooter.health = 100

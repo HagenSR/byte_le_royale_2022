@@ -180,6 +180,7 @@ class Shooter(MovingObject):
         data['view_distance'] = self.view_distance
         data['speed_boost_cooldown'] = self.speed_boost_cooldown
         data['radar_cooldown'] = self.radar_cooldown
+        data['primary_gun_pointer'] = self.__primary_pointer
 
         return data
 
@@ -190,6 +191,7 @@ class Shooter(MovingObject):
                 self.from_json_helper(data['inventory'][slot_type])
             for slot_type in data['inventory']
         }
+        self.__primary_pointer = data['primary_gun_pointer']
         self.money = data['money']
         self.armor = data['armor']
         self.view_distance = data['view_distance']
