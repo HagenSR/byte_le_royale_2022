@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/BYTEART/PLAYER.png" type="Texture" id=2]
-[ext_resource path="res://Assets/BYTEART/SHOTGUN_LEVEL1.png" type="Texture" id=3]
 
 [node name="Player" type="KinematicBody2D"]
 z_index = 101
@@ -20,5 +19,4 @@ __meta__ = {
 texture = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Sprite"]
-texture = ExtResource( 3 )
 offset = Vector2( 15, 0 )
