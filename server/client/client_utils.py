@@ -9,7 +9,7 @@ class ClientUtils:
         urllib3.disable_warnings()
         self.IP = 'https://134.129.91.223:8000/api/'
         self.PORT = 8000
-        self.path_to_public = "server/certs/cert.pem"
+        self.path_to_public = False
         self.use_csv = csv_bool
 
     def get_team_types(self):
