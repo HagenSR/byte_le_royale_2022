@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "/home/nyx/Downloads/byte_le_royale_2022/logs"
+onready var log_path = "./../logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
@@ -40,7 +40,10 @@ func load_json(path):
 			if file == "game_map.json":
 				f.insert(0, file)
 			elif file == "results.json":
-				f.insert(1, file)
+				if f.size() > 0:
+					f.insert(1, file)
+				else:
+					f.insert(0,file)
 			else:
 				f.append(file)
 	dir.list_dir_end()
@@ -88,7 +91,6 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_money.game_position = [(pos[0]), (pos[1])]
 			new_money.update()
-			self.add_child(new_money)
 			ids.append(new_money.id)
 			out = new_money
 	elif object["object_type"] == 12:
