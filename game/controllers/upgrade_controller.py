@@ -14,6 +14,10 @@ class UpgradeController(Controller):
             if obj and obj.object_type == ObjectType.upgrade:
                 if obj.upgrade_enum == Upgrades.armor:
                     client.shooter.armor = 1.0
+                    # mark other armor as not applied
+                    for item in client.shooter.inventory['upgrades']:
+                        if item.upgrade_enum == Upgrades.armor:
+                            item.applied = False
                 if obj.upgrade_enum == Upgrades.movement_boots:
                     client.shooter.max_speed /= 1 + GameStats.upgrade_stats['movement_boost']
                 if obj.upgrade_enum == Upgrades.backpack:

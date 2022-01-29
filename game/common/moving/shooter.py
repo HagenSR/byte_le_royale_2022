@@ -70,7 +70,7 @@ class Shooter(MovingObject):
 
     @property
     def inventory(self):
-        return deepcopy(self.__inventory)
+        return self.__inventory
 
     def has_empty_slot(self, slot_type):
         """check if there's an empty slot of a particular type in the inventory"""
@@ -169,11 +169,9 @@ class Shooter(MovingObject):
     def to_json(self):
         data = super().to_json()
         data['inventory'] = {
-            'inventory': {
-                slot_type:
-                    [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
-                for slot_type in self.__inventory
-            }
+            slot_type:
+                [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
+            for slot_type in self.__inventory
         }
         data['money'] = self.money
         data['armor'] = self.armor
