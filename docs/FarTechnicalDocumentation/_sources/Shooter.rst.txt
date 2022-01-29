@@ -7,6 +7,7 @@ In contains information on location, inventory, view stats, etc.
 ================ =========== ===========
 Name             Type        Description
 ================ =========== ===========
+health           int         How much health the player currently has
 hitbox           Hitbox      Hitbox of where the shooter is on the map
 view_distance    int         Radius of circle that represents your field of view
 max_speed        int         Max speed a player can move in a turn
