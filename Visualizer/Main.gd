@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "./../logs"
+onready var log_path = "../logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
