@@ -143,7 +143,7 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_grenade.game_position = [(pos[0]), (pos[1])]
 			new_grenade.update()
-			self.add_child(new_grenade)
+			#self.add_child(new_grenade)
 			ids.append(new_grenade.id)
 			out = new_grenade
 	#for id in map_objects.keys():
@@ -180,6 +180,7 @@ func run_tick(json_log):
 		players[client["id"]].game_position = client["shooter"]["hitbox"]["position"]
 
 		players[client["id"]].inventory = client["shooter"]["inventory"]
+		players[client["id"]].gun_primary = client["shooter"]["primary_gun_pointer"]
 	
 	for nray in json_log["game_map"]["ray_list"]:
 		var r = ray.instance()
@@ -220,9 +221,9 @@ func _ready():
 	load_json(log_path)
 	var file = File.new()
 	files.sort()
-	print(str(files))
+	#print(str(files))
 	file.open(log_path + "/" + "results.json", File.READ)
-	print(str(files[1]))
+	#print(str(files[1]))
 	var file_text = file.get_as_text()
 	var results = parse_json(file_text)
 	file.close()
@@ -234,7 +235,7 @@ func _ready():
 	files.sort()
 	
 	for i in range(2, len(files)):
-		print(str(i))
+		#print(str(i))
 		for r in rays:
 			self.remove_child(r)
 		rays.clear()

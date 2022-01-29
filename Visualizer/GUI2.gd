@@ -39,7 +39,7 @@ func _ready():
 
 func update():
 	for i in range(len(inventory["guns"])):	
-		print(str(inventory["guns"][i]))
+		#print(str(inventory["guns"][i]))
 		if inventory["guns"][i] != null:
 			self.get_node("Inventory/Guns/Gun"+ str(i+1)).texture = textures[inventory["guns"][i]["gun_type"]-1][inventory["guns"][i]["level"]-1]
 		else:

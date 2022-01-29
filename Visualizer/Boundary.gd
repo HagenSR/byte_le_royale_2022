@@ -19,7 +19,7 @@ func _ready():
 func update():
 	self.position = (Vector2(500.0, 500.0))
 	#self.get_node("Sprite").scale = Vector2(1, 1)
-	print(str(float(radius)/472))
+	#print(str(float(radius)/472))
 	self.get_node("Sprite").scale = Vector2(float(4*radius)/472, float(4*radius)/472)
 	radius -= 5
 
