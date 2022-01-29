@@ -378,7 +378,7 @@ def generate():
                             wallList.append(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
-        structures_list.append(None)
+        # structures_list.append(None)
 
     # Choose what structure goes in what plot
     plot_list = findPlotHitboxes()
@@ -464,4 +464,4 @@ def determine_teleporter_nearby(teleporter, game_board):
 
 
 if __name__ == '__main__':
-    create_structures_file("./structures/structureDescriptiveName.json")
+    create_structures_file("./structures.json")
