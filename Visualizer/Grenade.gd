@@ -14,7 +14,7 @@ func _ready():
 
 func update():
 	self.position = (Vector2(float(2*game_position[0]), float(2*game_position[1])))
-	if fuse_time == 0:
+	if fuse_time < 0:
 		self.remove_and_skip()
 	fuse_time -= 1
 	

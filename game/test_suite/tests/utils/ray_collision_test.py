@@ -126,8 +126,8 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
-        self.assertAlmostEqual(ray.endpoint[0], 21.21, 2)
-        self.assertAlmostEqual(ray.endpoint[1], 23.21, 2)
+        self.assertAlmostEqual(ray.endpoint[0], 26.21, 2)
+        self.assertAlmostEqual(ray.endpoint[1], 28.21, 2)
 
     def test_miss_collision2(self):
         player = Player()
@@ -148,7 +148,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
-        self.assertAlmostEqual(ray.endpoint[0], 2, 2)
+        self.assertAlmostEqual(ray.endpoint[0], 12, 2)
         self.assertEqual(ray.endpoint[1], 0)
 
     def test_miss_collision3(self):
@@ -170,7 +170,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
-        self.assertAlmostEqual(ray.endpoint[0], 2, 2)
+        self.assertAlmostEqual(ray.endpoint[0], 12, 2)
         self.assertEqual(ray.endpoint[1], 0, 2)
 
     def test_vertical_slope1(self):
@@ -192,8 +192,8 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
-        self.assertEqual(ray.endpoint[0], 0)
-        self.assertEqual(ray.endpoint[1], 32)
+        self.assertEqual(ray.endpoint[0], 5)
+        self.assertEqual(ray.endpoint[1], 37)
 
     def test_vertical_slope2(self):
         player = Player()
@@ -214,8 +214,8 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object_list(obj_list)
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
-        self.assertEqual(ray.endpoint[0], 0)
-        self.assertEqual(ray.endpoint[1], 20)
+        self.assertEqual(ray.endpoint[0], 5)
+        self.assertEqual(ray.endpoint[1], 25)
 
     def test_vertical_slope3(self):
         player = Player()
@@ -237,7 +237,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.collision, obj_list[0])
-        self.assertEqual(ray.endpoint[0], 20)
+        self.assertEqual(ray.endpoint[0], 25)
         self.assertEqual(ray.endpoint[1], 105)
 
     def test_horizontal_slope1(self):
@@ -260,7 +260,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
-        self.assertEqual(ray.endpoint[1], 100)
+        self.assertEqual(ray.endpoint[1], 105)
         self.assertEqual(ray.collision, obj_list[0])
 
     def test_horizontal_slope2(self):
@@ -283,7 +283,7 @@ class TestRayCollision(unittest.TestCase):
         gameboard.partition.add_object(player.shooter)
         ray = get_gun_ray_collision(player, gameboard)
         self.assertEqual(ray.endpoint[0], 20)
-        self.assertEqual(ray.endpoint[1], 100)
+        self.assertEqual(ray.endpoint[1], 105)
         self.assertEqual(ray.collision, obj_list[0])
 
 

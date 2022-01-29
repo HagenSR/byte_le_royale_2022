@@ -6,6 +6,34 @@ extends MarginContainer
 # var b = "text"\
 var health = 0
 var shield = false
+var inventory = []
+
+var textures = [[preload("res://Assets/BYTEART/PISTOL_LEVEL1.png"),
+preload("res://Assets/BYTEART/PISTOL_LEVEL2.png"),
+preload("res://Assets/BYTEART/PISTOL_LEVEL3.png"),],
+[preload("res://Assets/BYTEART/RIFLE_LEVEL1.png"),
+preload("res://Assets/BYTEART/RIFLE_LEVEL2.png"),
+preload("res://Assets/BYTEART/RIFLE_LEVEL3.png")],
+[preload("res://Assets/BYTEART/SHOTGUN_LEVEL1.png"),
+preload("res://Assets/BYTEART/SHOTGUN_LEVEL2.png"),
+preload("res://Assets/BYTEART/SHOTGUN_LEVEL3.png")],
+[preload("res://Assets/BYTEART/SNIPER_LEVEL1.png"),
+preload("res://Assets/BYTEART/SNIPER_LEVEL2.png"),
+preload("res://Assets/BYTEART/SNIPER_LEVEL3.png")]]
+
+var c_textures = [preload("res://Assets/BYTEART/HEALTH_PACK.png"),
+preload("res://Assets/BYTEART/SHIELD.png"),
+preload("res://Assets/BYTEART/SPEED.png"),
+preload("res://Assets/BYTEART/RADAR.png"),
+preload("res://Assets/BYTEART/GERNADE.png")
+]
+
+var u_textures = [preload("res://Assets/BYTEART/ARMOR.png"),
+preload("res://Assets/BYTEART/BOOTS.png"),
+preload("res://Assets/BYTEART/BACKPACK.png")
+]
+
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -13,11 +41,22 @@ func _ready():
 	pass # Replace with function body.
 
 func update():
-	self.get_node("Bars/Bar/Count/Background/Number").text = str(health)
+	for i in range(len(inventory["inventory"]["guns"])):	
+		if inventory["inventory"]["guns"][i] != null:
+			self.get_node("Inventory/Guns/Gun"+ str(i+1)).texture = textures[inventory["inventory"]["guns"][i]["gun_type"]-1][inventory["guns"][i]["level"]-1]
+		else:
+			self.get_node("Inventory/Guns/Gun" + str(i+1)).texture = null
+	for i in range(len(inventory["consumables"])):
+		if inventory["inventory"]["consumables"][i] != null:
+			self.get_node("Inventory/Consumables/Consumable" + str(i)).texture = c_textures[inventory["inventory"]["consumables"][i]["consumable_type"]-1]
+	for i in range(len(inventory["upgrades"])):
+		if inventory["inventory"]["upgrades"][i] != null:
+			self.get_node("Inventory/Upgrades/Upgrade" + str(i)).texture = u_textures[inventory["inventory"]["upgrades"][i]["upgrade_type"]-1]
+	self.get_node("Inventory/Bars/Bar/Count/Background/Number").text = str(health)
 	if shield:
-		self.get_node("Bars/Bar/Count2/Background2").show()
+		self.get_node("Inventory/Bars/Bar/Count2/Background2").show()
 	else:
-		self.get_node("Bars/Bar/Count2/Background2").show()
+		self.get_node("Inventory/Bars/Bar/Count2/Background2").show()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
