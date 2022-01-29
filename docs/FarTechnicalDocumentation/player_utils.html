@@ -139,11 +139,13 @@
 </div>
 <div class="section" id="angle-to-point">
 <h3>angle_to_point<a class="headerlink" href="#angle-to-point" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">player_utils</span><span class="o">.</span><span class="n">angle_to_point</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">coord_tuple</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">player_utils</span><span class="o">.</span><span class="n">angle_to_point</span><span class="p">(</span><span class="n">player</span><span class="p">,</span> <span class="n">coord_tuple</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span>
 </pre></div>
 </div>
 <p>Returns the angle you need to travel in to go from one point to another
 (Not considering any obstacle)</p>
+<p><strong>NOTE: if the angle measurement is a fraction, it will be truncated and returned
+as an int. This should still point you close to the desired direction.</strong></p>
 </div>
 </div>
 <div class="section" id="code">
