@@ -24,8 +24,6 @@ onready var rays = []
 
 onready var log_i = 2
 
-#func _draw():
-	#draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
 
 func load_json(path):
 	var f = []
@@ -91,6 +89,7 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_money.game_position = [(pos[0]), (pos[1])]
 			new_money.update()
+			self.add_child(new_money)
 			ids.append(new_money.id)
 			out = new_money
 	elif object["object_type"] == 12:
@@ -157,6 +156,7 @@ func initialize(results, game_map):
 	for player_log in results["players"]:
 		var new_player = player.instance()
 		new_player.id = player_log["id"]
+		new_player.team_name = player_log["team_name"]
 		players[new_player.id] = new_player
 		self.add_child(new_player)
 	for partition_set in game_map["game_map"]["partition"]["partition_grid"]:
@@ -176,10 +176,11 @@ func run_tick(json_log):
 		players[client["id"]].speed = client["shooter"]["speed"]
 		players[client["id"]].money = client["shooter"]["money"]
 		players[client["id"]].armor = client["shooter"]["armor"]
+		players[client["id"]].width = client["shooter"]["hitbox"]["width"]
+		players[client["id"]].height = client["shooter"]["hitbox"]["height"]
 		players[client["id"]].game_position = client["shooter"]["hitbox"]["position"]
 
-		# Need to do something with this
-		players[client["id"]].inventory = client["shooter"]["inventory"]
+		players[client["id"]].inventory = client["shooter"]["inventory"]["inventory"]
 	
 	for nray in json_log["game_map"]["ray_list"]:
 		var r = ray.instance()
@@ -187,7 +188,6 @@ func run_tick(json_log):
 		var endpoint = nray["endpoint"]
 		r.add_point((Vector2(float(2*origin[0]), float(2*origin[1]))))
 		r.add_point((Vector2(float(2*endpoint[0]), float(2*endpoint[1]))))
-		self.add_child(r)
 		rays.append(r)
 
 	for partition_set in json_log["game_map"]["partition"]["partition_grid"]:
@@ -206,8 +206,8 @@ func tiling():
 			new_tile.position = (Vector2(float((1000/32)*i), float(j*(1000/32))))
 			self.add_child(new_tile)
 
-func move_boundary(tick):
-	draw_circle(Vector2(500.0, 500.0), 600-tick, Color(255, 0, 0))
+#func move_boundary(tick):
+#	draw_circle(Vector2(500.0, 500.0), 600-tick, Color(255, 0, 0))
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -247,7 +247,10 @@ func _ready():
 		run_tick(json_log)
 
 		ui1.health = players.values()[0].health
+		ui1.inventory = players.values()[0].inventory
 		ui2.health = players.values()[1].health
+		ui2.inventory = players.values()[1].inventory
+		ui2.inventory = players.values()[1].inventory
 		ui1.update()
 		ui2.update()
 
@@ -255,6 +258,8 @@ func _ready():
 			object.update()
 		for p in players.values():
 			p.update()
+		for ray in rays:
+			self.add_child(ray)			
 		game_boundary.update()
 		var t = Timer.new()
 		t.set_wait_time(.5)

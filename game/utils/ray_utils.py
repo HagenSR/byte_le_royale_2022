@@ -330,51 +330,53 @@ def determine_gun_collision(
         slope,
         ray_endpoint,
         damage):
+    origin = ((player.shooter.hitbox.position[0]+(player.shooter.hitbox.width/2)), 
+            (player.shooter.hitbox.position[1]+(player.shooter.hitbox.height/2))) 
     # Ray object used to provide data for visualizer
     collisions = {}
     for collidable in collidables.keys():
         intersections = []
         top = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.top_right),
-            (player.shooter.hitbox.position, ray_endpoint)
+            (origin, ray_endpoint)
         )
         if top:
             intersections.append(top)
         bottom = line_intersection(
             (collidable.hitbox.bottom_left, collidable.hitbox.bottom_right),
-            (player.shooter.hitbox.position, ray_endpoint)
+            (origin, ray_endpoint)
         )
         if bottom:
             intersections.append(bottom)
         left = line_intersection(
             (collidable.hitbox.top_left, collidable.hitbox.bottom_left),
-            (player.shooter.hitbox.position, ray_endpoint)
+            (origin, ray_endpoint)
         )
         if left:
             intersections.append(left)
         right = line_intersection(
             (collidable.hitbox.top_right, collidable.hitbox.bottom_right),
-            (player.shooter.hitbox.position, ray_endpoint)
+            (origin, ray_endpoint)
         )
         if right:
             intersections.append(right)
         for intersection in intersections:
             ray = Ray(
-                player.shooter.hitbox.position,
+                origin,
                 intersection,
                 collidable,
                 player.shooter.primary_gun.damage
             )
             collisions[ray] = 0
 
-    rays = sort_objects(player.shooter.hitbox.position,
+    rays = sort_objects(origin,
                         collisions,
                         player.shooter.primary_gun.range)
     if len(rays) > 0:
         return rays[0][0]
     else:
         ray = Ray(
-            player.shooter.hitbox.position,
+            origin,
             ray_endpoint,
             None,
             player.shooter.primary_gun.damage
@@ -414,14 +416,16 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 def get_gun_ray_collision(player, gameboard):
     radians = math.radians(player.shooter.heading)
     slope = calculate_slope(radians)
+    origin = ((player.shooter.hitbox.position[0]+(player.shooter.hitbox.width/2)), 
+            (player.shooter.hitbox.position[1]+(player.shooter.hitbox.height/2))) 
     ray_endpoint = get_ray_limits(radians,
-                                  player.shooter.hitbox.position,
+                                  origin,
                                   gameboard,
                                   slope,
                                   player.shooter.primary_gun.range)
     collidables = load_collidables_in_ray_range(
         radians,
-        player.shooter.hitbox.position,
+        origin,
         gameboard,
         ray_endpoint,
         [player.shooter]
@@ -437,38 +441,3 @@ def get_gun_ray_collision(player, gameboard):
     )
 
     return ray
-
-
-# This sucks. Used to test rays, will replace later
-def get_grenade_collisions(gameboard, start_coords, grenade_range, damage,
-                           exclusions):
-    collisions = []
-    for i in range(360000):
-        heading = math.radians(i / 1000)
-        slope = calculate_slope(heading)
-        ray_endpoint = get_ray_limits(
-            heading,
-            start_coords,
-            gameboard,
-            slope,
-            grenade_range
-        )
-        collidables = load_collidables_in_ray_range(
-            heading,
-            start_coords,
-            gameboard,
-            ray_endpoint,
-            exclusions
-        )
-        ray = determine_ray_collision(
-            gameboard,
-            collidables,
-            start_coords,
-            slope,
-            ray_endpoint,
-            grenade_range,
-            damage
-        )
-        collisions.append(ray)
-
-    return collisions

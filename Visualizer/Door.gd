@@ -11,10 +11,10 @@ var game_position = [0, 0]
 var width = 0
 var height = 0
 
-var textures = [
-	preload("res://Assets/BYTEART/DOOR_HORIZONTAL_CLOSED.png"),
-	preload("res://Assets/BYTEART/DOOR_HORIZONTAL_OPEN.png"),
-]
+var horiz_closed = preload("res://Assets/BYTEART/DOOR_HORIZONTAL_CLOSED.png")
+var horiz_open = preload("res://Assets/BYTEART/DOOR_HORIZONTAL_OPEN.png")
+var vert_closed = preload("res://Assets/BYTEART/DOOR_VERTICAL_CLOSED.png")
+var vert_open = preload("res://Assets/BYTEART/DOOR_VERTICAL_OPEN.png")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -26,9 +26,15 @@ func update():
 	self.get_node("Sprite").scale.x = (width/16)
 	self.get_node("Sprite").scale.y = (height/16)
 	if open_state == false:
-		get_node("Sprite").texture = textures[0]
+		if width < height: 
+			get_node("Sprite").texture = vert_closed
+		else:
+			get_node("Sprite").texture = horiz_closed
 	elif open_state == true:
-		get_node("Sprite").texture = textures[1]
+		if width < height:
+			get_node("Sprite").texture = vert_open
+		else:
+			get_node("Sprite").texture = horiz_open
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
