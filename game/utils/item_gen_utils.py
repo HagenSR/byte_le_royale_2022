@@ -20,8 +20,8 @@ class ItemGenUtils:
     def place_item(self,
                    game_board,
                    loot_wave_num):
-        half_width = game_board.circle_radius
-        half_height = game_board.circle_radius
+        half_width = game_board.center[0]
+        half_height = game_board.center[1]
         # Value is pined between 0 and game board height/width. Values are
         # (somewhat) normally distributed around the center
         potential_x = max(
