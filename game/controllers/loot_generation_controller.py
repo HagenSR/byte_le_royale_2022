@@ -13,6 +13,7 @@ class LootGenerationController(Controller):
         self.tick = 0
         self.next_wave = 1
         self.item_gen_utils = ItemGenUtils()
+        self.uuids = []
 
     def handle_actions(self, game_board):
         if (self.tick % GameStats.ticks_between_waves) == 0 and self.next_wave <= GameStats.num_loot_waves:
@@ -25,6 +26,9 @@ class LootGenerationController(Controller):
                     game_board, self.next_wave)
                 if item is None:
                     continue
+                if item.id in self.uuids:
+                    print("ARG")
+                self.uuids.append(item.id)
                 game_board.partition.add_object(item)
             self.next_wave += 1
         self.tick += 1
