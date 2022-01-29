@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # Version Subparser
     upd_subpar = spar.add_parser('version', help='Prints the current version of the launcher')
 
-        # Visualizer Subparser
+    # Visualizer Subparser
     vis_subpar = spar.add_parser('visualizer', aliases=['v'], help='Visualizes last run game')
 
     # Client parser
