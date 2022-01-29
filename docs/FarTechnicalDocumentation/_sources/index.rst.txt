@@ -28,6 +28,7 @@ secure victory for Amazon ( no relation to the forest ).
    Shoot_Controller
    Teleporter_Controller
    Teleporter 
+   Interact_controller
    Upgrade_Controller
    Upgrades
    UseController
@@ -42,6 +43,9 @@ secure victory for Amazon ( no relation to the forest ).
    Item_Gen_Utils
    Partition Grid
    calculate_new_location
+   Enums
+   Money
+   shop
    
 
 
