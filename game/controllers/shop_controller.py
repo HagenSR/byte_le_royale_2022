@@ -20,10 +20,10 @@ class ShopController(Controller):
             # selected_object should come from Consumables enum
             item = client.action.item_to_purchase
             if client.shooter.money >= GameStats.shop_stats[item][
-                "cost"]:
+                    "cost"]:
                 if client.shooter.has_empty_slot('consumables'):
                     client.shooter.money = client.shooter.money - \
-                                           GameStats.shop_stats[item]["cost"]
+                        GameStats.shop_stats[item]["cost"]
                     # Create consumable object to be appended to inventory.
                     # "consumable_enum" will store the the client's selected item.
                     if client.action.item_to_purchase is not Consumables.grenade:
