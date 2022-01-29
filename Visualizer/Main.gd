@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "../logs"
+onready var log_path = "./logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
@@ -89,7 +89,6 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_money.game_position = [(pos[0]), (pos[1])]
 			new_money.update()
-			self.add_child(new_money)
 			ids.append(new_money.id)
 			out = new_money
 	elif object["object_type"] == 12:
@@ -180,7 +179,7 @@ func run_tick(json_log):
 		players[client["id"]].height = client["shooter"]["hitbox"]["height"]
 		players[client["id"]].game_position = client["shooter"]["hitbox"]["position"]
 
-		players[client["id"]].inventory = client["shooter"]["inventory"]["inventory"]
+		players[client["id"]].inventory = client["shooter"]["inventory"]
 	
 	for nray in json_log["game_map"]["ray_list"]:
 		var r = ray.instance()
