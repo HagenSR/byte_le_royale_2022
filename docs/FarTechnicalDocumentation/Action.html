@@ -52,10 +52,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#interact">Interact</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#reload">Reload</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#shop">Shop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#use">Use</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#use-consumable-item">Use Consumable Item</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#throw-grenade">Throw Grenade</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#use-teleporter">Use Teleporter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#cycle-primary-gun">Cycle Primary Gun</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#drop-item">Drop Item</a></li>
 </ul>
 </li>
 </ul>
@@ -167,8 +168,8 @@ This means your gun will run out of ammo in it’s magazine, but you can reload 
 If you have enough money, it will add the object to your inventory and subtract the amount it costs from your money.
 Check out the consumables page and list of consumable enums to see your options!</p>
 </div>
-<div class="section" id="use">
-<h3>Use<a class="headerlink" href="#use" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="use-consumable-item">
+<h3>Use Consumable Item<a class="headerlink" href="#use-consumable-item" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">select_item_to_use</span><span class="p">(</span><span class="n">consumable_enum</span><span class="p">:</span> <span class="n">Enum</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span>
 </pre></div>
 </div>
@@ -202,6 +203,24 @@ a short delay, then re-enabled.</p>
 </div>
 <p>This will cycle your selected gun in your shooter’s inventory to the next one in the inventory.
 Note: this does not use up your action for the turn!</p>
+</div>
+<div class="section" id="drop-item">
+<h3>Drop Item<a class="headerlink" href="#drop-item" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">drop_item</span><span class="p">(</span><span class="n">enum</span><span class="p">:</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">sub_enum</span><span class="p">:</span> <span class="n">Enum</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will drop an item of a specific enum. Pass it one of the ObjectType enums or
+it might drop the wrong thing. It will search for the first match in your inventory of that
+type and remove it.</p>
+<p>sub_enum should be the corresponding type of the object you want to drop.
+For example, gun should be enum GunType, upgrade should be enum Upgrades, consumable should
+be enum Consumables</p>
+<p>Due to the Amazon return policy, the item does not go on the map but
+gets sent back to Amazon returns with no refund.</p>
+<p>If you drop a backpack upgrade, this will also remove slots in your inventory.
+It removes the last slots in your inventory first, so make sure you don’t have any items there
+or you will lose them!</p>
+<p>Note: this does not use up your action for the turn!</p>
 </div>
 </div>
 </div>

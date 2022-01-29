@@ -5,12 +5,34 @@ Running the game
 Installing
 ==========
 
+Python version
+----------------
+
 Make sure to uninstall the visual studio version of python if you have visual studio installed. 
 You can do this by re-running the installer and unselecting the python development kit then clicking update.
 
 We recommend running a python version between 3.8.10 and 3.9.9
 
 You can use any text editor for this competition, but we recommend visual studio code.
+
+Getting the code
+-----------------
+
+Please download all of the assets you need from https://github.com/HagenSR/byte_le_royale_2022_release
+
+We recommend using git, so you can easily pull updates from github when they eventually happen. You can also download a zip 
+of all the files by going to https://github.com/HagenSR/byte_le_royale_2022_release/archive/refs/heads/master.zip
+
+Submitting Issues
+------------------
+
+If you run into issues with the game, please submit an issue with your zipped log files at https://github.com/HagenSR/byte_le_royale_2022_release/issues
+and accurately describe the issue encountered!
+
+Release of top clients
+-----------------------
+
+The top three clients at the end of the competition will be made public ( with censorship at the board's discretion (Association for Censorship Mmmmmmmmmmmmm))
 
 
 Running the game
