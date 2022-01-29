@@ -38,13 +38,13 @@ func set_gun():
 		var level = inventory["guns"][gun_primary]["level"]
 		self.get_node("Sprite/Sprite").texture = textures[gun-1][level-1]
 		if gun == 0:
-			self.get_node("Sprite/Sprite").offset = 15
+			self.get_node("Sprite/Sprite").offset = Vector2(15.0, 0.0)
 		if gun == 1:
-			self.get_node("Sprite/Sprite").offset = 20
+			self.get_node("Sprite/Sprite").offset = Vector2(20.0, 0.0)
 		if gun == 2:
-			self.get_node("Sprite/Sprite").offset = 20
+			self.get_node("Sprite/Sprite").offset = Vector2(20.0, 0.0)
 		if gun == 3:
-			self.get_node("Sprite/Sprite").offset = 40
+			self.get_node("Sprite/Sprite").offset = Vector2(40.0, 0.0)
 	else:
 		self.get_node("Sprite/Sprite").texture = null
 	
@@ -57,7 +57,7 @@ func _ready():
 	pass # Replace with function body.
 
 func update():
-	#set_gun()
+	set_gun()
 	self.get_node("Label").text = team_name
 	self.get_node("Label").set_as_toplevel(true)
 	self.get_node("Label").set_position(self.position)

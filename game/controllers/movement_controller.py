@@ -50,6 +50,7 @@ class MovementController(Controller):
                     break
 
                 obj = game_board.partition.find_object_hitbox(dummy_hitbox)
+
                 if not obj or not obj.collidable:
                     try:
                         client.shooter.hitbox.position = (new_x, new_y)
