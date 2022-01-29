@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="clientRay2" type="Line2D"]
+points = PoolVector2Array( 562.714, 118.796 )
+width = 1.0
+default_color = Color( 0.721569, 0, 0, 1 )
