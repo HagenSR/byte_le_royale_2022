@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "../logs"
+onready var log_path = "./logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
@@ -12,8 +12,10 @@ onready var teleporter = preload("res://Teleporter.tscn")
 
 onready var tile = preload("res://Tile.tscn")
 onready var boundary = preload("res://Boundary.tscn")
-onready var gui = preload("res://GUI.tscn")
-onready var gui2 = preload("res://GUI2.tscn")
+#onready var gui = preload("res://GUI.tscn")
+#onready var gui2 = preload("res://GUI2.tscn")
+onready var gui = preload("res://UI1.tscn")
+onready var gui2 = preload("res://UI2.tscn")
 onready var grenade = preload("res://Grenade.tscn")
 
 onready var files = load_json(log_path)
@@ -268,3 +270,4 @@ func _ready():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
+	get_tree().quit()

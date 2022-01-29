@@ -28,6 +28,21 @@ window/icon="res://Assets/base_wall.png"
 
 path=false
 
+[input]
+
+scroll={
+"deadzone": 0.5,
+"events": [  ]
+}
+"Wheel Up"={
+"deadzone": 0.5,
+"events": [  ]
+}
+"Wheel Down"={
+"deadzone": 0.5,
+"events": [  ]
+}
+
 [physics]
 
 common/enable_pause_aware_picking=true
