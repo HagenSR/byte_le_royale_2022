@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consumables &mdash; Byte-le-Royale 2022 9 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Consumables &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/accordion.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -42,7 +40,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -67,13 +65,14 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Gun.html">Gun</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Shooter.html">Shooter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="player_utils.html">Player Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition%20Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
@@ -104,57 +103,57 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="consumables">
-<h1>Consumables<a class="headerlink" href="#consumables" title="Permalink to this headline"></a></h1>
-<section id="lore">
-<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline"></a></h2>
+  <div class="section" id="consumables">
+<h1>Consumables<a class="headerlink" href="#consumables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="lore">
+<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline">¶</a></h2>
 <p>Robots picked up their habit of consumption from the humans they replaced. This consumption is purely performative, as robots are not actually affected by the items
 they consume. All of these buffs latently exist within the robots capabilities, but they choose not to use them without consuming. This finicky behavior is a side effect
 of creating AI based off of humans.</p>
-</section>
-<section id="important-information">
-<h2>Important information<a class="headerlink" href="#important-information" title="Permalink to this headline"></a></h2>
+</div>
+<div class="section" id="important-information">
+<h2>Important information<a class="headerlink" href="#important-information" title="Permalink to this headline">¶</a></h2>
 <p>Consumables are items which can be bought in the shop. They are single use items, costing various amounts of money.</p>
-</section>
-<section id="types-of-consumables">
-<h2>Types of Consumables<a class="headerlink" href="#types-of-consumables" title="Permalink to this headline"></a></h2>
-<table class="docutils align-default">
+</div>
+<div class="section" id="types-of-consumables">
+<h2>Types of Consumables<a class="headerlink" href="#types-of-consumables" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
 <colgroup>
-<col style="width: 16%" />
-<col style="width: 5%" />
-<col style="width: 79%" />
+<col width="16%" />
+<col width="5%" />
+<col width="79%" />
 </colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Name</p></th>
-<th class="head"><p>Cost</p></th>
-<th class="head"><p>Description</p></th>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Cost</th>
+<th class="head">Description</th>
 </tr>
 </thead>
-<tbody>
-<tr class="row-even"><td><p>Speed Boost</p></td>
-<td><p>20</p></td>
-<td><p>Gives the player a 20% speed boost for 10 turns.</p></td>
+<tbody valign="top">
+<tr class="row-even"><td>Speed Boost</td>
+<td>20</td>
+<td>Gives the player a 20% speed boost for 10 turns.</td>
 </tr>
-<tr class="row-odd"><td><p>Health Pack</p></td>
-<td><p>25</p></td>
-<td><p>When used, gives up to 50 additional health to the player.</p></td>
+<tr class="row-odd"><td>Health Pack</td>
+<td>25</td>
+<td>When used, gives up to 50 additional health to the player.</td>
 </tr>
-<tr class="row-even"><td><p>Shield</p></td>
-<td><p>30</p></td>
-<td><p>Shields the player from an oncoming bullet (and therefore damage).</p></td>
+<tr class="row-even"><td>Shield</td>
+<td>30</td>
+<td>Shields the player from an oncoming bullet (and therefore damage).</td>
 </tr>
-<tr class="row-odd"><td><p>Radar</p></td>
-<td><p>40</p></td>
-<td><p>Increases range player can see by 20% for 10 turns.</p></td>
+<tr class="row-odd"><td>Radar</td>
+<td>40</td>
+<td>Increases range player can see by 20% for 10 turns.</td>
 </tr>
-<tr class="row-even"><td><p>Grenade</p></td>
-<td><p>55</p></td>
-<td><p>Damages everything in a radius, see grenade documentation for more information.</p></td>
+<tr class="row-even"><td>Grenade</td>
+<td>55</td>
+<td>Damages everything in a radius, see grenade documentation for more information.</td>
 </tr>
 </tbody>
 </table>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

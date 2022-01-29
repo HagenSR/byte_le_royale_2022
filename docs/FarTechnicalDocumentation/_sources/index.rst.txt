@@ -35,6 +35,7 @@ secure victory for Amazon ( no relation to the forest ).
    consumable
    grenade_controller
    Grenade
+   Gun
    Shooter 
    player_utils
    Wall
