@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Search &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Money &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
-    
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -17,10 +16,10 @@
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
-    <script src="_static/searchtools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Shop" href="shop.html" />
+    <link rel="prev" title="List of Enums" href="Enums.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,7 +33,7 @@
                 Version 1.0
               </div>
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -42,7 +41,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
@@ -70,7 +69,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Money</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-info">Basic Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instance-variables">Instance Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#picking-up-money">Picking up Money</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-how-much-money-you-have">Checking how much Money you Have</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="shop.html">Shop</a></li>
 </ul>
 
@@ -88,8 +93,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Search</li>
+      <li>Money</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Money.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,22 +103,68 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="money">
+<h1>Money<a class="headerlink" href="#money" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-info">
+<h2>Basic Info<a class="headerlink" href="#basic-info" title="Permalink to this headline">¶</a></h2>
+<p>Throughout the game, money will spawn on the map for
+the shooter to pick up.</p>
+</div>
+<div class="section" id="instance-variables">
+<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
+<p>Instance variables for Money object:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="24%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>amount</td>
+<td>int</td>
+<td>This represents the currency value of the money object.
+Each Money object will be initialized with a random amount value
+prior to being dropped
+on the map. This value can range from 25 to 50.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="picking-up-money">
+<h2>Picking up Money<a class="headerlink" href="#picking-up-money" title="Permalink to this headline">¶</a></h2>
+<p>In order to pick up money, your shooter object must be standing on top of it. You can then
+use this command to let the game know you would like to interact with this object.</p>
+<blockquote>
+<div><strong>Note: Each player can only perform up to 1 action per turn.</strong></div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_action</span><span class="p">(</span><span class="n">ActionType</span><span class="o">.</span><span class="n">interact</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-how-much-money-you-have">
+<h2>Checking how much Money you Have<a class="headerlink" href="#checking-how-much-money-you-have" title="Permalink to this headline">¶</a></h2>
+<p>During the game, you’ll probably want to keep track of
+how much money you’ve been saving. To do so, you may enter the
+following command:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shooter</span><span class="o">.</span><span class="n">money</span>
+</pre></div>
+</div>
+<p>This will return the money amount as an int value.</p>
+</div>
+</div>
 
-  
-  <div id="search-results">
-  
-  </div>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Enums.html" class="btn btn-neutral float-left" title="List of Enums" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="shop.html" class="btn btn-neutral float-right" title="Shop" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
@@ -134,14 +186,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script>
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>
