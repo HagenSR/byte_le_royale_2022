@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var log_path = "../logs"
+onready var log_path = "./logs"
 onready var player = preload("res://Player.tscn")
 onready var wall = preload("res://Wall.tscn")
 onready var door = preload("res://Door.tscn")
@@ -12,9 +12,12 @@ onready var teleporter = preload("res://Teleporter.tscn")
 
 onready var tile = preload("res://Tile.tscn")
 onready var boundary = preload("res://Boundary.tscn")
-onready var gui = preload("res://GUI.tscn")
-onready var gui2 = preload("res://GUI2.tscn")
+#onready var gui = preload("res://GUI.tscn")
+#onready var gui2 = preload("res://GUI2.tscn")
+onready var gui = preload("res://UI1.tscn")
+onready var gui2 = preload("res://UI2.tscn")
 onready var grenade = preload("res://Grenade.tscn")
+onready var start = preload("res://StartScreen.tscn")
 
 onready var files = load_json(log_path)
 
@@ -23,9 +26,8 @@ onready var players = {}
 onready var rays = []
 
 onready var log_i = 2
+onready var global = get_node("/root/Global")
 
-#func _draw():
-	#draw_line(Vector2(0,0), Vector2(50, 50), Color(255, 0, 0), 1)
 
 func load_json(path):
 	var f = []
@@ -120,7 +122,7 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_consumable.game_position = [(pos[0]), (pos[1])]
 			new_consumable.update()
-			self.add_child(new_consumable)
+			#self.add_child(new_consumable)
 			ids.append(new_consumable.id)
 			out = new_consumable
 	elif object["object_type"] == 19:
@@ -145,7 +147,7 @@ func instantiate(object):
 			var pos = object["hitbox"]["position"]
 			new_grenade.game_position = [(pos[0]), (pos[1])]
 			new_grenade.update()
-			self.add_child(new_grenade)
+			#self.add_child(new_grenade)
 			ids.append(new_grenade.id)
 			out = new_grenade
 	#for id in map_objects.keys():
@@ -157,6 +159,7 @@ func initialize(results, game_map):
 	for player_log in results["players"]:
 		var new_player = player.instance()
 		new_player.id = player_log["id"]
+		new_player.team_name = player_log["team_name"]
 		players[new_player.id] = new_player
 		self.add_child(new_player)
 	for partition_set in game_map["game_map"]["partition"]["partition_grid"]:
@@ -176,10 +179,12 @@ func run_tick(json_log):
 		players[client["id"]].speed = client["shooter"]["speed"]
 		players[client["id"]].money = client["shooter"]["money"]
 		players[client["id"]].armor = client["shooter"]["armor"]
+		players[client["id"]].width = client["shooter"]["hitbox"]["width"]
+		players[client["id"]].height = client["shooter"]["hitbox"]["height"]
 		players[client["id"]].game_position = client["shooter"]["hitbox"]["position"]
 
-		# Need to do something with this
 		players[client["id"]].inventory = client["shooter"]["inventory"]
+		players[client["id"]].gun_primary = client["shooter"]["primary_gun_pointer"]
 	
 	for nray in json_log["game_map"]["ray_list"]:
 		var r = ray.instance()
@@ -187,7 +192,6 @@ func run_tick(json_log):
 		var endpoint = nray["endpoint"]
 		r.add_point((Vector2(float(2*origin[0]), float(2*origin[1]))))
 		r.add_point((Vector2(float(2*endpoint[0]), float(2*endpoint[1]))))
-		self.add_child(r)
 		rays.append(r)
 
 	for partition_set in json_log["game_map"]["partition"]["partition_grid"]:
@@ -206,11 +210,12 @@ func tiling():
 			new_tile.position = (Vector2(float((1000/32)*i), float(j*(1000/32))))
 			self.add_child(new_tile)
 
-func move_boundary(tick):
-	draw_circle(Vector2(500.0, 500.0), 600-tick, Color(255, 0, 0))
+#func move_boundary(tick):
+#	draw_circle(Vector2(500.0, 500.0), 600-tick, Color(255, 0, 0))
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var new_start = start.instance()
 	var game_boundary = boundary.instance()
 	self.add_child(game_boundary)
 	tiling()
@@ -221,9 +226,9 @@ func _ready():
 	load_json(log_path)
 	var file = File.new()
 	files.sort()
-	print(str(files))
+	#print(str(files))
 	file.open(log_path + "/" + "results.json", File.READ)
-	print(str(files[1]))
+	#print(str(files[1]))
 	var file_text = file.get_as_text()
 	var results = parse_json(file_text)
 	file.close()
@@ -234,8 +239,8 @@ func _ready():
 	initialize(results, game_map)
 	files.sort()
 	
-	for i in range(2, len(files)):
-		print(str(i))
+	for i in range(global.tick, len(files)):
+		#print(str(i))
 		for r in rays:
 			self.remove_child(r)
 		rays.clear()
@@ -247,7 +252,12 @@ func _ready():
 		run_tick(json_log)
 
 		ui1.health = players.values()[0].health
+		ui1.armor = players.values()[0].armor
+		ui1.inventory = players.values()[0].inventory
 		ui2.health = players.values()[1].health
+		ui2.armor = players.values()[1].armor
+		ui2.inventory = players.values()[1].inventory
+		ui2.inventory = players.values()[1].inventory
 		ui1.update()
 		ui2.update()
 
@@ -255,6 +265,8 @@ func _ready():
 			object.update()
 		for p in players.values():
 			p.update()
+		for ray in rays:
+			self.add_child(ray)			
 		game_boundary.update()
 		var t = Timer.new()
 		t.set_wait_time(.5)
@@ -263,3 +275,4 @@ func _ready():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
+	get_tree().quit()

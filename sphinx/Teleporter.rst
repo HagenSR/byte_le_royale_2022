@@ -7,7 +7,7 @@ Lore
 
 Long ago people thought they wanted to be somewhere else when they really wanted to be at peace, so they developed means of transportation that could bring them elsewhere
 faster and faster. The end result was IT ( Instantaneous Travel ). Amazon (Again, no relation to the rain forest) was a major sponsor of this technology so they could use
-it to bring people products to fill the voids in their hearts faster than their competitors 2 lightyear guarantee. This materialistic consumption was also an odd human 
+it to bring people products to fill the voids in their hearts faster than their competitor's 2 lightyear guarantee. This materialistic consumption was also an odd human 
 cope for their inability to find inner peace.
 
 Important information

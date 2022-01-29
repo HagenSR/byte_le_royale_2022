@@ -7,7 +7,7 @@ Interact Controller
 Basic Info
 -----------------
 
-This controller allows you to interact with object on the game board. The objects shooters can interact with are
+This controller allows you to interact with an object on the game board. The objects shooters can interact with are
 consumables, upgrades, money, and doors.
 **NOTE: Items have higher precedence than doors in the interact controller. If
 you want to interact with a door, make sure you are not standing on an item before ending your

@@ -20,9 +20,9 @@ class GameStats:
     # The size of a plot (square)
     plot_width_height = 140
 
-    default_wall_health = 18
+    default_wall_health = 50
 
-    default_door_health = 18
+    default_door_health = 300
 
     player_stats = {
         'starting_health': 100,

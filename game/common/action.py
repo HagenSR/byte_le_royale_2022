@@ -22,6 +22,29 @@ class Action:
 
         self.__cycle_primary_gun = False
 
+        self.item_to_drop = 0
+        self.item_sub_type_to_drop = 0
+
+    @property
+    def item_to_drop(self):
+        return self.__item_to_drop
+
+    @item_to_drop.setter
+    def item_to_drop(self, value):
+        if not isinstance(value, int):
+            TypeError("enum must be of type int!")
+        self.__item_to_drop = value
+
+    @property
+    def item_sub_type_to_drop(self):
+        return self.__item_sub_type_to_drop
+
+    @item_sub_type_to_drop.setter
+    def item_sub_type_to_drop(self, value):
+        if not isinstance(value, int):
+            raise TypeError("enum must be of type int!")
+        self.__item_sub_type_to_drop = value
+
     @property
     def cycle_primary_gun(self):
         return self.__cycle_primary_gun
@@ -73,12 +96,12 @@ class Action:
             raise ValueError("Values passed to action object methods must be of correct type")
         self.item_to_purchase = obj
 
-    def select_item_to_use(self, obj):
+    def select_item_to_use(self, consumable_type):
         """Sets item to use and action to use. Must be same object reference as is in player inventory"""
-        if not isinstance(obj, Consumable):
+        if not isinstance(consumable_type, int):
             raise ValueError("Values passed to action object methods must be of correct type")
         self._chosen_action = ActionType.use
-        self.item_to_use = obj
+        self.item_to_use = consumable_type
 
     def set_throw_grenade(self, heading: int, distance_to_throw: int):
         """Sets the player to throw a grenade for the current turn"""
@@ -96,6 +119,10 @@ class Action:
 
     def cycle_primary(self):
         self.__cycle_primary_gun = True
+
+    def drop_item(self, enum: int, sub_enum: int):
+        self.item_to_drop = enum
+        self.item_sub_type_to_drop = sub_enum
 
     def to_json(self):
         data = dict()
