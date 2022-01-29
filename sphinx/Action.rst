@@ -68,8 +68,8 @@ This will set your intention to buy an object from the shop. You pass in the enu
 If you have enough money, it will add the object to your inventory and subtract the amount it costs from your money.
 Check out the consumables page and list of consumable enums to see your options!
 
-Use
-===
+Use Consumable Item
+====================
 
 .. code-block:: python
 

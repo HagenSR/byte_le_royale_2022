@@ -22,7 +22,7 @@ class UseController(Controller):
 
         # player action
         if client.action._chosen_action is ActionType.use:
-            obj = client.shooter.remove_from_inventory_enum(client.action.item_to_use[0], client.action.item_to_use[1])
+            obj = client.shooter.remove_from_inventory_enum(ObjectType.consumable, client.action.item_to_use)
             if not obj:
                 return
             if obj.consumable_type == Consumables.health_pack:
