@@ -22,7 +22,7 @@ class GameStats:
 
     default_wall_health = 50
 
-    default_door_health = 50
+    default_door_health = 300
 
     player_stats = {
         'starting_health': 100,
