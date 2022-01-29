@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Player Utilities" href="player_utils.html" />
-    <link rel="prev" title="Grenade" href="Grenade.html" /> 
+    <link rel="prev" title="Gun" href="Gun.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -60,7 +60,9 @@
 <li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Gun.html">Gun</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Shooter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-your-player-can-see">What your player can see</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#inventory">Inventory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#methods">Methods</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#has-empty-slot">has_empty_slot</a></li>
@@ -153,6 +155,15 @@ In contains information on location, inventory, view stats, etc.</p>
 </tbody>
 </table>
 <p>The shooter starts with a level one handgun in the inventory</p>
+<div class="section" id="what-your-player-can-see">
+<h2>What your player can see<a class="headerlink" href="#what-your-player-can-see" title="Permalink to this headline">¶</a></h2>
+<p>Your player has a radar that lets them see where the other opponent is at any given time. This radar is
+a circle centered around your player with a radius of 50. Anything outside this circle is automatically
+removed from your version of the game_map (encapsulated within the PartitionGrid object).</p>
+<p>The objects that are removed are: Any items (Upgrades, consumables, money) and players (Shooter object).</p>
+<p>Your player can still see walls, doors, and teleporters outside it’s radar.</p>
+<p>The radar consumable object can increase your view distance</p>
+</div>
 <div class="section" id="inventory">
 <h2>Inventory<a class="headerlink" href="#inventory" title="Permalink to this headline">¶</a></h2>
 <p>The player inventory contains all the objects the player is currently holding.</p>
@@ -192,7 +203,7 @@ In contains information on location, inventory, view stats, etc.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="Grenade.html" class="btn btn-neutral float-left" title="Grenade" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Gun.html" class="btn btn-neutral float-left" title="Gun" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="player_utils.html" class="btn btn-neutral float-right" title="Player Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

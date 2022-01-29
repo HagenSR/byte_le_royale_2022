@@ -105,13 +105,6 @@ class TestHitboxObject(unittest.TestCase):
         self.assertEqual(self.hitbox.bottom_left, (10, 12))
         self.assertEqual(self.hitbox.bottom_right, (12, 12))
 
-    def test_rotation_45(self):
-        self.hitbox.position = (10, 10)
-        self.hitbox.rotation = 45
-        self.assertEqual(self.hitbox.top_left, (11.0, 9.585786437626904))
-        self.assertEqual(self.hitbox.top_right, (12.414213562373096, 11.0))
-        self.assertEqual(self.hitbox.bottom_left, (9.585786437626904, 11.0))
-        self.assertEqual(self.hitbox.bottom_right, (11.0, 12.414213562373096))
 
     def test_rotation_90(self):
         self.hitbox.position = (10, 10)
