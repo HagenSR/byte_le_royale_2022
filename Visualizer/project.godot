@@ -15,8 +15,12 @@ _global_script_class_icons={
 [application]
 
 config/name="TestVisualizer"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://StartScreen.tscn"
 config/icon="res://Assets/BYTEART/SHIELD.png"
+
+[autoload]
+
+Global="*res://Global.tscn"
 
 [display]
 

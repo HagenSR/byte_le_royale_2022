@@ -17,6 +17,7 @@ onready var boundary = preload("res://Boundary.tscn")
 onready var gui = preload("res://UI1.tscn")
 onready var gui2 = preload("res://UI2.tscn")
 onready var grenade = preload("res://Grenade.tscn")
+onready var start = preload("res://StartScreen.tscn")
 
 onready var files = load_json(log_path)
 
@@ -25,6 +26,7 @@ onready var players = {}
 onready var rays = []
 
 onready var log_i = 2
+onready var global = get_node("/root/Global")
 
 
 func load_json(path):
@@ -213,6 +215,7 @@ func tiling():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var new_start = start.instance()
 	var game_boundary = boundary.instance()
 	self.add_child(game_boundary)
 	tiling()
@@ -236,7 +239,7 @@ func _ready():
 	initialize(results, game_map)
 	files.sort()
 	
-	for i in range(2, len(files)):
+	for i in range(global.tick, len(files)):
 		#print(str(i))
 		for r in rays:
 			self.remove_child(r)
