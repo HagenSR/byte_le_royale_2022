@@ -330,8 +330,8 @@ def determine_gun_collision(
         slope,
         ray_endpoint,
         damage):
-    origin = ((player.shooter.hitbox.position[0]+(player.shooter.hitbox.width/2)), 
-            (player.shooter.hitbox.position[1]+(player.shooter.hitbox.height/2))) 
+    origin = ((player.shooter.hitbox.position[0] + (player.shooter.hitbox.width / 2)),
+              (player.shooter.hitbox.position[1] + (player.shooter.hitbox.height / 2)))
     # Ray object used to provide data for visualizer
     collisions = {}
     for collidable in collidables.keys():
@@ -416,8 +416,8 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 def get_gun_ray_collision(player, gameboard):
     radians = math.radians(player.shooter.heading)
     slope = calculate_slope(radians)
-    origin = ((player.shooter.hitbox.position[0]+(player.shooter.hitbox.width/2)), 
-            (player.shooter.hitbox.position[1]+(player.shooter.hitbox.height/2))) 
+    origin = ((player.shooter.hitbox.position[0] + (player.shooter.hitbox.width / 2)),
+              (player.shooter.hitbox.position[1] + (player.shooter.hitbox.height / 2)))
     ray_endpoint = get_ray_limits(radians,
                                   origin,
                                   gameboard,
