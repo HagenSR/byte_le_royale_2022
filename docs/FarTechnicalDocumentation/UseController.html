@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using Items &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Consumables" href="consumable.html" />
+    <link rel="prev" title="Upgrades" href="Upgrades.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Byte-le-Royale 2022
+          </a>
+              <div class="version">
+                Version 1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GameBoard.html">The Game Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kill_boundary_controller.html">The Kill Boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loot_Generation_Controller.html">Loot Generation Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reload_controller.html">Reload Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shoot_Controller.html">Shoot Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Interact_controller.html">Interact Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Gun.html">Gun</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shooter.html">Shooter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_utils.html">Player Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shop.html">Shop</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Byte-le-Royale 2022</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Using Items</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/UseController.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="using-items">
+<h1>Using Items<a class="headerlink" href="#using-items" title="Permalink to this headline">¶</a></h1>
+<p>The use controller controls using consumable items.</p>
+<p>By calling the action</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">select_item_to_use</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>you can select what item you want to use. Make sure that obj is the consumable object from your inventory.</p>
+<p>Speed boost and radar will last for 10 turns each and cannot be applied again until after those 10 turns.</p>
+<p>Shield is set as a boolean in the shooter object, and will go away after one shot hits you.</p>
+<p>Health pack will increase your shooter health.</p>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Upgrades.html" class="btn btn-neutral float-left" title="Upgrades" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="consumable.html" class="btn btn-neutral float-right" title="Consumables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 1970-2100, NDSU ACM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

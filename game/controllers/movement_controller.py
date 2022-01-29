@@ -5,6 +5,7 @@ from game.utils.calculate_new_location import calculate_location
 from game.utils.collision_detection import distance_tuples
 from game.common.enums import *
 from game.common.stats import GameStats
+from game.common.hitbox import Hitbox
 
 
 class MovementController(Controller):
@@ -36,6 +37,7 @@ class MovementController(Controller):
             self.space_free = True
             distance_to = GameStats.game_board_width
             prev_distance_to = GameStats.game_board_width + 1
+            # breakpoint()
             while (distance_to < prev_distance_to and self.space_free):
                 prev_distance_to = distance_to
                 distance_to = distance_tuples(client.shooter.hitbox.position, self.target_location)
@@ -46,7 +48,9 @@ class MovementController(Controller):
                 except ValueError:
                     self.space_free = False
                     break
+
                 obj = game_board.partition.find_object_hitbox(dummy_hitbox)
+
                 if not obj or not obj.collidable:
                     try:
                         client.shooter.hitbox.position = (new_x, new_y)
@@ -60,4 +64,5 @@ class MovementController(Controller):
                 prev_distance_to = distance_to
                 distance_to = distance_tuples(client.shooter.hitbox.position, self.target_location)
             # gameboard is updated with new client location
+            # breakpoint()
             game_board.partition.add_object(client.shooter)

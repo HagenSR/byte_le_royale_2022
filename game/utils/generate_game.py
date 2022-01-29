@@ -11,6 +11,7 @@ from game.common.wall import Wall
 from game.common.items.gun import Gun
 from game.common.items.item import Item
 from game.config import *
+from game.utils import collision_detection
 from game.utils.helpers import write_json_file
 from game.common.game_board import GameBoard
 from game.common.stats import GameStats
@@ -18,14 +19,15 @@ from game.common.door import Door
 from game.common.teleporter import Teleporter
 import zipfile
 import json
-
+from game.utils.collision_detection import distance
 import requests
+import uuid
 
 
 def create_structures_file(file_path):
     Structures = []
     # Structure1 has no walls
-    block = [(Wall(Hitbox(140, 140, (0, 0)), destructible=True))]
+    block = [(Wall(Hitbox(140, 140, (0, 0)), destructible=True, health=300))]
     Structures.append(block)
     outlet = [
         Wall(Hitbox(50, 20, (50, 10)), destructible=True),
@@ -359,7 +361,7 @@ def generate():
                 with z.open(filename, 'r') as fl:
                     # Read the zipped file, then decode it from bytes, then
                     # load it into json
-                   # print(requests.get(fl.read().decode('utf-8')).content)
+                    # print(requests.get(fl.read().decode('utf-8')).content)
                     filejsn = json.loads(fl.read().decode('utf-8'))
                     wallList = []
                     for entry in filejsn:
@@ -367,14 +369,16 @@ def generate():
                         if entry['object_type'] == ObjectType.wall:
                             wall = Wall(Hitbox(1, 1, (0, 0)))
                             wall.from_json(entry)
+                            wall.id = str(uuid.uuid4())
                             wallList.append(wall)
                         elif entry['object_type'] == ObjectType.door:
                             door = Door(Hitbox(1, 1, (0, 0)))
                             door.from_json(entry)
+                            door.id = str(uuid.uuid4())
                             wallList.append(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
-        structures_list.append(None)
+        # structures_list.append(None)
 
     # Choose what structure goes in what plot
     plot_list = findPlotHitboxes()
@@ -389,19 +393,21 @@ def generate():
                 x_offset = plot.position[0] + wall_copy.hitbox.position[0]
                 y_offset = plot.position[1] + wall_copy.hitbox.position[1]
                 wall_copy.hitbox.position = (x_offset, y_offset)
+                wall_copy.id = str(uuid.uuid4())
                 game_map.partition.add_object(wall_copy)
 
     # place 5 teleporters
     for i in range(5):
         teleporter_x, teleporter_y = find_teleporter_position()
         dummy_wall = Wall(hitbox=Hitbox(10, 10, (teleporter_x, teleporter_y)))
-        while game_map.partition.find_object_object(dummy_wall)\
-                or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height\
-                or teleporter_x < 0 or teleporter_y < 0\
+        while game_map.partition.find_object_object(dummy_wall) \
+                or teleporter_x >= GameStats.game_board_width or teleporter_y >= GameStats.game_board_height \
+                or teleporter_x < 0 or teleporter_y < 0 \
                 or determine_teleporter_nearby(dummy_wall, game_map):
             teleporter_x, teleporter_y = find_teleporter_position()
             dummy_wall = Wall(hitbox=(Hitbox(10, 10, (teleporter_x, teleporter_y))))
         new_tel = Teleporter(Hitbox(10, 10, (teleporter_x, teleporter_y)))
+        new_tel.id = str(uuid.uuid4())
         game_map.partition.add_object(new_tel)
         game_map.teleporter_list.append(new_tel)
 
@@ -447,17 +453,15 @@ def find_teleporter_position():
 
 
 def determine_teleporter_nearby(teleporter, game_board):
-    # min & max make sure bounds are within the game board
-    for x in range(int(max(0, teleporter.hitbox.position[0] -
-                           11)), int(min(teleporter.hitbox.position[1] +
-                                         11, GameStats.game_board_width))):
-        for y in range(int(max(0, teleporter.hitbox.position[0] -
-                               11)), int(min(teleporter.hitbox.position[1] +
-                                             11, GameStats.game_board_width))):
-            if game_board.partition.find_object_coordinates(x, y) is not False:
-                return True
+    for obj in game_board.teleporter_list:
+        if len(game_board.teleporter_list) < 1:
+            return False
+        if distance(teleporter.hitbox.middle[0], teleporter.hitbox.middle[1], obj.hitbox.middle[0],
+                    obj.hitbox.middle[1]) < GameStats.min_teleporter_distance:
+            return True
+
     return False
 
 
 if __name__ == '__main__':
-    create_structures_file("./structures/structureDescriptiveName.json")
+    create_structures_file("./structures.json")

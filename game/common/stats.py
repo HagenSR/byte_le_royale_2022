@@ -20,16 +20,16 @@ class GameStats:
     # The size of a plot (square)
     plot_width_height = 140
 
-    default_wall_health = 18
+    default_wall_health = 50
 
-    default_door_health = 18
+    default_door_health = 300
 
     player_stats = {
         'starting_health': 100,
         'starting_money': 10,
         'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
-        'view_distance': 500,
+        'view_distance': 50,
         'max_distance_per_turn': 25
     }
 
@@ -60,9 +60,13 @@ class GameStats:
         "backpack_slot_increase": 3,
     }
 
+    # stats for making sure teleporters don't spawn next to each other. Distance is measured by middle
+    # of hitbox.
+    min_teleporter_distance = 80
+
     # stats for money located on the gameboard
     min_money_amount = 25
-    max_money_amount = 500
+    max_money_amount = 50
 
     moving_object_stats = {
         # max speed value is arbitrary at this time and will most likely be
@@ -276,3 +280,5 @@ class GameStats:
     blast_radius = 40
 
     grenade_max_distance = 75
+
+    grenade_fuse_time = 5

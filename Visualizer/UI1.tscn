@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI1.gd" type="Script" id=2]
+
+[node name="UI1" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="MarginContainer" parent="." instance=ExtResource( 1 )]

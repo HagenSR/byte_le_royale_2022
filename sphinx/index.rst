@@ -3,22 +3,51 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to FarTechs's documentation!
+Welcome to FarTech's documentation!
 =======================================
+
+In this game you write the soldier AI for a warmongering robot nation state. Your goal is to win as many 1v1 matches against 
+other AI's, lest your robot employers find you to be incompetent at your job. Move, shoot, teleport, buy and throw grenades to
+secure victory for Amazon ( no relation to the forest ).
+
+.. image:: ./_static/imgs/terrorists_byte_le.png
+   :width: 800
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   test
+   RunningTheGame
    Server
    Action
+   GameBoard
    Movement_Controller
-   Map
-   Partition Grid
-   Grenade
+   Kill_boundary_controller
+   Loot_Generation_Controller
+   Reload_controller
+   Shoot_Controller
+   Teleporter_Controller
+   Teleporter 
+   Interact_controller
+   Upgrade_Controller
+   Upgrades
+   UseController
+   consumable
    grenade_controller
-
+   Grenade
+   Gun
+   Shooter 
+   player_utils
+   Wall
+   Door
+   Hitbox
+   Item_Gen_Utils
+   Partition Grid
+   calculate_new_location
+   Enums
+   Money
+   shop
+   
 
 
 Indices and tables

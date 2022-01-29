@@ -4,11 +4,13 @@ Taking Action
 
 The Action Object
 ------------------
+
 Taking actions is managed by an action object passed to the player each turn.
 This comes in as "actions" in the take_turns() method in your client.
 
 Available Actions
 ------------------
+
 Each turn you can take one action.
 If you take multiple actions your client will do the last one that is set.
 
@@ -66,8 +68,8 @@ This will set your intention to buy an object from the shop. You pass in the enu
 If you have enough money, it will add the object to your inventory and subtract the amount it costs from your money.
 Check out the consumables page and list of consumable enums to see your options!
 
-Use
-===
+Use Consumable Item
+====================
 
 .. code-block:: python
 
@@ -102,3 +104,36 @@ This will set your intent to use a teleporter. You must be standing on a telepor
 you will then be teleported to a random different teleporter. Both of these teleporters will be disabled for
 a short delay, then re-enabled.
 
+Cycle Primary Gun
+==================
+
+.. code-block:: python
+
+    actions.cycle_primary()
+
+This will cycle your selected gun in your shooter's inventory to the next one in the inventory.
+Note: this does not use up your action for the turn!
+
+Drop Item
+==========
+
+.. code-block:: python
+
+    actions.drop_item(enum: Enum, sub_enum: Enum)
+
+This will drop an item of a specific enum. Pass it one of the ObjectType enums or
+it might drop the wrong thing. It will search for the first match in your inventory of that
+type and remove it.
+
+sub_enum should be the corresponding type of the object you want to drop.
+For example, gun should be enum GunType, upgrade should be enum Upgrades, consumable should
+be enum Consumables
+
+Due to the Amazon return policy, the item does not go on the map but
+gets sent back to Amazon returns with no refund.
+
+If you drop a backpack upgrade, this will also remove slots in your inventory.
+It removes the last slots in your inventory first, so make sure you don't have any items there
+or you will lose them!
+
+Note: this does not use up your action for the turn!
