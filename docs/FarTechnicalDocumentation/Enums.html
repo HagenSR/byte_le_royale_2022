@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>List of Enums &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/accordion.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Money" href="Money.html" />
+    <link rel="prev" title="Calculate New Location" href="calculate_new_location.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Byte-le-Royale 2022
+          </a>
+              <div class="version">
+                Version 1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Action.html">Taking Action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GameBoard.html">The Game Board</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Movement_Controller.html">Movement Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kill_boundary_controller.html">The Kill Boundary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Loot_Generation_Controller.html">Loot Generation Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reload_controller.html">Reload Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shoot_Controller.html">Shoot Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter_Controller.html">Teleporter Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Teleporter.html">Teleporter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Interact_controller.html">Interact Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrade_Controller.html">Upgrade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Upgrades.html">Upgrades</a></li>
+<li class="toctree-l1"><a class="reference internal" href="UseController.html">Using Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="consumable.html">Consumables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grenade_controller.html">Grenade Controller</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Grenade.html">Grenade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Shooter.html">Shooter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="player_utils.html">Player Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Wall.html">Wall</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">List of Enums</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#objecttype">ObjectType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#actiontype">ActionType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#upgrades">Upgrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#guntype">GunType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gunlevel">GunLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shotpattern">ShotPattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#consumables">Consumables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shop.html">Shop</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Byte-le-Royale 2022</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>List of Enums</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Enums.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="list-of-enums">
+<h1>List of Enums<a class="headerlink" href="#list-of-enums" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="objecttype">
+<h2>ObjectType<a class="headerlink" href="#objecttype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>action</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>player</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>game_board</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>map_object</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>damaging_object</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>moving_object</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>grenade</td>
+<td>7</td>
+</tr>
+<tr class="row-even"><td>ray</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>bullet</td>
+<td>9</td>
+</tr>
+<tr class="row-even"><td>shooter</td>
+<td>10</td>
+</tr>
+<tr class="row-odd"><td>item</td>
+<td>11</td>
+</tr>
+<tr class="row-even"><td>gun</td>
+<td>12</td>
+</tr>
+<tr class="row-odd"><td>wall</td>
+<td>13</td>
+</tr>
+<tr class="row-even"><td>hitbox</td>
+<td>14</td>
+</tr>
+<tr class="row-odd"><td>door</td>
+<td>15</td>
+</tr>
+<tr class="row-even"><td>upgrade</td>
+<td>16</td>
+</tr>
+<tr class="row-odd"><td>consumable</td>
+<td>17</td>
+</tr>
+<tr class="row-even"><td>money</td>
+<td>18</td>
+</tr>
+<tr class="row-odd"><td>teleporter</td>
+<td>19</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="actiontype">
+<h2>ActionType<a class="headerlink" href="#actiontype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="57%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>move</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>shoot</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>interact</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>reload</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>shop</td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>use</td>
+<td>6</td>
+</tr>
+<tr class="row-odd"><td>use_teleporter</td>
+<td>7</td>
+</tr>
+<tr class="row-even"><td>throw_grenade</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="upgrades">
+<h2>Upgrades<a class="headerlink" href="#upgrades" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="60%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>armor</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>movement_boots</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>backpack</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="guntype">
+<h2>GunType<a class="headerlink" href="#guntype" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="59%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>handgun</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>assault_rifle</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>shotgun</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>sniper</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="gunlevel">
+<h2>GunLevel<a class="headerlink" href="#gunlevel" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="57%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>level_zero</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>level_one</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>level_two</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>level_three</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="shotpattern">
+<h2>ShotPattern<a class="headerlink" href="#shotpattern" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="57%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>single</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>multi</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>spread</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="consumables">
+<h2>Consumables<a class="headerlink" href="#consumables" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="57%" />
+<col width="43%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">variable name</th>
+<th class="head">int value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>none</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>health_pack</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>shield</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>speed_boost</td>
+<td>3</td>
+</tr>
+<tr class="row-even"><td>radar</td>
+<td>4</td>
+</tr>
+<tr class="row-odd"><td>grenade</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="calculate_new_location.html" class="btn btn-neutral float-left" title="Calculate New Location" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Money.html" class="btn btn-neutral float-right" title="Money" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 1970-2100, NDSU ACM.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

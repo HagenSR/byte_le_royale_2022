@@ -29,7 +29,9 @@ In order to pick up money, your shooter object must be standing on top of it. Yo
 use this command to let the game know you would like to interact with this object.
 
     **Note: Each player can only perform up to 1 action per turn.**
+
 .. code-block:: python
+
     actions.set_action(ActionType.interact)
 
 
@@ -44,6 +46,7 @@ how much money you've been saving. To do so, you may enter the
 following command:
 
 .. code-block:: python
+
     shooter.money
 
 This will return the money amount as an int value.
