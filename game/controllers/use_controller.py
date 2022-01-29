@@ -24,17 +24,18 @@ class UseController(Controller):
         if client.action._chosen_action is ActionType.use:
             obj = client.shooter.remove_from_inventory(client.action.item_to_use)
             if not obj:
-                raise ValueError("Object to use not in inventory")
-            if obj.consumable_type == Consumables.health_pack:
-                if client.shooter.health + GameStats.consumable_stats['health_pack_heal_amount'] > 100:
-                    client.shooter.health = 100
-                else:
-                    client.shooter.health += GameStats.consumable_stats['health_pack_heal_amount']
-            if obj.consumable_type == Consumables.shield:
-                client.shooter.shield = True
-            if obj.consumable_type == Consumables.speed and client.shooter.speed_boost_cooldown <= 0:
-                client.shooter.max_speed *= 1 + GameStats.consumable_stats['speed_increase_percent']
-                client.shooter.speed_boost_cooldown = GameStats.consumable_stats['speed_cooldown_turns']
-            if obj.consumable_type == Consumables.radar and client.shooter.radar_cooldown <= 0:
-                client.shooter.view_distance *= 1 + GameStats.consumable_stats['radar_range_increase_percent']
-                client.shooter.radar_cooldown = GameStats.consumable_stats['radar_cooldown_turns']
+                pass
+            else:
+                if obj.consumable_type == Consumables.health_pack:
+                    if client.shooter.health + GameStats.consumable_stats['health_pack_heal_amount'] > 100:
+                        client.shooter.health = 100
+                    else:
+                        client.shooter.health += GameStats.consumable_stats['health_pack_heal_amount']
+                if obj.consumable_type == Consumables.shield:
+                    client.shooter.shield = True
+                if obj.consumable_type == Consumables.speed and client.shooter.speed_boost_cooldown <= 0:
+                    client.shooter.max_speed *= 1 + GameStats.consumable_stats['speed_increase_percent']
+                    client.shooter.speed_boost_cooldown = GameStats.consumable_stats['speed_cooldown_turns']
+                if obj.consumable_type == Consumables.radar and client.shooter.radar_cooldown <= 0:
+                    client.shooter.view_distance *= 1 + GameStats.consumable_stats['radar_range_increase_percent']
+                    client.shooter.radar_cooldown = GameStats.consumable_stats['radar_cooldown_turns']
