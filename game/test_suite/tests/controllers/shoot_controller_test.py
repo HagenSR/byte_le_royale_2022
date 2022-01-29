@@ -20,7 +20,7 @@ class TestShootController(unittest.TestCase):
         self.game_board = GameBoard()
         shooter = Shooter(heading=(0), speed=0,
                           hitbox=Hitbox(10, 10, (0, 0)))
-        self.gun = Gun(GunType.sniper, level=1, hitbox=Hitbox(2, 2, (0, 0)))
+        self.gun = Gun(GunType.sniper, level=3, hitbox=Hitbox(2, 2, (0, 0)))
         shooter.append_inventory(self.gun)
         self.player = Player(shooter=shooter)
         self.player.action._chosen_action = ActionType.shoot
@@ -56,9 +56,9 @@ class TestShootController(unittest.TestCase):
         self.game_board.partition.remove_object(door)
 
     def test_door_removal(self):
-        door = Door(Hitbox(30, 30, (20, 0)))
+        door = Door(Hitbox(30, 30, (20, 0)), health=50)
         self.game_board.partition.add_object(door)
-        for i in range(20):
+        for i in range(100):
             self.shoot_controller.handle_action(self.player, self.game_board)
         object_list = self.game_board.partition.get_partition_objects(
             20, 0)

@@ -36,4 +36,4 @@ class ShopController(Controller):
                                               fuse_time=GameStats.grenade_fuse_time, damage=40)
                     client.shooter.append_inventory(bought_item)
                 else:
-                    raise ValueError("Inventory slots for consumables is full.")
+                    pass

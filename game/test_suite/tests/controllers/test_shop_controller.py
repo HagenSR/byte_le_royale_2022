@@ -19,23 +19,6 @@ class TestShopController(unittest.TestCase):
         self.myPlayer.action._chosen_action = ActionType.shop
         self.shopController = ShopController()
 
-    # Tests to make sure player cannot buy items if inventory is full
-    def test_user_inventory_error(self):
-        self.myPlayer.shooter.money = GameStats.shop_stats[Consumables.speed_boost]["cost"]
-        self.myPlayer.action.item_to_purchase = Consumables.speed_boost
-        an_item = Consumable(hitbox=None, health=None,
-                             consumable_enum=Consumables.speed_boost)
-        # All consumable slots in player's inventory should be full after the
-        # for loop
-        items = [an_item, an_item, an_item, an_item]
-        for item in items:
-            self.myPlayer.shooter.append_inventory(item)
-
-        self.assertRaises(
-            ValueError,
-            self.shopController.handle_actions,
-            self.myPlayer)
-
     # Tests to make sure item is in player's inventory after the purchase is
     # made
     def test_shop_gives_item(self):
