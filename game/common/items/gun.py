@@ -52,5 +52,4 @@ class Gun(Item):
             Fire Rate: {self.fire_rate}
             Range: {self.range}
             Mag Size: {self.mag_size}
-            Cooldown: {self.cooldown}
             """

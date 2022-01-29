@@ -30,7 +30,6 @@ class Hitbox(GameObject):
         self.__width = width
         self.__height = height
         # (x,y) tuple, where [0] is the x position and y is [1] of the top left corner
-        self.__rotation = rotation
         self.position = xy_tuple
         self.update_corners()
 
@@ -48,7 +47,7 @@ class Hitbox(GameObject):
 
     @property
     def rotation(self):
-        return self.__rotation
+        return 0
 
     @property
     def top_left(self):

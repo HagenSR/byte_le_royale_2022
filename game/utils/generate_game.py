@@ -430,21 +430,21 @@ def find_teleporter_position():
     plot_size = GameStats.plot_width_height
 
     if x_corridor == 1:
-        x_pos = random.randint(1, GameStats.corridor_width_height)
+        x_pos = random.randint(1, GameStats.corridor_width_height - 10)
     elif x_corridor == 2:
-        x_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
+        x_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size - 10)
     elif x_corridor == 3:
-        x_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
+        x_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2 - 10)
     elif x_corridor == 4:
         # teleporters are 10 x 10 so they must spawn 10 left of game board width
         x_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 11)
 
     if y_corridor == 1:
-        y_pos = random.randint(1, GameStats.corridor_width_height)
+        y_pos = random.randint(1, GameStats.corridor_width_height - 10)
     elif y_corridor == 2:
-        y_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size)
+        y_pos = random.randint(corridor_size + plot_size, corridor_size * 2 + plot_size - 10)
     elif y_corridor == 3:
-        y_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2)
+        y_pos = random.randint(corridor_size * 2 + plot_size * 2, corridor_size * 3 + plot_size * 2 - 10)
     elif y_corridor == 4:
         # teleporters are 10 x 10 so they must spawn 10 left of game board height
         y_pos = random.randint(corridor_size * 3 + plot_size * 3, GameStats.game_board_width - 11)
