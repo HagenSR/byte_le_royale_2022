@@ -25,10 +25,10 @@ class TestItemGenerationUtil(unittest.TestCase):
     def test_place_item(self):
         item_gen_utils = ItemGenUtils()
         game_board = GameBoard()
-        
-        # Set seed so it always appears in same random gausian position 
-        random.seed(42)  
-        big_boi_wall = Wall(Hitbox(250,250, (game_board.center[0], game_board.center[1])), 10, False)
+
+        # Set seed so it always appears in same random gausian position
+        random.seed(42)
+        big_boi_wall = Wall(Hitbox(250, 250, (game_board.center[0], game_board.center[1])), 10, False)
         game_board.partition.add_object(big_boi_wall)
         item = item_gen_utils.place_item(game_board, loot_wave_num=1)
         self.assertFalse(game_board.partition.find_object_hitbox(item.hitbox))
