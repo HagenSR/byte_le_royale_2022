@@ -4,11 +4,13 @@ Taking Action
 
 The Action Object
 ------------------
+
 Taking actions is managed by an action object passed to the player each turn.
 This comes in as "actions" in the take_turns() method in your client.
 
 Available Actions
 ------------------
+
 Each turn you can take one action.
 If you take multiple actions your client will do the last one that is set.
 
@@ -110,5 +112,21 @@ Cycle Primary Gun
     actions.cycle_primary()
 
 This will cycle your selected gun in your shooter's inventory to the next one in the inventory.
+Note: this does not use up your action for the turn!
+
+Drop Item
+==========
+
+.. code-block:: python
+
+    actions.drop_item(enum: Enum)
+
+This will drop an item of a specific enum. Pass it one of the ObjectType enums or
+it might drop the wrong thing. It will search for the first match in your inventory of that
+type and remove it.
+
+Due to the Amazon return policy, the item does not go on the map but
+gets sent back to Amazon returns with no refund.
+
 Note: this does not use up your action for the turn!
 

@@ -120,6 +120,16 @@ class Shooter(MovingObject):
             return obj
         return None
 
+    def remove_from_inventory_enum(self, enum):
+        for slot_type in self.__inventory:
+            for item in self.__inventory[slot_type]:
+                if item.object_type == enum:
+                    self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                if isinstance(item, Gun) and item == self.primary_gun:
+                    self.cycle_primary()
+                return item
+            return None
+
     @property
     def primary_gun(self):
         """Gun currently equipped"""
