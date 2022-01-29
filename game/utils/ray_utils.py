@@ -16,7 +16,7 @@ def load_collidables_in_ray_range(
     if exclusions is None:
         exclusions = []
     # starting partition
-    heading = (2*math.pi-heading)
+    heading = (2 * math.pi - heading)
     partition_x = gameboard.partition.find_column(coords[0])
     partition_y = gameboard.partition.find_row(coords[1])
     # ending partition
@@ -91,7 +91,7 @@ def load_collidables_in_range(gameboard, coords, max_range, exclusions=[]):
 
 # Calculate slope from player heading
 def calculate_slope(heading_in_radians):
-    heading_in_radians = (2*math.pi-heading_in_radians)
+    heading_in_radians = (2 * math.pi - heading_in_radians)
     if (heading_in_radians != math.pi / 2
             and heading_in_radians != ((3 * math.pi) / 2)):
         slope = math.tan(heading_in_radians)
@@ -125,7 +125,7 @@ def calculate_ray_x(coords, slope, y):
 
 #TODO: Cleanup
 def get_ray_limits(heading, coords, gameboard, slope, ray_range):
-    heading = (2*math.pi-heading)
+    heading = (2 * math.pi - heading)
     # Get final x and y coordinates given gun range and heading
     if ((0 <= heading <= math.pi / 2
             or (3 * math.pi) / 2 <= heading <= 2 * math.pi)
@@ -418,7 +418,7 @@ def get_ray_collision(gameboard, ray_start, heading, dist, damage, exclusions):
 
 def get_gun_ray_collision(player, gameboard):
     radians = math.radians(player.shooter.heading)
-    radians = (2*math.pi - radians)
+    radians = (2 * math.pi - radians)
     slope = calculate_slope(radians)
     origin = ((player.shooter.hitbox.position[0] + (player.shooter.hitbox.width / 2)),
               (player.shooter.hitbox.position[1] + (player.shooter.hitbox.height / 2)))
