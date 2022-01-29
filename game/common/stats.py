@@ -29,7 +29,7 @@ class GameStats:
         'starting_money': 10,
         'hitbox': [[10, 10, 5, 5], [10, 10, 485, 485]],
         'field_of_view': 90,
-        'view_distance': 500,
+        'view_distance': 50,
         'max_distance_per_turn': 25
     }
 

@@ -18,6 +18,19 @@ inventory        dictionary  contains inventory objects referenced by slot type
 
 The shooter starts with a level one handgun in the inventory
 
+What your player can see
+---------------------------
+
+Your player has a radar that lets them see where the other opponent is at any given time. This radar is
+a circle centered around your player with a radius of 50. Anything outside this circle is automatically
+removed from your version of the game_map (encapsulated within the PartitionGrid object).
+
+The objects that are removed are: Any items (Upgrades, consumables, money) and players (Shooter object).
+
+Your player can still see walls, doors, and teleporters outside it's radar.
+
+The radar consumable object can increase your view distance
+
 Inventory
 ---------
 
