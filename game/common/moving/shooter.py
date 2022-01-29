@@ -70,7 +70,7 @@ class Shooter(MovingObject):
 
     @property
     def inventory(self):
-        return deepcopy(self.__inventory)
+        return self.__inventory
 
     def has_empty_slot(self, slot_type):
         """check if there's an empty slot of a particular type in the inventory"""
@@ -120,6 +120,27 @@ class Shooter(MovingObject):
             return obj
         return None
 
+    def remove_from_inventory_enum(self, enum, sub_enum):
+        for slot_type in self.__inventory:
+            for item in self.__inventory[slot_type]:
+                if item.object_type == enum:
+                    if isinstance(item, Gun) and item.gun_type == sub_enum:
+                        self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                        if item == self.primary_gun:
+                            self.cycle_primary()
+                        return item
+                    if isinstance(item, Upgrade) and item.upgrade_enum == sub_enum:
+                        self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                        return item
+                    if isinstance(item, Consumable) and item.consumable_type == sub_enum:
+                        self.__inventory[slot_type][self.__inventory[slot_type].index(item)] = None
+                        return item
+            return None
+
+    def remove_consumable_slots(self, num_slots):
+        self.__inventory['consumables'] = \
+            self.__inventory['consumables'][:len(self.__inventory['consumables']) - num_slots]
+
     @property
     def primary_gun(self):
         """Gun currently equipped"""
@@ -150,17 +171,16 @@ class Shooter(MovingObject):
     def to_json(self):
         data = super().to_json()
         data['inventory'] = {
-            'inventory': {
-                slot_type:
-                    [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
-                for slot_type in self.__inventory
-            }
+            slot_type:
+                [obj.to_json() if obj else None for obj in self.__inventory[slot_type]]
+            for slot_type in self.__inventory
         }
         data['money'] = self.money
         data['armor'] = self.armor
         data['view_distance'] = self.view_distance
         data['speed_boost_cooldown'] = self.speed_boost_cooldown
         data['radar_cooldown'] = self.radar_cooldown
+        data['primary_gun_pointer'] = self.__primary_pointer
 
         return data
 
@@ -171,6 +191,7 @@ class Shooter(MovingObject):
                 self.from_json_helper(data['inventory'][slot_type])
             for slot_type in data['inventory']
         }
+        self.__primary_pointer = data['primary_gun_pointer']
         self.money = data['money']
         self.armor = data['armor']
         self.view_distance = data['view_distance']
