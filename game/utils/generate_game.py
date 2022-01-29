@@ -26,7 +26,7 @@ import requests
 def create_structures_file(file_path):
     Structures = []
     # Structure1 has no walls
-    block = [(Wall(Hitbox(140, 140, (0, 0)), destructible=True))]
+    block = [(Wall(Hitbox(140, 140, (0, 0)), destructible=True, health=300))]
     Structures.append(block)
     outlet = [
         Wall(Hitbox(50, 20, (50, 10)), destructible=True),
