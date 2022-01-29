@@ -7,6 +7,7 @@ extends Node2D
 var fuse_time = 1000
 var game_position = [0,0]
 
+var explosion = preload("res://Assets/explosion.jpeg")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,7 +16,10 @@ func _ready():
 func update():
 	self.position = (Vector2(float(2*game_position[0]), float(2*game_position[1])))
 	if fuse_time < 0:
-		self.remove_and_skip()
+		if fuse_time < -1:
+			self.remove_and_skip()
+		self.get_node("Sprite").texture = explosion
+		
 	fuse_time -= 1
 	
 	

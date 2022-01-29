@@ -21,6 +21,7 @@ import zipfile
 import json
 from game.utils.collision_detection import distance
 import requests
+import uuid
 
 
 def create_structures_file(file_path):
@@ -368,10 +369,12 @@ def generate():
                         if entry['object_type'] == ObjectType.wall:
                             wall = Wall(Hitbox(1, 1, (0, 0)))
                             wall.from_json(entry)
+                            wall.id = str(uuid.uuid4())
                             wallList.append(wall)
                         elif entry['object_type'] == ObjectType.door:
                             door = Door(Hitbox(1, 1, (0, 0)))
                             door.from_json(entry)
+                            door.id = str(uuid.uuid4())
                             wallList.append(door)
                     structures_list.append(wallList)
         # Plots can potentially be empty
