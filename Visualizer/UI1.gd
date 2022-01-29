@@ -8,6 +8,7 @@ extends CanvasLayer
 
 var health = 0
 var shield = false
+var armor = 0
 var inventory = []
 
 var textures = [[preload("res://Assets/BYTEART/PISTOL_LEVEL1.png"),
@@ -62,6 +63,7 @@ func update():
 		else:
 			self.get_node("MarginContainer/Inventory/Upgrades/Upgrade" + str(i+1)).texture = null
 	self.get_node("MarginContainer/Inventory/Bars/Count/Background/Number").text = str(health)
+	self.get_node("MarginContainer/Inventory/Bars/Count2/Background2/Number").text = str(armor)
 	if shield:
 		self.get_node("MarginContainer/Inventory/Bars/Count2/Background2").show()
 	else:

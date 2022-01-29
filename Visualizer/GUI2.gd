@@ -5,6 +5,7 @@ extends MarginContainer
 # var a = 2
 # var b = "text"\
 var health = 0
+var armor = 0
 var shield = false
 var inventory = []
 
@@ -51,10 +52,7 @@ func update():
 		if inventory["upgrades"][i] != null:
 			self.get_node("Inventory/Upgrades/Upgrade" + str(i)).texture = u_textures[inventory["upgrades"][i]["upgrade_type"]-1]
 	self.get_node("Inventory/Bars/Count/Background/Number").text = str(health)
-	if shield:
-		self.get_node("Inventory/Bars/Count2/Background2").show()
-	else:
-		self.get_node("Inventory/Bars/Count2/Background2").show()
+	self.get_node("Inventory/Bars/Coun2/Background2/Number").text = str(armor)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

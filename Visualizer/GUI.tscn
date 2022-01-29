@@ -79,12 +79,12 @@ __meta__ = {
 }
 
 [node name="Number" type="Label" parent="Inventory/Bars/Count2/Background2"]
-modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 51.0
+margin_top = 25.0
 margin_right = 100.0
-margin_bottom = 100.0
-align = 2
+margin_bottom = 74.0
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

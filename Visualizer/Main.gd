@@ -252,8 +252,10 @@ func _ready():
 		run_tick(json_log)
 
 		ui1.health = players.values()[0].health
+		ui1.armor = players.values()[0].armor
 		ui1.inventory = players.values()[0].inventory
 		ui2.health = players.values()[1].health
+		ui2.armor = players.values()[1].armor
 		ui2.inventory = players.values()[1].inventory
 		ui2.inventory = players.values()[1].inventory
 		ui1.update()
