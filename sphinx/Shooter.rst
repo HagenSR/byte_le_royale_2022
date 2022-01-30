@@ -72,7 +72,7 @@ primary_gun
 
 .. code-block:: python
 
-    shooter.primary_gun()
+    shooter.primary_gun
 
 Returns the Gun object of the currently equipped gun
 

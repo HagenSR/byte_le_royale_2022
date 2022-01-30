@@ -9,7 +9,8 @@ The map is a continuous cartesian grid with nine subplots separated by a small o
 a randomly chosen predefined structure of walls and doors will spawn. Navigating these structures is a task left to the player.
 Note that the (X,Y) representation of the map follows "display" logic, where an increase in X represents a movement towards the 
 Right but an increase in Y represents a downward movement. Also note the "backwards" degree rotation where an increase in degrees 
-moves counter-clockwise (see movement controller).
+moves counter-clockwise (see movement controller). The corridors between structures are 20 units wide
+while structures are 140 x 140 plots seperated by the corridors.
 
 Item loot generation
 ---------------------
