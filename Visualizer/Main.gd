@@ -174,7 +174,8 @@ func initialize(results, game_map):
 	
 func run_tick(json_log):
 	var clients = json_log["clients"]
-	var ids = [players.keys()]
+	var ids = []
+	ids.append_array(players.keys())
 	for client in clients:
 		players[client["id"]].heading = client["shooter"]["heading"]
 		players[client["id"]].health = client["shooter"]["health"]
@@ -200,14 +201,16 @@ func run_tick(json_log):
 			for object in partition:
 				var tmp = instantiate(object)
 				if not tmp == null:
-					ids.append(tmp[1])
+					for i in tmp[1]:
+						ids.append(i)
 					tmp = tmp[0]
 				if not tmp == null:
 					if not tmp.id in map_objects.keys():
 						self.add_child(tmp)
 					map_objects[tmp.id] = tmp
-				for id in ids:
-					if not id in map_objects.keys():
+				for id in map_objects.keys():
+					if not id in ids:
+						self.remove_child(map_objects[id])
 						map_objects.erase(id)
 					
 func tiling():
@@ -222,7 +225,6 @@ func tiling():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var new_start = start.instance()
 	var game_boundary = boundary.instance()
 	self.add_child(game_boundary)
 	tiling()
@@ -283,4 +285,4 @@ func _ready():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
-	#get_tree().quit()
+	get_tree().quit()
