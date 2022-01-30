@@ -21,17 +21,19 @@ class InteractController(Controller):
     def handle_actions(self, client, game_board):
         if client.action._chosen_action is ActionType.interact:
             # partition grid checks to see if any objects collide with the player's hitbox
-            self.object_target = game_board.partition.find_object_hitbox(client.shooter.hitbox)
-            if isinstance(self.object_target, Upgrade) or isinstance(self.object_target, Gun):
-                self.interact_item(client, game_board, self.object_target)
-            elif isinstance(self.object_target, Money):
-                self.interact_money(client, game_board, self.object_target)
-            else:
-                # if there are no objects beneath the player, the controller checks if there are nearby doors
-                # to interact with.
-                self.object_target = self.find_doors(client.shooter.hitbox.middle, game_board.partition)
-                if isinstance(self.object_target, Door):
-                    self.interact_door(game_board.partition, self.object_target)
+            object_targets = game_board.partition.find_all_object_collisions(client.shooter.hitbox)
+            for obj in object_targets:
+                if isinstance(obj, Upgrade) or isinstance(obj, Gun):
+                    self.interact_item(client, game_board, obj)
+                    return
+                elif isinstance(obj, Money):
+                    self.interact_money(client, game_board, obj)
+                    return
+            # if there are no objects beneath the player, the controller checks if there are nearby doors
+            # to interact with.
+            obj = self.find_doors(client.shooter.hitbox.middle, game_board.partition)
+            if isinstance(obj, Door):
+                self.interact_door(game_board.partition, obj)
 
     # removes upgrade from beneath the player and adds the upgrade to their inventory
     def interact_item(self, client, game_board, item):
