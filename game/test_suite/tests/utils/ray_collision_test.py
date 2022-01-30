@@ -19,7 +19,7 @@ class TestRayCollision(unittest.TestCase):
         player = Player()
         player.shooter = Shooter()
         player.shooter.heading = 135
-        expected_slope = -1
+        expected_slope = 1
         test_slope = calculate_slope(math.radians(player.shooter.heading))
         self.assertAlmostEqual(expected_slope, test_slope, 2)
 
