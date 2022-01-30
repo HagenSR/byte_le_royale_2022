@@ -109,18 +109,26 @@ class MasterController(Controller):
             # client actions
             self.shoot_controller.handle_action(
                 client, self.current_world_data["game_map"])
+
+        for client in clients:
             self.movement_controller.handle_actions(
                 client, self.current_world_data["game_map"])
+        for client in clients:
             self.use_controller.handle_actions(client)
+        for client in clients:
             self.shop_controller.handle_actions(client)
+        for client in clients:
             ReloadController.handle_actions(client)
+        for client in clients:
             self.teleporter_controller.handle_actions(
                 client, self.current_world_data['game_map'])
+        for client in clients:
             self.interact_controller.handle_actions(
                 client, self.current_world_data["game_map"])
+        for client in clients:
             self.grenade_controller.handle_actions(
                 client, self.current_world_data["game_map"])
-
+        for client in clients:
             # extra client applications of logic
             self.upgrade_controller.handle_actions(client)
             if client.action.cycle_primary_gun:
