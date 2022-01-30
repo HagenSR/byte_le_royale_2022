@@ -159,15 +159,19 @@ class PartitionGrid:
                     return obj
         return False
 
-    def remove_object(self, obj: MapObject) -> None:
+    def remove_object(self, obj: MapObject, obj_id=None) -> None:
         """Remove a given object from the structure"""
-        if not isinstance(obj, MapObject):
-            raise ValueError("Object must be of type MapObject")
-        for partition in self.check_overlap(obj.hitbox):
-            try:
-                self.__matrix[partition[0]][partition[1]].remove(obj)
-            except ValueError:
-                pass
+        if obj_id:
+            for partition in self.check_overlap(obj.hitbox):
+                for obj in self.__matrix[partition[0]][partition[1]]:
+                    if obj.id == obj_id:
+                        self.__matrix[partition[0]][partition[1]].remove(obj)
+        else:
+            for partition in self.check_overlap(obj.hitbox):
+                try:
+                    self.__matrix[partition[0]][partition[1]].remove(obj)
+                except ValueError:
+                    pass
 
     def get_partitions_wide(self):
         return len(self.__matrix)
@@ -179,7 +183,7 @@ class PartitionGrid:
         """Remove all moving and item objects in the partition that contains the x, y coordinates"""
         for obj in self.__matrix[self.find_row(y)][self.find_column(x)]:
             if isinstance(obj, MovingObject) or isinstance(obj, Item):
-                self.remove_object(obj)
+                self.remove_object(obj, obj.id)
 
     def obfuscate(self, client):
         # Check all partitions, if a partition isn't in view, obfuscate it
@@ -191,7 +195,7 @@ class PartitionGrid:
                     self.partition_height):
                 partition = self.get_partition_hitbox(x, y)
                 # remove client's own shooter
-                self.remove_object(client.shooter)
+                self.remove_object(client.shooter, client.shooter.id)
                 # remove everything from a partition that isn't in view at all
                 if not collision_detection.intersect_circle(
                         client.shooter.hitbox.middle,
