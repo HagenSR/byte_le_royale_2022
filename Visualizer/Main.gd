@@ -153,7 +153,7 @@ func instantiate(object):
 	#for id in map_objects.keys():
 		#if not id in ids:
 			#map_objects.erase(id)
-	return out
+	return [out, ids]
 
 func initialize(results, game_map):
 	for player_log in results["players"]:
@@ -167,12 +167,14 @@ func initialize(results, game_map):
 			for object in partition:
 				var obj = instantiate(object)
 				if obj != null:
+					obj = obj[0]
 					map_objects[obj.id] = obj
 					self.add_child(obj)
 	return [players, map_objects]
 	
 func run_tick(json_log):
 	var clients = json_log["clients"]
+	var ids = [players.keys()]
 	for client in clients:
 		players[client["id"]].heading = client["shooter"]["heading"]
 		players[client["id"]].health = client["shooter"]["health"]
@@ -193,15 +195,20 @@ func run_tick(json_log):
 		r.add_point((Vector2(float(2*origin[0]), float(2*origin[1]))))
 		r.add_point((Vector2(float(2*endpoint[0]), float(2*endpoint[1]))))
 		rays.append(r)
-
 	for partition_set in json_log["game_map"]["partition"]["partition_grid"]:
 		for partition in partition_set:
 			for object in partition:
 				var tmp = instantiate(object)
 				if not tmp == null:
+					ids.append(tmp[1])
+					tmp = tmp[0]
+				if not tmp == null:
 					if not tmp.id in map_objects.keys():
 						self.add_child(tmp)
 					map_objects[tmp.id] = tmp
+				for id in ids:
+					if not id in map_objects.keys():
+						map_objects.erase(id)
 					
 func tiling():
 	for i in range(33):
@@ -254,10 +261,11 @@ func _ready():
 		ui1.health = players.values()[0].health
 		ui1.armor = players.values()[0].armor
 		ui1.inventory = players.values()[0].inventory
+		ui1.money = players.values()[0].money
 		ui2.health = players.values()[1].health
 		ui2.armor = players.values()[1].armor
 		ui2.inventory = players.values()[1].inventory
-		ui2.inventory = players.values()[1].inventory
+		ui2.money = players.values()[1].money
 		ui1.update()
 		ui2.update()
 
@@ -275,4 +283,4 @@ func _ready():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
-	get_tree().quit()
+	#get_tree().quit()

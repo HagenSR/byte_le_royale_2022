@@ -5,6 +5,7 @@ var health = 0
 var shield = false
 var inventory = []
 var armor = 0
+var money = 0
 
 var textures = [[preload("res://Assets/BYTEART/PISTOL_LEVEL1.png"),
 preload("res://Assets/BYTEART/PISTOL_LEVEL2.png"),
@@ -59,6 +60,7 @@ func update():
 			self.get_node("MarginContainer/Inventory/Upgrades/Upgrade" + str(i+1)).texture = null
 	self.get_node("MarginContainer/Inventory/Bars/Count/Background/Number").text = str(health)
 	self.get_node("MarginContainer/Inventory/Bars/Count2/Background2/Number").text = str(armor)
+	self.get_node("MarginContainer/Inventory/Bars2/Count/Background/Number").text = str(money) 
 	if shield:
 		self.get_node("MarginContainer/Inventory/Bars/Count2/Background2").show()
 	else:
