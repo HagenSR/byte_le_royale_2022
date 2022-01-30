@@ -7,6 +7,7 @@ extends MarginContainer
 var health = 0
 var armor = 0
 var shield = false
+var money = 0
 var inventory = []
 
 var textures = [[preload("res://Assets/BYTEART/PISTOL_LEVEL1.png"),
@@ -52,7 +53,8 @@ func update():
 		if inventory["upgrades"][i] != null:
 			self.get_node("Inventory/Upgrades/Upgrade" + str(i)).texture = u_textures[inventory["upgrades"][i]["upgrade_type"]-1]
 	self.get_node("Inventory/Bars/Count/Background/Number").text = str(health)
-	self.get_node("Inventory/Bars/Coun2/Background2/Number").text = str(armor)
+	self.get_node("Inventory/Bars/Count2/Background2/Number").text = str(armor)
+	self.get_node("Inventory/HBoxContainer/Label").text = str(money)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
