@@ -79,6 +79,9 @@ class Shooter(MovingObject):
                 return True
         return False
 
+    def add_new_slot(self, slot_type):
+        self.__inventory[slot_type].append(None)
+
     def append_inventory(self, value):
         """Add object to inventory. Not allowed for client use! Will be disqualified if called in contestant's code"""
         if not isinstance(
