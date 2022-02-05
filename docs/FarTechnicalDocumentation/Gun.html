@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gun &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Gun &mdash; Byte-le-Royale 2022 9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/accordion.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -77,7 +79,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition%20Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
@@ -108,237 +110,237 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="gun">
-<h1>Gun<a class="headerlink" href="#gun" title="Permalink to this headline">¶</a></h1>
+  <section id="gun">
+<h1>Gun<a class="headerlink" href="#gun" title="Permalink to this headline"></a></h1>
 <p>The gun is an archaic weapon that propels small bits of metal by explosions. Why do our alien overlords choose to use these weapons against robots? Because
 their military industrial complex was geared towards defeating humans, and then the gun manufacturers used lobbying to outlaw more advanced forms of weaponry
 so they could keep reaping those sweet profits. Anyway, the gun object has the following properties.</p>
-<div class="section" id="instance-variables">
-<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline">¶</a></h2>
+<section id="instance-variables">
+<h2>Instance Variables<a class="headerlink" href="#instance-variables" title="Permalink to this headline"></a></h2>
 <p>Instance variables for the Gun object</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="15%" />
-<col width="25%" />
-<col width="61%" />
+<col style="width: 15%" />
+<col style="width: 25%" />
+<col style="width: 61%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Name</th>
-<th class="head">Type</th>
-<th class="head">Description</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Description</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>gun_type</td>
-<td>GunType enums</td>
-<td>An enum that describes what type of gun this is</td>
+<tbody>
+<tr class="row-even"><td><p>gun_type</p></td>
+<td><p>GunType enums</p></td>
+<td><p>An enum that describes what type of gun this is</p></td>
 </tr>
-<tr class="row-odd"><td>level</td>
-<td>number</td>
-<td>The level of the gun</td>
+<tr class="row-odd"><td><p>level</p></td>
+<td><p>number</p></td>
+<td><p>The level of the gun</p></td>
 </tr>
-<tr class="row-even"><td>damage</td>
-<td>number</td>
-<td>How much damage the gun does per hit</td>
+<tr class="row-even"><td><p>damage</p></td>
+<td><p>number</p></td>
+<td><p>How much damage the gun does per hit</p></td>
 </tr>
-<tr class="row-odd"><td>fire_rate</td>
-<td>number</td>
-<td>If greater than zero, how many bullets are shot at the same time</td>
+<tr class="row-odd"><td><p>fire_rate</p></td>
+<td><p>number</p></td>
+<td><p>If greater than zero, how many bullets are shot at the same time</p></td>
 </tr>
-<tr class="row-even"><td>range</td>
-<td>number</td>
-<td>How far the gun can shoot, in game board units</td>
+<tr class="row-even"><td><p>range</p></td>
+<td><p>number</p></td>
+<td><p>How far the gun can shoot, in game board units</p></td>
 </tr>
-<tr class="row-odd"><td>mag_size</td>
-<td>number</td>
-<td>How many shots you can make before needing to reload</td>
+<tr class="row-odd"><td><p>mag_size</p></td>
+<td><p>number</p></td>
+<td><p>How many shots you can make before needing to reload</p></td>
 </tr>
-<tr class="row-even"><td>mag_ammo</td>
-<td>number</td>
-<td>How many bullets are currently loaded in the magazine</td>
+<tr class="row-even"><td><p>mag_ammo</p></td>
+<td><p>number</p></td>
+<td><p>How many bullets are currently loaded in the magazine</p></td>
 </tr>
-<tr class="row-odd"><td>__str__</td>
-<td>string</td>
-<td>returns a string describing the gun</td>
+<tr class="row-odd"><td><p>__str__</p></td>
+<td><p>string</p></td>
+<td><p>returns a string describing the gun</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="gun-type-enum">
-<h2>Gun type enum<a class="headerlink" href="#gun-type-enum" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="gun-type-enum">
+<h2>Gun type enum<a class="headerlink" href="#gun-type-enum" title="Permalink to this headline"></a></h2>
 <p>The following are the enums described above</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="37%" />
-<col width="63%" />
+<col style="width: 37%" />
+<col style="width: 63%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Gun Type</th>
-<th class="head">number</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Gun Type</p></th>
+<th class="head"><p>number</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>None</td>
-<td>0</td>
+<tbody>
+<tr class="row-even"><td><p>None</p></td>
+<td><p>0</p></td>
 </tr>
-<tr class="row-odd"><td>handgun</td>
-<td>1</td>
+<tr class="row-odd"><td><p>handgun</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-even"><td>assault_rifle</td>
-<td>2</td>
+<tr class="row-even"><td><p>assault_rifle</p></td>
+<td><p>2</p></td>
 </tr>
-<tr class="row-odd"><td>shotgun</td>
-<td>3</td>
+<tr class="row-odd"><td><p>shotgun</p></td>
+<td><p>3</p></td>
 </tr>
-<tr class="row-even"><td>sniper</td>
-<td>4</td>
+<tr class="row-even"><td><p>sniper</p></td>
+<td><p>4</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="gun-stats">
-<h2>Gun stats<a class="headerlink" href="#gun-stats" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="gun-stats">
+<h2>Gun stats<a class="headerlink" href="#gun-stats" title="Permalink to this headline"></a></h2>
 <p>Below are the stats for each gun type, for each level</p>
-<div class="section" id="level-1">
-<h3>level 1<a class="headerlink" href="#level-1" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
+<section id="level-1">
+<h3>level 1<a class="headerlink" href="#level-1" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
 <colgroup>
-<col width="27%" />
-<col width="17%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
+<col style="width: 27%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><a class="reference internal" href="#gun">Gun</a></th>
-<th class="head">damage</th>
-<th class="head">fire rate</th>
-<th class="head">range</th>
-<th class="head">mag size</th>
+<thead>
+<tr class="row-odd"><th class="head"><p><a class="reference internal" href="#gun">Gun</a></p></th>
+<th class="head"><p>damage</p></th>
+<th class="head"><p>fire rate</p></th>
+<th class="head"><p>range</p></th>
+<th class="head"><p>mag size</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>handgun</td>
-<td>25</td>
-<td>n/a</td>
-<td>30</td>
-<td>5</td>
+<tbody>
+<tr class="row-even"><td><p>handgun</p></td>
+<td><p>25</p></td>
+<td><p>n/a</p></td>
+<td><p>30</p></td>
+<td><p>5</p></td>
 </tr>
-<tr class="row-odd"><td>assault_rifle</td>
-<td>15</td>
-<td>3</td>
-<td>50</td>
-<td>12</td>
+<tr class="row-odd"><td><p>assault_rifle</p></td>
+<td><p>15</p></td>
+<td><p>3</p></td>
+<td><p>50</p></td>
+<td><p>12</p></td>
 </tr>
-<tr class="row-even"><td>shotgun</td>
-<td>10</td>
-<td>4</td>
-<td>10</td>
-<td>1</td>
+<tr class="row-even"><td><p>shotgun</p></td>
+<td><p>10</p></td>
+<td><p>4</p></td>
+<td><p>10</p></td>
+<td><p>1</p></td>
 </tr>
-<tr class="row-odd"><td>sniper</td>
-<td>50</td>
-<td>n/a</td>
-<td>100</td>
-<td>1</td>
+<tr class="row-odd"><td><p>sniper</p></td>
+<td><p>50</p></td>
+<td><p>n/a</p></td>
+<td><p>100</p></td>
+<td><p>1</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="level-2">
-<h3>level 2<a class="headerlink" href="#level-2" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
+</section>
+<section id="level-2">
+<h3>level 2<a class="headerlink" href="#level-2" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
 <colgroup>
-<col width="27%" />
-<col width="17%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
+<col style="width: 27%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><a class="reference internal" href="#gun">Gun</a></th>
-<th class="head">damage</th>
-<th class="head">fire rate</th>
-<th class="head">range</th>
-<th class="head">mag size</th>
+<thead>
+<tr class="row-odd"><th class="head"><p><a class="reference internal" href="#gun">Gun</a></p></th>
+<th class="head"><p>damage</p></th>
+<th class="head"><p>fire rate</p></th>
+<th class="head"><p>range</p></th>
+<th class="head"><p>mag size</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>handgun</td>
-<td>40</td>
-<td>n/a</td>
-<td>35</td>
-<td>7</td>
+<tbody>
+<tr class="row-even"><td><p>handgun</p></td>
+<td><p>40</p></td>
+<td><p>n/a</p></td>
+<td><p>35</p></td>
+<td><p>7</p></td>
 </tr>
-<tr class="row-odd"><td>assault_rifle</td>
-<td>15</td>
-<td>5</td>
-<td>60</td>
-<td>20</td>
+<tr class="row-odd"><td><p>assault_rifle</p></td>
+<td><p>15</p></td>
+<td><p>5</p></td>
+<td><p>60</p></td>
+<td><p>20</p></td>
 </tr>
-<tr class="row-even"><td>shotgun</td>
-<td>10</td>
-<td>6</td>
-<td>20</td>
-<td>3</td>
+<tr class="row-even"><td><p>shotgun</p></td>
+<td><p>10</p></td>
+<td><p>6</p></td>
+<td><p>20</p></td>
+<td><p>3</p></td>
 </tr>
-<tr class="row-odd"><td>sniper</td>
-<td>80</td>
-<td>n/a</td>
-<td>200</td>
-<td>2</td>
+<tr class="row-odd"><td><p>sniper</p></td>
+<td><p>80</p></td>
+<td><p>n/a</p></td>
+<td><p>200</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-<div class="section" id="level-3">
-<h3>level 3<a class="headerlink" href="#level-3" title="Permalink to this headline">¶</a></h3>
-<table border="1" class="docutils">
+</section>
+<section id="level-3">
+<h3>level 3<a class="headerlink" href="#level-3" title="Permalink to this headline"></a></h3>
+<table class="docutils align-default">
 <colgroup>
-<col width="27%" />
-<col width="17%" />
-<col width="19%" />
-<col width="19%" />
-<col width="19%" />
+<col style="width: 27%" />
+<col style="width: 17%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
+<col style="width: 19%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head"><a class="reference internal" href="#gun">Gun</a></th>
-<th class="head">damage</th>
-<th class="head">fire rate</th>
-<th class="head">range</th>
-<th class="head">mag size</th>
+<thead>
+<tr class="row-odd"><th class="head"><p><a class="reference internal" href="#gun">Gun</a></p></th>
+<th class="head"><p>damage</p></th>
+<th class="head"><p>fire rate</p></th>
+<th class="head"><p>range</p></th>
+<th class="head"><p>mag size</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>handgun</td>
-<td>60</td>
-<td>n/a</td>
-<td>50</td>
-<td>11</td>
+<tbody>
+<tr class="row-even"><td><p>handgun</p></td>
+<td><p>60</p></td>
+<td><p>n/a</p></td>
+<td><p>50</p></td>
+<td><p>11</p></td>
 </tr>
-<tr class="row-odd"><td>assault_rifle</td>
-<td>20</td>
-<td>5</td>
-<td>60</td>
-<td>25</td>
+<tr class="row-odd"><td><p>assault_rifle</p></td>
+<td><p>20</p></td>
+<td><p>5</p></td>
+<td><p>60</p></td>
+<td><p>25</p></td>
 </tr>
-<tr class="row-even"><td>shotgun</td>
-<td>20</td>
-<td>8</td>
-<td>30</td>
-<td>5</td>
+<tr class="row-even"><td><p>shotgun</p></td>
+<td><p>20</p></td>
+<td><p>8</p></td>
+<td><p>30</p></td>
+<td><p>5</p></td>
 </tr>
-<tr class="row-odd"><td>sniper</td>
-<td>100</td>
-<td>n/a</td>
-<td>300</td>
-<td>2</td>
+<tr class="row-odd"><td><p>sniper</p></td>
+<td><p>100</p></td>
+<td><p>n/a</p></td>
+<td><p>300</p></td>
+<td><p>2</p></td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>

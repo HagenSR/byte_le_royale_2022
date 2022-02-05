@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loot Generation Controller &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Loot Generation Controller &mdash; Byte-le-Royale 2022 9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/accordion.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -71,7 +73,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition%20Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
@@ -102,10 +104,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="loot-generation-controller">
-<h1>Loot Generation Controller<a class="headerlink" href="#loot-generation-controller" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="lore">
-<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline">¶</a></h2>
+  <section id="loot-generation-controller">
+<h1>Loot Generation Controller<a class="headerlink" href="#loot-generation-controller" title="Permalink to this headline"></a></h1>
+<section id="lore">
+<h2>Lore<a class="headerlink" href="#lore" title="Permalink to this headline"></a></h2>
 <p>There he stood, standing there, menacingly. The black sky smelled of mildew,
 out of your left ear you hear a crow shrieking. It’s been years since you stood in
 front of another person, you think to yourself, “is that even a person?”
@@ -119,20 +121,20 @@ exclaim “uh, I don’t know there was uh I.. I..” The animatronic had no tim
 for your senseless quarrel, you thought you were a goner.
 UNTIL FROM THE SKIES CAME JOOOHHHNNN CEEEEEENNNNAAAA with his iconic
 theme song playing
-” ba ba da ba bah da ba bah.”
+&quot; ba ba da ba bah da ba bah.&quot;
 All of a sudden John Cena appears everywhere around you simultaneously.
 There it is! A healthpack, you can now heal yourself and get out of here!</p>
-</div>
-<div class="section" id="how-it-works">
-<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="how-it-works">
+<h2>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline"></a></h2>
 <p>The loot generation controller handles the spawning of loot around the
 game map. Money has a 60% chance to spawn, guns 20% and upgrades 20%.
 Loot is distributed according to a standard distribution,
 centered at the middle of the game map. Before the spawning of a new loot wave,
 all of the loot will be removed.
 Allowing for higher-tier loot to appear as the game progresses.</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

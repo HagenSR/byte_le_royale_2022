@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movement Controller &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Movement Controller &mdash; Byte-le-Royale 2022 9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/accordion.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -71,7 +73,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Door.html">Door</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Hitbox.html">Hitbox</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Item_Gen_Utils.html">Item Generation Utils Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Partition Grid.html">Partition Grid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Partition%20Grid.html">Partition Grid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="calculate_new_location.html">Calculate New Location</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Enums.html">List of Enums</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Money.html">Money</a></li>
@@ -102,25 +104,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="movement-controller">
-<h1>Movement Controller<a class="headerlink" href="#movement-controller" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="important-notes">
-<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
+  <section id="movement-controller">
+<h1>Movement Controller<a class="headerlink" href="#movement-controller" title="Permalink to this headline"></a></h1>
+<section id="important-notes">
+<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline"></a></h2>
 <p>The movement controller moves your player in the requested direction until you reach the given distance or until you reach an obstacle.</p>
 <p>Please note that angle should be passed as degrees, where each degree turns in the clockwise direction ( counterintuitively ). Refer to the
 below image.</p>
 <a class="reference internal image-reference" href="_images/unitCircleDegrees.png"><img alt="Degrees" src="_images/unitCircleDegrees.png" style="width: 400px;" /></a>
 <p>The shooter max speed is 25 units.</p>
 <p>The movement controller will often place you beyond your desired location. This is not a bug, but instead a realistic modeling of inertia.</p>
-</div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">actions</span><span class="o">.</span><span class="n">set_move</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span> <span class="n">shooter</span><span class="o">.</span><span class="n">max_speed</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>will send you towards the bottom right corner (assuming you’re in the middle) 25 units (assuming there are no obstacles)</p>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>

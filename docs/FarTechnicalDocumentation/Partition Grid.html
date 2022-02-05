@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html4" lang="en" >
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Partition Grid &mdash; Byte-le-Royale 2022 9 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Partition Grid &mdash; Byte-le-Royale 2022 9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/accordion.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/accordion.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/accordion.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -40,7 +42,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="RunningTheGame.html">Running the game</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Server.html">Server Documentation</a></li>
@@ -115,26 +117,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="partition-grid">
-<h1>Partition Grid<a class="headerlink" href="#partition-grid" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="what-is-it">
-<h2>What is it?<a class="headerlink" href="#what-is-it" title="Permalink to this headline">¶</a></h2>
+  <section id="partition-grid">
+<h1>Partition Grid<a class="headerlink" href="#partition-grid" title="Permalink to this headline"></a></h1>
+<section id="what-is-it">
+<h2>What is it?<a class="headerlink" href="#what-is-it" title="Permalink to this headline"></a></h2>
 <p>The partition grid is an internal data structure used by the game board to make finding objects
 on the map easy and efficient.</p>
 <p>It works by splitting up the map of 500x500 game units into squares that are each 20x20 units.
 This means that the map consists of 25x25 partitions.</p>
 <p>Your client is passed in a PartitionGrid object within the GameBoard object by default named game_board.
 You can access the PartitionGrid object by calling <code class="docutils literal notranslate"><span class="pre">game_board.partition</span></code></p>
-</div>
-<div class="section" id="obfuscation">
-<h2>Obfuscation<a class="headerlink" href="#obfuscation" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="obfuscation">
+<h2>Obfuscation<a class="headerlink" href="#obfuscation" title="Permalink to this headline"></a></h2>
 <p>The partition grid given to your client isn’t the same partition grid used by the engine,
 instead it is a deepcopy of the internal one.</p>
 <p>During this process of deep copying, it is also filtered to remove any players or items that are outside of your
 client’s view. See the page on what your client can see to learn more.</p>
-</div>
-<div class="section" id="how-to-use-it">
-<h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="how-to-use-it">
+<h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline"></a></h2>
 <p>The partition grid is meant to make it easy for you to find all the objects you need, however, if your team
 decides it is too complex, buggy, or not right for you, there is another option.</p>
 <p>Instead of using the partitions you can get a list of all the objects in the map.
@@ -147,8 +149,8 @@ To do this, you can use this method:</p>
 <p>If you do want to use the partition as the partition grid object, there are a number of helpful methods to allow
 you to efficiently find objects in particular locations.</p>
 <p>The PartitionGrid is a 3 dimensional list, with the most interior list containing a subset of the objects within the map.</p>
-<div class="section" id="properties">
-<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h3>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this headline"></a></h3>
 <p>The partition grid has a couple of properties:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">partition_width</span>
 </pre></div>
@@ -166,55 +168,55 @@ you to efficiently find objects in particular locations.</p>
 </pre></div>
 </div>
 <p>How many partitions wide the grid is</p>
-</div>
-<div class="section" id="methods">
-<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="get-partition-objects">
-<h4>get_partition_objects<a class="headerlink" href="#get-partition-objects" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="methods">
+<h3>Methods<a class="headerlink" href="#methods" title="Permalink to this headline"></a></h3>
+<section id="get-partition-objects">
+<h4>get_partition_objects<a class="headerlink" href="#get-partition-objects" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">get_partition_objects</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span>
 </pre></div>
 </div>
 <p>This method returns all objects within the partition that encompasses point (x, y)</p>
-</div>
-<div class="section" id="get-partition-objects-by-index">
-<h4>get_partition_objects_by_index<a class="headerlink" href="#get-partition-objects-by-index" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="get-partition-objects-by-index">
+<h4>get_partition_objects_by_index<a class="headerlink" href="#get-partition-objects-by-index" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">get_partition_objects_by_index</span><span class="p">(</span><span class="n">row</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">column</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span>
 </pre></div>
 </div>
 <p>This method returns all objects at the partition at the given row and column.</p>
-</div>
-<div class="section" id="find-object-coordinates">
-<h4>find_object_coordinates<a class="headerlink" href="#find-object-coordinates" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="find-object-coordinates">
+<h4>find_object_coordinates<a class="headerlink" href="#find-object-coordinates" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">find_object_coordinates</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">bool</span>
 </pre></div>
 </div>
 <p>Returns the object at point (x, y) if there is an object at those coordinates, false otherwise</p>
-</div>
-<div class="section" id="find-objects-hitbox">
-<h4>find_objects_hitbox<a class="headerlink" href="#find-objects-hitbox" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="find-objects-hitbox">
+<h4>find_objects_hitbox<a class="headerlink" href="#find-objects-hitbox" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">find_object_hitbox</span><span class="p">(</span><span class="n">hitbox</span><span class="p">:</span> <span class="n">Hitbox</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">bool</span>
 </pre></div>
 </div>
 <p>Returns the object if there is an object on the map that collides with the given hitbox, false otherwise</p>
-</div>
-<div class="section" id="find-object-object">
-<h4>find_object_object<a class="headerlink" href="#find-object-object" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="find-object-object">
+<h4>find_object_object<a class="headerlink" href="#find-object-object" title="Permalink to this headline"></a></h4>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">find_object_object</span><span class="p">(</span><span class="n">given_obj</span><span class="p">:</span> <span class="n">MapObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">obj</span><span class="p">,</span> <span class="nb">bool</span>
 </pre></div>
 </div>
 <p>Returns object if there is an object that collides with the given object, false otherwise</p>
-</div>
-<div class="section" id="remove-object">
-<h4>remove_object<a class="headerlink" href="#remove-object" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">MapObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span>
+</section>
+<section id="remove-object">
+<h4>remove_object<a class="headerlink" href="#remove-object" title="Permalink to this headline"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">partition_grid</span><span class="o">.</span><span class="n">remove_object</span><span class="p">(</span><span class="n">obj</span><span class="p">:</span> <span class="n">MapObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
 </pre></div>
 </div>
 <p>Removes a given object from the structure. Note, because the client has it’s own copy of the partition grid, it will not
 remove it from the game entirely. Will most likely not be useful to you, but it’s here if you want to use it.</p>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
            </div>
