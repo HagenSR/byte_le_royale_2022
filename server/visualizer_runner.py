@@ -30,9 +30,10 @@ class visualizer_runner:
         self.group_id = 0
 
         self.logs_path = 'server/vis_temp'
+
         today930pm = datetime.datetime.now().replace(hour=21, minute=30, second=0, microsecond=0)
         try:
-            while datetime.datetime.now() < today930pm:
+            while datetime.datetime.now() < today930pm or True:
                 group_id = self.get_latest_group()
                 if self.group_id != group_id:
                     print("getting new logs")
