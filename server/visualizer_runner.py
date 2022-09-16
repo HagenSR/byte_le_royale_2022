@@ -30,14 +30,15 @@ class visualizer_runner:
         self.group_id = 0
 
         self.logs_path = 'server/vis_temp'
+
         today930pm = datetime.datetime.now().replace(hour=21, minute=30, second=0, microsecond=0)
         try:
-            while datetime.datetime.now() < today930pm:
+            while datetime.datetime.now() < today930pm or True:
                 group_id = self.get_latest_group()
                 if self.group_id != group_id:
                     print("getting new logs")
+                    self.get_latest_log_files(group_id)
                     self.group_id = group_id
-                    self.get_latest_log_files()
                 self.visualizer_loop()
                 time.sleep(30)
         except (KeyboardInterrupt, Exception) as e:
@@ -45,12 +46,12 @@ class visualizer_runner:
         finally:
             self.delete_vis_temp()
 
-    def get_latest_log_files(self):
+    def get_latest_log_files(self, group_id):
         self.delete_vis_temp()
 
         print("getting latest log files")
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
-        cur.execute("SELECT (get_logs_for_group_run(%s)).*", (self.group_id,))
+        cur.execute("SELECT (get_logs_for_group_run(%s)).*", (group_id,))
         logs = cur.fetchall()
 
         for log in logs:
