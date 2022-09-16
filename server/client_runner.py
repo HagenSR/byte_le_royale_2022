@@ -50,15 +50,16 @@ class client_runner:
         # IE how many combinations of clients can you make
         self.number_of_unique_games = -1
 
-        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 150
+        self.SLEEP_TIME_SECONDS_BETWEEN_RUNS = 450
 
         # Maps a seed_index to a database seed_id
         self.index_to_seed_id = {}
 
+        self.tick = True
+
         self.version = self.get_version_number()
 
         self.best_run_for_client = {}
-
         self.runner_temp_dir = 'server/runner_temp'
         self.seed_path = f"{self.runner_temp_dir}/seeds"
 
@@ -74,7 +75,7 @@ class client_runner:
                 logging.warning(
                     f"Sleeping for {self.SLEEP_TIME_SECONDS_BETWEEN_RUNS} seconds")
                 self.group_id = -1
-                time.sleep(150)
+                time.sleep(self.SLEEP_TIME_SECONDS_BETWEEN_RUNS)
         except (KeyboardInterrupt, Exception) as e:
             logging.warning("Ending runner due to {0}".format(e))
         finally:
@@ -170,11 +171,12 @@ class client_runner:
             for sub_id in errors:
                 self.insert_error(sub_id, run_id, errors[sub_id])
             # Update information in best run dict
-            if winner != -1:
-                if winner not in self.best_run_for_client:
+            if winner != -1 or self.tick:
+                if winner not in self.best_run_for_client or len(self.best_run_for_client) < 21:
                     self.best_run_for_client[row["submission_id"]] = {}
                     self.best_run_for_client[row["submission_id"]]["log_path"] = end_path + "/logs"
                     self.best_run_for_client[row["submission_id"]]["run_id"] = run_id
+            self.tick = not self.tick
 
     def fetch_clients(self):
         '''
